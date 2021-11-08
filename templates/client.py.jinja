@@ -3,8 +3,9 @@
     https://github.com/openapi-generators/openapi-python-client/blob/main/openapi_python_client/templates/client.py.jinja
 #}
 import ssl
-from typing import Dict, Union
+from typing import Dict, Union, Tuple
 import attr
+import httpx
 
 @attr.s(auto_attribs=True)
 class Client:
@@ -42,8 +43,32 @@ class Client:
 class AuthenticatedClient(Client):
     """ A Client which has been authenticated for use on secured endpoints """
 
-    token: str
+    auth: Union[str, Tuple[str, str]]
 
-    def get_headers(self) -> Dict[str, str]:
-        """ Get headers to be used in authenticated endpoints """
-        return {"Authorization": f"Bearer {self.token}", **self.headers}
+    def __attrs_post_init__(self):
+        """ Create new session after class initialization """
+        self.create_session()
+
+    def get_auth(self):
+        return self.auth
+
+    def get_session(self):
+        return self.session
+
+    def create_session(self):
+        """ Create new session with the arguments obtained from client """
+        self.session = httpx.Client(
+            base_url=self.base_url,
+            auth=self.auth,
+            headers=self.headers,
+            cookies=self.cookies,
+            timeout=self.timeout,
+            verify=self.verify_ssl,
+        )
+
+    def close_session(self):
+        self.session.close()
+
+    def reload_session(self):
+        self.close_session()
+        self.create_session()
