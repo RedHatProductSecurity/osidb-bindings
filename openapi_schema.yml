@@ -32,7 +32,9 @@ paths:
       tags:
       - bzimport
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -73,7 +75,9 @@ paths:
             schema:
               $ref: '#/components/schemas/Job'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -109,7 +113,9 @@ paths:
       tags:
       - bzimport
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -134,31 +140,12 @@ paths:
       tags:
       - bzimport
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
-          description: No response body
-  /bzimport/api/v1/reports/bz/failures:
-    get:
-      operationId: bzimport_api_v1_reports_bz_failures_retrieve
-      description: HTTP get /reports/bz/failures
-      parameters:
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - csv
-          - json
-          - xml
-      tags:
-      - bzimport
-      security:
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
           description: No response body
   /bzimport/api/v1/status:
     get:
@@ -176,7 +163,32 @@ paths:
       tags:
       - bzimport
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /bzimport/api/v1/sync:
+    post:
+      operationId: bzimport_api_v1_sync_create
+      description: HTTP POST /jobs
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      tags:
+      - bzimport
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -197,7 +209,9 @@ paths:
       tags:
       - bzimport
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -300,6 +314,16 @@ paths:
             type: string
         description: Include only specified fields in the response. Multiple values
           may be separated by commas.
+      - in: query
+        name: include_meta_attr
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Specify which keys from meta_attr field should be retrieved,
+          multiple values may be separated by commas. Use wildcard `include_meta_attr=*`
+          for retrieving all the keys. Omit this parameter to not include meta_attr
+          field at all. '
       - name: limit
         required: false
         in: query
@@ -342,41 +366,90 @@ paths:
           enum:
           - ADOBE
           - APPLE
+          - ASF
+          - BIND
+          - BK
           - BUGTRAQ
           - BUGZILLA
           - CERT
+          - CERTIFI
+          - CORELABS
           - CUSTOMER
           - CVE
+          - DAILYDAVE
           - DEBIAN
           - DISTROS
+          - FEDORA
+          - FETCHMAIL
+          - FREEDESKTOP
+          - FREERADIUS
+          - FSIRT
           - FULLDISCLOSURE
+          - GAIM
+          - GENTOBZ
           - GENTOO
           - GIT
+          - GNOME
+          - GNUPG
           - GOOGLE
+          - HP
           - HW_VENDOR
+          - IDEFENSE
+          - INDIVIDUAL
           - INTERNET
+          - ISC
+          - ISEC
+          - JBOSS
+          - JPCERT
+          - KERNALBUGZILLA
+          - KERNELSEC
           - LKML
+          - LWN
+          - MACROMEDIA
           - MAGEIA
+          - MAILINGLIST
+          - MILWORM
           - MIT
+          - MITRE
           - MOZILLA
+          - MUTTDEV
+          - NETDEV
+          - NISCC
           - NOVALUE
+          - OCERT
+          - OPENOFFICE
           - OPENSSL
+          - OPENSUSE
           - ORACLE
+          - OSS
           - OSSSECURITY
           - PHP
           - PIDGIN
+          - POSTGRESQL
+          - PRESS
+          - REAL
           - REDHAT
           - RESEARCHER
+          - RT
+          - SAMBA
           - SECALERT
           - SECUNIA
+          - SECURITYFOCUS
           - SKO
+          - SQUID
+          - SQUIRRELMAIL
           - SUN
           - SUSE
+          - SUSOLVE
           - TWITTER
           - UBUNTU
           - UPSTREAM
           - VENDORSEC
+          - VULNWATCH
+          - WIRESHARK
+          - XCHAT
           - XEN
+          - XPDF
       - in: query
         name: state
         schema:
@@ -436,7 +509,9 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -478,7 +553,9 @@ paths:
               $ref: '#/components/schemas/FlawList'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -496,7 +573,7 @@ paths:
   /flawdb/api/v1/flaws/{id}:
     get:
       operationId: flawdb_api_v1_flaws_retrieve
-      description: HTTP GET /flaws/{flaw_id}
+      description: HTTP GET /flaws/{pk}
       parameters:
       - in: query
         name: format
@@ -511,10 +588,22 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: include_meta_attr
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Specify which keys from meta_attr field should be retrieved,
+          multiple values may be separated by commas. Use wildcard `include_meta_attr=*`
+          for retrieving all the keys. Omit this parameter to not include meta_attr
+          field at all. '
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -529,34 +618,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Flaw'
           description: ''
-    post:
-      operationId: flawdb_api_v1_flaws_create_2
-      description: HTTP POST /flaws/{flaw_id}
-      parameters:
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - csv
-          - json
-          - xml
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - flawdb
-      security:
-      - cookieAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
     delete:
       operationId: flawdb_api_v1_flaws_destroy
-      description: HTTP DELETE /flaws/{flaw_id}
+      description: HTTP DELETE /flaws/{pk}
       parameters:
       - in: query
         name: format
@@ -574,7 +638,9 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -582,7 +648,7 @@ paths:
   /flawdb/api/v1/manifest:
     get:
       operationId: flawdb_api_v1_manifest_retrieve
-      description: authenticated view containing project manifest information
+      description: HTTP get /manifest
       parameters:
       - in: query
         name: format
@@ -595,7 +661,9 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -720,7 +788,9 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -745,7 +815,7 @@ paths:
   /flawdb/api/v1/status:
     get:
       operationId: flawdb_api_v1_status_retrieve
-      description: authenticated view containing status flawdb service
+      description: HTTP get /status
       parameters:
       - in: query
         name: format
@@ -758,11 +828,90 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  dt:
+                    type: string
+                    format: date-time
+                  flawdb_service:
+                    type: object
+                  flawdb_data:
+                    type: object
+                    properties:
+                      flaw_count:
+                        type: integer
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  dt:
+                    type: string
+                    format: date-time
+                  flawdb_service:
+                    type: object
+                  flawdb_data:
+                    type: object
+                    properties:
+                      flaw_count:
+                        type: integer
+            text/csv:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  dt:
+                    type: string
+                    format: date-time
+                  flawdb_service:
+                    type: object
+                  flawdb_data:
+                    type: object
+                    properties:
+                      flaw_count:
+                        type: integer
+          description: ''
+  /flawdb/auth/get_auth_token/:
+    post:
+      operationId: flawdb_auth_get_auth_token_create
+      tags:
+      - flawdb
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
   /flawdb/healthy:
     get:
       operationId: flawdb_healthy_retrieve
@@ -779,15 +928,61 @@ paths:
       tags:
       - flawdb
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
           description: No response body
-  /sfm/:
+  /jiraffe/api/v1/jobs:
     get:
-      operationId: sfm_retrieve
-      description: HTTP get /
+      operationId: jiraffe_api_v1_jobs_list
+      description: Fetch list of JiraffeJobs
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - jiraffe
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedJiraffeJobList'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/PaginatedJiraffeJobList'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/PaginatedJiraffeJobList'
+          description: ''
+    post:
+      operationId: jiraffe_api_v1_jobs_create
+      description: Create a JiraffeJob
       parameters:
       - in: query
         name: format
@@ -798,17 +993,96 @@ paths:
           - json
           - xml
       tags:
-      - sfm
+      - jiraffe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JiraffeJob'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JiraffeJob'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JiraffeJob'
+        required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JiraffeJob'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/JiraffeJob'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/JiraffeJob'
+          description: ''
+  /jiraffe/api/v1/jobs/{id}:
+    get:
+      operationId: jiraffe_api_v1_jobs_retrieve
+      description: Retrieve details for a specific job or delete it
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - jiraffe
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
           description: No response body
-  /sfm/healthy:
+    delete:
+      operationId: jiraffe_api_v1_jobs_destroy
+      description: Retrieve details for a specific job or delete it
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - jiraffe
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /jiraffe/api/v1/status:
     get:
-      operationId: sfm_healthy_retrieve
-      description: HTTP get /healthy
+      operationId: jiraffe_api_v1_status_retrieve
+      description: Returns status for the Jiraffe service
       parameters:
       - in: query
         name: format
@@ -819,17 +1093,23 @@ paths:
           - json
           - xml
       tags:
-      - sfm
+      - jiraffe
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
           description: No response body
-  /sfm/workflows:
-    get:
-      operationId: sfm_workflows_retrieve
-      description: HTTP get /workflows
+  /jiraffe/api/v1/sync:
+    post:
+      operationId: jiraffe_api_v1_sync_create
+      description: |-
+        Sync affects from trackers that have been updated in the last interval
+
+        For valid interval values, please see the following JIRA JQL documentation:
+        https://support.atlassian.com/jira-software-cloud/docs/advanced-search-reference-jql-fields/#Advancedsearchingfieldsreference-UpdatedUpdatedDateupdatedDateUpdated
       parameters:
       - in: query
         name: format
@@ -840,9 +1120,145 @@ paths:
           - json
           - xml
       tags:
-      - sfm
+      - jiraffe
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /jiraffe/healthy:
+    get:
+      operationId: jiraffe_healthy_retrieve
+      description: Health check on Jiraffe service
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      tags:
+      - jiraffe
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /osim/:
+    get:
+      operationId: osim_retrieve
+      description: index API endpoint listing available API endpoints
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      tags:
+      - osim
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /osim/api/v1/workflows:
+    get:
+      operationId: osim_api_v1_workflows_retrieve
+      description: workflow info API endpoint
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      tags:
+      - osim
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /osim/api/v1/workflows/{id}:
+    get:
+      operationId: osim_api_v1_workflows_retrieve_2
+      description: |-
+        workflow classification API endpoint
+
+        for flaw identified by UUID or CVE returns its workflow:state classification
+
+        params:
+
+            verbose - return also workflows with flaw classification
+                      which represents the reasoning of the result
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: verbose
+        schema:
+          type: boolean
+        description: Return also workflows with flaw classification which represents
+          the reasoning of the result.
+      tags:
+      - osim
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /osim/healthy:
+    get:
+      operationId: osim_healthy_retrieve
+      description: unauthenticated health check API endpoint
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      tags:
+      - osim
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -861,19 +1277,16 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/AffectTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         state:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/AffectStateEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         resolution:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/ResolutionEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         ps_module:
           type: string
@@ -943,9 +1356,89 @@ components:
       enum:
       - DEFAULT
       type: string
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
     BlankEnum:
       enum:
       - ''
+    CVEv5PackageVersions:
+      type: object
+      description: CVEv5 package versions serializer
+      properties:
+        package:
+          type: string
+          maxLength: 2058
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CVEv5Versions'
+      required:
+      - package
+      - versions
+    CVEv5Versions:
+      type: object
+      description: CVEv5 Package Version Serializer
+      properties:
+        version:
+          type: string
+          maxLength: 1024
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+      required:
+      - status
+      - version
+    Comment:
+      type: object
+      description: FlawComment serializer
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        type:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/CommentTypeEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        external_system_id:
+          type: string
+          nullable: true
+          maxLength: 100
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        created_dt:
+          type: string
+          format: date-time
+          nullable: true
+        meta_attr:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+      required:
+      - uuid
+    CommentTypeEnum:
+      enum:
+      - BUGZILLA
+      type: string
     Flaw:
       type: object
       description: serialize flaw model
@@ -972,7 +1465,6 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/State574Enum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         resolution:
           type: string
@@ -982,7 +1474,6 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/ImpactEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         title:
           type: string
@@ -1038,6 +1529,9 @@ components:
           type: number
           format: float
           nullable: true
+        is_csaw:
+          type: boolean
+          nullable: true
         affects:
           type: array
           items:
@@ -1048,10 +1542,28 @@ components:
           items:
             $ref: '#/components/schemas/Meta'
           readOnly: true
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          readOnly: true
+        meta_attr:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+        package_versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CVEv5PackageVersions'
+          readOnly: true
       required:
       - affects
+      - comments
       - cve_id
       - meta
+      - package_versions
       - title
       - type
       - updated_dt
@@ -1082,7 +1594,6 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/State574Enum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         resolution:
           type: string
@@ -1092,7 +1603,6 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/ImpactEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
         title:
           type: string
@@ -1153,6 +1663,9 @@ components:
           type: number
           format: float
           nullable: true
+        is_csaw:
+          type: boolean
+          nullable: true
         affects:
           type: array
           items:
@@ -1163,10 +1676,28 @@ components:
           items:
             $ref: '#/components/schemas/Meta'
           readOnly: true
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+          readOnly: true
+        meta_attr:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+        package_versions:
+          type: array
+          items:
+            type: string
+            format: uuid
       required:
       - affects
+      - comments
       - cve_id
       - meta
+      - package_versions
       - title
       - trackers
       - type
@@ -1180,6 +1711,44 @@ components:
       - IMPORTANT
       - CRITICAL
       type: string
+    JiraffeJob:
+      type: object
+      description: Serialize JiraffeJob into JSON
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        state:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/State7f6Enum'
+          - $ref: '#/components/schemas/NullEnum'
+        comment:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_dt:
+          type: string
+          format: date-time
+          nullable: true
+        affect_uuids:
+          type: array
+          items:
+            type: string
+            nullable: true
+            maxLength: 255
+        dry_run:
+          type: boolean
+        update:
+          type: boolean
+        affect_count:
+          type: string
+          readOnly: true
+      required:
+      - affect_count
+      - affect_uuids
+      - uuid
     Job:
       type: object
       description: serialize job json
@@ -1191,7 +1760,7 @@ components:
         state:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/JobStateEnum'
+          - $ref: '#/components/schemas/State7f6Enum'
           - $ref: '#/components/schemas/NullEnum'
         comment:
           type: string
@@ -1205,6 +1774,7 @@ components:
           type: array
           items:
             type: string
+            maxLength: 255
         dry_run:
           type: boolean
         update:
@@ -1219,12 +1789,6 @@ components:
       - bz_count
       - cve_count
       - uuid
-    JobStateEnum:
-      enum:
-      - PROCESSING
-      - SUCCESS
-      - FAILURE
-      type: string
     Meta:
       type: object
       description: FlawMeta serializer
@@ -1237,9 +1801,12 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/MetaTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        attr:
+        created_dt:
+          type: string
+          format: date-time
+          nullable: true
+        meta_attr:
           type: object
           additionalProperties:
             type: string
@@ -1249,9 +1816,16 @@ components:
       - uuid
     MetaTypeEnum:
       enum:
+      - ERRATA
       - REFERENCE
       - ACKNOWLEDGEMENT
       - EXPLOIT
+      - CSAW
+      - CSAW_LITE
+      - REQUIRES_DOC_TEXT
+      - NIST_CVSS_VALIDATION
+      - NEED_INFO
+      - CHECKLIST
       type: string
     MitigatedByEnum:
       enum:
@@ -1282,6 +1856,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FlawList'
+    PaginatedJiraffeJobList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/JiraffeJob'
     PaginatedJobList:
       type: object
       properties:
@@ -1309,46 +1903,97 @@ components:
       - DEFER
       - WONTFIX
       - OOSS
+      - DELEGATED
+      - WONTREPORT
       type: string
     SourceEnum:
       enum:
-      - NOVALUE
       - ADOBE
       - APPLE
+      - ASF
+      - BIND
+      - BK
       - BUGTRAQ
       - BUGZILLA
       - CERT
+      - CERTIFI
+      - CORELABS
       - CUSTOMER
       - CVE
+      - DAILYDAVE
       - DEBIAN
       - DISTROS
+      - FEDORA
+      - FETCHMAIL
+      - FREEDESKTOP
+      - FREERADIUS
+      - FSIRT
       - FULLDISCLOSURE
+      - GAIM
       - GENTOO
+      - GENTOBZ
       - GIT
+      - GNOME
+      - GNUPG
       - GOOGLE
+      - HP
       - HW_VENDOR
+      - IDEFENSE
+      - INDIVIDUAL
       - INTERNET
+      - ISC
+      - ISEC
+      - JBOSS
+      - JPCERT
+      - KERNALBUGZILLA
+      - KERNELSEC
       - LKML
+      - LWN
+      - MACROMEDIA
       - MAGEIA
+      - MAILINGLIST
+      - MILWORM
       - MIT
+      - MITRE
       - MOZILLA
-      - OSSSECURITY
+      - MUTTDEV
+      - NETDEV
+      - NISCC
+      - NOVALUE
+      - OCERT
+      - OPENOFFICE
       - OPENSSL
+      - OPENSUSE
       - ORACLE
+      - OSS
+      - OSSSECURITY
       - PHP
       - PIDGIN
+      - POSTGRESQL
+      - PRESS
+      - REAL
       - REDHAT
       - RESEARCHER
+      - RT
+      - SAMBA
       - SECALERT
-      - SKO
       - SECUNIA
+      - SECURITYFOCUS
+      - SKO
+      - SQUID
+      - SQUIRRELMAIL
       - SUN
+      - SUSOLVE
       - SUSE
       - TWITTER
       - UBUNTU
       - UPSTREAM
       - VENDORSEC
+      - VULNWATCH
+      - WIRESHARK
+      - XCHAT
       - XEN
+      - XPDF
       type: string
     State574Enum:
       enum:
@@ -1359,6 +2004,18 @@ components:
       - OPEN
       - CLOSED
       - VERIFIED
+      type: string
+    State7f6Enum:
+      enum:
+      - PROCESSING
+      - SUCCESS
+      - FAILURE
+      type: string
+    StatusEnum:
+      enum:
+      - AFFECTED
+      - UNAFFECTED
+      - UNKNOWN
       type: string
     Tracker:
       type: object
@@ -1372,10 +2029,8 @@ components:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/TrackerTypeEnum'
-          - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-          # TODO: NullEnum causes issues, see https://github.com/openapi-generators/openapi-python-client/issues/504
-        key:
+        external_system_id:
           type: string
           nullable: true
           maxLength: 100
@@ -1392,7 +2047,15 @@ components:
       - WEAKNESS
       type: string
   securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
     cookieAuth:
       type: apiKey
       in: cookie
-      name: Session
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
