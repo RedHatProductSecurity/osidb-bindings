@@ -1,0 +1,4 @@
+# Additional set of dependencies required in a local development env
+-r base.txt
+openapi-python-client
+pip-tools

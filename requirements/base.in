@@ -1,0 +1,4 @@
+# Minimal set of dependencies required to use OSIDB bindings
+attrs
+httpx
+python-dateutil
