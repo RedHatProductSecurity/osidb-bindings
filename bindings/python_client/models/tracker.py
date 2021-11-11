@@ -27,7 +27,7 @@ class Tracker:
         elif isinstance(self.type, TrackerTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value
+                type = self.type.value if isinstance(self.type, TrackerTypeEnum) else TrackerTypeEnum(self.type).value
 
         else:
             type = self.type

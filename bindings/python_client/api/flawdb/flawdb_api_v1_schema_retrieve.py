@@ -19,11 +19,23 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = format_.value if format_ else None
+        json_format_ = (
+            format_.value
+            if isinstance(format_, FlawdbApiV1SchemaRetrieveFormat)
+            else FlawdbApiV1SchemaRetrieveFormat(format_).value
+            if format_
+            else None
+        )
 
     json_lang: Union[Unset, None, str] = UNSET
     if not isinstance(lang, Unset):
-        json_lang = lang.value if lang else None
+        json_lang = (
+            lang.value
+            if isinstance(lang, FlawdbApiV1SchemaRetrieveLang)
+            else FlawdbApiV1SchemaRetrieveLang(lang).value
+            if lang
+            else None
+        )
 
     params: Dict[str, Any] = {
         "format": json_format_,

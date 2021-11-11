@@ -58,7 +58,7 @@ class Flaw:
         uuid = self.uuid
         updated_dt = self.updated_dt.isoformat()
 
-        type = self.type.value
+        type = self.type.value if isinstance(self.type, Type824Enum) else Type824Enum(self.type).value
 
         title = self.title
         affects = []
@@ -98,7 +98,7 @@ class Flaw:
         elif isinstance(self.state, State574Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value
+                state = self.state.value if isinstance(self.state, State574Enum) else State574Enum(self.state).value
 
         else:
             state = self.state
@@ -112,7 +112,7 @@ class Flaw:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value
+                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
 
         else:
             impact = self.impact
@@ -134,12 +134,12 @@ class Flaw:
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value
+                source = self.source.value if isinstance(self.source, SourceEnum) else SourceEnum(self.source).value
 
         elif isinstance(self.source, BlankEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value
+                source = self.source.value if isinstance(self.source, BlankEnum) else BlankEnum(self.source).value
 
         else:
             source = self.source
@@ -156,12 +156,20 @@ class Flaw:
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = self.mitigated_by.value
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, MitigatedByEnum)
+                    else MitigatedByEnum(self.mitigated_by).value
+                )
 
         elif isinstance(self.mitigated_by, BlankEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = self.mitigated_by.value
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, BlankEnum)
+                    else BlankEnum(self.mitigated_by).value
+                )
 
         else:
             mitigated_by = self.mitigated_by

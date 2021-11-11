@@ -51,7 +51,7 @@ class Affect:
         elif isinstance(self.type, AffectTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value
+                type = self.type.value if isinstance(self.type, AffectTypeEnum) else AffectTypeEnum(self.type).value
 
         else:
             type = self.type
@@ -64,7 +64,9 @@ class Affect:
         elif isinstance(self.state, AffectStateEnum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value
+                state = (
+                    self.state.value if isinstance(self.state, AffectStateEnum) else AffectStateEnum(self.state).value
+                )
 
         else:
             state = self.state
@@ -77,7 +79,11 @@ class Affect:
         elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
-                resolution = self.resolution.value
+                resolution = (
+                    self.resolution.value
+                    if isinstance(self.resolution, ResolutionEnum)
+                    else ResolutionEnum(self.resolution).value
+                )
 
         else:
             resolution = self.resolution
@@ -96,12 +102,12 @@ class Affect:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value
+                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
 
         elif isinstance(self.impact, BlankEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value
+                impact = self.impact.value if isinstance(self.impact, BlankEnum) else BlankEnum(self.impact).value
 
         else:
             impact = self.impact

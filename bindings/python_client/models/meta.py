@@ -31,7 +31,7 @@ class Meta:
         elif isinstance(self.type, MetaTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value
+                type = self.type.value if isinstance(self.type, MetaTypeEnum) else MetaTypeEnum(self.type).value
 
         else:
             type = self.type

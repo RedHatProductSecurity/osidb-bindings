@@ -33,7 +33,7 @@ class Comment:
         elif isinstance(self.type, CommentTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value
+                type = self.type.value if isinstance(self.type, CommentTypeEnum) else CommentTypeEnum(self.type).value
 
         else:
             type = self.type
