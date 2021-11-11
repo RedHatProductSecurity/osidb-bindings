@@ -59,7 +59,7 @@ class FlawList:
         uuid = self.uuid
         updated_dt = self.updated_dt.isoformat()
 
-        type = self.type.value
+        type = self.type.value if isinstance(self.type, Type824Enum) else Type824Enum(self.type).value
 
         title = self.title
         trackers = self.trackers
@@ -97,7 +97,7 @@ class FlawList:
         elif isinstance(self.state, State574Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value
+                state = self.state.value if isinstance(self.state, State574Enum) else State574Enum(self.state).value
 
         else:
             state = self.state
@@ -111,7 +111,7 @@ class FlawList:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value
+                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
 
         else:
             impact = self.impact
@@ -133,12 +133,12 @@ class FlawList:
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value
+                source = self.source.value if isinstance(self.source, SourceEnum) else SourceEnum(self.source).value
 
         elif isinstance(self.source, BlankEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value
+                source = self.source.value if isinstance(self.source, BlankEnum) else BlankEnum(self.source).value
 
         else:
             source = self.source
@@ -155,12 +155,20 @@ class FlawList:
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = self.mitigated_by.value
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, MitigatedByEnum)
+                    else MitigatedByEnum(self.mitigated_by).value
+                )
 
         elif isinstance(self.mitigated_by, BlankEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = self.mitigated_by.value
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, BlankEnum)
+                    else BlankEnum(self.mitigated_by).value
+                )
 
         else:
             mitigated_by = self.mitigated_by
@@ -235,7 +243,7 @@ class FlawList:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
         updated_dt = self.updated_dt.isoformat()
 
-        type = (None, str(self.type.value), "text/plain")
+        type = self.type.value if isinstance(self.type, Type824Enum) else Type824Enum(self.type).value
 
         title = self.title if self.title is UNSET else (None, str(self.title), "text/plain")
         _temp_trackers = self.trackers
@@ -278,7 +286,7 @@ class FlawList:
         elif isinstance(self.state, State574Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = (None, str(self.state.value), "text/plain")
+                state = self.state.value if isinstance(self.state, State574Enum) else State574Enum(self.state).value
 
         else:
             state = self.state
@@ -292,7 +300,7 @@ class FlawList:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value), "text/plain")
+                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
 
         else:
             impact = self.impact
@@ -314,12 +322,12 @@ class FlawList:
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = (None, str(self.source.value), "text/plain")
+                source = self.source.value if isinstance(self.source, SourceEnum) else SourceEnum(self.source).value
 
         elif isinstance(self.source, BlankEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = (None, str(self.source.value), "text/plain")
+                source = self.source.value if isinstance(self.source, BlankEnum) else BlankEnum(self.source).value
 
         else:
             source = self.source
@@ -336,12 +344,20 @@ class FlawList:
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = (None, str(self.mitigated_by.value), "text/plain")
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, MitigatedByEnum)
+                    else MitigatedByEnum(self.mitigated_by).value
+                )
 
         elif isinstance(self.mitigated_by, BlankEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = (None, str(self.mitigated_by.value), "text/plain")
+                mitigated_by = (
+                    self.mitigated_by.value
+                    if isinstance(self.mitigated_by, BlankEnum)
+                    else BlankEnum(self.mitigated_by).value
+                )
 
         else:
             mitigated_by = self.mitigated_by

@@ -38,7 +38,7 @@ class JiraffeJob:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value
+                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
 
         else:
             state = self.state
@@ -87,7 +87,7 @@ class JiraffeJob:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = (None, str(self.state.value), "text/plain")
+                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
 
         else:
             state = self.state

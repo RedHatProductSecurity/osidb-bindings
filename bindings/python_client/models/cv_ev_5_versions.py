@@ -17,7 +17,7 @@ class CVEv5Versions:
 
     def to_dict(self) -> Dict[str, Any]:
         version = self.version
-        status = self.status.value
+        status = self.status.value if isinstance(self.status, StatusEnum) else StatusEnum(self.status).value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)

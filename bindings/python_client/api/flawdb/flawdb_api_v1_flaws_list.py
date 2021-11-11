@@ -81,11 +81,23 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = format_.value if format_ else None
+        json_format_ = (
+            format_.value
+            if isinstance(format_, FlawdbApiV1FlawsListFormat)
+            else FlawdbApiV1FlawsListFormat(format_).value
+            if format_
+            else None
+        )
 
     json_impact: Union[Unset, None, str] = UNSET
     if not isinstance(impact, Unset):
-        json_impact = impact.value if impact else None
+        json_impact = (
+            impact.value
+            if isinstance(impact, FlawdbApiV1FlawsListImpact)
+            else FlawdbApiV1FlawsListImpact(impact).value
+            if impact
+            else None
+        )
 
     json_include_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(include_fields, Unset):
@@ -103,7 +115,13 @@ def _get_kwargs(
 
     json_mitigated_by: Union[Unset, None, str] = UNSET
     if not isinstance(mitigated_by, Unset):
-        json_mitigated_by = mitigated_by.value if mitigated_by else None
+        json_mitigated_by = (
+            mitigated_by.value
+            if isinstance(mitigated_by, FlawdbApiV1FlawsListMitigatedBy)
+            else FlawdbApiV1FlawsListMitigatedBy(mitigated_by).value
+            if mitigated_by
+            else None
+        )
 
     json_reported_dt: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt, Unset):
@@ -111,11 +129,23 @@ def _get_kwargs(
 
     json_source: Union[Unset, None, str] = UNSET
     if not isinstance(source, Unset):
-        json_source = source.value if source else None
+        json_source = (
+            source.value
+            if isinstance(source, FlawdbApiV1FlawsListSource)
+            else FlawdbApiV1FlawsListSource(source).value
+            if source
+            else None
+        )
 
     json_state: Union[Unset, None, str] = UNSET
     if not isinstance(state, Unset):
-        json_state = state.value if state else None
+        json_state = (
+            state.value
+            if isinstance(state, FlawdbApiV1FlawsListState)
+            else FlawdbApiV1FlawsListState(state).value
+            if state
+            else None
+        )
 
     json_tracker_ids: Union[Unset, None, List[str]] = UNSET
     if not isinstance(tracker_ids, Unset):
@@ -126,7 +156,13 @@ def _get_kwargs(
 
     json_type: Union[Unset, None, str] = UNSET
     if not isinstance(type, Unset):
-        json_type = type.value if type else None
+        json_type = (
+            type.value
+            if isinstance(type, FlawdbApiV1FlawsListType)
+            else FlawdbApiV1FlawsListType(type).value
+            if type
+            else None
+        )
 
     json_unembargo_dt: Union[Unset, None, str] = UNSET
     if not isinstance(unembargo_dt, Unset):

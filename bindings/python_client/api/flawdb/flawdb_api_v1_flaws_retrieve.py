@@ -21,7 +21,13 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = format_.value if format_ else None
+        json_format_ = (
+            format_.value
+            if isinstance(format_, FlawdbApiV1FlawsRetrieveFormat)
+            else FlawdbApiV1FlawsRetrieveFormat(format_).value
+            if format_
+            else None
+        )
 
     json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
     if not isinstance(include_meta_attr, Unset):
