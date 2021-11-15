@@ -49,3 +49,5 @@ filtered_flaws.count
 # list with the results
 filtered_flaws.results
 ```
+
+## For more details read [tutorial](TUTORIAL.md)
