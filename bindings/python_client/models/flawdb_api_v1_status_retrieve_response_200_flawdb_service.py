@@ -15,7 +15,6 @@ class FlawdbApiV1StatusRetrieveResponse200FlawdbService:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
 
         return field_dict
 

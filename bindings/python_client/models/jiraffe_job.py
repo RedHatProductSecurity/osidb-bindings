@@ -1,6 +1,6 @@
 import datetime
 import json
-from typing import Any, Dict, List, Optional, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -27,7 +27,9 @@ class JiraffeJob:
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        affect_uuids = self.affect_uuids
+        affect_uuids: List[Optional[str]] = UNSET
+        if not isinstance(self.affect_uuids, Unset):
+            affect_uuids = self.affect_uuids
 
         affect_count = self.affect_count
         state: Union[None, Unset, str]
@@ -38,7 +40,8 @@ class JiraffeJob:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
+
+                state = State7F6Enum(self.state).value
 
         else:
             state = self.state
@@ -53,13 +56,12 @@ class JiraffeJob:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "affect_uuids": affect_uuids,
-                "affect_count": affect_count,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if affect_uuids is not UNSET:
+            field_dict["affect_uuids"] = affect_uuids
+        if affect_count is not UNSET:
+            field_dict["affect_count"] = affect_count
         if state is not UNSET:
             field_dict["state"] = state
         if comment is not UNSET:
@@ -75,8 +77,10 @@ class JiraffeJob:
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        _temp_affect_uuids = self.affect_uuids
-        affect_uuids = (None, json.dumps(_temp_affect_uuids), "application/json")
+        affect_uuids: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.affect_uuids, Unset):
+            _temp_affect_uuids = self.affect_uuids
+            affect_uuids = (None, json.dumps(_temp_affect_uuids), "application/json")
 
         affect_count = self.affect_count if self.affect_count is UNSET else (None, str(self.affect_count), "text/plain")
         state: Union[None, Unset, str]
@@ -87,7 +91,8 @@ class JiraffeJob:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
+
+                state = State7F6Enum(self.state).value
 
         else:
             state = self.state
@@ -102,13 +107,12 @@ class JiraffeJob:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "affect_uuids": affect_uuids,
-                "affect_count": affect_count,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if affect_uuids is not UNSET:
+            field_dict["affect_uuids"] = affect_uuids
+        if affect_count is not UNSET:
+            field_dict["affect_count"] = affect_count
         if state is not UNSET:
             field_dict["state"] = state
         if comment is not UNSET:
@@ -125,11 +129,11 @@ class JiraffeJob:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
-        affect_uuids = cast(List[Optional[str]], d.pop("affect_uuids"))
+        affect_uuids = cast(List[Optional[str]], d.pop("affect_uuids", UNSET))
 
-        affect_count = d.pop("affect_count")
+        affect_count = d.pop("affect_count", UNSET)
 
         def _parse_state(data: object) -> Union[None, State7F6Enum, Unset]:
             if data is None:

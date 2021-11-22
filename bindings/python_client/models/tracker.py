@@ -27,7 +27,8 @@ class Tracker:
         elif isinstance(self.type, TrackerTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value if isinstance(self.type, TrackerTypeEnum) else TrackerTypeEnum(self.type).value
+
+                type = TrackerTypeEnum(self.type).value
 
         else:
             type = self.type
@@ -36,11 +37,8 @@ class Tracker:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
         if type is not UNSET:
             field_dict["type"] = type
         if external_system_id is not UNSET:
@@ -51,7 +49,7 @@ class Tracker:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
         def _parse_type(data: object) -> Union[None, TrackerTypeEnum, Unset]:
             if data is None:

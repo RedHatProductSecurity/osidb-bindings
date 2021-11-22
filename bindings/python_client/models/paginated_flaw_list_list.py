@@ -26,13 +26,14 @@ class PaginatedFlawListList:
         if not isinstance(self.results, Unset):
             results = []
             for results_item_data in self.results:
-                results_item = results_item_data.to_dict()
+                results_item: Dict[str, Any] = UNSET
+                if not isinstance(results_item_data, Unset):
+                    results_item = results_item_data.to_dict()
 
                 results.append(results_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
         if count is not UNSET:
             field_dict["count"] = count
         if next_ is not UNSET:
@@ -55,10 +56,18 @@ class PaginatedFlawListList:
 
         results = []
         _results = d.pop("results", UNSET)
-        for results_item_data in _results or []:
-            results_item = FlawList.from_dict(results_item_data)
+        if _results is UNSET:
+            results = UNSET
+        else:
+            for results_item_data in _results or []:
+                _results_item = results_item_data
+                results_item: FlawList
+                if isinstance(_results_item, Unset):
+                    results_item = UNSET
+                else:
+                    results_item = FlawList.from_dict(_results_item)
 
-            results.append(results_item)
+                results.append(results_item)
 
         paginated_flaw_list_list = cls(
             count=count,

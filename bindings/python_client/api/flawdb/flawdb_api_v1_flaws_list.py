@@ -30,6 +30,7 @@ def _get_kwargs(
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     format_: Union[Unset, None, FlawdbApiV1FlawsListFormat] = UNSET,
     impact: Union[Unset, None, FlawdbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -79,25 +80,22 @@ def _get_kwargs(
         else:
             json_exclude_fields = exclude_fields
 
+    json_flaw_meta_type: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(flaw_meta_type, Unset):
+        if flaw_meta_type is None:
+            json_flaw_meta_type = None
+        else:
+            json_flaw_meta_type = flaw_meta_type
+
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = (
-            format_.value
-            if isinstance(format_, FlawdbApiV1FlawsListFormat)
-            else FlawdbApiV1FlawsListFormat(format_).value
-            if format_
-            else None
-        )
+
+        json_format_ = FlawdbApiV1FlawsListFormat(format_).value if format_ else None
 
     json_impact: Union[Unset, None, str] = UNSET
     if not isinstance(impact, Unset):
-        json_impact = (
-            impact.value
-            if isinstance(impact, FlawdbApiV1FlawsListImpact)
-            else FlawdbApiV1FlawsListImpact(impact).value
-            if impact
-            else None
-        )
+
+        json_impact = FlawdbApiV1FlawsListImpact(impact).value if impact else None
 
     json_include_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(include_fields, Unset):
@@ -115,13 +113,8 @@ def _get_kwargs(
 
     json_mitigated_by: Union[Unset, None, str] = UNSET
     if not isinstance(mitigated_by, Unset):
-        json_mitigated_by = (
-            mitigated_by.value
-            if isinstance(mitigated_by, FlawdbApiV1FlawsListMitigatedBy)
-            else FlawdbApiV1FlawsListMitigatedBy(mitigated_by).value
-            if mitigated_by
-            else None
-        )
+
+        json_mitigated_by = FlawdbApiV1FlawsListMitigatedBy(mitigated_by).value if mitigated_by else None
 
     json_reported_dt: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt, Unset):
@@ -129,23 +122,13 @@ def _get_kwargs(
 
     json_source: Union[Unset, None, str] = UNSET
     if not isinstance(source, Unset):
-        json_source = (
-            source.value
-            if isinstance(source, FlawdbApiV1FlawsListSource)
-            else FlawdbApiV1FlawsListSource(source).value
-            if source
-            else None
-        )
+
+        json_source = FlawdbApiV1FlawsListSource(source).value if source else None
 
     json_state: Union[Unset, None, str] = UNSET
     if not isinstance(state, Unset):
-        json_state = (
-            state.value
-            if isinstance(state, FlawdbApiV1FlawsListState)
-            else FlawdbApiV1FlawsListState(state).value
-            if state
-            else None
-        )
+
+        json_state = FlawdbApiV1FlawsListState(state).value if state else None
 
     json_tracker_ids: Union[Unset, None, List[str]] = UNSET
     if not isinstance(tracker_ids, Unset):
@@ -156,13 +139,8 @@ def _get_kwargs(
 
     json_type: Union[Unset, None, str] = UNSET
     if not isinstance(type, Unset):
-        json_type = (
-            type.value
-            if isinstance(type, FlawdbApiV1FlawsListType)
-            else FlawdbApiV1FlawsListType(type).value
-            if type
-            else None
-        )
+
+        json_type = FlawdbApiV1FlawsListType(type).value if type else None
 
     json_unembargo_dt: Union[Unset, None, str] = UNSET
     if not isinstance(unembargo_dt, Unset):
@@ -186,6 +164,7 @@ def _get_kwargs(
         "description": description,
         "embargoed": embargoed,
         "exclude_fields": json_exclude_fields,
+        "flaw_meta_type": json_flaw_meta_type,
         "format": json_format_,
         "impact": json_impact,
         "include_fields": json_include_fields,
@@ -217,7 +196,12 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[PaginatedFlawListList]:
     if response.status_code == 200:
-        response_200 = PaginatedFlawListList.from_dict(response.json())
+        _response_200 = response.json()
+        response_200: PaginatedFlawListList
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
+        else:
+            response_200 = PaginatedFlawListList.from_dict(_response_200)
 
         return response_200
     return None
@@ -248,6 +232,7 @@ def sync_detailed(
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     format_: Union[Unset, None, FlawdbApiV1FlawsListFormat] = UNSET,
     impact: Union[Unset, None, FlawdbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -284,6 +269,7 @@ def sync_detailed(
         description=description,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
+        flaw_meta_type=flaw_meta_type,
         format_=format_,
         impact=impact,
         include_fields=include_fields,
@@ -330,6 +316,7 @@ def sync(
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     format_: Union[Unset, None, FlawdbApiV1FlawsListFormat] = UNSET,
     impact: Union[Unset, None, FlawdbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -368,6 +355,7 @@ def sync(
         description=description,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
+        flaw_meta_type=flaw_meta_type,
         format_=format_,
         impact=impact,
         include_fields=include_fields,
@@ -407,6 +395,7 @@ async def asyncio_detailed(
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     format_: Union[Unset, None, FlawdbApiV1FlawsListFormat] = UNSET,
     impact: Union[Unset, None, FlawdbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -443,6 +432,7 @@ async def asyncio_detailed(
         description=description,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
+        flaw_meta_type=flaw_meta_type,
         format_=format_,
         impact=impact,
         include_fields=include_fields,
@@ -487,6 +477,7 @@ async def asyncio(
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     format_: Union[Unset, None, FlawdbApiV1FlawsListFormat] = UNSET,
     impact: Union[Unset, None, FlawdbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -526,6 +517,7 @@ async def asyncio(
             description=description,
             embargoed=embargoed,
             exclude_fields=exclude_fields,
+            flaw_meta_type=flaw_meta_type,
             format_=format_,
             impact=impact,
             include_fields=include_fields,

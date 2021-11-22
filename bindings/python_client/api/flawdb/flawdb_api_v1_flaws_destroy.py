@@ -19,13 +19,8 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = (
-            format_.value
-            if isinstance(format_, FlawdbApiV1FlawsDestroyFormat)
-            else FlawdbApiV1FlawsDestroyFormat(format_).value
-            if format_
-            else None
-        )
+
+        json_format_ = FlawdbApiV1FlawsDestroyFormat(format_).value if format_ else None
 
     params: Dict[str, Any] = {
         "format": json_format_,

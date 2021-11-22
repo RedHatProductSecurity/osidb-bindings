@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar
 import attr
 
 from ..models.cv_ev_5_versions import CVEv5Versions
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CVEv5PackageVersions")
 
@@ -17,34 +18,44 @@ class CVEv5PackageVersions:
 
     def to_dict(self) -> Dict[str, Any]:
         package = self.package
-        versions = []
-        for versions_item_data in self.versions:
-            versions_item = versions_item_data.to_dict()
+        versions: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.versions, Unset):
+            versions = []
+            for versions_item_data in self.versions:
+                versions_item: Dict[str, Any] = UNSET
+                if not isinstance(versions_item_data, Unset):
+                    versions_item = versions_item_data.to_dict()
 
-            versions.append(versions_item)
+                versions.append(versions_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "package": package,
-                "versions": versions,
-            }
-        )
+        if package is not UNSET:
+            field_dict["package"] = package
+        if versions is not UNSET:
+            field_dict["versions"] = versions
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        package = d.pop("package")
+        package = d.pop("package", UNSET)
 
         versions = []
-        _versions = d.pop("versions")
-        for versions_item_data in _versions:
-            versions_item = CVEv5Versions.from_dict(versions_item_data)
+        _versions = d.pop("versions", UNSET)
+        if _versions is UNSET:
+            versions = UNSET
+        else:
+            for versions_item_data in _versions or []:
+                _versions_item = versions_item_data
+                versions_item: CVEv5Versions
+                if isinstance(_versions_item, Unset):
+                    versions_item = UNSET
+                else:
+                    versions_item = CVEv5Versions.from_dict(_versions_item)
 
-            versions.append(versions_item)
+                versions.append(versions_item)
 
         cv_ev_5_package_versions = cls(
             package=package,

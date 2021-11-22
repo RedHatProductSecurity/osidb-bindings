@@ -19,13 +19,8 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = (
-            format_.value
-            if isinstance(format_, JiraffeApiV1JobsListFormat)
-            else JiraffeApiV1JobsListFormat(format_).value
-            if format_
-            else None
-        )
+
+        json_format_ = JiraffeApiV1JobsListFormat(format_).value if format_ else None
 
     params: Dict[str, Any] = {
         "format": json_format_,
@@ -42,7 +37,12 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[PaginatedJiraffeJobList]:
     if response.status_code == 200:
-        response_200 = PaginatedJiraffeJobList.from_dict(response.json())
+        _response_200 = response.json()
+        response_200: PaginatedJiraffeJobList
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
+        else:
+            response_200 = PaginatedJiraffeJobList.from_dict(_response_200)
 
         return response_200
     return None

@@ -31,7 +31,8 @@ class Meta:
         elif isinstance(self.type, MetaTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value if isinstance(self.type, MetaTypeEnum) else MetaTypeEnum(self.type).value
+
+                type = MetaTypeEnum(self.type).value
 
         else:
             type = self.type
@@ -46,11 +47,8 @@ class Meta:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
         if type is not UNSET:
             field_dict["type"] = type
         if created_dt is not UNSET:
@@ -63,7 +61,7 @@ class Meta:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
         def _parse_type(data: object) -> Union[MetaTypeEnum, None, Unset]:
             if data is None:
