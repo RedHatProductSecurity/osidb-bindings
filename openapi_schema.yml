@@ -288,6 +288,14 @@ paths:
         description: Exclude specified fields from the response. Multiple values may
           be separated by commas.
       - in: query
+        name: flaw_meta_type
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Include flaw metas with specified type only, multiple values
+          may be separated by commas. '
+      - in: query
         name: format
         schema:
           type: string
@@ -575,6 +583,14 @@ paths:
       operationId: flawdb_api_v1_flaws_retrieve
       description: HTTP GET /flaws/{pk}
       parameters:
+      - in: query
+        name: flaw_meta_type
+        schema:
+          type: array
+          items:
+            type: string
+        description: 'Include flaw metas with specified type only, multiple values
+          may be separated by commas. '
       - in: query
         name: format
         schema:
@@ -1240,6 +1256,41 @@ paths:
       responses:
         '200':
           description: No response body
+  /osim/api/v1/workflows/{id}/adjust:
+    post:
+      operationId: osim_api_v1_workflows_adjust_create
+      description: |-
+        workflow adjustion API endpoint
+
+        adjust workflow classification of flaw identified by UUID or CVE
+        and return its workflow:state classification (new if changed and old otherwise)
+
+        adjust operation is idempotent so when the classification
+        is already adjusted running it results in no operation
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - osim
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
   /osim/healthy:
     get:
       operationId: osim_healthy_retrieve
@@ -1558,8 +1609,24 @@ components:
           items:
             $ref: '#/components/schemas/CVEv5PackageVersions'
           readOnly: true
+        classification:
+          type: object
+          properties:
+            workflow:
+              type: string
+            state:
+              type: string
+              enum:
+              - DRAFT
+              - NEW
+              - ANALYSIS
+              - REVIEW
+              - FIX
+              - DONE
+          readOnly: true
       required:
       - affects
+      - classification
       - comments
       - cve_id
       - meta
@@ -1692,8 +1759,24 @@ components:
           items:
             type: string
             format: uuid
+        classification:
+          type: object
+          properties:
+            workflow:
+              type: string
+            state:
+              type: string
+              enum:
+              - DRAFT
+              - NEW
+              - ANALYSIS
+              - REVIEW
+              - FIX
+              - DONE
+          readOnly: true
       required:
       - affects
+      - classification
       - comments
       - cve_id
       - meta
