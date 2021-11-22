@@ -63,6 +63,9 @@ class Session:
     def retrieve_list(self, **kwargs):
         return osidb_flaws_list.sync(client=self.__client, **kwargs)
 
+    def search(self, searched_text):
+        return osidb_flaws_list.sync(client=self.__client, search=searched_text)
+
     def create(self):
         raise NotImplementedError("Flaw create not implemented yet.")
 
