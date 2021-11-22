@@ -1,0 +1,33 @@
+{#
+    This is a custom template derived from:
+    https://github.com/openapi-generators/openapi-python-client/blob/ccf1fab06dc5cb4838b5c444c786e9352331f1b2/openapi_python_client/templates/property_templates/datetime_property.py.jinja
+#}
+{% macro construct_function(property, source) %}
+isoparse({{ source }})
+{% endmacro %}
+
+{% from "property_templates/property_macros.py.jinja" import construct_template %}
+
+{% macro construct(property, source, initial_value=None) %}
+{{ construct_template(construct_function, property, source, initial_value=initial_value) }}
+{% endmacro %}
+
+{% macro check_type_for_construct(property, source) %}isinstance({{ source }}, str){% endmacro %}
+
+{% macro transform(property, source, destination, declare_type=True, stringify=False) %}
+{% if property.required %}
+{% if property.nullable %}
+{{ destination }} = {{ source }}.isoformat() if {{ source }} else None
+{% else %}
+{{ destination }} = {{ source }}.isoformat()
+{% endif %}
+{% else %}
+{{ destination }}{% if declare_type %}: {{ property.get_type_string(json=True) }}{% endif %} = UNSET
+if not isinstance({{ source }}, Unset):
+{% if property.nullable %}
+    {{ destination }} = {{ source }}.isoformat() if {{ source }} else None
+{% else %}
+    {{ destination }} = {{ source }}.isoformat()
+{% endif %}
+{% endif %}
+{% endmacro %}
