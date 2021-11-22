@@ -74,18 +74,9 @@ field_dict.update({
 field_dict.update(self.additional_properties)
 {% endif %}
 {% endif %}
-field_dict.update({
-    {% for property in model.required_properties + model.optional_properties %}
-    {% if property.required %}
-    "{{ property.name }}": {{ property.python_name }},
-    {% endif %}
-    {% endfor %}
-})
-{% for property in model.optional_properties %}
-{% if not property.required %}
+{% for property in  model.required_properties + model.optional_properties %}
 if {{ property.python_name }} is not UNSET:
     field_dict["{{ property.name }}"] = {{ property.python_name }}
-{% endif %}
 {% endfor %}
 
 return field_dict
@@ -103,11 +94,7 @@ return field_dict
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
 {% for property in model.required_properties + model.optional_properties %}
-    {% if property.required %}
-        {% set property_source = 'd.pop("' + property.name + '")' %}
-    {% else %}
-        {% set property_source = 'd.pop("' + property.name + '", UNSET)' %}
-    {% endif %}
+    {% set property_source = 'd.pop("' + property.name + '", UNSET)' %}
     {% if property.template %}
         {% from "property_templates/" + property.template import construct %}
         {{ construct(property, property_source) | indent(8) }}

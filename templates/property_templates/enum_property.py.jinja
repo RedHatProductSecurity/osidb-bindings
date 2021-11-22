@@ -19,24 +19,16 @@
 {% set type_base = property.get_type_string(no_optional=True) %}
 {% set transformed_basic = source + ".value" %}
 {% set transformed_typed = type_base + "(" +  source  + ").value" %}
-{% set transformed = transformed_basic + " if isinstance(" + source + ", " + type_base + ") " + "else " + transformed_typed %}
 {% if stringify %}
     {% set transformed_basic = "(None, str(" + transformed_basic + "), 'text/plain')" %}
     {% set type_string = "Union[Unset, Tuple[None, str, str]]" %}
 {% endif %}
-{% if property.required %}
-{% if property.nullable %}
-{{ destination }} = {{ transformed }} if {{ source }} else None
-{% else %}
-{{ destination }} = {{ transformed }}
-{% endif %}
-{% else %}
 {{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
 if not isinstance({{ source }}, Unset):
+
 {% if property.nullable %}
-    {{ destination }} = {{ transformed }} if {{source}} else None
+        {{ destination }} = {{ transformed_typed }} if {{ source }} else None
 {% else %}
-    {{ destination }} = {{ transformed }}
-{% endif %}
+        {{ destination }} = {{ transformed_typed }}
 {% endif %}
 {% endmacro %}
