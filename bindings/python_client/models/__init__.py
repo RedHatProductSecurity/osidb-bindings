@@ -18,7 +18,11 @@ from .comment_type_enum import CommentTypeEnum
 from .cv_ev_5_package_versions import CVEv5PackageVersions
 from .cv_ev_5_versions import CVEv5Versions
 from .flaw import Flaw
+from .flaw_classification import FlawClassification
+from .flaw_classification_state import FlawClassificationState
 from .flaw_list import FlawList
+from .flaw_list_classification import FlawListClassification
+from .flaw_list_classification_state import FlawListClassificationState
 from .flaw_list_meta_attr import FlawListMetaAttr
 from .flaw_meta_attr import FlawMetaAttr
 from .flawdb_api_v1_flaws_create_format import FlawdbApiV1FlawsCreateFormat
@@ -53,6 +57,7 @@ from .meta import Meta
 from .meta_meta_attr import MetaMetaAttr
 from .meta_type_enum import MetaTypeEnum
 from .mitigated_by_enum import MitigatedByEnum
+from .osim_api_v1_workflows_adjust_create_format import OsimApiV1WorkflowsAdjustCreateFormat
 from .osim_api_v1_workflows_retrieve_2_format import OsimApiV1WorkflowsRetrieve2Format
 from .osim_api_v1_workflows_retrieve_format import OsimApiV1WorkflowsRetrieveFormat
 from .osim_healthy_retrieve_format import OsimHealthyRetrieveFormat

@@ -8,6 +8,7 @@ from ..models.affect import Affect
 from ..models.blank_enum import BlankEnum
 from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
+from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
 from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
@@ -32,6 +33,7 @@ class Flaw:
     meta: List[Meta]
     comments: List[Comment]
     package_versions: List[CVEv5PackageVersions]
+    classification: FlawClassification
     cve_id: Optional[str]
     created_dt: Union[Unset, None, datetime.datetime] = UNSET
     state: Union[None, State574Enum, Unset] = UNSET
@@ -56,34 +58,59 @@ class Flaw:
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        updated_dt = self.updated_dt.isoformat()
+        updated_dt: str = UNSET
+        if not isinstance(self.updated_dt, Unset):
+            updated_dt = self.updated_dt.isoformat()
 
-        type = self.type.value if isinstance(self.type, Type824Enum) else Type824Enum(self.type).value
+        type: str = UNSET
+        if not isinstance(self.type, Unset):
+
+            type = Type824Enum(self.type).value
 
         title = self.title
-        affects = []
-        for affects_item_data in self.affects:
-            affects_item = affects_item_data.to_dict()
+        affects: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.affects, Unset):
+            affects = []
+            for affects_item_data in self.affects:
+                affects_item: Dict[str, Any] = UNSET
+                if not isinstance(affects_item_data, Unset):
+                    affects_item = affects_item_data.to_dict()
 
-            affects.append(affects_item)
+                affects.append(affects_item)
 
-        meta = []
-        for meta_item_data in self.meta:
-            meta_item = meta_item_data.to_dict()
+        meta: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.meta, Unset):
+            meta = []
+            for meta_item_data in self.meta:
+                meta_item: Dict[str, Any] = UNSET
+                if not isinstance(meta_item_data, Unset):
+                    meta_item = meta_item_data.to_dict()
 
-            meta.append(meta_item)
+                meta.append(meta_item)
 
-        comments = []
-        for comments_item_data in self.comments:
-            comments_item = comments_item_data.to_dict()
+        comments: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.comments, Unset):
+            comments = []
+            for comments_item_data in self.comments:
+                comments_item: Dict[str, Any] = UNSET
+                if not isinstance(comments_item_data, Unset):
+                    comments_item = comments_item_data.to_dict()
 
-            comments.append(comments_item)
+                comments.append(comments_item)
 
-        package_versions = []
-        for package_versions_item_data in self.package_versions:
-            package_versions_item = package_versions_item_data.to_dict()
+        package_versions: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.package_versions, Unset):
+            package_versions = []
+            for package_versions_item_data in self.package_versions:
+                package_versions_item: Dict[str, Any] = UNSET
+                if not isinstance(package_versions_item_data, Unset):
+                    package_versions_item = package_versions_item_data.to_dict()
 
-            package_versions.append(package_versions_item)
+                package_versions.append(package_versions_item)
+
+        classification: Dict[str, Any] = UNSET
+        if not isinstance(self.classification, Unset):
+            classification = self.classification.to_dict()
 
         created_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -98,7 +125,8 @@ class Flaw:
         elif isinstance(self.state, State574Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value if isinstance(self.state, State574Enum) else State574Enum(self.state).value
+
+                state = State574Enum(self.state).value
 
         else:
             state = self.state
@@ -112,7 +140,8 @@ class Flaw:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
+
+                impact = ImpactEnum(self.impact).value
 
         else:
             impact = self.impact
@@ -134,12 +163,14 @@ class Flaw:
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value if isinstance(self.source, SourceEnum) else SourceEnum(self.source).value
+
+                source = SourceEnum(self.source).value
 
         elif isinstance(self.source, BlankEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = self.source.value if isinstance(self.source, BlankEnum) else BlankEnum(self.source).value
+
+                source = BlankEnum(self.source).value
 
         else:
             source = self.source
@@ -156,20 +187,14 @@ class Flaw:
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = (
-                    self.mitigated_by.value
-                    if isinstance(self.mitigated_by, MitigatedByEnum)
-                    else MitigatedByEnum(self.mitigated_by).value
-                )
+
+                mitigated_by = MitigatedByEnum(self.mitigated_by).value
 
         elif isinstance(self.mitigated_by, BlankEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
-                mitigated_by = (
-                    self.mitigated_by.value
-                    if isinstance(self.mitigated_by, BlankEnum)
-                    else BlankEnum(self.mitigated_by).value
-                )
+
+                mitigated_by = BlankEnum(self.mitigated_by).value
 
         else:
             mitigated_by = self.mitigated_by
@@ -185,21 +210,28 @@ class Flaw:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "updated_dt": updated_dt,
-                "type": type,
-                "title": title,
-                "affects": affects,
-                "meta": meta,
-                "comments": comments,
-                "package_versions": package_versions,
-                "cve_id": cve_id,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if updated_dt is not UNSET:
+            field_dict["updated_dt"] = updated_dt
+        if type is not UNSET:
+            field_dict["type"] = type
+        if title is not UNSET:
+            field_dict["title"] = title
+        if affects is not UNSET:
+            field_dict["affects"] = affects
+        if meta is not UNSET:
+            field_dict["meta"] = meta
+        if comments is not UNSET:
+            field_dict["comments"] = comments
+        if package_versions is not UNSET:
+            field_dict["package_versions"] = package_versions
+        if classification is not UNSET:
+            field_dict["classification"] = classification
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
+        if cve_id is not UNSET:
+            field_dict["cve_id"] = cve_id
         if state is not UNSET:
             field_dict["state"] = state
         if resolution is not UNSET:
@@ -242,41 +274,90 @@ class Flaw:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
-        updated_dt = isoparse(d.pop("updated_dt"))
+        _updated_dt = d.pop("updated_dt", UNSET)
+        updated_dt: datetime.datetime
+        if isinstance(_updated_dt, Unset):
+            updated_dt = UNSET
+        else:
+            updated_dt = isoparse(_updated_dt)
 
-        type = Type824Enum(d.pop("type"))
+        _type = d.pop("type", UNSET)
+        type: Type824Enum
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = Type824Enum(_type)
 
-        title = d.pop("title")
+        title = d.pop("title", UNSET)
 
         affects = []
-        _affects = d.pop("affects")
-        for affects_item_data in _affects:
-            affects_item = Affect.from_dict(affects_item_data)
+        _affects = d.pop("affects", UNSET)
+        if _affects is UNSET:
+            affects = UNSET
+        else:
+            for affects_item_data in _affects or []:
+                _affects_item = affects_item_data
+                affects_item: Affect
+                if isinstance(_affects_item, Unset):
+                    affects_item = UNSET
+                else:
+                    affects_item = Affect.from_dict(_affects_item)
 
-            affects.append(affects_item)
+                affects.append(affects_item)
 
         meta = []
-        _meta = d.pop("meta")
-        for meta_item_data in _meta:
-            meta_item = Meta.from_dict(meta_item_data)
+        _meta = d.pop("meta", UNSET)
+        if _meta is UNSET:
+            meta = UNSET
+        else:
+            for meta_item_data in _meta or []:
+                _meta_item = meta_item_data
+                meta_item: Meta
+                if isinstance(_meta_item, Unset):
+                    meta_item = UNSET
+                else:
+                    meta_item = Meta.from_dict(_meta_item)
 
-            meta.append(meta_item)
+                meta.append(meta_item)
 
         comments = []
-        _comments = d.pop("comments")
-        for comments_item_data in _comments:
-            comments_item = Comment.from_dict(comments_item_data)
+        _comments = d.pop("comments", UNSET)
+        if _comments is UNSET:
+            comments = UNSET
+        else:
+            for comments_item_data in _comments or []:
+                _comments_item = comments_item_data
+                comments_item: Comment
+                if isinstance(_comments_item, Unset):
+                    comments_item = UNSET
+                else:
+                    comments_item = Comment.from_dict(_comments_item)
 
-            comments.append(comments_item)
+                comments.append(comments_item)
 
         package_versions = []
-        _package_versions = d.pop("package_versions")
-        for package_versions_item_data in _package_versions:
-            package_versions_item = CVEv5PackageVersions.from_dict(package_versions_item_data)
+        _package_versions = d.pop("package_versions", UNSET)
+        if _package_versions is UNSET:
+            package_versions = UNSET
+        else:
+            for package_versions_item_data in _package_versions or []:
+                _package_versions_item = package_versions_item_data
+                package_versions_item: CVEv5PackageVersions
+                if isinstance(_package_versions_item, Unset):
+                    package_versions_item = UNSET
+                else:
+                    package_versions_item = CVEv5PackageVersions.from_dict(_package_versions_item)
 
-            package_versions.append(package_versions_item)
+                package_versions.append(package_versions_item)
+
+        _classification = d.pop("classification", UNSET)
+        classification: FlawClassification
+        if isinstance(_classification, Unset):
+            classification = UNSET
+        else:
+            classification = FlawClassification.from_dict(_classification)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: Union[Unset, None, datetime.datetime]
@@ -287,7 +368,7 @@ class Flaw:
         else:
             created_dt = isoparse(_created_dt)
 
-        cve_id = d.pop("cve_id")
+        cve_id = d.pop("cve_id", UNSET)
 
         def _parse_state(data: object) -> Union[None, State574Enum, Unset]:
             if data is None:
@@ -461,6 +542,7 @@ class Flaw:
             meta=meta,
             comments=comments,
             package_versions=package_versions,
+            classification=classification,
             created_dt=created_dt,
             cve_id=cve_id,
             state=state,

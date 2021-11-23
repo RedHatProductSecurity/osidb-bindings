@@ -37,11 +37,15 @@ class Affect:
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        trackers = []
-        for trackers_item_data in self.trackers:
-            trackers_item = trackers_item_data.to_dict()
+        trackers: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.trackers, Unset):
+            trackers = []
+            for trackers_item_data in self.trackers:
+                trackers_item: Dict[str, Any] = UNSET
+                if not isinstance(trackers_item_data, Unset):
+                    trackers_item = trackers_item_data.to_dict()
 
-            trackers.append(trackers_item)
+                trackers.append(trackers_item)
 
         type: Union[None, Unset, str]
         if isinstance(self.type, Unset):
@@ -51,7 +55,8 @@ class Affect:
         elif isinstance(self.type, AffectTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value if isinstance(self.type, AffectTypeEnum) else AffectTypeEnum(self.type).value
+
+                type = AffectTypeEnum(self.type).value
 
         else:
             type = self.type
@@ -64,9 +69,8 @@ class Affect:
         elif isinstance(self.state, AffectStateEnum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = (
-                    self.state.value if isinstance(self.state, AffectStateEnum) else AffectStateEnum(self.state).value
-                )
+
+                state = AffectStateEnum(self.state).value
 
         else:
             state = self.state
@@ -79,11 +83,8 @@ class Affect:
         elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
-                resolution = (
-                    self.resolution.value
-                    if isinstance(self.resolution, ResolutionEnum)
-                    else ResolutionEnum(self.resolution).value
-                )
+
+                resolution = ResolutionEnum(self.resolution).value
 
         else:
             resolution = self.resolution
@@ -102,12 +103,14 @@ class Affect:
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value if isinstance(self.impact, ImpactEnum) else ImpactEnum(self.impact).value
+
+                impact = ImpactEnum(self.impact).value
 
         elif isinstance(self.impact, BlankEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-                impact = self.impact.value if isinstance(self.impact, BlankEnum) else BlankEnum(self.impact).value
+
+                impact = BlankEnum(self.impact).value
 
         else:
             impact = self.impact
@@ -119,12 +122,10 @@ class Affect:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "trackers": trackers,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if trackers is not UNSET:
+            field_dict["trackers"] = trackers
         if type is not UNSET:
             field_dict["type"] = type
         if state is not UNSET:
@@ -159,14 +160,22 @@ class Affect:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
         trackers = []
-        _trackers = d.pop("trackers")
-        for trackers_item_data in _trackers:
-            trackers_item = Tracker.from_dict(trackers_item_data)
+        _trackers = d.pop("trackers", UNSET)
+        if _trackers is UNSET:
+            trackers = UNSET
+        else:
+            for trackers_item_data in _trackers or []:
+                _trackers_item = trackers_item_data
+                trackers_item: Tracker
+                if isinstance(_trackers_item, Unset):
+                    trackers_item = UNSET
+                else:
+                    trackers_item = Tracker.from_dict(_trackers_item)
 
-            trackers.append(trackers_item)
+                trackers.append(trackers_item)
 
         def _parse_type(data: object) -> Union[AffectTypeEnum, None, Unset]:
             if data is None:

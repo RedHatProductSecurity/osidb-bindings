@@ -20,22 +20,21 @@ def _get_kwargs(
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
-        json_format_ = (
-            format_.value
-            if isinstance(format_, BzimportApiV1JobsCreateFormat)
-            else BzimportApiV1JobsCreateFormat(format_).value
-            if format_
-            else None
-        )
+
+        json_format_ = BzimportApiV1JobsCreateFormat(format_).value if format_ else None
 
     params: Dict[str, Any] = {
         "format": json_format_,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    json_body.to_dict()
+    json_json_body: Dict[str, Any] = UNSET
+    if not isinstance(json_body, Unset):
+        json_body.to_dict()
 
-    multipart_data.to_multipart()
+    multipart_multipart_data: Dict[str, Any] = UNSET
+    if not isinstance(multipart_data, Unset):
+        multipart_data.to_multipart()
 
     return {
         "url": url,
@@ -46,7 +45,12 @@ def _get_kwargs(
 
 def _parse_response(*, response: httpx.Response) -> Optional[Job]:
     if response.status_code == 200:
-        response_200 = Job.from_dict(response.json())
+        _response_200 = response.json()
+        response_200: Job
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
+        else:
+            response_200 = Job.from_dict(_response_200)
 
         return response_200
     return None

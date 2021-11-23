@@ -41,7 +41,6 @@ class FlawdbApiV1StatusRetrieveResponse200:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
         if status is not UNSET:
             field_dict["status"] = status
         if dt is not UNSET:

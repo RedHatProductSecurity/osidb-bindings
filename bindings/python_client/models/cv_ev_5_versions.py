@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar
 import attr
 
 from ..models.status_enum import StatusEnum
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="CVEv5Versions")
 
@@ -17,25 +18,31 @@ class CVEv5Versions:
 
     def to_dict(self) -> Dict[str, Any]:
         version = self.version
-        status = self.status.value if isinstance(self.status, StatusEnum) else StatusEnum(self.status).value
+        status: str = UNSET
+        if not isinstance(self.status, Unset):
+
+            status = StatusEnum(self.status).value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "version": version,
-                "status": status,
-            }
-        )
+        if version is not UNSET:
+            field_dict["version"] = version
+        if status is not UNSET:
+            field_dict["status"] = status
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        version = d.pop("version")
+        version = d.pop("version", UNSET)
 
-        status = StatusEnum(d.pop("status"))
+        _status = d.pop("status", UNSET)
+        status: StatusEnum
+        if isinstance(_status, Unset):
+            status = UNSET
+        else:
+            status = StatusEnum(_status)
 
         cv_ev_5_versions = cls(
             version=version,

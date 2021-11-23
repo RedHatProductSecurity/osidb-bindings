@@ -38,7 +38,8 @@ class Job:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
+
+                state = State7F6Enum(self.state).value
 
         else:
             state = self.state
@@ -57,13 +58,12 @@ class Job:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "bz_count": bz_count,
-                "cve_count": cve_count,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if bz_count is not UNSET:
+            field_dict["bz_count"] = bz_count
+        if cve_count is not UNSET:
+            field_dict["cve_count"] = cve_count
         if state is not UNSET:
             field_dict["state"] = state
         if comment is not UNSET:
@@ -91,7 +91,8 @@ class Job:
         elif isinstance(self.state, State7F6Enum):
             state = UNSET
             if not isinstance(self.state, Unset):
-                state = self.state.value if isinstance(self.state, State7F6Enum) else State7F6Enum(self.state).value
+
+                state = State7F6Enum(self.state).value
 
         else:
             state = self.state
@@ -111,13 +112,12 @@ class Job:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
-        field_dict.update(
-            {
-                "uuid": uuid,
-                "bz_count": bz_count,
-                "cve_count": cve_count,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
+        if bz_count is not UNSET:
+            field_dict["bz_count"] = bz_count
+        if cve_count is not UNSET:
+            field_dict["cve_count"] = cve_count
         if state is not UNSET:
             field_dict["state"] = state
         if comment is not UNSET:
@@ -136,11 +136,11 @@ class Job:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
-        bz_count = d.pop("bz_count")
+        bz_count = d.pop("bz_count", UNSET)
 
-        cve_count = d.pop("cve_count")
+        cve_count = d.pop("cve_count", UNSET)
 
         def _parse_state(data: object) -> Union[None, State7F6Enum, Unset]:
             if data is None:

@@ -23,13 +23,12 @@ class AuthToken:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "username": username,
-                "password": password,
-                "token": token,
-            }
-        )
+        if username is not UNSET:
+            field_dict["username"] = username
+        if password is not UNSET:
+            field_dict["password"] = password
+        if token is not UNSET:
+            field_dict["token"] = token
 
         return field_dict
 
@@ -40,24 +39,23 @@ class AuthToken:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
-        field_dict.update(
-            {
-                "username": username,
-                "password": password,
-                "token": token,
-            }
-        )
+        if username is not UNSET:
+            field_dict["username"] = username
+        if password is not UNSET:
+            field_dict["password"] = password
+        if token is not UNSET:
+            field_dict["token"] = token
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        username = d.pop("username")
+        username = d.pop("username", UNSET)
 
-        password = d.pop("password")
+        password = d.pop("password", UNSET)
 
-        token = d.pop("token")
+        token = d.pop("token", UNSET)
 
         auth_token = cls(
             username=username,

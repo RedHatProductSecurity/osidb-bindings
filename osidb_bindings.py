@@ -3,7 +3,6 @@ import importlib
 from constants import (
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
-    OSIDB_BINDINGS_USERAGENT,
 )
 from bindings.python_client import AuthenticatedClient
 
@@ -50,7 +49,7 @@ class Session:
         self.__client = AuthenticatedClient(
             base_url=base_url,
             auth=auth,
-            headers={"User-Agent": OSIDB_BINDINGS_USERAGENT, **headers},
+            headers=headers,
             verify_ssl=verify_ssl,
         )
 

@@ -3,21 +3,24 @@ from typing import Any, Dict, Union
 import httpx
 
 from ...client import AuthenticatedClient
-from ...models.bzimport_api_v1_sync_create_format import BzimportApiV1SyncCreateFormat
+from ...models.osim_api_v1_workflows_adjust_create_format import OsimApiV1WorkflowsAdjustCreateFormat
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
+    id: str,
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, BzimportApiV1SyncCreateFormat] = UNSET,
+    format_: Union[Unset, None, OsimApiV1WorkflowsAdjustCreateFormat] = UNSET,
 ) -> Dict[str, Any]:
-    url = "/bzimport/api/v1/sync"
+    url = "/osim/api/v1/workflows/{id}/adjust".format(
+        id=id,
+    )
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
 
-        json_format_ = BzimportApiV1SyncCreateFormat(format_).value if format_ else None
+        json_format_ = OsimApiV1WorkflowsAdjustCreateFormat(format_).value if format_ else None
 
     params: Dict[str, Any] = {
         "format": json_format_,
@@ -40,11 +43,13 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 
 
 def sync_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, BzimportApiV1SyncCreateFormat] = UNSET,
+    format_: Union[Unset, None, OsimApiV1WorkflowsAdjustCreateFormat] = UNSET,
 ) -> Response[Any]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
         format_=format_,
     )
@@ -58,11 +63,13 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, BzimportApiV1SyncCreateFormat] = UNSET,
+    format_: Union[Unset, None, OsimApiV1WorkflowsAdjustCreateFormat] = UNSET,
 ) -> Response[Any]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
         format_=format_,
     )

@@ -19,7 +19,6 @@ class FlawdbApiV1StatusRetrieveResponse200FlawdbData:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
         if flaw_count is not UNSET:
             field_dict["flaw_count"] = flaw_count
 

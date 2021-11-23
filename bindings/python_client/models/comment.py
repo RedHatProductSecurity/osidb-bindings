@@ -33,7 +33,8 @@ class Comment:
         elif isinstance(self.type, CommentTypeEnum):
             type = UNSET
             if not isinstance(self.type, Unset):
-                type = self.type.value if isinstance(self.type, CommentTypeEnum) else CommentTypeEnum(self.type).value
+
+                type = CommentTypeEnum(self.type).value
 
         else:
             type = self.type
@@ -50,11 +51,8 @@ class Comment:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "uuid": uuid,
-            }
-        )
+        if uuid is not UNSET:
+            field_dict["uuid"] = uuid
         if type is not UNSET:
             field_dict["type"] = type
         if external_system_id is not UNSET:
@@ -71,7 +69,7 @@ class Comment:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid")
+        uuid = d.pop("uuid", UNSET)
 
         def _parse_type(data: object) -> Union[CommentTypeEnum, None, Unset]:
             if data is None:
