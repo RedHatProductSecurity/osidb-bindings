@@ -1,4 +1,8 @@
 # Additional set of dependencies required in a local development env
--r base.txt
+-c base.txt
 openapi-python-client
 pip-tools
+pytest
+pytest-recording
+tox
+vcrpy
