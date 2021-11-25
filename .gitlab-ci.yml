@@ -1,0 +1,20 @@
+stages:
+  - check
+  - test
+
+before_script:
+  - export LANG=en_US.UTF-8
+
+check:
+  stage: check
+  image: quay.io/prodsecdev/fedora-latest:latest  # includes tox
+  script:
+    - dnf install -y python3.9
+    - tox
+
+test:
+  stage: test
+  image: quay.io/prodsecdev/fedora-latest:latest  # includes all deps
+  script:
+    - dnf install -y python3.9
+    - tox -e unit-tests
