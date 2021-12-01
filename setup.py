@@ -5,10 +5,11 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="osidb-bindings",
-    version="1.0.0",
+    version="1.0.2",
     author="Jakub Frejlach, Red Hat Product Security",
     author_email="jfrejlac@redhat.com",
     description="Python bindings for accessing OSIDB API",
+    url="https://github.com/RedHatProductSecurity/osidb-bindings",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
