@@ -55,10 +55,10 @@ patch release is prefered.
     $ git pull
     ```
 
-3) Create release branch
+3) Create release branch with name matching the specified format (eg. v1.1.1)
 
     ```
-    $ git checkout -b <name-of-the-release-branch>
+    $ git checkout -b vX.X.X
     ```
 
 4) Prepare release
@@ -79,8 +79,8 @@ patch release is prefered.
 
 8) tag new release in git - this will trigger the build and upload to PyPI
     ```
-    $ git tag <release version> <name-of-the-release-branch>
-    $ git push origin <release version> <name-of-the-release-branch>
+    $ git tag <release version> vX.X.X
+    $ git push origin <release version> vX.X.X
     ```
 
 ### Release with OSIDB
