@@ -219,7 +219,6 @@ paths:
   /flawdb/api/v1/flaws:
     get:
       operationId: flawdb_api_v1_flaws_list
-      description: HTTP get /flaws
       parameters:
       - in: query
         name: bz_id
@@ -526,17 +525,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedFlawListList'
+                $ref: '#/components/schemas/PaginatedFlawList'
             application/xml:
               schema:
-                $ref: '#/components/schemas/PaginatedFlawListList'
+                $ref: '#/components/schemas/PaginatedFlawList'
             text/csv:
               schema:
-                $ref: '#/components/schemas/PaginatedFlawListList'
+                $ref: '#/components/schemas/PaginatedFlawList'
           description: ''
     post:
       operationId: flawdb_api_v1_flaws_create
-      description: HTTP POST /flaws
       parameters:
       - in: query
         name: format
@@ -552,13 +550,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FlawList'
+              $ref: '#/components/schemas/Flaw'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/FlawList'
+              $ref: '#/components/schemas/Flaw'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FlawList'
+              $ref: '#/components/schemas/Flaw'
         required: true
       security:
       - basicAuth: []
@@ -570,18 +568,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FlawList'
+                $ref: '#/components/schemas/Flaw'
             application/xml:
               schema:
-                $ref: '#/components/schemas/FlawList'
+                $ref: '#/components/schemas/Flaw'
             text/csv:
               schema:
-                $ref: '#/components/schemas/FlawList'
+                $ref: '#/components/schemas/Flaw'
           description: ''
   /flawdb/api/v1/flaws/{id}:
     get:
       operationId: flawdb_api_v1_flaws_retrieve
-      description: HTTP GET /flaws/{pk}
       parameters:
       - in: query
         name: flaw_meta_type
@@ -603,6 +600,8 @@ paths:
         name: id
         schema:
           type: string
+        description: A string representing either the internal OSIDB UUID of the Flaw
+          resource or the CVE number corresponding to a Flaw
         required: true
       - in: query
         name: include_meta_attr
@@ -634,9 +633,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Flaw'
           description: ''
-    delete:
-      operationId: flawdb_api_v1_flaws_destroy
-      description: HTTP DELETE /flaws/{pk}
+    put:
+      operationId: flawdb_api_v1_flaws_update
       parameters:
       - in: query
         name: format
@@ -650,6 +648,58 @@ paths:
         name: id
         schema:
           type: string
+        description: A string representing either the internal OSIDB UUID of the Flaw
+          resource or the CVE number corresponding to a Flaw
+        required: true
+      tags:
+      - flawdb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Flaw'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Flaw'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Flaw'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flaw'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Flaw'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Flaw'
+          description: ''
+    delete:
+      operationId: flawdb_api_v1_flaws_destroy
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - csv
+          - json
+          - xml
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: A string representing either the internal OSIDB UUID of the Flaw
+          resource or the CVE number corresponding to a Flaw
         required: true
       tags:
       - flawdb
@@ -1507,30 +1557,24 @@ components:
           format: date-time
           readOnly: true
         type:
-          $ref: '#/components/schemas/Type824Enum'
+          $ref: '#/components/schemas/FlawTypeEnum'
         cve_id:
           type: string
-          nullable: true
-          maxLength: 500
         state:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/State574Enum'
-          - $ref: '#/components/schemas/NullEnum'
+          type: string
         resolution:
           type: string
-          nullable: true
-          maxLength: 100
         impact:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ImpactEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          type: string
         title:
           type: string
+        trackers:
+          type: array
+          items:
+            type: string
+          readOnly: true
         description:
           type: string
-          nullable: true
         summary:
           type: string
           nullable: true
@@ -1572,6 +1616,10 @@ components:
           type: number
           format: float
           nullable: true
+        nvd_cvss2:
+          type: string
+          nullable: true
+          maxLength: 100
         cvss3:
           type: string
           nullable: true
@@ -1580,6 +1628,10 @@ components:
           type: number
           format: float
           nullable: true
+        nvd_cvss3:
+          type: string
+          nullable: true
+          maxLength: 100
         is_csaw:
           type: boolean
           nullable: true
@@ -1629,163 +1681,22 @@ components:
       - classification
       - comments
       - cve_id
+      - description
+      - impact
       - meta
       - package_versions
-      - title
-      - type
-      - updated_dt
-      - uuid
-    FlawList:
-      type: object
-      description: serialize flaw list model
-      properties:
-        uuid:
-          type: string
-          format: uuid
-          readOnly: true
-        created_dt:
-          type: string
-          format: date-time
-          nullable: true
-        updated_dt:
-          type: string
-          format: date-time
-          readOnly: true
-        type:
-          $ref: '#/components/schemas/Type824Enum'
-        cve_id:
-          type: string
-          nullable: true
-          maxLength: 500
-        state:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/State574Enum'
-          - $ref: '#/components/schemas/NullEnum'
-        resolution:
-          type: string
-          nullable: true
-          maxLength: 100
-        impact:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/ImpactEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        title:
-          type: string
-        description:
-          type: string
-          nullable: true
-        summary:
-          type: string
-          nullable: true
-        statement:
-          type: string
-          nullable: true
-        trackers:
-          type: array
-          items:
-            type: string
-          readOnly: true
-        cwe_id:
-          type: string
-          nullable: true
-          maxLength: 50
-        embargoed:
-          type: boolean
-          nullable: true
-        unembargo_dt:
-          type: string
-          format: date-time
-          nullable: true
-        source:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SourceEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        reported_dt:
-          type: string
-          format: date-time
-          nullable: true
-        mitigated_by:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/MitigatedByEnum'
-          - $ref: '#/components/schemas/BlankEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        cvss2:
-          type: string
-          nullable: true
-          maxLength: 100
-        cvss2_score:
-          type: number
-          format: float
-          nullable: true
-        cvss3:
-          type: string
-          nullable: true
-          maxLength: 100
-        cvss3_score:
-          type: number
-          format: float
-          nullable: true
-        is_csaw:
-          type: boolean
-          nullable: true
-        affects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Affect'
-          readOnly: true
-        meta:
-          type: array
-          items:
-            $ref: '#/components/schemas/Meta'
-          readOnly: true
-        comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Comment'
-          readOnly: true
-        meta_attr:
-          type: object
-          additionalProperties:
-            type: string
-            nullable: true
-          nullable: true
-        package_versions:
-          type: array
-          items:
-            type: string
-            format: uuid
-        classification:
-          type: object
-          properties:
-            workflow:
-              type: string
-            state:
-              type: string
-              enum:
-              - DRAFT
-              - NEW
-              - ANALYSIS
-              - REVIEW
-              - FIX
-              - DONE
-          readOnly: true
-      required:
-      - affects
-      - classification
-      - comments
-      - cve_id
-      - meta
-      - package_versions
+      - resolution
+      - state
       - title
       - trackers
       - type
       - updated_dt
       - uuid
+    FlawTypeEnum:
+      enum:
+      - VULNERABILITY
+      - WEAKNESS
+      type: string
     ImpactEnum:
       enum:
       - NONE
@@ -1901,7 +1812,7 @@ components:
       enum:
       - ERRATA
       - REFERENCE
-      - ACKNOWLEDGEMENT
+      - ACKNOWLEDGMENT
       - EXPLOIT
       - CSAW
       - CSAW_LITE
@@ -1909,6 +1820,7 @@ components:
       - NIST_CVSS_VALIDATION
       - NEED_INFO
       - CHECKLIST
+      - NVD_CVSS
       type: string
     MitigatedByEnum:
       enum:
@@ -1919,7 +1831,7 @@ components:
     NullEnum:
       enum:
       - null
-    PaginatedFlawListList:
+    PaginatedFlawList:
       type: object
       properties:
         count:
@@ -1938,7 +1850,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/FlawList'
+            $ref: '#/components/schemas/Flaw'
     PaginatedJiraffeJobList:
       type: object
       properties:
@@ -2078,16 +1990,6 @@ components:
       - XEN
       - XPDF
       type: string
-    State574Enum:
-      enum:
-      - STUB
-      - DRAFT
-      - NEW
-      - ASSIGNED
-      - OPEN
-      - CLOSED
-      - VERIFIED
-      type: string
     State7f6Enum:
       enum:
       - PROCESSING
@@ -2123,11 +2025,6 @@ components:
       enum:
       - JIRA
       - BUGZILLA
-      type: string
-    Type824Enum:
-      enum:
-      - VULNERABILITY
-      - WEAKNESS
       type: string
   securitySchemes:
     basicAuth:
