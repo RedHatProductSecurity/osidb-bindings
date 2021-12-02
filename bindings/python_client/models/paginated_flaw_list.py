@@ -2,20 +2,20 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.flaw_list import FlawList
+from ..models.flaw import Flaw
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="PaginatedFlawListList")
+T = TypeVar("T", bound="PaginatedFlawList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedFlawListList:
+class PaginatedFlawList:
     """ """
 
     count: Union[Unset, int] = UNSET
     next_: Union[Unset, None, str] = UNSET
     previous: Union[Unset, None, str] = UNSET
-    results: Union[Unset, List[FlawList]] = UNSET
+    results: Union[Unset, List[Flaw]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -61,23 +61,23 @@ class PaginatedFlawListList:
         else:
             for results_item_data in _results or []:
                 _results_item = results_item_data
-                results_item: FlawList
+                results_item: Flaw
                 if isinstance(_results_item, Unset):
                     results_item = UNSET
                 else:
-                    results_item = FlawList.from_dict(_results_item)
+                    results_item = Flaw.from_dict(_results_item)
 
                 results.append(results_item)
 
-        paginated_flaw_list_list = cls(
+        paginated_flaw_list = cls(
             count=count,
             next_=next_,
             previous=previous,
             results=results,
         )
 
-        paginated_flaw_list_list.additional_properties = d
-        return paginated_flaw_list_list
+        paginated_flaw_list.additional_properties = d
+        return paginated_flaw_list
 
     @property
     def additional_keys(self) -> List[str]:
