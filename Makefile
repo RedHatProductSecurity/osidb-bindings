@@ -28,3 +28,12 @@ compile-deps:
 sync-deps:
 	@echo ">synchronizing python dependencies"
 	$(ps) requirements/base.txt requirements/dev.txt $$([ -f requirements/local.txt ] && echo 'requirements/local.txt')
+
+patch-release: update
+	@echo ">preparing patch release"
+	scripts/update_release.sh patch
+
+release:
+	@echo ">preparing release"
+	scripts/update_release.sh $$(cat openapi_schema.yml | grep -Po '(?<=version: )\d+\.\d+\.\d+')
+	$(MAKE) update

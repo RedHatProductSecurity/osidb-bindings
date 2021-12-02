@@ -51,3 +51,5 @@ filtered_flaws.results
 ```
 
 ## For more details read [tutorial](TUTORIAL.md)
+
+## For development details read [developer guide](DEVELOP.md)
