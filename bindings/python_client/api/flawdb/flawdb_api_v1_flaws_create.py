@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import AuthenticatedClient
-from ...models.flaw_list import FlawList
+from ...models.flaw import Flaw
 from ...models.flawdb_api_v1_flaws_create_format import FlawdbApiV1FlawsCreateFormat
 from ...types import UNSET, Response, Unset
 
@@ -11,9 +11,9 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    form_data: FlawList,
-    multipart_data: FlawList,
-    json_body: FlawList,
+    form_data: Flaw,
+    multipart_data: Flaw,
+    json_body: Flaw,
     format_: Union[Unset, None, FlawdbApiV1FlawsCreateFormat] = UNSET,
 ) -> Dict[str, Any]:
     url = "/flawdb/api/v1/flaws"
@@ -43,20 +43,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[FlawList]:
+def _parse_response(*, response: httpx.Response) -> Optional[Flaw]:
     if response.status_code == 201:
         _response_201 = response.json()
-        response_201: FlawList
+        response_201: Flaw
         if isinstance(_response_201, Unset):
             response_201 = UNSET
         else:
-            response_201 = FlawList.from_dict(_response_201)
+            response_201 = Flaw.from_dict(_response_201)
 
         return response_201
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[FlawList]:
+def _build_response(*, response: httpx.Response) -> Response[Flaw]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,11 +68,11 @@ def _build_response(*, response: httpx.Response) -> Response[FlawList]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    form_data: FlawList,
-    multipart_data: FlawList,
-    json_body: FlawList,
+    form_data: Flaw,
+    multipart_data: Flaw,
+    json_body: Flaw,
     format_: Union[Unset, None, FlawdbApiV1FlawsCreateFormat] = UNSET,
-) -> Response[FlawList]:
+) -> Response[Flaw]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -92,12 +92,12 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    form_data: FlawList,
-    multipart_data: FlawList,
-    json_body: FlawList,
+    form_data: Flaw,
+    multipart_data: Flaw,
+    json_body: Flaw,
     format_: Union[Unset, None, FlawdbApiV1FlawsCreateFormat] = UNSET,
-) -> Optional[FlawList]:
-    """HTTP POST /flaws"""
+) -> Optional[Flaw]:
+    """ """
 
     return sync_detailed(
         client=client,
@@ -111,11 +111,11 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    form_data: FlawList,
-    multipart_data: FlawList,
-    json_body: FlawList,
+    form_data: Flaw,
+    multipart_data: Flaw,
+    json_body: Flaw,
     format_: Union[Unset, None, FlawdbApiV1FlawsCreateFormat] = UNSET,
-) -> Response[FlawList]:
+) -> Response[Flaw]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -133,12 +133,12 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    form_data: FlawList,
-    multipart_data: FlawList,
-    json_body: FlawList,
+    form_data: Flaw,
+    multipart_data: Flaw,
+    json_body: Flaw,
     format_: Union[Unset, None, FlawdbApiV1FlawsCreateFormat] = UNSET,
-) -> Optional[FlawList]:
-    """HTTP POST /flaws"""
+) -> Optional[Flaw]:
+    """ """
 
     return (
         await asyncio_detailed(

@@ -4,7 +4,7 @@ from enum import Enum
 class MetaTypeEnum(str, Enum):
     ERRATA = "ERRATA"
     REFERENCE = "REFERENCE"
-    ACKNOWLEDGEMENT = "ACKNOWLEDGEMENT"
+    ACKNOWLEDGMENT = "ACKNOWLEDGMENT"
     EXPLOIT = "EXPLOIT"
     CSAW = "CSAW"
     CSAW_LITE = "CSAW_LITE"
@@ -12,6 +12,7 @@ class MetaTypeEnum(str, Enum):
     NIST_CVSS_VALIDATION = "NIST_CVSS_VALIDATION"
     NEED_INFO = "NEED_INFO"
     CHECKLIST = "CHECKLIST"
+    NVD_CVSS = "NVD_CVSS"
 
     def __str__(self) -> str:
         return str(self.value)

@@ -20,11 +20,8 @@ from .cv_ev_5_versions import CVEv5Versions
 from .flaw import Flaw
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
-from .flaw_list import FlawList
-from .flaw_list_classification import FlawListClassification
-from .flaw_list_classification_state import FlawListClassificationState
-from .flaw_list_meta_attr import FlawListMetaAttr
 from .flaw_meta_attr import FlawMetaAttr
+from .flaw_type_enum import FlawTypeEnum
 from .flawdb_api_v1_flaws_create_format import FlawdbApiV1FlawsCreateFormat
 from .flawdb_api_v1_flaws_destroy_format import FlawdbApiV1FlawsDestroyFormat
 from .flawdb_api_v1_flaws_list_format import FlawdbApiV1FlawsListFormat
@@ -34,6 +31,7 @@ from .flawdb_api_v1_flaws_list_source import FlawdbApiV1FlawsListSource
 from .flawdb_api_v1_flaws_list_state import FlawdbApiV1FlawsListState
 from .flawdb_api_v1_flaws_list_type import FlawdbApiV1FlawsListType
 from .flawdb_api_v1_flaws_retrieve_format import FlawdbApiV1FlawsRetrieveFormat
+from .flawdb_api_v1_flaws_update_format import FlawdbApiV1FlawsUpdateFormat
 from .flawdb_api_v1_manifest_retrieve_format import FlawdbApiV1ManifestRetrieveFormat
 from .flawdb_api_v1_schema_retrieve_format import FlawdbApiV1SchemaRetrieveFormat
 from .flawdb_api_v1_schema_retrieve_lang import FlawdbApiV1SchemaRetrieveLang
@@ -62,14 +60,12 @@ from .osim_api_v1_workflows_retrieve_2_format import OsimApiV1WorkflowsRetrieve2
 from .osim_api_v1_workflows_retrieve_format import OsimApiV1WorkflowsRetrieveFormat
 from .osim_healthy_retrieve_format import OsimHealthyRetrieveFormat
 from .osim_retrieve_format import OsimRetrieveFormat
-from .paginated_flaw_list_list import PaginatedFlawListList
+from .paginated_flaw_list import PaginatedFlawList
 from .paginated_jiraffe_job_list import PaginatedJiraffeJobList
 from .paginated_job_list import PaginatedJobList
 from .resolution_enum import ResolutionEnum
 from .source_enum import SourceEnum
 from .state_7f6_enum import State7F6Enum
-from .state_574_enum import State574Enum
 from .status_enum import StatusEnum
 from .tracker import Tracker
 from .tracker_type_enum import TrackerTypeEnum
-from .type_824_enum import Type824Enum

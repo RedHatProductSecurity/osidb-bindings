@@ -10,7 +10,7 @@ from ...models.flawdb_api_v1_flaws_list_mitigated_by import FlawdbApiV1FlawsList
 from ...models.flawdb_api_v1_flaws_list_source import FlawdbApiV1FlawsListSource
 from ...models.flawdb_api_v1_flaws_list_state import FlawdbApiV1FlawsListState
 from ...models.flawdb_api_v1_flaws_list_type import FlawdbApiV1FlawsListType
-from ...models.paginated_flaw_list_list import PaginatedFlawListList
+from ...models.paginated_flaw_list import PaginatedFlawList
 from ...types import UNSET, Response, Unset
 
 
@@ -194,20 +194,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[PaginatedFlawListList]:
+def _parse_response(*, response: httpx.Response) -> Optional[PaginatedFlawList]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: PaginatedFlawListList
+        response_200: PaginatedFlawList
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = PaginatedFlawListList.from_dict(_response_200)
+            response_200 = PaginatedFlawList.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[PaginatedFlawListList]:
+def _build_response(*, response: httpx.Response) -> Response[PaginatedFlawList]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -253,7 +253,7 @@ def sync_detailed(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Response[PaginatedFlawListList]:
+) -> Response[PaginatedFlawList]:
     kwargs = _get_kwargs(
         client=client,
         bz_id=bz_id,
@@ -337,8 +337,8 @@ def sync(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Optional[PaginatedFlawListList]:
-    """HTTP get /flaws"""
+) -> Optional[PaginatedFlawList]:
+    """ """
 
     return sync_detailed(
         client=client,
@@ -416,7 +416,7 @@ async def asyncio_detailed(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Response[PaginatedFlawListList]:
+) -> Response[PaginatedFlawList]:
     kwargs = _get_kwargs(
         client=client,
         bz_id=bz_id,
@@ -498,8 +498,8 @@ async def asyncio(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Optional[PaginatedFlawListList]:
-    """HTTP get /flaws"""
+) -> Optional[PaginatedFlawList]:
+    """ """
 
     return (
         await asyncio_detailed(

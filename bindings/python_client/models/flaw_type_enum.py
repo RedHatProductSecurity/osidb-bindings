@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Type824Enum(str, Enum):
+class FlawTypeEnum(str, Enum):
     VULNERABILITY = "VULNERABILITY"
     WEAKNESS = "WEAKNESS"
 
