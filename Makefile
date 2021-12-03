@@ -4,16 +4,26 @@
 openapi-python-client=`which openapi-python-client`
 pc=`which pip-compile`
 ps=`which pip-sync`
+package_dir=osidb_bindings/
+bindings_dir=$(package_dir)bindings/
 
 
 ############################################################################
 # client generation
 ############################################################################
 update:
-	$(openapi-python-client) update --path openapi_schema.yml --config $(shell pwd)/bindings_config.yml --custom-template-path templates
+	cd $(package_dir) \
+	&& $(openapi-python-client) update --path openapi_schema.yml \
+	--config $(shell pwd)/$(package_dir)bindings_config.yml \
+	--custom-template-path templates
+	touch $(bindings_dir)__init__.py
 
 create:
-	$(openapi-python-client) generate --path openapi_schema.yml --config $(shell pwd)/bindings_config.yml --custom-template-path templates
+	cd $(package_dir) \
+	&& $(openapi-python-client) generate --path openapi_schema.yml \
+	--config $(shell pwd)/$(package_dir)bindings_config.yml \
+	--custom-template-path templates
+	touch $(bindings_dir)__init__.py
 
 
 ############################################################################
@@ -35,5 +45,5 @@ patch-release: update
 
 release:
 	@echo ">preparing release"
-	scripts/update_release.sh $$(cat openapi_schema.yml | grep -Po '(?<=version: )\d+\.\d+\.\d+')
+	scripts/update_release.sh $$(cat $(package_dir)openapi_schema.yml | grep -Po '(?<=version: )\d+\.\d+\.\d+')
 	$(MAKE) update
