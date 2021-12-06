@@ -15,7 +15,7 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
     ],
-    packages=find_packages(include=["osidb_bindings", "osidb_bindings.bindings.*"]),
+    packages=find_packages(include=["osidb_bindings", "osidb_bindings.*"]),
     python_requires=">=3.6",
     install_requires=["attrs", "httpx", "python-dateutil"],
 )

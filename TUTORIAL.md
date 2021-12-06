@@ -204,3 +204,14 @@ paginated_response.results[0]
 ```
 
 Work with each item of the results is basically identical to work with [single response](#single-response)
+
+### Utils
+
+There are some utility functions which can help you with common use cases of the bindings.
+
+* #### ```cve_ids```
+    Retrieve list of all CVE IDs. Takes care of the response pagination.
+    ```python
+    all_cve_ids = osidb_bindings.cve_ids(session)
+    #  ['CVE-2021-43527', 'CVE-2021-3984', 'CVE-2021-4019', ... ]
+    ```
