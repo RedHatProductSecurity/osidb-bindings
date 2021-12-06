@@ -25,6 +25,7 @@ class Flaw:
     """serialize flaw model"""
 
     uuid: str
+    created_dt: datetime.datetime
     updated_dt: datetime.datetime
     type: FlawTypeEnum
     cve_id: str
@@ -39,7 +40,6 @@ class Flaw:
     comments: List[Comment]
     package_versions: List[CVEv5PackageVersions]
     classification: FlawClassification
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET
     summary: Union[Unset, None, str] = UNSET
     statement: Union[Unset, None, str] = UNSET
     cwe_id: Union[Unset, None, str] = UNSET
@@ -60,6 +60,10 @@ class Flaw:
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
+
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
@@ -122,10 +126,6 @@ class Flaw:
         classification: Dict[str, Any] = UNSET
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
-
-        created_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat() if self.created_dt else None
 
         summary = self.summary
         statement = self.statement
@@ -194,6 +194,8 @@ class Flaw:
         field_dict.update(self.additional_properties)
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
+        if created_dt is not UNSET:
+            field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
             field_dict["updated_dt"] = updated_dt
         if type is not UNSET:
@@ -222,8 +224,6 @@ class Flaw:
             field_dict["package_versions"] = package_versions
         if classification is not UNSET:
             field_dict["classification"] = classification
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
         if summary is not UNSET:
             field_dict["summary"] = summary
         if statement is not UNSET:
@@ -261,6 +261,10 @@ class Flaw:
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
+
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
@@ -329,10 +333,6 @@ class Flaw:
         if not isinstance(self.classification, Unset):
             classification = (None, json.dumps(self.classification.to_dict()), "application/json")
 
-        created_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat() if self.created_dt else None
-
         summary = self.summary if self.summary is UNSET else (None, str(self.summary), "text/plain")
         statement = self.statement if self.statement is UNSET else (None, str(self.statement), "text/plain")
         cwe_id = self.cwe_id if self.cwe_id is UNSET else (None, str(self.cwe_id), "text/plain")
@@ -400,6 +400,8 @@ class Flaw:
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
+        if created_dt is not UNSET:
+            field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
             field_dict["updated_dt"] = updated_dt
         if type is not UNSET:
@@ -428,8 +430,6 @@ class Flaw:
             field_dict["package_versions"] = package_versions
         if classification is not UNSET:
             field_dict["classification"] = classification
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
         if summary is not UNSET:
             field_dict["summary"] = summary
         if statement is not UNSET:
@@ -469,6 +469,13 @@ class Flaw:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
+
+        _created_dt = d.pop("created_dt", UNSET)
+        created_dt: datetime.datetime
+        if isinstance(_created_dt, Unset):
+            created_dt = UNSET
+        else:
+            created_dt = isoparse(_created_dt)
 
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
@@ -564,15 +571,6 @@ class Flaw:
             classification = UNSET
         else:
             classification = FlawClassification.from_dict(_classification)
-
-        _created_dt = d.pop("created_dt", UNSET)
-        created_dt: Union[Unset, None, datetime.datetime]
-        if _created_dt is None:
-            created_dt = None
-        elif isinstance(_created_dt, Unset):
-            created_dt = UNSET
-        else:
-            created_dt = isoparse(_created_dt)
 
         summary = d.pop("summary", UNSET)
 
@@ -695,6 +693,7 @@ class Flaw:
 
         flaw = cls(
             uuid=uuid,
+            created_dt=created_dt,
             updated_dt=updated_dt,
             type=type,
             cve_id=cve_id,
@@ -709,7 +708,6 @@ class Flaw:
             comments=comments,
             package_versions=package_versions,
             classification=classification,
-            created_dt=created_dt,
             summary=summary,
             statement=statement,
             cwe_id=cwe_id,

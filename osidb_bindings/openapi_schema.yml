@@ -1379,10 +1379,10 @@ components:
           oneOf:
           - $ref: '#/components/schemas/AffectTypeEnum'
           - $ref: '#/components/schemas/NullEnum'
-        state:
+        affectedness:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/AffectStateEnum'
+          - $ref: '#/components/schemas/AffectednessEnum'
           - $ref: '#/components/schemas/NullEnum'
         resolution:
           nullable: true
@@ -1394,18 +1394,6 @@ components:
           nullable: true
           maxLength: 100
         ps_component:
-          type: string
-          nullable: true
-          maxLength: 100
-        module_name:
-          type: string
-          nullable: true
-          maxLength: 100
-        module_stream:
-          type: string
-          nullable: true
-          maxLength: 100
-        component:
           type: string
           nullable: true
           maxLength: 100
@@ -1443,19 +1431,16 @@ components:
       required:
       - trackers
       - uuid
-    AffectStateEnum:
+    AffectTypeEnum:
+      enum:
+      - DEFAULT
+      type: string
+    AffectednessEnum:
       enum:
       - NONE
       - NEW
       - AFFECTED
-      - NOT_AFFECTED
-      - WONT_FIX
-      - OOSS
-      - DEFERRED
-      type: string
-    AffectTypeEnum:
-      enum:
-      - DEFAULT
+      - NOTAFFECTED
       type: string
     AuthToken:
       type: object
@@ -1527,7 +1512,7 @@ components:
         created_dt:
           type: string
           format: date-time
-          nullable: true
+          readOnly: true
         meta_attr:
           type: object
           additionalProperties:
@@ -1535,6 +1520,7 @@ components:
             nullable: true
           nullable: true
       required:
+      - created_dt
       - uuid
     CommentTypeEnum:
       enum:
@@ -1551,7 +1537,7 @@ components:
         created_dt:
           type: string
           format: date-time
-          nullable: true
+          readOnly: true
         updated_dt:
           type: string
           format: date-time
@@ -1680,6 +1666,7 @@ components:
       - affects
       - classification
       - comments
+      - created_dt
       - cve_id
       - description
       - impact
@@ -1716,7 +1703,7 @@ components:
         state:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/State7f6Enum'
+          - $ref: '#/components/schemas/StateEnum'
           - $ref: '#/components/schemas/NullEnum'
         comment:
           type: string
@@ -1754,7 +1741,7 @@ components:
         state:
           nullable: true
           oneOf:
-          - $ref: '#/components/schemas/State7f6Enum'
+          - $ref: '#/components/schemas/StateEnum'
           - $ref: '#/components/schemas/NullEnum'
         comment:
           type: string
@@ -1799,7 +1786,7 @@ components:
         created_dt:
           type: string
           format: date-time
-          nullable: true
+          readOnly: true
         meta_attr:
           type: object
           additionalProperties:
@@ -1807,6 +1794,7 @@ components:
             nullable: true
           nullable: true
       required:
+      - created_dt
       - uuid
     MetaTypeEnum:
       enum:
@@ -1990,7 +1978,7 @@ components:
       - XEN
       - XPDF
       type: string
-    State7f6Enum:
+    StateEnum:
       enum:
       - PROCESSING
       - SUCCESS
@@ -2016,6 +2004,14 @@ components:
           - $ref: '#/components/schemas/TrackerTypeEnum'
           - $ref: '#/components/schemas/NullEnum'
         external_system_id:
+          type: string
+          nullable: true
+          maxLength: 100
+        status:
+          type: string
+          nullable: true
+          maxLength: 100
+        resolution:
           type: string
           nullable: true
           maxLength: 100

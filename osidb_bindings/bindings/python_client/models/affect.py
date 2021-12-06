@@ -2,8 +2,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.affect_state_enum import AffectStateEnum
 from ..models.affect_type_enum import AffectTypeEnum
+from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.resolution_enum import ResolutionEnum
@@ -20,13 +20,10 @@ class Affect:
     uuid: str
     trackers: List[Tracker]
     type: Union[AffectTypeEnum, None, Unset] = UNSET
-    state: Union[AffectStateEnum, None, Unset] = UNSET
+    affectedness: Union[AffectednessEnum, None, Unset] = UNSET
     resolution: Union[None, ResolutionEnum, Unset] = UNSET
     ps_module: Union[Unset, None, str] = UNSET
     ps_component: Union[Unset, None, str] = UNSET
-    module_name: Union[Unset, None, str] = UNSET
-    module_stream: Union[Unset, None, str] = UNSET
-    component: Union[Unset, None, str] = UNSET
     statement: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, None, Unset] = UNSET
     cvss2: Union[Unset, None, str] = UNSET
@@ -61,19 +58,19 @@ class Affect:
         else:
             type = self.type
 
-        state: Union[None, Unset, str]
-        if isinstance(self.state, Unset):
-            state = UNSET
-        elif self.state is None:
-            state = None
-        elif isinstance(self.state, AffectStateEnum):
-            state = UNSET
-            if not isinstance(self.state, Unset):
+        affectedness: Union[None, Unset, str]
+        if isinstance(self.affectedness, Unset):
+            affectedness = UNSET
+        elif self.affectedness is None:
+            affectedness = None
+        elif isinstance(self.affectedness, AffectednessEnum):
+            affectedness = UNSET
+            if not isinstance(self.affectedness, Unset):
 
-                state = AffectStateEnum(self.state).value
+                affectedness = AffectednessEnum(self.affectedness).value
 
         else:
-            state = self.state
+            affectedness = self.affectedness
 
         resolution: Union[None, Unset, str]
         if isinstance(self.resolution, Unset):
@@ -91,9 +88,6 @@ class Affect:
 
         ps_module = self.ps_module
         ps_component = self.ps_component
-        module_name = self.module_name
-        module_stream = self.module_stream
-        component = self.component
         statement = self.statement
         impact: Union[None, Unset, str]
         if isinstance(self.impact, Unset):
@@ -128,20 +122,14 @@ class Affect:
             field_dict["trackers"] = trackers
         if type is not UNSET:
             field_dict["type"] = type
-        if state is not UNSET:
-            field_dict["state"] = state
+        if affectedness is not UNSET:
+            field_dict["affectedness"] = affectedness
         if resolution is not UNSET:
             field_dict["resolution"] = resolution
         if ps_module is not UNSET:
             field_dict["ps_module"] = ps_module
         if ps_component is not UNSET:
             field_dict["ps_component"] = ps_component
-        if module_name is not UNSET:
-            field_dict["module_name"] = module_name
-        if module_stream is not UNSET:
-            field_dict["module_stream"] = module_stream
-        if component is not UNSET:
-            field_dict["component"] = component
         if statement is not UNSET:
             field_dict["statement"] = statement
         if impact is not UNSET:
@@ -199,7 +187,7 @@ class Affect:
 
         type = _parse_type(d.pop("type", UNSET))
 
-        def _parse_state(data: object) -> Union[AffectStateEnum, None, Unset]:
+        def _parse_affectedness(data: object) -> Union[AffectednessEnum, None, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -207,19 +195,19 @@ class Affect:
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                _state_type_0 = data
-                state_type_0: Union[Unset, AffectStateEnum]
-                if isinstance(_state_type_0, Unset):
-                    state_type_0 = UNSET
+                _affectedness_type_0 = data
+                affectedness_type_0: Union[Unset, AffectednessEnum]
+                if isinstance(_affectedness_type_0, Unset):
+                    affectedness_type_0 = UNSET
                 else:
-                    state_type_0 = AffectStateEnum(_state_type_0)
+                    affectedness_type_0 = AffectednessEnum(_affectedness_type_0)
 
-                return state_type_0
+                return affectedness_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[AffectStateEnum, None, Unset], data)
+            return cast(Union[AffectednessEnum, None, Unset], data)
 
-        state = _parse_state(d.pop("state", UNSET))
+        affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
         def _parse_resolution(data: object) -> Union[None, ResolutionEnum, Unset]:
             if data is None:
@@ -246,12 +234,6 @@ class Affect:
         ps_module = d.pop("ps_module", UNSET)
 
         ps_component = d.pop("ps_component", UNSET)
-
-        module_name = d.pop("module_name", UNSET)
-
-        module_stream = d.pop("module_stream", UNSET)
-
-        component = d.pop("component", UNSET)
 
         statement = d.pop("statement", UNSET)
 
@@ -302,13 +284,10 @@ class Affect:
             uuid=uuid,
             trackers=trackers,
             type=type,
-            state=state,
+            affectedness=affectedness,
             resolution=resolution,
             ps_module=ps_module,
             ps_component=ps_component,
-            module_name=module_name,
-            module_stream=module_stream,
-            component=component,
             statement=statement,
             impact=impact,
             cvss2=cvss2,

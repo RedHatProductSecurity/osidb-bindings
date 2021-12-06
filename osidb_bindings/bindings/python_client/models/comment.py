@@ -16,15 +16,19 @@ class Comment:
     """FlawComment serializer"""
 
     uuid: str
+    created_dt: datetime.datetime
     type: Union[CommentTypeEnum, None, Unset] = UNSET
     external_system_id: Union[Unset, None, str] = UNSET
     order: Union[Unset, None, int] = UNSET
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET
     meta_attr: Union[Unset, None, CommentMetaAttr] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
+
         type: Union[None, Unset, str]
         if isinstance(self.type, Unset):
             type = UNSET
@@ -41,10 +45,6 @@ class Comment:
 
         external_system_id = self.external_system_id
         order = self.order
-        created_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat() if self.created_dt else None
-
         meta_attr: Union[Unset, None, Dict[str, Any]] = UNSET
         if not isinstance(self.meta_attr, Unset):
             meta_attr = self.meta_attr.to_dict() if self.meta_attr else None
@@ -53,14 +53,14 @@ class Comment:
         field_dict.update(self.additional_properties)
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
+        if created_dt is not UNSET:
+            field_dict["created_dt"] = created_dt
         if type is not UNSET:
             field_dict["type"] = type
         if external_system_id is not UNSET:
             field_dict["external_system_id"] = external_system_id
         if order is not UNSET:
             field_dict["order"] = order
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
         if meta_attr is not UNSET:
             field_dict["meta_attr"] = meta_attr
 
@@ -70,6 +70,13 @@ class Comment:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
+
+        _created_dt = d.pop("created_dt", UNSET)
+        created_dt: datetime.datetime
+        if isinstance(_created_dt, Unset):
+            created_dt = UNSET
+        else:
+            created_dt = isoparse(_created_dt)
 
         def _parse_type(data: object) -> Union[CommentTypeEnum, None, Unset]:
             if data is None:
@@ -97,15 +104,6 @@ class Comment:
 
         order = d.pop("order", UNSET)
 
-        _created_dt = d.pop("created_dt", UNSET)
-        created_dt: Union[Unset, None, datetime.datetime]
-        if _created_dt is None:
-            created_dt = None
-        elif isinstance(_created_dt, Unset):
-            created_dt = UNSET
-        else:
-            created_dt = isoparse(_created_dt)
-
         _meta_attr = d.pop("meta_attr", UNSET)
         meta_attr: Union[Unset, None, CommentMetaAttr]
         if _meta_attr is None:
@@ -117,10 +115,10 @@ class Comment:
 
         comment = cls(
             uuid=uuid,
+            created_dt=created_dt,
             type=type,
             external_system_id=external_system_id,
             order=order,
-            created_dt=created_dt,
             meta_attr=meta_attr,
         )
 

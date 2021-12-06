@@ -1,14 +1,11 @@
 from enum import Enum
 
 
-class AffectStateEnum(str, Enum):
+class AffectednessEnum(str, Enum):
     NONE = "NONE"
     NEW = "NEW"
     AFFECTED = "AFFECTED"
-    NOT_AFFECTED = "NOT_AFFECTED"
-    WONT_FIX = "WONT_FIX"
-    OOSS = "OOSS"
-    DEFERRED = "DEFERRED"
+    NOTAFFECTED = "NOTAFFECTED"
 
     def __str__(self) -> str:
         return str(self.value)

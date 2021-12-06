@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class State7F6Enum(str, Enum):
+class StateEnum(str, Enum):
     PROCESSING = "PROCESSING"
     SUCCESS = "SUCCESS"
     FAILURE = "FAILURE"
