@@ -101,7 +101,7 @@ When new OSIDB version is released, major/minor release of the osidb-bindings ne
     ```
 
 3) Download OpenAPI schema `yml` file matching the released OSIDB version and replace
-   the `openapi_schema.yml` with its content
+   the `osidb_bindings/openapi_schema.yml` with its content
 
 4) Prepare release
 

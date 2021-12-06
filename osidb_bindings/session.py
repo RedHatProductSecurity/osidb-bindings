@@ -1,20 +1,23 @@
 import importlib
 
-from constants import (
+from .constants import (
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
 )
-from bindings.python_client import AuthenticatedClient
+from .bindings.python_client import AuthenticatedClient
 
 # TODO: Once FlawDB will be renamed to OSIDB, these paths need to be changed
 osidb_flaws_list = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_flaws_list"
+    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_flaws_list",
+    package="osidb_bindings",
 )
 osidb_flaws_retrieve = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_flaws_retrieve"
+    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_flaws_retrieve",
+    package="osidb_bindings",
 )
 osidb_status_retrieve = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_status_retrieve"
+    f"{OSIDB_BINDINGS_API_PATH}.flawdb_api_{OSIDB_API_VERSION}_status_retrieve",
+    package="osidb_bindings",
 )
 
 
