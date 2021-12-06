@@ -15,6 +15,8 @@ class Tracker:
     uuid: str
     type: Union[None, TrackerTypeEnum, Unset] = UNSET
     external_system_id: Union[Unset, None, str] = UNSET
+    status: Union[Unset, None, str] = UNSET
+    resolution: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -34,6 +36,8 @@ class Tracker:
             type = self.type
 
         external_system_id = self.external_system_id
+        status = self.status
+        resolution = self.resolution
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -43,6 +47,10 @@ class Tracker:
             field_dict["type"] = type
         if external_system_id is not UNSET:
             field_dict["external_system_id"] = external_system_id
+        if status is not UNSET:
+            field_dict["status"] = status
+        if resolution is not UNSET:
+            field_dict["resolution"] = resolution
 
         return field_dict
 
@@ -75,10 +83,16 @@ class Tracker:
 
         external_system_id = d.pop("external_system_id", UNSET)
 
+        status = d.pop("status", UNSET)
+
+        resolution = d.pop("resolution", UNSET)
+
         tracker = cls(
             uuid=uuid,
             type=type,
             external_system_id=external_system_id,
+            status=status,
+            resolution=resolution,
         )
 
         tracker.additional_properties = d

@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
-from ..models.state_7f6_enum import State7F6Enum
+from ..models.state_enum import StateEnum
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="JiraffeJob")
@@ -18,7 +18,7 @@ class JiraffeJob:
     uuid: str
     affect_uuids: List[Optional[str]]
     affect_count: str
-    state: Union[None, State7F6Enum, Unset] = UNSET
+    state: Union[None, StateEnum, Unset] = UNSET
     comment: Union[Unset, None, str] = UNSET
     created_dt: Union[Unset, None, datetime.datetime] = UNSET
     dry_run: Union[Unset, bool] = UNSET
@@ -37,11 +37,11 @@ class JiraffeJob:
             state = UNSET
         elif self.state is None:
             state = None
-        elif isinstance(self.state, State7F6Enum):
+        elif isinstance(self.state, StateEnum):
             state = UNSET
             if not isinstance(self.state, Unset):
 
-                state = State7F6Enum(self.state).value
+                state = StateEnum(self.state).value
 
         else:
             state = self.state
@@ -88,11 +88,11 @@ class JiraffeJob:
             state = UNSET
         elif self.state is None:
             state = None
-        elif isinstance(self.state, State7F6Enum):
+        elif isinstance(self.state, StateEnum):
             state = UNSET
             if not isinstance(self.state, Unset):
 
-                state = State7F6Enum(self.state).value
+                state = StateEnum(self.state).value
 
         else:
             state = self.state
@@ -135,7 +135,7 @@ class JiraffeJob:
 
         affect_count = d.pop("affect_count", UNSET)
 
-        def _parse_state(data: object) -> Union[None, State7F6Enum, Unset]:
+        def _parse_state(data: object) -> Union[None, StateEnum, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -144,16 +144,16 @@ class JiraffeJob:
                 if not isinstance(data, str):
                     raise TypeError()
                 _state_type_0 = data
-                state_type_0: Union[Unset, State7F6Enum]
+                state_type_0: Union[Unset, StateEnum]
                 if isinstance(_state_type_0, Unset):
                     state_type_0 = UNSET
                 else:
-                    state_type_0 = State7F6Enum(_state_type_0)
+                    state_type_0 = StateEnum(_state_type_0)
 
                 return state_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, State7F6Enum, Unset], data)
+            return cast(Union[None, StateEnum, Unset], data)
 
         state = _parse_state(d.pop("state", UNSET))
 

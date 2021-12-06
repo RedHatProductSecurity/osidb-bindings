@@ -1,8 +1,8 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .affect import Affect
-from .affect_state_enum import AffectStateEnum
 from .affect_type_enum import AffectTypeEnum
+from .affectedness_enum import AffectednessEnum
 from .auth_token import AuthToken
 from .blank_enum import BlankEnum
 from .bzimport_api_v1_jobs_create_format import BzimportApiV1JobsCreateFormat
@@ -65,7 +65,7 @@ from .paginated_jiraffe_job_list import PaginatedJiraffeJobList
 from .paginated_job_list import PaginatedJobList
 from .resolution_enum import ResolutionEnum
 from .source_enum import SourceEnum
-from .state_7f6_enum import State7F6Enum
+from .state_enum import StateEnum
 from .status_enum import StatusEnum
 from .tracker import Tracker
 from .tracker_type_enum import TrackerTypeEnum
