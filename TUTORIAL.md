@@ -111,10 +111,48 @@ This section describes possible session operations. See [response section](#resp
     ```
 
 * #### ```create```
-    NOT YET SUPPORTED
+    Create a new Flaw from given data.
+
+    See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    ```python
+    from datetime import datetime
+    create_data = {
+        "type": "VULNERABILITY",
+        "cve_id": "CVE-1111-2222",
+        "state": "NEW",
+        "resolution": "NONE",
+        "impact": "LOW",
+        "title": "New title",
+        "description": "New description",
+        "summary": "New summary",
+        "statement": "New statement",
+        "cwe_id": "CWE-123",
+        "unembargo_dt": datetime("2022-01-01"),
+        "source": "ADOBE",
+        "reported_dt": "2022-02-10T15:27:24.131Z",
+        "mitigated_by": "SELINUX",
+        "cvss3": "8.8/CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "cvss3_score": 8.8,
+        "is_major_incident": False
+    }
+
+    create_flaw_response = session.create(form_data=create_data)
+    ```
 
 * #### ```update```
-    NOT YET SUPPORTED
+    Update an existing Flaw with given data.
+
+    See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    ```python
+    from datetime import datetime
+    update_data = {
+        "cve_id": "CVE-1111-3333",
+        "resolution": "ERRATA",
+        "impact": "MEDIUM",
+    }
+
+    update_flaw_response = session.create(id="CVE-1111-2222", form_data=update_data)
+    ```
 
 * #### ```delete```
     NOT YET SUPPORTED
