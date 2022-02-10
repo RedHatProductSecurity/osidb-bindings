@@ -1,2 +1,2 @@
-""" A client library for accessing FlawDB API """
+""" A client library for accessing OSIDB API """
 from .client import AuthenticatedClient, Client

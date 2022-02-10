@@ -1,5 +1,5 @@
 # bindings
-A client library for accessing FlawDB API
+A client library for accessing OSIDB API
 
 ## Usage
 First, create a client:

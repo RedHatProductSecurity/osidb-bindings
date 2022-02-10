@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.affect_meta_attr import AffectMetaAttr
 from ..models.affect_type_enum import AffectTypeEnum
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
@@ -19,6 +20,8 @@ class Affect:
 
     uuid: str
     trackers: List[Tracker]
+    meta_attr: AffectMetaAttr
+    delegated_resolution: str
     type: Union[AffectTypeEnum, None, Unset] = UNSET
     affectedness: Union[AffectednessEnum, None, Unset] = UNSET
     resolution: Union[None, ResolutionEnum, Unset] = UNSET
@@ -44,6 +47,11 @@ class Affect:
 
                 trackers.append(trackers_item)
 
+        meta_attr: Dict[str, Any] = UNSET
+        if not isinstance(self.meta_attr, Unset):
+            meta_attr = self.meta_attr.to_dict()
+
+        delegated_resolution = self.delegated_resolution
         type: Union[None, Unset, str]
         if isinstance(self.type, Unset):
             type = UNSET
@@ -120,6 +128,10 @@ class Affect:
             field_dict["uuid"] = uuid
         if trackers is not UNSET:
             field_dict["trackers"] = trackers
+        if meta_attr is not UNSET:
+            field_dict["meta_attr"] = meta_attr
+        if delegated_resolution is not UNSET:
+            field_dict["delegated_resolution"] = delegated_resolution
         if type is not UNSET:
             field_dict["type"] = type
         if affectedness is not UNSET:
@@ -164,6 +176,15 @@ class Affect:
                     trackers_item = Tracker.from_dict(_trackers_item)
 
                 trackers.append(trackers_item)
+
+        _meta_attr = d.pop("meta_attr", UNSET)
+        meta_attr: AffectMetaAttr
+        if isinstance(_meta_attr, Unset):
+            meta_attr = UNSET
+        else:
+            meta_attr = AffectMetaAttr.from_dict(_meta_attr)
+
+        delegated_resolution = d.pop("delegated_resolution", UNSET)
 
         def _parse_type(data: object) -> Union[AffectTypeEnum, None, Unset]:
             if data is None:
@@ -283,6 +304,8 @@ class Affect:
         affect = cls(
             uuid=uuid,
             trackers=trackers,
+            meta_attr=meta_attr,
+            delegated_resolution=delegated_resolution,
             type=type,
             affectedness=affectedness,
             resolution=resolution,

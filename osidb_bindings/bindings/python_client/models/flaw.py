@@ -35,15 +35,16 @@ class Flaw:
     title: str
     trackers: List[str]
     description: str
+    embargoed: bool
     affects: List[Affect]
     meta: List[Meta]
     comments: List[Comment]
+    meta_attr: FlawMetaAttr
     package_versions: List[CVEv5PackageVersions]
     classification: FlawClassification
     summary: Union[Unset, None, str] = UNSET
     statement: Union[Unset, None, str] = UNSET
     cwe_id: Union[Unset, None, str] = UNSET
-    embargoed: Union[Unset, None, bool] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
     source: Union[BlankEnum, None, SourceEnum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
@@ -54,8 +55,7 @@ class Flaw:
     cvss3: Union[Unset, None, str] = UNSET
     cvss3_score: Union[Unset, None, float] = UNSET
     nvd_cvss3: Union[Unset, None, str] = UNSET
-    is_csaw: Union[Unset, None, bool] = UNSET
-    meta_attr: Union[Unset, None, FlawMetaAttr] = UNSET
+    is_major_incident: Union[Unset, None, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -83,6 +83,7 @@ class Flaw:
             trackers = self.trackers
 
         description = self.description
+        embargoed = self.embargoed
         affects: List[Dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
@@ -113,6 +114,10 @@ class Flaw:
 
                 comments.append(comments_item)
 
+        meta_attr: Dict[str, Any] = UNSET
+        if not isinstance(self.meta_attr, Unset):
+            meta_attr = self.meta_attr.to_dict()
+
         package_versions: List[Dict[str, Any]] = UNSET
         if not isinstance(self.package_versions, Unset):
             package_versions = []
@@ -130,7 +135,6 @@ class Flaw:
         summary = self.summary
         statement = self.statement
         cwe_id = self.cwe_id
-        embargoed = self.embargoed
         unembargo_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.unembargo_dt, Unset):
             unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
@@ -185,10 +189,7 @@ class Flaw:
         cvss3 = self.cvss3
         cvss3_score = self.cvss3_score
         nvd_cvss3 = self.nvd_cvss3
-        is_csaw = self.is_csaw
-        meta_attr: Union[Unset, None, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict() if self.meta_attr else None
+        is_major_incident = self.is_major_incident
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -214,12 +215,16 @@ class Flaw:
             field_dict["trackers"] = trackers
         if description is not UNSET:
             field_dict["description"] = description
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if affects is not UNSET:
             field_dict["affects"] = affects
         if meta is not UNSET:
             field_dict["meta"] = meta
         if comments is not UNSET:
             field_dict["comments"] = comments
+        if meta_attr is not UNSET:
+            field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
         if classification is not UNSET:
@@ -230,8 +235,6 @@ class Flaw:
             field_dict["statement"] = statement
         if cwe_id is not UNSET:
             field_dict["cwe_id"] = cwe_id
-        if embargoed is not UNSET:
-            field_dict["embargoed"] = embargoed
         if unembargo_dt is not UNSET:
             field_dict["unembargo_dt"] = unembargo_dt
         if source is not UNSET:
@@ -252,10 +255,8 @@ class Flaw:
             field_dict["cvss3_score"] = cvss3_score
         if nvd_cvss3 is not UNSET:
             field_dict["nvd_cvss3"] = nvd_cvss3
-        if is_csaw is not UNSET:
-            field_dict["is_csaw"] = is_csaw
-        if meta_attr is not UNSET:
-            field_dict["meta_attr"] = meta_attr
+        if is_major_incident is not UNSET:
+            field_dict["is_major_incident"] = is_major_incident
 
         return field_dict
 
@@ -285,6 +286,7 @@ class Flaw:
             trackers = (None, json.dumps(_temp_trackers), "application/json")
 
         description = self.description if self.description is UNSET else (None, str(self.description), "text/plain")
+        embargoed = self.embargoed if self.embargoed is UNSET else (None, str(self.embargoed), "text/plain")
         affects: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.affects, Unset):
             _temp_affects = []
@@ -318,6 +320,10 @@ class Flaw:
                 _temp_comments.append(comments_item)
             comments = (None, json.dumps(_temp_comments), "application/json")
 
+        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.meta_attr, Unset):
+            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
+
         package_versions: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.package_versions, Unset):
             _temp_package_versions = []
@@ -336,7 +342,6 @@ class Flaw:
         summary = self.summary if self.summary is UNSET else (None, str(self.summary), "text/plain")
         statement = self.statement if self.statement is UNSET else (None, str(self.statement), "text/plain")
         cwe_id = self.cwe_id if self.cwe_id is UNSET else (None, str(self.cwe_id), "text/plain")
-        embargoed = self.embargoed if self.embargoed is UNSET else (None, str(self.embargoed), "text/plain")
         unembargo_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.unembargo_dt, Unset):
             unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
@@ -391,10 +396,11 @@ class Flaw:
         cvss3 = self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
         cvss3_score = self.cvss3_score if self.cvss3_score is UNSET else (None, str(self.cvss3_score), "text/plain")
         nvd_cvss3 = self.nvd_cvss3 if self.nvd_cvss3 is UNSET else (None, str(self.nvd_cvss3), "text/plain")
-        is_csaw = self.is_csaw if self.is_csaw is UNSET else (None, str(self.is_csaw), "text/plain")
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json") if self.meta_attr else None
+        is_major_incident = (
+            self.is_major_incident
+            if self.is_major_incident is UNSET
+            else (None, str(self.is_major_incident), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
@@ -420,12 +426,16 @@ class Flaw:
             field_dict["trackers"] = trackers
         if description is not UNSET:
             field_dict["description"] = description
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if affects is not UNSET:
             field_dict["affects"] = affects
         if meta is not UNSET:
             field_dict["meta"] = meta
         if comments is not UNSET:
             field_dict["comments"] = comments
+        if meta_attr is not UNSET:
+            field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
         if classification is not UNSET:
@@ -436,8 +446,6 @@ class Flaw:
             field_dict["statement"] = statement
         if cwe_id is not UNSET:
             field_dict["cwe_id"] = cwe_id
-        if embargoed is not UNSET:
-            field_dict["embargoed"] = embargoed
         if unembargo_dt is not UNSET:
             field_dict["unembargo_dt"] = unembargo_dt
         if source is not UNSET:
@@ -458,10 +466,8 @@ class Flaw:
             field_dict["cvss3_score"] = cvss3_score
         if nvd_cvss3 is not UNSET:
             field_dict["nvd_cvss3"] = nvd_cvss3
-        if is_csaw is not UNSET:
-            field_dict["is_csaw"] = is_csaw
-        if meta_attr is not UNSET:
-            field_dict["meta_attr"] = meta_attr
+        if is_major_incident is not UNSET:
+            field_dict["is_major_incident"] = is_major_incident
 
         return field_dict
 
@@ -504,6 +510,8 @@ class Flaw:
         trackers = cast(List[str], d.pop("trackers", UNSET))
 
         description = d.pop("description", UNSET)
+
+        embargoed = d.pop("embargoed", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -550,6 +558,13 @@ class Flaw:
 
                 comments.append(comments_item)
 
+        _meta_attr = d.pop("meta_attr", UNSET)
+        meta_attr: FlawMetaAttr
+        if isinstance(_meta_attr, Unset):
+            meta_attr = UNSET
+        else:
+            meta_attr = FlawMetaAttr.from_dict(_meta_attr)
+
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
         if _package_versions is UNSET:
@@ -577,8 +592,6 @@ class Flaw:
         statement = d.pop("statement", UNSET)
 
         cwe_id = d.pop("cwe_id", UNSET)
-
-        embargoed = d.pop("embargoed", UNSET)
 
         _unembargo_dt = d.pop("unembargo_dt", UNSET)
         unembargo_dt: Union[Unset, None, datetime.datetime]
@@ -680,16 +693,7 @@ class Flaw:
 
         nvd_cvss3 = d.pop("nvd_cvss3", UNSET)
 
-        is_csaw = d.pop("is_csaw", UNSET)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, None, FlawMetaAttr]
-        if _meta_attr is None:
-            meta_attr = None
-        elif isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = FlawMetaAttr.from_dict(_meta_attr)
+        is_major_incident = d.pop("is_major_incident", UNSET)
 
         flaw = cls(
             uuid=uuid,
@@ -703,15 +707,16 @@ class Flaw:
             title=title,
             trackers=trackers,
             description=description,
+            embargoed=embargoed,
             affects=affects,
             meta=meta,
             comments=comments,
+            meta_attr=meta_attr,
             package_versions=package_versions,
             classification=classification,
             summary=summary,
             statement=statement,
             cwe_id=cwe_id,
-            embargoed=embargoed,
             unembargo_dt=unembargo_dt,
             source=source,
             reported_dt=reported_dt,
@@ -722,8 +727,7 @@ class Flaw:
             cvss3=cvss3,
             cvss3_score=cvss3_score,
             nvd_cvss3=nvd_cvss3,
-            is_csaw=is_csaw,
-            meta_attr=meta_attr,
+            is_major_incident=is_major_incident,
         )
 
         flaw.additional_properties = d

@@ -57,7 +57,6 @@ By default, the SSL verification is enabled, you can disable it by passing `veri
 session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=False)
 ```
 
-<!-- TODO: Once FlawDB will be renamed to OSIDB, paths needs to be changed -->
 ### Session operations
 
 This section describes possible session operations. See [response section](#response) to learn how to work with obtained operation responses.
@@ -65,7 +64,7 @@ This section describes possible session operations. See [response section](#resp
 * #### ```status```
     Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
 
-    See `/GET /flawdb/api/{api_version}/status` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/status` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     status_response = session.status()
     ```
@@ -74,7 +73,7 @@ This section describes possible session operations. See [response section](#resp
     Retrieve a single Flaw with specified `id`.
 
 
-    See `/GET /flawdb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     # CVE ID
     flaw1_response = session.retrieve(id="CVE-1111-2222")
@@ -86,7 +85,7 @@ This section describes possible session operations. See [response section](#resp
 * #### ```retrieve_list```
     Retrieve a list of Flaws. You can filter the flaws using the query parameters.
 
-    See `/GET /flawdb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     all_flaws_response = session.retrieve_list()
 
@@ -185,7 +184,7 @@ You can view overall count of responses, previous and next segment query (based 
 paginated_response = session.retrieve_list(limit=5)
 
 paginated_response
-# PaginatedFlawListList(count=12, next_='http://localhost:8000/flawdb/api/v1/flaws?limit=5&offset=5', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+# PaginatedFlawListList(count=12, next_='http://localhost:8000/osidb/api/v1/flaws?limit=5&offset=5', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
 
 paginated_response.count
 # 12
@@ -194,7 +193,7 @@ paginated_response.previous
 # None
 
 paginated_response.next_
-# "http://localhost:8000/flawdb/api/v1/flaws?limit=5&offset=5"
+# "http://localhost:8000/osidb/api/v1/flaws?limit=5&offset=5"
 
 paginated_response.results
 # [FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... ]

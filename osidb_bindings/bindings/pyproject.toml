@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "bindings"
-version = "1.0.0"
-description = "A client library for accessing FlawDB API"
+version = "0.0.2"
+description = "A client library for accessing OSIDB API"
 
 authors = []
 

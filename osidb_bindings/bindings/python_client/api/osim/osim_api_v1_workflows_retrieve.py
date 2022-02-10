@@ -1,32 +1,19 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict
 
 import httpx
 
 from ...client import AuthenticatedClient
-from ...models.osim_api_v1_workflows_retrieve_format import OsimApiV1WorkflowsRetrieveFormat
-from ...types import UNSET, Response, Unset
+from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, OsimApiV1WorkflowsRetrieveFormat] = UNSET,
 ) -> Dict[str, Any]:
     url = "/osim/api/v1/workflows"
 
-    json_format_: Union[Unset, None, str] = UNSET
-    if not isinstance(format_, Unset):
-
-        json_format_ = OsimApiV1WorkflowsRetrieveFormat(format_).value if format_ else None
-
-    params: Dict[str, Any] = {
-        "format": json_format_,
-    }
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     return {
         "url": url,
-        "params": params,
     }
 
 
@@ -42,11 +29,9 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, OsimApiV1WorkflowsRetrieveFormat] = UNSET,
 ) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
     )
 
     response = client.get_session().get(
@@ -60,11 +45,9 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, OsimApiV1WorkflowsRetrieveFormat] = UNSET,
 ) -> Response[Any]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
