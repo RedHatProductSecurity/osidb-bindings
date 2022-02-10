@@ -1,9 +1,8 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import AuthenticatedClient
-from ...models.bzimport_api_v1_jobs_create_format import BzimportApiV1JobsCreateFormat
 from ...models.job import Job
 from ...types import UNSET, Response, Unset
 
@@ -14,19 +13,8 @@ def _get_kwargs(
     form_data: Job,
     multipart_data: Job,
     json_body: Job,
-    format_: Union[Unset, None, BzimportApiV1JobsCreateFormat] = UNSET,
 ) -> Dict[str, Any]:
     url = "/bzimport/api/v1/jobs"
-
-    json_format_: Union[Unset, None, str] = UNSET
-    if not isinstance(format_, Unset):
-
-        json_format_ = BzimportApiV1JobsCreateFormat(format_).value if format_ else None
-
-    params: Dict[str, Any] = {
-        "format": json_format_,
-    }
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -39,7 +27,6 @@ def _get_kwargs(
     return {
         "url": url,
         "data": form_data.to_dict(),
-        "params": params,
     }
 
 
@@ -71,14 +58,12 @@ def sync_detailed(
     form_data: Job,
     multipart_data: Job,
     json_body: Job,
-    format_: Union[Unset, None, BzimportApiV1JobsCreateFormat] = UNSET,
 ) -> Response[Job]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        format_=format_,
     )
 
     response = client.get_session().post(
@@ -95,7 +80,6 @@ def sync(
     form_data: Job,
     multipart_data: Job,
     json_body: Job,
-    format_: Union[Unset, None, BzimportApiV1JobsCreateFormat] = UNSET,
 ) -> Optional[Job]:
     """HTTP POST /jobs"""
 
@@ -104,7 +88,6 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        format_=format_,
     ).parsed
 
 
@@ -114,14 +97,12 @@ async def asyncio_detailed(
     form_data: Job,
     multipart_data: Job,
     json_body: Job,
-    format_: Union[Unset, None, BzimportApiV1JobsCreateFormat] = UNSET,
 ) -> Response[Job]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        format_=format_,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -136,7 +117,6 @@ async def asyncio(
     form_data: Job,
     multipart_data: Job,
     json_body: Job,
-    format_: Union[Unset, None, BzimportApiV1JobsCreateFormat] = UNSET,
 ) -> Optional[Job]:
     """HTTP POST /jobs"""
 
@@ -146,6 +126,5 @@ async def asyncio(
             form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
-            format_=format_,
         )
     ).parsed

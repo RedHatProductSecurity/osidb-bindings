@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import AuthenticatedClient
-from ...models.jiraffe_api_v1_jobs_list_format import JiraffeApiV1JobsListFormat
 from ...models.paginated_jiraffe_job_list import PaginatedJiraffeJobList
 from ...types import UNSET, Response, Unset
 
@@ -11,19 +10,12 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, JiraffeApiV1JobsListFormat] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
 ) -> Dict[str, Any]:
     url = "/jiraffe/api/v1/jobs"
 
-    json_format_: Union[Unset, None, str] = UNSET
-    if not isinstance(format_, Unset):
-
-        json_format_ = JiraffeApiV1JobsListFormat(format_).value if format_ else None
-
     params: Dict[str, Any] = {
-        "format": json_format_,
         "limit": limit,
         "offset": offset,
     }
@@ -60,13 +52,11 @@ def _build_response(*, response: httpx.Response) -> Response[PaginatedJiraffeJob
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, JiraffeApiV1JobsListFormat] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
 ) -> Response[PaginatedJiraffeJobList]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
         limit=limit,
         offset=offset,
     )
@@ -82,7 +72,6 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, JiraffeApiV1JobsListFormat] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
 ) -> Optional[PaginatedJiraffeJobList]:
@@ -90,7 +79,6 @@ def sync(
 
     return sync_detailed(
         client=client,
-        format_=format_,
         limit=limit,
         offset=offset,
     ).parsed
@@ -99,13 +87,11 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, JiraffeApiV1JobsListFormat] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
 ) -> Response[PaginatedJiraffeJobList]:
     kwargs = _get_kwargs(
         client=client,
-        format_=format_,
         limit=limit,
         offset=offset,
     )
@@ -119,7 +105,6 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    format_: Union[Unset, None, JiraffeApiV1JobsListFormat] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
 ) -> Optional[PaginatedJiraffeJobList]:
@@ -128,7 +113,6 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
-            format_=format_,
             limit=limit,
             offset=offset,
         )
