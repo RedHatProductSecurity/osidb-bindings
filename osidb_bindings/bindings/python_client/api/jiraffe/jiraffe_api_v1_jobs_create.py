@@ -4,7 +4,7 @@ import httpx
 
 from ...client import AuthenticatedClient
 from ...models.jiraffe_job import JiraffeJob
-from ...types import UNSET, Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(

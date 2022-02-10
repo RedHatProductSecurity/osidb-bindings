@@ -4,7 +4,7 @@ import httpx
 
 from ...client import AuthenticatedClient
 from ...models.collectors_retrieve_response_200 import CollectorsRetrieveResponse200
-from ...types import UNSET, Response
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
