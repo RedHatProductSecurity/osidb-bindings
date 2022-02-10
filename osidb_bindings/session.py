@@ -3,6 +3,7 @@ import importlib
 from .bindings.python_client import AuthenticatedClient
 from .constants import OSIDB_API_VERSION, OSIDB_BINDINGS_API_PATH
 
+# Import API modules via importlib so we can parametrize path and API version
 osidb_flaws_list = importlib.import_module(
     f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_flaws_list",
     package="osidb_bindings",
@@ -52,17 +53,28 @@ class Session:
             verify_ssl=verify_ssl,
         )
 
-    def status(self):
-        return osidb_status_retrieve.sync(client=self.__client)
+    def __get_sync_function(self, api_module):
+        """
+        Get 'sync' function from API module if available (response example is defined in schema)
+        or get basic 'sync_detailed' function (response example is not defined in schema)
+        """
+        return getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
 
-    def retrieve(self, **kwargs):
-        return osidb_flaws_retrieve.sync(client=self.__client, **kwargs)
+    def status(self):
+        status_fn = self.__get_sync_function(osidb_status_retrieve)
+        return status_fn(client=self.__client)
+
+    def retrieve(self, id, **kwargs):
+        flaws_retrieve_fn = self.__get_sync_function(osidb_flaws_retrieve)
+        return flaws_retrieve_fn(client=self.__client, id=id, **kwargs)
 
     def retrieve_list(self, **kwargs):
-        return osidb_flaws_list.sync(client=self.__client, **kwargs)
+        flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
+        return flaws_list_retrieve_fn(client=self.__client, **kwargs)
 
     def search(self, searched_text):
-        return osidb_flaws_list.sync(client=self.__client, search=searched_text)
+        flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
+        return flaws_list_retrieve_fn(client=self.__client, search=searched_text)
 
     def create(self):
         raise NotImplementedError("Flaw create not implemented yet.")
