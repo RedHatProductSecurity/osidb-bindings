@@ -78,29 +78,25 @@ patch release is prefered.
     $ git pull
     ```
 
-3) Create release branch with name matching the specified format (eg. v1.1.1)
+3) Start release script and follow instructions
 
     ```
-    $ git checkout -b vX.X.X
-    ```
-
-4) Prepare release
-
-    ```
-    > make patch-release
+    $ make patch-release
     ```
 
     This will:
-    * update the `bindings` folder in case it hasn't been updated before
-    * increment the patch part of the version (eg. x.x.1 -> x.x.2)
+    * create a new branch
+    * increment the patch part of the version in all necessary places (eg. x.x.1 -> x.x.2)
+    * commit and push the changes
+    * open merge request creation in browser
 
-5) raise MR against master
+4) Confirm MR creation opened by the relase script
 
-6) confirm CI passes
+5) Confirm CI passes
 
-7) merge MR
+6) Merge MR
 
-8) tag new release in git - this will trigger the build and upload to PyPI
+7) Tag new release in git - this will trigger the build and upload to PyPI
     ```
     $ git tag <release version> vX.X.X
     $ git push origin <release version> vX.X.X
