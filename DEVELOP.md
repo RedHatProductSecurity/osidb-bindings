@@ -104,7 +104,7 @@ patch release is prefered.
 
 ### Release with OSIDB
 
-When new OSIDB version is released, major/minor release of the osidb-bindings needs to be performed.
+When new major/minor OSIDB version is released, major/minor release of the osidb-bindings needs to be performed.
 
 1) Clone/update master branch
 
@@ -113,33 +113,28 @@ When new OSIDB version is released, major/minor release of the osidb-bindings ne
     $ git pull
     ```
 
-2) Create release branch with name matching the specified format (eg. v1.1.1)
+2) Start release script and follow instructions (GitLab token will be needed to access GitLab API)
 
     ```
-    $ git checkout -b vX.X.X
-    ```
-
-3) Download OpenAPI schema `yml` file matching the released OSIDB version and replace
-   the `osidb_bindings/openapi_schema.yml` with its content
-
-4) Prepare release
-
-    ```
-    > make release
+    $ make release
     ```
 
     This will:
-    * update the `bindings` folder in case it hasn't been updated before
-    * parse the new version (major/minor) from `openapi_schema.yml` and use it
+    * compare latest version of OSIDB and bindings (safe check before release)
+    * download OpenAPI schema of latest OSIDB version
+    * create a new branch
+    * regenerate bindings
+    * replace version on all places with new OSIDB bindings based on the latest OSIDB version
+    * commit and push the changes
+    * open merge request creation in browser
 
-5) raise MR against master
+3) Confirm MR creation opened by the relase script
 
-6) confirm CI passes
+4) Confirm CI passes
 
-7) merge MR
+5) Merge MR
 
-8) tag new release in git - this will trigger the build and upload to PyPI
+6) Tag new release in git - this will trigger the build and upload to PyPI
     ```
     $ git tag <release version> vX.X.X
     $ git push origin <release version> vX.X.X
-    ```

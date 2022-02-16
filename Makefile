@@ -12,6 +12,7 @@ bindings_dir=$(package_dir)bindings/
 # client generation
 ############################################################################
 update:
+	@echo "Updating bindings python client"
 	cd $(package_dir) \
 	&& $(openapi-python-client) update --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
@@ -19,6 +20,7 @@ update:
 	touch $(bindings_dir)__init__.py
 
 create:
+	@echo "Creating bindings python client"
 	cd $(package_dir) \
 	&& $(openapi-python-client) generate --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
@@ -44,6 +46,5 @@ patch-release:
 	scripts/patch_release.sh
 
 release:
-	@echo ">preparing release"
-	scripts/update_release.sh $$(cat $(package_dir)openapi_schema.yml | grep -Po '(?<=version: )\d+\.\d+\.\d+')
-	$(MAKE) update
+	@echo ">preparing major/minor release"
+	scripts/release.sh
