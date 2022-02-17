@@ -33,13 +33,13 @@ create:
 ############################################################################
 compile-deps:
 	@echo ">compiling python dependencies"
-	$(pc) --generate-hashes --allow-unsafe requirements/base.in
-	$(pc) --generate-hashes --allow-unsafe requirements/dev.in
-	[ -f requirements/local.in ] && $(pc) --generate-hashes --allow-unsafe requirements/local.in || true
+	$(pc) --generate-hashes --allow-unsafe requirements.in
+	$(pc) --generate-hashes --allow-unsafe devel-requirements.in
+	[ -f local-requirements.in ] && $(pc) --generate-hashes --allow-unsafe local-requirements.in || true
 
 sync-deps:
 	@echo ">synchronizing python dependencies"
-	$(ps) requirements/base.txt requirements/dev.txt $$([ -f requirements/local.txt ] && echo 'requirements/local.txt')
+	$(ps) requirements.txt devel-requirements.txt $$([ -f local-requirements.txt ] && echo 'local-requirements.txt')
 
 patch-release:
 	@echo ">preparing patch release"
