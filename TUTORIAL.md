@@ -25,6 +25,18 @@ You can install the bindings via Python 3 pip:
     pip install -e git+https://git.prodsec.redhat.com/devops/osidb-bindings.git@<branch_name>#egg=osidb_bindings
     ```
 
+## OSIDB Compatibility
+
+OSIDB and bindings both uses [semantic versioning](https://semver.org/) (eg. MAJOR.MINOR.PATCH, 1.2.3). Bindings are compatible
+with OSIDB when MAJOR and MINOR version matches.
+
+Eg.
+* OSIDB 1.2.0, bindings 1.2.0 - compatible
+* OSIDB 1.2.0, bindings 1.2.1 - compatible
+* OSIDB 1.2.2, bindings 1.2.1 - compatible
+* OSIDB 1.3.0, bindings 1.2.1 - **feature incomplete**
+* OSIDB 2.0.0, bindings 1.9.9 - **incompatible**
+
 ## Usage
 
 ### Import the bindings

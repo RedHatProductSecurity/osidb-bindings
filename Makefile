@@ -12,6 +12,7 @@ bindings_dir=$(package_dir)bindings/
 # client generation
 ############################################################################
 update:
+	@echo "Updating bindings python client"
 	cd $(package_dir) \
 	&& $(openapi-python-client) update --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
@@ -19,6 +20,7 @@ update:
 	touch $(bindings_dir)__init__.py
 
 create:
+	@echo "Creating bindings python client"
 	cd $(package_dir) \
 	&& $(openapi-python-client) generate --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
@@ -31,19 +33,18 @@ create:
 ############################################################################
 compile-deps:
 	@echo ">compiling python dependencies"
-	$(pc) --generate-hashes --allow-unsafe requirements/base.in
-	$(pc) --generate-hashes --allow-unsafe requirements/dev.in
-	[ -f requirements/local.in ] && $(pc) --generate-hashes --allow-unsafe requirements/local.in || true
+	$(pc) --generate-hashes --allow-unsafe requirements.in
+	$(pc) --generate-hashes --allow-unsafe devel-requirements.in
+	[ -f local-requirements.in ] && $(pc) --generate-hashes --allow-unsafe local-requirements.in || true
 
 sync-deps:
 	@echo ">synchronizing python dependencies"
-	$(ps) requirements/base.txt requirements/dev.txt $$([ -f requirements/local.txt ] && echo 'requirements/local.txt')
+	$(ps) requirements.txt devel-requirements.txt $$([ -f local-requirements.txt ] && echo 'local-requirements.txt')
 
-patch-release: update
+patch-release:
 	@echo ">preparing patch release"
-	scripts/update_release.sh patch
+	scripts/patch_release.sh
 
 release:
-	@echo ">preparing release"
-	scripts/update_release.sh $$(cat $(package_dir)openapi_schema.yml | grep -Po '(?<=version: )\d+\.\d+\.\d+')
-	$(MAKE) update
+	@echo ">preparing major/minor release"
+	scripts/release.sh

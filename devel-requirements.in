@@ -1,5 +1,5 @@
 # Additional set of dependencies required in a local development env
--c base.txt
+-c requirements.txt
 openapi-python-client
 pip-tools
 pytest

@@ -22,4 +22,4 @@ dmypy.json
 /coverage.xml
 /.coverage
 
-requirements/local.*
+local-requirements.*
