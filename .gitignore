@@ -10,6 +10,7 @@ dist/
 # Environments
 .env
 .venv
+venv
 
 # mypy
 .mypy_cache/
@@ -23,3 +24,6 @@ dmypy.json
 /.coverage
 
 local-requirements.*
+
+# Visual Studio Code
+.vscode
