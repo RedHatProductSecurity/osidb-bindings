@@ -50,22 +50,22 @@ Session is the main part of the bindings which you will be using. You can create
 
 You must always specify `osidb_server_uri` of the OSIDB instance you want to access, in this tutorial, we will be accessing local instance of OSIDB hosted on port 8000
 
-Authentication is supported via:
-* Basic authentication - `username` and `password`
+OSIDB uses token (JWT) authentication on most of the endpoints. Bindings handles the token refresh for you. All you need to do is to specify which method is supposed to be used for obtaining the token. OSIDB currently supports two main authentication mechanisms on the token endpoints:
+* Basic authentication - `username` and `password` (used on the OSIDB instances without the kerberos authentication enabled)
     ```python
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password")
     ```
-* Token authentication - `token`
-    ```python
-    session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", token="your_osidb_token")
-    ```
-* NOT YET SUPPORTED - Kerberos authentication - default
+* Kerberos authentication - default (used on the OSIDB instances with kerberos authentication enabled)
     ```python
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
     ```
 
-By default, the SSL verification is enabled, you can disable it by passing `verify_ssl` argument
+By default, the SSL verification is enabled and the path to the cert file is obtained from the `SSL_CERT_FILE`, `REQUEST_CA_BUNDLE` or `CURL_CA_BUNDLE` environmental variables in respective order. If none of these variables are set, the default trusted CA is used (`/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt`). You can change the behavior of the ssl verification either via the mentioned environmental variables or directly via `verify_ssl` argument.
 ```python
+session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=True)
+
+session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl="/path/to/cert")
+
 session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=False)
 ```
 
