@@ -21,15 +21,14 @@ from ...types import Response, UNSET, Unset
 def _get_kwargs(
     {{ arguments(endpoint) | indent(4) }}
 ) -> Dict[str, Any]:
-    {% if endpoint.path_parameters %}
-    url = "{{ endpoint.path }}".format(
+    url = "{}{{ endpoint.path }}".format(
+        client.base_url,
         {%- for parameter in endpoint.path_parameters.values() -%}
         {{parameter.name}}={{parameter.python_name}},
         {%- endfor -%}
     )
-    {% else %}
-    url = "{{ endpoint.path }}"
-    {% endif %}
+
+    headers: Dict[str, Any] = client.get_headers()
 
     {{ header_params(endpoint) | indent(4) }}
 
@@ -43,6 +42,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         {% if endpoint.form_body_class %}
         "data": form_data.to_dict(),
         {% elif endpoint.multipart_body %}
@@ -92,7 +92,9 @@ def sync_detailed(
         {{ kwargs(endpoint) }}
     )
 
-    response = client.get_session().{{ endpoint.method }}(
+    response = httpx.{{ endpoint.method }}(
+        verify=client.verify_ssl,
+        auth=client.auth,
         **kwargs,
     )
     response.raise_for_status()
