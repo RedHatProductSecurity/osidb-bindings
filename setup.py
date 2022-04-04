@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -17,5 +17,5 @@ setup(
     ],
     packages=find_packages(include=["osidb_bindings", "osidb_bindings.*"]),
     python_requires=">=3.6",
-    install_requires=["attrs", "httpx", "python-dateutil"],
+    install_requires=["attrs", "httpx", "httpx-gssapi", "python-dateutil"],
 )
