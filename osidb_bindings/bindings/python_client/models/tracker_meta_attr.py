@@ -13,6 +13,7 @@ class TrackerMetaAttr:
 
     bz_id: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
+    qe_owner: Union[Unset, str] = UNSET
     ps_component: Union[Unset, str] = UNSET
     ps_module: Union[Unset, str] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
@@ -23,6 +24,7 @@ class TrackerMetaAttr:
     def to_dict(self) -> Dict[str, Any]:
         bz_id = self.bz_id
         owner = self.owner
+        qe_owner = self.qe_owner
         ps_component = self.ps_component
         ps_module = self.ps_module
         ps_update_stream = self.ps_update_stream
@@ -35,6 +37,8 @@ class TrackerMetaAttr:
             field_dict["bz_id"] = bz_id
         if owner is not UNSET:
             field_dict["owner"] = owner
+        if qe_owner is not UNSET:
+            field_dict["qe_owner"] = qe_owner
         if ps_component is not UNSET:
             field_dict["ps_component"] = ps_component
         if ps_module is not UNSET:
@@ -55,6 +59,8 @@ class TrackerMetaAttr:
 
         owner = d.pop("owner", UNSET)
 
+        qe_owner = d.pop("qe_owner", UNSET)
+
         ps_component = d.pop("ps_component", UNSET)
 
         ps_module = d.pop("ps_module", UNSET)
@@ -68,6 +74,7 @@ class TrackerMetaAttr:
         tracker_meta_attr = cls(
             bz_id=bz_id,
             owner=owner,
+            qe_owner=qe_owner,
             ps_component=ps_component,
             ps_module=ps_module,
             ps_update_stream=ps_update_stream,

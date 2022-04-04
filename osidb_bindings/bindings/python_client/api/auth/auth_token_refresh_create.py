@@ -2,19 +2,19 @@ from typing import Any, Dict, Optional
 
 import httpx
 
-from ...client import AuthenticatedClient
-from ...models.jiraffe_job import JiraffeJob
+from ...client import Client
+from ...models.token_refresh import TokenRefresh
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
 ) -> Dict[str, Any]:
-    url = "{}/jiraffe/api/v1/jobs".format(
+    url = "{}/auth/token/refresh".format(
         client.base_url,
     )
 
@@ -35,20 +35,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[JiraffeJob]:
+def _parse_response(*, response: httpx.Response) -> Optional[TokenRefresh]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: JiraffeJob
+        response_200: TokenRefresh
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = JiraffeJob.from_dict(_response_200)
+            response_200 = TokenRefresh.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[JiraffeJob]:
+def _build_response(*, response: httpx.Response) -> Response[TokenRefresh]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -59,11 +59,11 @@ def _build_response(*, response: httpx.Response) -> Response[JiraffeJob]:
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Response[JiraffeJob]:
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Response[TokenRefresh]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -84,12 +84,13 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Optional[JiraffeJob]:
-    """Create a JiraffeJob"""
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Optional[TokenRefresh]:
+    """Takes a refresh type JSON web token and returns an access type JSON web
+    token if the refresh token is valid."""
 
     return sync_detailed(
         client=client,
@@ -101,11 +102,11 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Response[JiraffeJob]:
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Response[TokenRefresh]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -121,12 +122,13 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Optional[JiraffeJob]:
-    """Create a JiraffeJob"""
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Optional[TokenRefresh]:
+    """Takes a refresh type JSON web token and returns an access type JSON web
+    token if the refresh token is valid."""
 
     return (
         await asyncio_detailed(

@@ -15,7 +15,11 @@ def _get_kwargs(
     format_: Union[Unset, None, OsidbApiV1SchemaRetrieveFormat] = UNSET,
     lang: Union[Unset, None, OsidbApiV1SchemaRetrieveLang] = UNSET,
 ) -> Dict[str, Any]:
-    url = "/osidb/api/v1/schema/"
+    url = "{}/osidb/api/v1/schema/".format(
+        client.base_url,
+    )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
@@ -35,6 +39,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         "params": params,
     }
 
@@ -73,7 +78,10 @@ def sync_detailed(
         lang=lang,
     )
 
-    response = client.get_session().get(
+    response = httpx.get(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()

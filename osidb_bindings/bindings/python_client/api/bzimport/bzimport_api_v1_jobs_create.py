@@ -14,7 +14,11 @@ def _get_kwargs(
     multipart_data: Job,
     json_body: Job,
 ) -> Dict[str, Any]:
-    url = "/bzimport/api/v1/jobs"
+    url = "{}/bzimport/api/v1/jobs".format(
+        client.base_url,
+    )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -26,6 +30,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         "data": form_data.to_dict(),
     }
 
@@ -66,7 +71,10 @@ def sync_detailed(
         json_body=json_body,
     )
 
-    response = client.get_session().post(
+    response = httpx.post(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()

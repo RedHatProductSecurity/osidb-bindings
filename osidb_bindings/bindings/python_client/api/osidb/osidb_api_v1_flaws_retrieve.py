@@ -17,9 +17,12 @@ def _get_kwargs(
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Dict[str, Any]:
-    url = "/osidb/api/v1/flaws/{id}".format(
+    url = "{}/osidb/api/v1/flaws/{id}".format(
+        client.base_url,
         id=id,
     )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     json_exclude_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
@@ -67,6 +70,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         "params": params,
     }
 
@@ -113,7 +117,10 @@ def sync_detailed(
         tracker_ids=tracker_ids,
     )
 
-    response = client.get_session().get(
+    response = httpx.get(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()
