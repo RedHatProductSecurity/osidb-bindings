@@ -95,6 +95,7 @@ def sync_detailed(
     response = httpx.{{ endpoint.method }}(
         verify=client.verify_ssl,
         auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()
