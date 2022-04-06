@@ -4,7 +4,7 @@ A client library for accessing OSIDB API
 ## Installation
 
 ```
-pip install -e git+https://git.prodsec.redhat.com/devops/osidb-bindings.git#egg=osidb_bindings
+pip install osidb_bindings
 ```
 
 ## Usage
