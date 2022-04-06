@@ -11,14 +11,14 @@ without any deep knowledge about HTTP
 
 You can install the bindings via Python 3 pip:
 
+* from [PyPI](https://pypi.org/project/osidb-bindings/)
+    ```
+    pip install osidb-bindings
+    ```
 * directly from the [GitLab](https://git.prodsec.redhat.com/devops/osidb-bindings) repository (will install the version
     from master branch)
     ```
     pip install -e git+https://git.prodsec.redhat.com/devops/osidb-bindings.git#egg=osidb_bindings
-    ```
-* NOT YET SUPPORTED - from [PyPI](https://pypi.org/)
-    ```
-    pip install osidb-bindings
     ```
 * OPTIONAL - directly from the [GitLab](https://git.prodsec.redhat.com/devops/osidb-bindings) repository with branch specification
     ```
@@ -36,6 +36,8 @@ Eg.
 * OSIDB 1.2.2, bindings 1.2.1 - compatible
 * OSIDB 1.3.0, bindings 1.2.1 - **feature incomplete**
 * OSIDB 2.0.0, bindings 1.9.9 - **incompatible**
+
+**This compatibility starts from version 1.1.0. Any previous version of bindings is considered experimental and should not be used.**
 
 ## Usage
 
