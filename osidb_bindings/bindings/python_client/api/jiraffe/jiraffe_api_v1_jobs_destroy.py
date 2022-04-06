@@ -11,12 +11,16 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "/jiraffe/api/v1/jobs/{id}".format(
+    url = "{}/jiraffe/api/v1/jobs/{id}".format(
+        client.base_url,
         id=id,
     )
 
+    headers: Dict[str, Any] = client.get_headers()
+
     return {
         "url": url,
+        "headers": headers,
     }
 
 
@@ -39,7 +43,10 @@ def sync_detailed(
         client=client,
     )
 
-    response = client.get_session().delete(
+    response = httpx.delete(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()

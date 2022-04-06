@@ -17,8 +17,8 @@ osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:80
 ```
 or
 ```python
-# Token auth
-osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", token="token")
+# Default kerberos auth
+osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
 ```
 
 ```python

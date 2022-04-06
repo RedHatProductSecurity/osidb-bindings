@@ -10,10 +10,15 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "/osidb/api/v1/manifest"
+    url = "{}/osidb/api/v1/manifest".format(
+        client.base_url,
+    )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     return {
         "url": url,
+        "headers": headers,
     }
 
 
@@ -34,7 +39,10 @@ def sync_detailed(
         client=client,
     )
 
-    response = client.get_session().get(
+    response = httpx.get(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()

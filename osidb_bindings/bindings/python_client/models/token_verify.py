@@ -4,45 +4,31 @@ import attr
 
 from ..types import UNSET
 
-T = TypeVar("T", bound="AuthToken")
+T = TypeVar("T", bound="TokenVerify")
 
 
 @attr.s(auto_attribs=True)
-class AuthToken:
+class TokenVerify:
     """ """
 
-    username: str
-    password: str
     token: str
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        username = self.username
-        password = self.password
         token = self.token
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if username is not UNSET:
-            field_dict["username"] = username
-        if password is not UNSET:
-            field_dict["password"] = password
         if token is not UNSET:
             field_dict["token"] = token
 
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        username = self.username if self.username is UNSET else (None, str(self.username), "text/plain")
-        password = self.password if self.password is UNSET else (None, str(self.password), "text/plain")
         token = self.token if self.token is UNSET else (None, str(self.token), "text/plain")
 
         field_dict: Dict[str, Any] = {}
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
-        if username is not UNSET:
-            field_dict["username"] = username
-        if password is not UNSET:
-            field_dict["password"] = password
         if token is not UNSET:
             field_dict["token"] = token
 
@@ -51,20 +37,14 @@ class AuthToken:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        username = d.pop("username", UNSET)
-
-        password = d.pop("password", UNSET)
-
         token = d.pop("token", UNSET)
 
-        auth_token = cls(
-            username=username,
-            password=password,
+        token_verify = cls(
             token=token,
         )
 
-        auth_token.additional_properties = d
-        return auth_token
+        token_verify.additional_properties = d
+        return token_verify
 
     @property
     def additional_keys(self) -> List[str]:

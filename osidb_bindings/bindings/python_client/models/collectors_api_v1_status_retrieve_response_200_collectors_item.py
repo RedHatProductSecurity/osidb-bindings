@@ -26,7 +26,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
     depends_on: Union[Unset, List[str]] = UNSET
     error: Union[Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError] = UNSET
     is_complete: Union[Unset, bool] = UNSET
-    model: Union[Unset, str] = UNSET
+    data_models: Union[Unset, List[str]] = UNSET
     state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState] = UNSET
     updated_until: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -46,7 +46,10 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
             error = self.error.to_dict() if self.error else None
 
         is_complete = self.is_complete
-        model = self.model
+        data_models: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.data_models, Unset):
+            data_models = self.data_models
+
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
 
@@ -66,8 +69,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
             field_dict["error"] = error
         if is_complete is not UNSET:
             field_dict["is_complete"] = is_complete
-        if model is not UNSET:
-            field_dict["model"] = model
+        if data_models is not UNSET:
+            field_dict["data_models"] = data_models
         if state is not UNSET:
             field_dict["state"] = state
         if updated_until is not UNSET:
@@ -98,7 +101,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
 
         is_complete = d.pop("is_complete", UNSET)
 
-        model = d.pop("model", UNSET)
+        data_models = cast(List[str], d.pop("data_models", UNSET))
 
         _state = d.pop("state", UNSET)
         state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState]
@@ -119,7 +122,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
             depends_on=depends_on,
             error=error,
             is_complete=is_complete,
-            model=model,
+            data_models=data_models,
             state=state,
             updated_until=updated_until,
         )

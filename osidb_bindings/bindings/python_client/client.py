@@ -1,5 +1,5 @@
 import ssl
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Type, Union
 
 import attr
 import httpx
@@ -12,7 +12,7 @@ class Client:
     base_url: str
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
-    timeout: float = attr.ib(5.0, kw_only=True)
+    timeout: float = attr.ib(300.0, kw_only=True)
     verify_ssl: Union[str, bool, ssl.SSLContext] = attr.ib(True, kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
@@ -42,32 +42,11 @@ class Client:
 class AuthenticatedClient(Client):
     """A Client which has been authenticated for use on secured endpoints"""
 
-    auth: Union[str, Tuple[str, str]]
+    auth: Union[None, Tuple[str, str], Type[httpx.Auth]] = attr.ib(None, kw_only=True)
 
-    def __attrs_post_init__(self):
-        """Create new session after class initialization"""
-        self.create_session()
-
-    def get_auth(self):
+    def get_auth(self) -> Union[None, Tuple[str, str], Type[httpx.Auth]]:
         return self.auth
 
-    def get_session(self):
-        return self.session
-
-    def create_session(self):
-        """Create new session with the arguments obtained from client"""
-        self.session = httpx.Client(
-            base_url=self.base_url,
-            auth=self.auth,
-            headers=self.headers,
-            cookies=self.cookies,
-            timeout=self.timeout,
-            verify=self.verify_ssl,
-        )
-
-    def close_session(self):
-        self.session.close()
-
-    def reload_session(self):
-        self.close_session()
-        self.create_session()
+    def with_auth(self, auth: Union[None, Tuple[str, str], Type[httpx.Auth]]) -> "Client":
+        """Get a new client matching this one with a new auth method"""
+        return attr.evolve(self, auth=auth)

@@ -15,9 +15,12 @@ def _get_kwargs(
     multipart_data: Flaw,
     json_body: Flaw,
 ) -> Dict[str, Any]:
-    url = "/osidb/api/v1/flaws/{id}".format(
+    url = "{}/osidb/api/v1/flaws/{id}".format(
+        client.base_url,
         id=id,
     )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -29,6 +32,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         "data": form_data.to_dict(),
     }
 
@@ -71,7 +75,10 @@ def sync_detailed(
         json_body=json_body,
     )
 
-    response = client.get_session().put(
+    response = httpx.put(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()

@@ -51,7 +51,11 @@ def _get_kwargs(
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
-    url = "/osidb/api/v1/flaws"
+    url = "{}/osidb/api/v1/flaws".format(
+        client.base_url,
+    )
+
+    headers: Dict[str, Any] = client.get_headers()
 
     json_changed_after: Union[Unset, None, str] = UNSET
     if not isinstance(changed_after, Unset):
@@ -188,6 +192,7 @@ def _get_kwargs(
 
     return {
         "url": url,
+        "headers": headers,
         "params": params,
     }
 
@@ -288,7 +293,10 @@ def sync_detailed(
         uuid=uuid,
     )
 
-    response = client.get_session().get(
+    response = httpx.get(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
     response.raise_for_status()
