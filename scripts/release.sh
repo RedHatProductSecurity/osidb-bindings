@@ -91,7 +91,7 @@ get_new_version() {
     if [ ${split_osidb_version[0]} -gt ${split_bindings_version[0]} ]; then
         echo "New major version of OSIDB found [${latest_osidb_version}]"
         new_version=$(echo $(local IFS="." ; echo "${split_osidb_version[*]}"))
-    elif [ ${split_osidb_version[0]} -gt ${split_bindings_version[0]} ];then
+    elif [ ${split_osidb_version[1]} -gt ${split_bindings_version[1]} ];then
         echo "New minor version of OSIDB found [${latest_osidb_version}]"
         new_version=$(echo $(local IFS="." ; echo "${split_osidb_version[*]}"))
     else
