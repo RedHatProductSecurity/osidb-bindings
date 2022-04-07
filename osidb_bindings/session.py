@@ -186,6 +186,3 @@ class Session:
 
     def delete(self):
         raise NotImplementedError("Flaw delete not implemented yet.")
-
-    def reload_session(self):
-        self.__client.reload_session()
