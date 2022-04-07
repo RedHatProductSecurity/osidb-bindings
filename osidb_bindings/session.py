@@ -12,7 +12,12 @@ from .bindings.python_client.api.auth import (
 )
 from .bindings.python_client.models import Flaw, TokenObtainPair, TokenRefresh
 from .bindings.python_client.types import UNSET
-from .constants import OSIDB_API_VERSION, OSIDB_BINDINGS_API_PATH, TRUSTED_CAS
+from .constants import (
+    OSIDB_API_VERSION,
+    OSIDB_BINDINGS_API_PATH,
+    OSIDB_BINDINGS_USERAGENT,
+    TRUSTED_CAS,
+)
 
 # Import API modules via importlib so we can parametrize path and API version
 osidb_flaws_list = importlib.import_module(
@@ -77,6 +82,7 @@ class Session:
 
         self.__client = AuthenticatedClient(
             base_url=base_url,
+            headers={"User-Agent": OSIDB_BINDINGS_USERAGENT},
             verify_ssl=verify_ssl,
         )
 
@@ -157,7 +163,7 @@ class Session:
     def search(self, searched_text):
         flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
         return flaws_list_retrieve_fn(
-            client=self.self.__client_with_new_access_token, search=searched_text
+            client=self.__client_with_new_access_token, search=searched_text
         )
 
     def create(self, form_data):
@@ -165,7 +171,7 @@ class Session:
 
         flaws_create_fn = self.__get_sync_function(osidb_flaws_create)
         return flaws_create_fn(
-            client=self.self.__client_with_new_access_token,
+            client=self.__client_with_new_access_token,
             form_data=flaw_data,
             json_body=UNSET,
             multipart_data=UNSET,
@@ -176,7 +182,7 @@ class Session:
 
         flaws_update_fn = self.__get_sync_function(osidb_flaws_update)
         return flaws_update_fn(
-            client=self.self.__client_with_new_access_token,
+            client=self.__client_with_new_access_token,
             id=id,
             form_data=flaw_data,
             json_body=UNSET,
@@ -186,6 +192,3 @@ class Session:
 
     def delete(self):
         raise NotImplementedError("Flaw delete not implemented yet.")
-
-    def reload_session(self):
-        self.__client.reload_session()
