@@ -50,6 +50,9 @@ update_version() {
     echo "Replacing version in pyproject.toml of low level bindings to ${version}"
     sed -i 's/version = "[0-9]*\.[0-9]*\.[0-9]*"/version = "'${version}'"/g' osidb_bindings/bindings/pyproject.toml
 
+    echo "Replacing user agent version in constants.py to ${version}"
+    sed -i 's/"osidb-bindings-[0-9]*\.[0-9]*\.[0-9]*"/"osidb-bindings-'${version}'"/g' osidb_bindings/constants.py
+
     echo
 }
 

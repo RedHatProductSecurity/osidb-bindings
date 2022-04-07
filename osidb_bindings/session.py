@@ -12,7 +12,12 @@ from .bindings.python_client.api.auth import (
 )
 from .bindings.python_client.models import Flaw, TokenObtainPair, TokenRefresh
 from .bindings.python_client.types import UNSET
-from .constants import OSIDB_API_VERSION, OSIDB_BINDINGS_API_PATH, TRUSTED_CAS
+from .constants import (
+    OSIDB_API_VERSION,
+    OSIDB_BINDINGS_API_PATH,
+    OSIDB_BINDINGS_USERAGENT,
+    TRUSTED_CAS,
+)
 
 # Import API modules via importlib so we can parametrize path and API version
 osidb_flaws_list = importlib.import_module(
@@ -77,6 +82,7 @@ class Session:
 
         self.__client = AuthenticatedClient(
             base_url=base_url,
+            headers={"User-Agent": OSIDB_BINDINGS_USERAGENT},
             verify_ssl=verify_ssl,
         )
 
