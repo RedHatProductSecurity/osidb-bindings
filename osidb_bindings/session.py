@@ -157,7 +157,7 @@ class Session:
     def search(self, searched_text):
         flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
         return flaws_list_retrieve_fn(
-            client=self.self.__client_with_new_access_token, search=searched_text
+            client=self.__client_with_new_access_token, search=searched_text
         )
 
     def create(self, form_data):
@@ -165,7 +165,7 @@ class Session:
 
         flaws_create_fn = self.__get_sync_function(osidb_flaws_create)
         return flaws_create_fn(
-            client=self.self.__client_with_new_access_token,
+            client=self.__client_with_new_access_token,
             form_data=flaw_data,
             json_body=UNSET,
             multipart_data=UNSET,
@@ -176,7 +176,7 @@ class Session:
 
         flaws_update_fn = self.__get_sync_function(osidb_flaws_update)
         return flaws_update_fn(
-            client=self.self.__client_with_new_access_token,
+            client=self.__client_with_new_access_token,
             id=id,
             form_data=flaw_data,
             json_body=UNSET,
