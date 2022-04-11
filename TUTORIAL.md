@@ -109,12 +109,18 @@ This section describes possible session operations. See [response section](#resp
 
     # datetime query parameters
     from datetime import datetime
-    datetime_query_flaws_response = session.retrieve_list(changed_before=datetime.now(), changed_after=datetime("2021-01-01"))
+    changed_before_flaws_response = session.retrieve_list(changed_before=datetime.now())
+    changed_after_flaws_response = session.retrieve_list(changed_after=datetime(2021,7,13))
+    changed_after_and_before_response = session.retrieve_list(
+        changed_after=datetime.strptime("2021-07-13", "%Y-%m-%d"),
+        changed_before=datetime.strptime("2021-12-24", "%Y-%m-%d"),
+    )
+
 
     # comma separated list query parameters
     specified_cves_flaws_response = session.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")
 
-    multiple_criteria_flaws_response = session.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime("2021-07-12"))
+    multiple_criteria_flaws_response = session.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime(2021,7,12))
     ```
 
 * #### ```search```
@@ -141,7 +147,7 @@ This section describes possible session operations. See [response section](#resp
         "summary": "New summary",
         "statement": "New statement",
         "cwe_id": "CWE-123",
-        "unembargo_dt": datetime("2022-01-01"),
+        "unembargo_dt": datetime(2022,1,1),
         "source": "ADOBE",
         "reported_dt": "2022-02-10T15:27:24.131Z",
         "mitigated_by": "SELINUX",
@@ -158,7 +164,6 @@ This section describes possible session operations. See [response section](#resp
 
     See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
     ```python
-    from datetime import datetime
     update_data = {
         "cve_id": "CVE-1111-3333",
         "resolution": "ERRATA",
