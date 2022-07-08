@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_schema_retrieve_format import OsidbApiV1SchemaRetrieveFormat
@@ -44,7 +44,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[OsidbApiV1SchemaRetrieveResponse200]:
+def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1SchemaRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbApiV1SchemaRetrieveResponse200
@@ -57,7 +57,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[OsidbApiV1SchemaRet
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[OsidbApiV1SchemaRetrieveResponse200]:
+def _build_response(*, response: requests.Response) -> Response[OsidbApiV1SchemaRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -78,7 +78,7 @@ def sync_detailed(
         lang=lang,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -104,42 +104,4 @@ def sync(
         client=client,
         format_=format_,
         lang=lang,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-    format_: Union[Unset, None, OsidbApiV1SchemaRetrieveFormat] = UNSET,
-    lang: Union[Unset, None, OsidbApiV1SchemaRetrieveLang] = UNSET,
-) -> Response[OsidbApiV1SchemaRetrieveResponse200]:
-    kwargs = _get_kwargs(
-        client=client,
-        format_=format_,
-        lang=lang,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    format_: Union[Unset, None, OsidbApiV1SchemaRetrieveFormat] = UNSET,
-    lang: Union[Unset, None, OsidbApiV1SchemaRetrieveLang] = UNSET,
-) -> Optional[OsidbApiV1SchemaRetrieveResponse200]:
-    """OpenApi3 schema for this API. Format can be selected via content negotiation.
-
-    - YAML: application/vnd.oai.openapi
-    - JSON: application/vnd.oai.openapi+json"""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            format_=format_,
-            lang=lang,
-        )
     ).parsed

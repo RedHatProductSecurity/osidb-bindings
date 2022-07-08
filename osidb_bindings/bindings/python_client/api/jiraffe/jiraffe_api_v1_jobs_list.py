@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.paginated_jiraffe_job_list import PaginatedJiraffeJobList
@@ -32,7 +32,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[PaginatedJiraffeJobList]:
+def _parse_response(*, response: requests.Response) -> Optional[PaginatedJiraffeJobList]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: PaginatedJiraffeJobList
@@ -45,7 +45,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[PaginatedJiraffeJob
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[PaginatedJiraffeJobList]:
+def _build_response(*, response: requests.Response) -> Response[PaginatedJiraffeJobList]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
         offset=offset,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -89,39 +89,4 @@ def sync(
         client=client,
         limit=limit,
         offset=offset,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedJiraffeJobList]:
-    kwargs = _get_kwargs(
-        client=client,
-        limit=limit,
-        offset=offset,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedJiraffeJobList]:
-    """Fetch list of JiraffeJobs"""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            limit=limit,
-            offset=offset,
-        )
     ).parsed

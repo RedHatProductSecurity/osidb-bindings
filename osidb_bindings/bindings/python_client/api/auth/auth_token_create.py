@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-import httpx
+import requests
 
 from ...client import Client
 from ...models.token_obtain_pair import TokenObtainPair
@@ -35,7 +35,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[TokenObtainPair]:
+def _parse_response(*, response: requests.Response) -> Optional[TokenObtainPair]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: TokenObtainPair
@@ -48,7 +48,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[TokenObtainPair]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[TokenObtainPair]:
+def _build_response(*, response: requests.Response) -> Response[TokenObtainPair]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -71,7 +71,7 @@ def sync_detailed(
         json_body=json_body,
     )
 
-    response = httpx.post(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -97,44 +97,4 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: Client,
-    form_data: TokenObtainPair,
-    multipart_data: TokenObtainPair,
-    json_body: TokenObtainPair,
-) -> Response[TokenObtainPair]:
-    kwargs = _get_kwargs(
-        client=client,
-        form_data=form_data,
-        multipart_data=multipart_data,
-        json_body=json_body,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: Client,
-    form_data: TokenObtainPair,
-    multipart_data: TokenObtainPair,
-    json_body: TokenObtainPair,
-) -> Optional[TokenObtainPair]:
-    """Takes a set of user credentials and returns an access and refresh JSON web
-    token pair to prove the authentication of those credentials."""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            form_data=form_data,
-            multipart_data=multipart_data,
-            json_body=json_body,
-        )
     ).parsed

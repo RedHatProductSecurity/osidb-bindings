@@ -1,7 +1,7 @@
 import datetime
 from typing import Any, Dict, List, Optional, Union
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
@@ -197,7 +197,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[PaginatedFlawList]:
+def _parse_response(*, response: requests.Response) -> Optional[PaginatedFlawList]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: PaginatedFlawList
@@ -210,7 +210,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[PaginatedFlawList]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[PaginatedFlawList]:
+def _build_response(*, response: requests.Response) -> Response[PaginatedFlawList]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -293,7 +293,7 @@ def sync_detailed(
         uuid=uuid,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -378,163 +378,4 @@ def sync(
         unembargo_dt=unembargo_dt,
         updated_dt=updated_dt,
         uuid=uuid,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-    bz_id: Union[Unset, None, float] = UNSET,
-    changed_after: Union[Unset, None, datetime.datetime] = UNSET,
-    changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cve_id: Union[Unset, None, List[str]] = UNSET,
-    cvss2: Union[Unset, None, str] = UNSET,
-    cvss2_score: Union[Unset, None, float] = UNSET,
-    cvss3: Union[Unset, None, str] = UNSET,
-    cvss3_score: Union[Unset, None, float] = UNSET,
-    cwe_id: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1FlawsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    mitigated_by: Union[Unset, None, OsidbApiV1FlawsListMitigatedBy] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1FlawsListResolution] = UNSET,
-    search: Union[Unset, None, str] = UNSET,
-    source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
-    state: Union[Unset, None, OsidbApiV1FlawsListState] = UNSET,
-    statement: Union[Unset, None, str] = UNSET,
-    summary: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
-    tracker_ids: Union[Unset, None, List[str]] = UNSET,
-    type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
-    unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
-) -> Response[PaginatedFlawList]:
-    kwargs = _get_kwargs(
-        client=client,
-        bz_id=bz_id,
-        changed_after=changed_after,
-        changed_before=changed_before,
-        created_dt=created_dt,
-        cve_id=cve_id,
-        cvss2=cvss2,
-        cvss2_score=cvss2_score,
-        cvss3=cvss3,
-        cvss3_score=cvss3_score,
-        cwe_id=cwe_id,
-        description=description,
-        embargoed=embargoed,
-        exclude_fields=exclude_fields,
-        flaw_meta_type=flaw_meta_type,
-        impact=impact,
-        include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
-        limit=limit,
-        mitigated_by=mitigated_by,
-        offset=offset,
-        reported_dt=reported_dt,
-        resolution=resolution,
-        search=search,
-        source=source,
-        state=state,
-        statement=statement,
-        summary=summary,
-        title=title,
-        tracker_ids=tracker_ids,
-        type=type,
-        unembargo_dt=unembargo_dt,
-        updated_dt=updated_dt,
-        uuid=uuid,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    bz_id: Union[Unset, None, float] = UNSET,
-    changed_after: Union[Unset, None, datetime.datetime] = UNSET,
-    changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cve_id: Union[Unset, None, List[str]] = UNSET,
-    cvss2: Union[Unset, None, str] = UNSET,
-    cvss2_score: Union[Unset, None, float] = UNSET,
-    cvss3: Union[Unset, None, str] = UNSET,
-    cvss3_score: Union[Unset, None, float] = UNSET,
-    cwe_id: Union[Unset, None, str] = UNSET,
-    description: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1FlawsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    mitigated_by: Union[Unset, None, OsidbApiV1FlawsListMitigatedBy] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1FlawsListResolution] = UNSET,
-    search: Union[Unset, None, str] = UNSET,
-    source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
-    state: Union[Unset, None, OsidbApiV1FlawsListState] = UNSET,
-    statement: Union[Unset, None, str] = UNSET,
-    summary: Union[Unset, None, str] = UNSET,
-    title: Union[Unset, None, str] = UNSET,
-    tracker_ids: Union[Unset, None, List[str]] = UNSET,
-    type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
-    unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
-) -> Optional[PaginatedFlawList]:
-    """ """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            bz_id=bz_id,
-            changed_after=changed_after,
-            changed_before=changed_before,
-            created_dt=created_dt,
-            cve_id=cve_id,
-            cvss2=cvss2,
-            cvss2_score=cvss2_score,
-            cvss3=cvss3,
-            cvss3_score=cvss3_score,
-            cwe_id=cwe_id,
-            description=description,
-            embargoed=embargoed,
-            exclude_fields=exclude_fields,
-            flaw_meta_type=flaw_meta_type,
-            impact=impact,
-            include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
-            limit=limit,
-            mitigated_by=mitigated_by,
-            offset=offset,
-            reported_dt=reported_dt,
-            resolution=resolution,
-            search=search,
-            source=source,
-            state=state,
-            statement=statement,
-            summary=summary,
-            title=title,
-            tracker_ids=tracker_ids,
-            type=type,
-            unembargo_dt=unembargo_dt,
-            updated_dt=updated_dt,
-            uuid=uuid,
-        )
     ).parsed

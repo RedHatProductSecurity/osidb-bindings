@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.collectors_api_v1_status_retrieve_response_200 import CollectorsApiV1StatusRetrieveResponse200
@@ -23,7 +23,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
+def _parse_response(*, response: requests.Response) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: CollectorsApiV1StatusRetrieveResponse200
@@ -36,7 +36,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[CollectorsApiV1Stat
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
+def _build_response(*, response: requests.Response) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -53,7 +53,7 @@ def sync_detailed(
         client=client,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -72,31 +72,4 @@ def sync(
 
     return sync_detailed(
         client=client,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
-    kwargs = _get_kwargs(
-        client=client,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
-    """get the overall status of all collectors and the collected data"""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-        )
     ).parsed
