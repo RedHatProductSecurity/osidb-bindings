@@ -1,5 +1,4 @@
 import importlib
-import os
 
 import requests
 from requests_gssapi import HTTPSPNEGOAuth
@@ -16,7 +15,6 @@ from .constants import (
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_USERAGENT,
-    TRUSTED_CAS,
 )
 
 # Import API modules via importlib so we can parametrize path and API version
@@ -46,19 +44,9 @@ def new_session(
     osidb_server_uri,
     password=None,
     username=None,
-    verify_ssl=None,
+    verify_ssl=True,
 ):
     """Create a new session for selected OSIDB URI"""
-
-    if verify_ssl is None:
-
-        # Use httpx/requests/cURL environment variables or set default trusted CAs
-        verify_ssl = (
-            os.getenv("SSL_CERT_FILE")
-            or os.getenv("REQUESTS_CA_BUNDLE")
-            or os.getenv("CURL_CA_BUNDLE")
-            or TRUSTED_CAS
-        )
 
     if username and password:
 

@@ -62,8 +62,15 @@ OSIDB uses token (JWT) authentication on most of the endpoints. Bindings handles
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
     ```
 
-By default, the SSL verification is enabled and the path to the cert file is obtained from the `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE` or `CURL_CA_BUNDLE` environmental variables in respective order. If none of these variables are set, the default trusted CA is used (`/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt`). You can change the behavior of the ssl verification either via the mentioned environmental variables or directly via `verify_ssl` argument.
+The SSL verification is enabled by the default and in order to work properly you should export the `REQUESTS_CA_BUNDLE` environment variable to point to the location with the proper CA bundle. For example:
+
+```bash
+export REQUESTS_CA_BUNDLE="/etc/pki/tls/certs/ca-bundle.crt"
+```
+
+You can also pass the path to the CA bundle directly when creating the new session or you can disable the SSL verification:
 ```python
+# default behavior, REQUESTS_CA_BUNDLE should be exported
 session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=True)
 
 session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl="/path/to/cert")
