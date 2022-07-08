@@ -1,43 +1,43 @@
 import importlib
+from types import ModuleType
+from typing import Any, Callable, Dict, List
 
 import requests
 from requests_gssapi import HTTPSPNEGOAuth
 
-from .bindings.python_client import AuthenticatedClient
+from .bindings.python_client import AuthenticatedClient, models
 from .bindings.python_client.api.auth import (
     auth_token_create,
     auth_token_refresh_create,
     auth_token_retrieve,
 )
-from .bindings.python_client.models import Flaw, TokenObtainPair, TokenRefresh
 from .bindings.python_client.types import UNSET
 from .constants import (
+    ALL_SESSION_OPERATIONS,
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_USERAGENT,
+    RESOURCE_TO_MODEL_MAPPING,
 )
 
-# Import API modules via importlib so we can parametrize path and API version
-osidb_flaws_list = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_flaws_list",
-    package="osidb_bindings",
-)
-osidb_flaws_retrieve = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_flaws_retrieve",
-    package="osidb_bindings",
-)
-osidb_flaws_create = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_flaws_create",
-    package="osidb_bindings",
-)
-osidb_flaws_update = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_flaws_update",
-    package="osidb_bindings",
-)
 osidb_status_retrieve = importlib.import_module(
     f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
     package="osidb_bindings",
 )
+
+
+class OperationUnsupported(Exception):
+    """Session operation is unsupported exception"""
+
+    pass
+
+
+def get_sync_function(api_module: ModuleType) -> Callable:
+    """
+    Get 'sync' function from API module if available (response example is defined in schema)
+    or get basic 'sync_detailed' function (response example is not defined in schema)
+    """
+    return getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
 
 
 def new_session(
@@ -74,7 +74,46 @@ class Session:
             verify_ssl=verify_ssl,
         )
 
+        self.flaws = SessionOperationsGroup(
+            self.__get_client_with_new_access_token,
+            "flaws",
+            allowed_operations=(
+                "retrieve",
+                "update",
+                "list",
+                "create",
+                "destroy",
+                "search",
+            ),
+        )
+        self.affects = SessionOperationsGroup(
+            self.__get_client_with_new_access_token,
+            "affects",
+            allowed_operations=(
+                "retrieve",
+                "update",
+                "list",
+                "create",
+                "destroy",
+            ),
+        )
+        self.trackers = SessionOperationsGroup(
+            self.__get_client_with_new_access_token,
+            "trackers",
+            allowed_operations=(
+                "retrieve",
+                "update",
+                "list",
+                "create",
+                "destroy",
+            ),
+        )
+
         self.refresh_token = self.__get_refresh_token()
+
+    def status(self):
+        status_fn = self.__get_sync_function(osidb_status_retrieve)
+        return status_fn(client=self.__client_with_new_access_token)
 
     def __get_refresh_token(self) -> str:
         """Get resfresh token based on the auth type"""
@@ -82,7 +121,7 @@ class Session:
         if isinstance(self.auth, tuple):
             response = auth_token_create.sync(
                 client=self.__client,
-                form_data=TokenObtainPair.from_dict(
+                form_data=models.TokenObtainPair.from_dict(
                     {"username": self.auth[0], "password": self.auth[1]}
                 ),
                 multipart_data=UNSET,
@@ -100,7 +139,9 @@ class Session:
         try:
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                form_data=TokenRefresh.from_dict({"refresh": self.refresh_token}),
+                form_data=models.TokenRefresh.from_dict(
+                    {"refresh": self.refresh_token}
+                ),
                 multipart_data=UNSET,
                 json_body=UNSET,
             )
@@ -110,73 +151,157 @@ class Session:
             self.refresh_token = self.__get_refresh_token()
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                form_data=TokenRefresh.from_dict({"refresh": self.refresh_token}),
+                form_data=models.TokenRefresh.from_dict(
+                    {"refresh": self.refresh_token}
+                ),
                 multipart_data=UNSET,
                 json_body=UNSET,
             )
 
         return response.access
 
-    @property
-    def __client_with_new_access_token(self) -> AuthenticatedClient:
+    def __get_client_with_new_access_token(self) -> AuthenticatedClient:
         """Create a new client with refreshed access token"""
 
         return self.__client.with_headers(
             {"Authorization": f"Bearer {self.__get_access_token()}"}
         )
 
-    def __get_sync_function(self, api_module):
-        """
-        Get 'sync' function from API module if available (response example is defined in schema)
-        or get basic 'sync_detailed' function (response example is not defined in schema)
-        """
-        return getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
 
-    def status(self):
-        status_fn = self.__get_sync_function(osidb_status_retrieve)
-        return status_fn(client=self.__client_with_new_access_token)
+class SessionOperationsGroup:
+    """
+    Group of the CRUD and extra operations for one specific resource
+    """
+
+    def __init__(
+        self,
+        client: Callable,
+        resource_name: str,
+        allowed_operations: List[str] = ALL_SESSION_OPERATIONS,
+    ):
+        self.client = client
+        self.resource_name = resource_name
+        self.allowed_operations = allowed_operations
+
+    @property
+    def model_name(self) -> str:
+        if self.resource_name in RESOURCE_TO_MODEL_MAPPING:
+            # from mapping
+            return RESOURCE_TO_MODEL_MAPPING[self.resource_name]
+        else:
+            # parse it from the resource name
+            name_components = self.resource_name.split("_")
+            name_components[-1] = name_components[-1][:-1]
+            return "".join(name_component.title() for name_component in name_components)
+
+    @property
+    def model(self):
+        return getattr(models, self.model_name)
+
+    def __get_method_module(self, resource_name: str, method: str) -> ModuleType:
+        # import endpoint module based on a method
+        return importlib.import_module(
+            f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_{resource_name}_{method}",
+            package="osidb_bindings",
+        )
+
+    # CRUD operations
 
     def retrieve(self, id, **kwargs):
-        flaws_retrieve_fn = self.__get_sync_function(osidb_flaws_retrieve)
-        return flaws_retrieve_fn(
-            client=self.__client_with_new_access_token, id=id, **kwargs
-        )
+        if "retrieve" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="retrieve"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(id, client=self.client(), **kwargs)
+        else:
+            raise OperationUnsupported(
+                'Operation "update" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )
 
     def retrieve_list(self, **kwargs):
-        flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
-        return flaws_list_retrieve_fn(
-            client=self.__client_with_new_access_token, **kwargs
-        )
+        if "list" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="list"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(client=self.client(), **kwargs)
+        else:
+            raise OperationUnsupported(
+                'Operation "update" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )
 
-    def search(self, searched_text):
-        flaws_list_retrieve_fn = self.__get_sync_function(osidb_flaws_list)
-        return flaws_list_retrieve_fn(
-            client=self.__client_with_new_access_token, search=searched_text
-        )
+    def create(self, form_data: Dict[str, Any]):
+        if "create" in self.allowed_operations:
+            model = getattr(models, self.model_name)
+            transformed_data = model.from_dict(form_data)
 
-    def create(self, form_data):
-        flaw_data = Flaw.from_dict(form_data)
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="create"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                client=self.client(),
+                form_data=transformed_data,
+                multipart_data=UNSET,
+                json_body=UNSET,
+            )
+        else:
+            raise OperationUnsupported(
+                'Operation "update" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )
 
-        flaws_create_fn = self.__get_sync_function(osidb_flaws_create)
-        return flaws_create_fn(
-            client=self.__client_with_new_access_token,
-            form_data=flaw_data,
-            json_body=UNSET,
-            multipart_data=UNSET,
-        )
+    def update(self, id, form_data: Dict[str, Any]):
+        if "update" in self.allowed_operations:
+            transformed_data = self.model.from_dict(form_data)
 
-    def update(self, id, form_data, **kwargs):
-        flaw_data = Flaw.from_dict(form_data)
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="update"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                id,
+                client=self.client(),
+                form_data=transformed_data,
+                multipart_data=UNSET,
+                json_body=UNSET,
+            )
+        else:
+            raise OperationUnsupported(
+                'Operation "update" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )
 
-        flaws_update_fn = self.__get_sync_function(osidb_flaws_update)
-        return flaws_update_fn(
-            client=self.__client_with_new_access_token,
-            id=id,
-            form_data=flaw_data,
-            json_body=UNSET,
-            multipart_data=UNSET,
-            **kwargs,
-        )
+    def delete(self, id):
+        if "destroy" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="destroy"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                id,
+                client=self.client(),
+            )
+        else:
+            raise OperationUnsupported(
+                'Operation "delete" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )
 
-    def delete(self):
-        raise NotImplementedError("Flaw delete not implemented yet.")
+    # Extra operations
+
+    def search(self, searched_text: str):
+        if "search" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="list"
+            )
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(client=self.client(), search=searched_text)
+        else:
+            raise OperationUnsupported(
+                'Operation "search" is not supported for the '
+                f'"{self.resource_name}" resource.'
+            )

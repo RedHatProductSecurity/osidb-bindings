@@ -82,6 +82,11 @@ session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", 
 
 This section describes possible session operations. See [response section](#response) to learn how to work with obtained operation responses.
 
+Operations can be performed on the following entities:
+* flaws
+* affects
+* trackers
+
 * #### ```status```
     Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
 
@@ -90,17 +95,19 @@ This section describes possible session operations. See [response section](#resp
     status_response = session.status()
     ```
 
+Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource
+
 * #### ```retrieve```
-    Retrieve a single Flaw with specified `id`.
+    Retrieve a single resource with specified `id`.
 
 
     See `/GET /osidb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     # CVE ID
-    flaw1_response = session.retrieve(id="CVE-1111-2222")
+    flaw1_response = session.flaws.retrieve(id="CVE-1111-2222")
 
     # UUID
-    flaw2_response = session.retrieve(id="aedb854d-1afc-40fe-9554-bc50098b0154")
+    flaw2_response = session.flaws.retrieve(id="aedb854d-1afc-40fe-9554-bc50098b0154")
     ```
 
 * #### ```retrieve_list```
@@ -108,33 +115,33 @@ This section describes possible session operations. See [response section](#resp
 
     See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
-    all_flaws_response = session.retrieve_list()
+    all_flaws_response = session.flaws.retrieve_list()
 
     # string query parameters
-    critical_impact_flaws_response = session.retrieve_list(impact="CRITICAL")
-    internet_source_flaws_response = session.retrieve_list(source="INTERNET")
+    critical_impact_flaws_response = session.flaws.retrieve_list(impact="CRITICAL")
+    internet_source_flaws_response = session.flaws.retrieve_list(source="INTERNET")
 
     # datetime query parameters
     from datetime import datetime
-    changed_before_flaws_response = session.retrieve_list(changed_before=datetime.now())
-    changed_after_flaws_response = session.retrieve_list(changed_after=datetime(2021,7,13))
-    changed_after_and_before_response = session.retrieve_list(
+    changed_before_flaws_response = session.flaws.retrieve_list(changed_before=datetime.now())
+    changed_after_flaws_response = session.flaws.retrieve_list(changed_after=datetime(2021,7,13))
+    changed_after_and_before_response = session.flaws.retrieve_list(
         changed_after=datetime.strptime("2021-07-13", "%Y-%m-%d"),
         changed_before=datetime.strptime("2021-12-24", "%Y-%m-%d"),
     )
 
 
     # comma separated list query parameters
-    specified_cves_flaws_response = session.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")
+    specified_cves_flaws_response = session.flaws.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")
 
-    multiple_criteria_flaws_response = session.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime(2021,7,12))
+    multiple_criteria_flaws_response = session.flaws.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime(2021,7,12))
     ```
 
 * #### ```search```
     Retrieve a list of Flaws. Performs full text search filter.
     ```python
-    search_response = session.search("Red Hat Satellite v.5")
-    cve_search_response = session.search("CVE-1111-2222")
+    search_response = session.flaws.search("Red Hat Satellite v.5")
+    cve_search_response = session.flaws.search("CVE-1111-2222")
     ```
 
 * #### ```create```
@@ -163,7 +170,7 @@ This section describes possible session operations. See [response section](#resp
         "is_major_incident": False
     }
 
-    create_flaw_response = session.create(form_data=create_data)
+    create_flaw_response = session.flaws.create(form_data=create_data)
     ```
 
 * #### ```update```
@@ -177,11 +184,16 @@ This section describes possible session operations. See [response section](#resp
         "impact": "MEDIUM",
     }
 
-    update_flaw_response = session.create(id="CVE-1111-2222", form_data=update_data)
+    update_flaw_response = session.flaws.update(id="CVE-1111-2222", form_data=update_data)
     ```
 
 * #### ```delete```
-    NOT YET SUPPORTED
+    Delete an existing Flaw
+
+    See `/DELETE /osidb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    ```python
+    delete_flaw_response = session.flaws.delete(id="CVE-1111-2222")
+    ```
 
 ### Response
 
@@ -193,7 +205,7 @@ This response is typically retrieved from the [retrieve](#retrieve) or [status](
 Retrieved data are encapsulated in respective model of the retrieved resource which is build on the bindings side.
 
 ```python
-single_response = session.retrieve(id="CVE-1111-2222")
+single_response = session.flaws.retrieve(id="CVE-1111-2222")
 
 single_response
 # Flaw(uuid='4a41bafd-43e9-4255-b5cc-a554af8dbb0c', updated_dt=datetime.datetime(2021, 11, 19, 14, 19, 30, 15530, tzinfo=tzutc()), ... )
@@ -245,7 +257,7 @@ Paginated responses are typically retrieved from [retrieve_list](#retrieve_list)
 You can view overall count of responses, previous and next segment query (based on the `offset` and `limit` values) and content of the current segment.
 
 ```python
-paginated_response = session.retrieve_list(limit=5)
+paginated_response = session.flaws.retrieve_list(limit=5)
 
 paginated_response
 # PaginatedFlawListList(count=12, next_='http://localhost:8000/osidb/api/v1/flaws?limit=5&offset=5', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
