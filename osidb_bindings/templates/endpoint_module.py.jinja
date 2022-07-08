@@ -4,7 +4,7 @@
 #}
 from typing import Any, Dict, List, Optional, Union, cast
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient, Client
 from ...types import Response, UNSET, Unset
@@ -57,7 +57,7 @@ def _get_kwargs(
 
 
 {% if parsed_responses %}
-def _parse_response(*, response: httpx.Response) -> Optional[{{ return_string }}]:
+def _parse_response(*, response: requests.Response) -> Optional[{{ return_string }}]:
     {% for response in endpoint.responses %}
     if response.status_code == {{ response.status_code }}:
         {% if response.prop.template %}
@@ -72,7 +72,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[{{ return_string }}
 {% endif %}
 
 
-def _build_response(*, response: httpx.Response) -> Response[{{ return_string }}]:
+def _build_response(*, response: requests.Response) -> Response[{{ return_string }}]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -92,7 +92,7 @@ def sync_detailed(
         {{ kwargs(endpoint) }}
     )
 
-    response = httpx.{{ endpoint.method }}(
+    response = requests.{{ endpoint.method }}(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -111,29 +111,4 @@ def sync(
     return sync_detailed(
         {{ kwargs(endpoint) }}
     ).parsed
-{% endif %}
-
-async def asyncio_detailed(
-    {{ arguments(endpoint) | indent(4) }}
-) -> Response[{{ return_string }}]:
-    kwargs = _get_kwargs(
-        {{ kwargs(endpoint) }}
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.{{ endpoint.method }}(
-            **kwargs
-        )
-
-    return _build_response(response=response)
-
-{% if parsed_responses %}
-async def asyncio(
-    {{ arguments(endpoint) | indent(4) }}
-) -> Optional[{{ return_string }}]:
-    """ {{ endpoint.description }} """
-
-    return (await asyncio_detailed(
-        {{ kwargs(endpoint) }}
-    )).parsed
 {% endif %}

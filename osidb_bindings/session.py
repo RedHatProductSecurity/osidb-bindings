@@ -1,8 +1,8 @@
 import importlib
 import os
 
-import httpx
-from httpx_gssapi import HTTPSPNEGOAuth
+import requests
+from requests_gssapi import HTTPSPNEGOAuth
 
 from .bindings.python_client import AuthenticatedClient
 from .bindings.python_client.api.auth import (
@@ -116,7 +116,7 @@ class Session:
                 multipart_data=UNSET,
                 json_body=UNSET,
             )
-        except httpx.HTTPStatusError:
+        except requests.HTTPError:
 
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
