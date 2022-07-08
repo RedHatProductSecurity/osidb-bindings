@@ -62,8 +62,9 @@ commit_bindings_changes() {
 
 # Get number of the latest OSIDB version
 get_new_version() {
-    osidb_gitlab_id="540"
-    osidb_gitlab_base_link="https://git.prodsec.redhat.com/api/v4/projects/${osidb_gitlab_id}/repository"
+    # TODO: switch to GitHub repository once it is ready and includes tags
+    osidb_gitlab_id="9477"
+    osidb_gitlab_base_link="https://gitlab.corp.redhat.com/api/v4/projects/${osidb_gitlab_id}/repository"
 
     # Get latest tagged OSIDB version
     local response=$(curl -s -f "${osidb_gitlab_base_link}/tags" -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
