@@ -17,5 +17,5 @@ setup(
     ],
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["attrs", "httpx", "httpx-gssapi", "python-dateutil"],
+    install_requires=["attrs", "requests", "requests-gssapi", "python-dateutil"],
 )

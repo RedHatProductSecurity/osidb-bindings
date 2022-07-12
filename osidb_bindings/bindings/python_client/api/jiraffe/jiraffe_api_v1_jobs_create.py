@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.jiraffe_job import JiraffeJob
@@ -35,7 +35,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[JiraffeJob]:
+def _parse_response(*, response: requests.Response) -> Optional[JiraffeJob]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: JiraffeJob
@@ -48,7 +48,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[JiraffeJob]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[JiraffeJob]:
+def _build_response(*, response: requests.Response) -> Response[JiraffeJob]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -71,7 +71,7 @@ def sync_detailed(
         json_body=json_body,
     )
 
-    response = httpx.post(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -96,43 +96,4 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Response[JiraffeJob]:
-    kwargs = _get_kwargs(
-        client=client,
-        form_data=form_data,
-        multipart_data=multipart_data,
-        json_body=json_body,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.post(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    form_data: JiraffeJob,
-    multipart_data: JiraffeJob,
-    json_body: JiraffeJob,
-) -> Optional[JiraffeJob]:
-    """Create a JiraffeJob"""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            form_data=form_data,
-            multipart_data=multipart_data,
-            json_body=json_body,
-        )
     ).parsed

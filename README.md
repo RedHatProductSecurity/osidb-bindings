@@ -26,7 +26,7 @@ osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:80
 osidb_session.status()
 
 # Retrieve flaw
-flaw = osidb_session.retrieve(id="CVE-1111-2222")
+flaw = osidb_session.flaws.retrieve(id="CVE-1111-2222")
 
 # Attributes can be accessed directly via .
 flaw.summary
@@ -38,10 +38,10 @@ flaw_dict["summary"]
 flaw_dict["impact"]
 
 # Retrieving multiple flaws
-all_flaws = osidb_session.retrieve_list()
+all_flaws = osidb_session.flaw.retrieve_list()
 
 # All query params listed in OpenAPI schema can be passed as well
-filtered_flaws = osidb_session.retrieve_list(impact="IMPORTANT", tracker_ids=["111111", "222222"])
+filtered_flaws = osidb_session.flaws.retrieve_list(impact="IMPORTANT", tracker_ids=["111111", "222222"])
 
 # number of results
 filtered_flaws.count

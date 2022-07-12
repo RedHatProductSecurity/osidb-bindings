@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.paginated_job_list import PaginatedJobList
@@ -32,7 +32,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[PaginatedJobList]:
+def _parse_response(*, response: requests.Response) -> Optional[PaginatedJobList]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: PaginatedJobList
@@ -45,7 +45,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[PaginatedJobList]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[PaginatedJobList]:
+def _build_response(*, response: requests.Response) -> Response[PaginatedJobList]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
         offset=offset,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -89,39 +89,4 @@ def sync(
         client=client,
         limit=limit,
         offset=offset,
-    ).parsed
-
-
-async def asyncio_detailed(
-    *,
-    client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-) -> Response[PaginatedJobList]:
-    kwargs = _get_kwargs(
-        client=client,
-        limit=limit,
-        offset=offset,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-) -> Optional[PaginatedJobList]:
-    """HTTP get /jobs"""
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            limit=limit,
-            offset=offset,
-        )
     ).parsed

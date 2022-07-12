@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional, Union
 
-import httpx
+import requests
 
 from ...client import AuthenticatedClient
 from ...models.flaw import Flaw
@@ -75,7 +75,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Flaw]:
+def _parse_response(*, response: requests.Response) -> Optional[Flaw]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: Flaw
@@ -88,7 +88,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Flaw]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Flaw]:
+def _build_response(*, response: requests.Response) -> Response[Flaw]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -117,7 +117,7 @@ def sync_detailed(
         tracker_ids=tracker_ids,
     )
 
-    response = httpx.get(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -148,55 +148,4 @@ def sync(
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
-    ).parsed
-
-
-async def asyncio_detailed(
-    id: str,
-    *,
-    client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    tracker_ids: Union[Unset, None, List[str]] = UNSET,
-) -> Response[Flaw]:
-    kwargs = _get_kwargs(
-        id=id,
-        client=client,
-        exclude_fields=exclude_fields,
-        flaw_meta_type=flaw_meta_type,
-        include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
-        tracker_ids=tracker_ids,
-    )
-
-    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
-        response = await _client.get(**kwargs)
-
-    return _build_response(response=response)
-
-
-async def asyncio(
-    id: str,
-    *,
-    client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    tracker_ids: Union[Unset, None, List[str]] = UNSET,
-) -> Optional[Flaw]:
-    """ """
-
-    return (
-        await asyncio_detailed(
-            id=id,
-            client=client,
-            exclude_fields=exclude_fields,
-            flaw_meta_type=flaw_meta_type,
-            include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
-            tracker_ids=tracker_ids,
-        )
     ).parsed
