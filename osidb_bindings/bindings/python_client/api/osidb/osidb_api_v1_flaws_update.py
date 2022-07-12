@@ -4,6 +4,7 @@ import requests
 
 from ...client import AuthenticatedClient
 from ...models.flaw import Flaw
+from ...models.osidb_api_v1_flaws_update_response_200 import OsidbApiV1FlawsUpdateResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -37,20 +38,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[Flaw]:
+def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: Flaw
+        response_200: OsidbApiV1FlawsUpdateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = Flaw.from_dict(_response_200)
+            response_200 = OsidbApiV1FlawsUpdateResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[Flaw]:
+def _build_response(*, response: requests.Response) -> Response[OsidbApiV1FlawsUpdateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +67,7 @@ def sync_detailed(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
-) -> Response[Flaw]:
+) -> Response[OsidbApiV1FlawsUpdateResponse200]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -93,7 +94,7 @@ def sync(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
-) -> Optional[Flaw]:
+) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     """ """
 
     return sync_detailed(

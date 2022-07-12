@@ -1,8 +1,9 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import requests
 
 from ...client import AuthenticatedClient
+from ...models.osim_api_v1_workflows_retrieve_2_response_200 import OsimApiV1WorkflowsRetrieve2Response200
 from ...types import UNSET, Response, Unset
 
 
@@ -31,12 +32,25 @@ def _get_kwargs(
     }
 
 
-def _build_response(*, response: requests.Response) -> Response[Any]:
+def _parse_response(*, response: requests.Response) -> Optional[OsimApiV1WorkflowsRetrieve2Response200]:
+    if response.status_code == 200:
+        _response_200 = response.json()
+        response_200: OsimApiV1WorkflowsRetrieve2Response200
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
+        else:
+            response_200 = OsimApiV1WorkflowsRetrieve2Response200.from_dict(_response_200)
+
+        return response_200
+    return None
+
+
+def _build_response(*, response: requests.Response) -> Response[OsimApiV1WorkflowsRetrieve2Response200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=None,
+        parsed=_parse_response(response=response),
     )
 
 
@@ -45,7 +59,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     verbose: Union[Unset, None, bool] = UNSET,
-) -> Response[Any]:
+) -> Response[OsimApiV1WorkflowsRetrieve2Response200]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -61,3 +75,25 @@ def sync_detailed(
     response.raise_for_status()
 
     return _build_response(response=response)
+
+
+def sync(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+    verbose: Union[Unset, None, bool] = UNSET,
+) -> Optional[OsimApiV1WorkflowsRetrieve2Response200]:
+    """workflow classification API endpoint
+
+    for flaw identified by UUID or CVE returns its workflow:state classification
+
+    params:
+
+        verbose - return also workflows with flaw classification
+                  which represents the reasoning of the result"""
+
+    return sync_detailed(
+        id=id,
+        client=client,
+        verbose=verbose,
+    ).parsed

@@ -11,10 +11,13 @@ from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
+from ..models.flaw_resolution_enum import FlawResolutionEnum
 from ..models.flaw_type_enum import FlawTypeEnum
+from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
 from ..models.mitigated_by_enum import MitigatedByEnum
 from ..models.source_enum import SourceEnum
+from ..models.state_enum import StateEnum
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Flaw")
@@ -25,13 +28,6 @@ class Flaw:
     """serialize flaw model"""
 
     uuid: str
-    created_dt: datetime.datetime
-    updated_dt: datetime.datetime
-    type: FlawTypeEnum
-    cve_id: str
-    state: str
-    resolution: str
-    impact: str
     title: str
     trackers: List[str]
     description: str
@@ -41,42 +37,32 @@ class Flaw:
     comments: List[Comment]
     meta_attr: FlawMetaAttr
     package_versions: List[CVEv5PackageVersions]
+    created_dt: datetime.datetime
+    updated_dt: datetime.datetime
     classification: FlawClassification
-    summary: Union[Unset, None, str] = UNSET
-    statement: Union[Unset, None, str] = UNSET
-    cwe_id: Union[Unset, None, str] = UNSET
+    type: Union[Unset, FlawTypeEnum] = UNSET
+    cve_id: Union[Unset, None, str] = UNSET
+    state: Union[Unset, StateEnum] = UNSET
+    resolution: Union[BlankEnum, FlawResolutionEnum, Unset] = UNSET
+    impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
+    summary: Union[Unset, str] = UNSET
+    statement: Union[Unset, str] = UNSET
+    cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, None, SourceEnum, Unset] = UNSET
+    source: Union[BlankEnum, SourceEnum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
-    mitigated_by: Union[BlankEnum, MitigatedByEnum, None, Unset] = UNSET
-    cvss2: Union[Unset, None, str] = UNSET
+    mitigated_by: Union[BlankEnum, MitigatedByEnum, Unset] = UNSET
+    cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
-    nvd_cvss2: Union[Unset, None, str] = UNSET
-    cvss3: Union[Unset, None, str] = UNSET
+    nvd_cvss2: Union[Unset, str] = UNSET
+    cvss3: Union[Unset, str] = UNSET
     cvss3_score: Union[Unset, None, float] = UNSET
-    nvd_cvss3: Union[Unset, None, str] = UNSET
-    is_major_incident: Union[Unset, None, bool] = UNSET
+    nvd_cvss3: Union[Unset, str] = UNSET
+    is_major_incident: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
-        type: str = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawTypeEnum(self.type).value
-
-        cve_id = self.cve_id
-        state = self.state
-        resolution = self.resolution
-        impact = self.impact
         title = self.title
         trackers: List[str] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -128,9 +114,58 @@ class Flaw:
 
                 package_versions.append(package_versions_item)
 
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
+
+        updated_dt: str = UNSET
+        if not isinstance(self.updated_dt, Unset):
+            updated_dt = self.updated_dt.isoformat()
+
         classification: Dict[str, Any] = UNSET
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
+
+        type: Union[Unset, str] = UNSET
+        if not isinstance(self.type, Unset):
+
+            type = FlawTypeEnum(self.type).value
+
+        cve_id = self.cve_id
+        state: Union[Unset, str] = UNSET
+        if not isinstance(self.state, Unset):
+
+            state = StateEnum(self.state).value
+
+        resolution: Union[Unset, str]
+        if isinstance(self.resolution, Unset):
+            resolution = UNSET
+        elif isinstance(self.resolution, FlawResolutionEnum):
+            resolution = UNSET
+            if not isinstance(self.resolution, Unset):
+
+                resolution = FlawResolutionEnum(self.resolution).value
+
+        else:
+            resolution = UNSET
+            if not isinstance(self.resolution, Unset):
+
+                resolution = BlankEnum(self.resolution).value
+
+        impact: Union[Unset, str]
+        if isinstance(self.impact, Unset):
+            impact = UNSET
+        elif isinstance(self.impact, ImpactEnum):
+            impact = UNSET
+            if not isinstance(self.impact, Unset):
+
+                impact = ImpactEnum(self.impact).value
+
+        else:
+            impact = UNSET
+            if not isinstance(self.impact, Unset):
+
+                impact = BlankEnum(self.impact).value
 
         summary = self.summary
         statement = self.statement
@@ -139,49 +174,39 @@ class Flaw:
         if not isinstance(self.unembargo_dt, Unset):
             unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
 
-        source: Union[None, Unset, str]
+        source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif self.source is None:
-            source = None
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
                 source = SourceEnum(self.source).value
 
-        elif isinstance(self.source, BlankEnum):
+        else:
             source = UNSET
             if not isinstance(self.source, Unset):
 
                 source = BlankEnum(self.source).value
 
-        else:
-            source = self.source
-
         reported_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.reported_dt, Unset):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
-        mitigated_by: Union[None, Unset, str]
+        mitigated_by: Union[Unset, str]
         if isinstance(self.mitigated_by, Unset):
             mitigated_by = UNSET
-        elif self.mitigated_by is None:
-            mitigated_by = None
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
 
                 mitigated_by = MitigatedByEnum(self.mitigated_by).value
 
-        elif isinstance(self.mitigated_by, BlankEnum):
+        else:
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
 
                 mitigated_by = BlankEnum(self.mitigated_by).value
-
-        else:
-            mitigated_by = self.mitigated_by
 
         cvss2 = self.cvss2
         cvss2_score = self.cvss2_score
@@ -195,20 +220,6 @@ class Flaw:
         field_dict.update(self.additional_properties)
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
-            field_dict["updated_dt"] = updated_dt
-        if type is not UNSET:
-            field_dict["type"] = type
-        if cve_id is not UNSET:
-            field_dict["cve_id"] = cve_id
-        if state is not UNSET:
-            field_dict["state"] = state
-        if resolution is not UNSET:
-            field_dict["resolution"] = resolution
-        if impact is not UNSET:
-            field_dict["impact"] = impact
         if title is not UNSET:
             field_dict["title"] = title
         if trackers is not UNSET:
@@ -227,8 +238,22 @@ class Flaw:
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if created_dt is not UNSET:
+            field_dict["created_dt"] = created_dt
+        if updated_dt is not UNSET:
+            field_dict["updated_dt"] = updated_dt
         if classification is not UNSET:
             field_dict["classification"] = classification
+        if type is not UNSET:
+            field_dict["type"] = type
+        if cve_id is not UNSET:
+            field_dict["cve_id"] = cve_id
+        if state is not UNSET:
+            field_dict["state"] = state
+        if resolution is not UNSET:
+            field_dict["resolution"] = resolution
+        if impact is not UNSET:
+            field_dict["impact"] = impact
         if summary is not UNSET:
             field_dict["summary"] = summary
         if statement is not UNSET:
@@ -262,23 +287,6 @@ class Flaw:
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawTypeEnum(self.type).value
-
-        cve_id = self.cve_id if self.cve_id is UNSET else (None, str(self.cve_id), "text/plain")
-        state = self.state if self.state is UNSET else (None, str(self.state), "text/plain")
-        resolution = self.resolution if self.resolution is UNSET else (None, str(self.resolution), "text/plain")
-        impact = self.impact if self.impact is UNSET else (None, str(self.impact), "text/plain")
         title = self.title if self.title is UNSET else (None, str(self.title), "text/plain")
         trackers: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -335,9 +343,58 @@ class Flaw:
                 _temp_package_versions.append(package_versions_item)
             package_versions = (None, json.dumps(_temp_package_versions), "application/json")
 
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
+
+        updated_dt: str = UNSET
+        if not isinstance(self.updated_dt, Unset):
+            updated_dt = self.updated_dt.isoformat()
+
         classification: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.classification, Unset):
             classification = (None, json.dumps(self.classification.to_dict()), "application/json")
+
+        type: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.type, Unset):
+
+            type = FlawTypeEnum(self.type).value
+
+        cve_id = self.cve_id if self.cve_id is UNSET else (None, str(self.cve_id), "text/plain")
+        state: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.state, Unset):
+
+            state = StateEnum(self.state).value
+
+        resolution: Union[Unset, str]
+        if isinstance(self.resolution, Unset):
+            resolution = UNSET
+        elif isinstance(self.resolution, FlawResolutionEnum):
+            resolution = UNSET
+            if not isinstance(self.resolution, Unset):
+
+                resolution = FlawResolutionEnum(self.resolution).value
+
+        else:
+            resolution = UNSET
+            if not isinstance(self.resolution, Unset):
+
+                resolution = BlankEnum(self.resolution).value
+
+        impact: Union[Unset, str]
+        if isinstance(self.impact, Unset):
+            impact = UNSET
+        elif isinstance(self.impact, ImpactEnum):
+            impact = UNSET
+            if not isinstance(self.impact, Unset):
+
+                impact = ImpactEnum(self.impact).value
+
+        else:
+            impact = UNSET
+            if not isinstance(self.impact, Unset):
+
+                impact = BlankEnum(self.impact).value
 
         summary = self.summary if self.summary is UNSET else (None, str(self.summary), "text/plain")
         statement = self.statement if self.statement is UNSET else (None, str(self.statement), "text/plain")
@@ -346,49 +403,39 @@ class Flaw:
         if not isinstance(self.unembargo_dt, Unset):
             unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
 
-        source: Union[None, Unset, str]
+        source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif self.source is None:
-            source = None
         elif isinstance(self.source, SourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
                 source = SourceEnum(self.source).value
 
-        elif isinstance(self.source, BlankEnum):
+        else:
             source = UNSET
             if not isinstance(self.source, Unset):
 
                 source = BlankEnum(self.source).value
 
-        else:
-            source = self.source
-
         reported_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.reported_dt, Unset):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
-        mitigated_by: Union[None, Unset, str]
+        mitigated_by: Union[Unset, str]
         if isinstance(self.mitigated_by, Unset):
             mitigated_by = UNSET
-        elif self.mitigated_by is None:
-            mitigated_by = None
         elif isinstance(self.mitigated_by, MitigatedByEnum):
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
 
                 mitigated_by = MitigatedByEnum(self.mitigated_by).value
 
-        elif isinstance(self.mitigated_by, BlankEnum):
+        else:
             mitigated_by = UNSET
             if not isinstance(self.mitigated_by, Unset):
 
                 mitigated_by = BlankEnum(self.mitigated_by).value
-
-        else:
-            mitigated_by = self.mitigated_by
 
         cvss2 = self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
         cvss2_score = self.cvss2_score if self.cvss2_score is UNSET else (None, str(self.cvss2_score), "text/plain")
@@ -406,20 +453,6 @@ class Flaw:
         field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
-            field_dict["updated_dt"] = updated_dt
-        if type is not UNSET:
-            field_dict["type"] = type
-        if cve_id is not UNSET:
-            field_dict["cve_id"] = cve_id
-        if state is not UNSET:
-            field_dict["state"] = state
-        if resolution is not UNSET:
-            field_dict["resolution"] = resolution
-        if impact is not UNSET:
-            field_dict["impact"] = impact
         if title is not UNSET:
             field_dict["title"] = title
         if trackers is not UNSET:
@@ -438,8 +471,22 @@ class Flaw:
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if created_dt is not UNSET:
+            field_dict["created_dt"] = created_dt
+        if updated_dt is not UNSET:
+            field_dict["updated_dt"] = updated_dt
         if classification is not UNSET:
             field_dict["classification"] = classification
+        if type is not UNSET:
+            field_dict["type"] = type
+        if cve_id is not UNSET:
+            field_dict["cve_id"] = cve_id
+        if state is not UNSET:
+            field_dict["state"] = state
+        if resolution is not UNSET:
+            field_dict["resolution"] = resolution
+        if impact is not UNSET:
+            field_dict["impact"] = impact
         if summary is not UNSET:
             field_dict["summary"] = summary
         if statement is not UNSET:
@@ -475,35 +522,6 @@ class Flaw:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
-
-        _created_dt = d.pop("created_dt", UNSET)
-        created_dt: datetime.datetime
-        if isinstance(_created_dt, Unset):
-            created_dt = UNSET
-        else:
-            created_dt = isoparse(_created_dt)
-
-        _updated_dt = d.pop("updated_dt", UNSET)
-        updated_dt: datetime.datetime
-        if isinstance(_updated_dt, Unset):
-            updated_dt = UNSET
-        else:
-            updated_dt = isoparse(_updated_dt)
-
-        _type = d.pop("type", UNSET)
-        type: FlawTypeEnum
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawTypeEnum(_type)
-
-        cve_id = d.pop("cve_id", UNSET)
-
-        state = d.pop("state", UNSET)
-
-        resolution = d.pop("resolution", UNSET)
-
-        impact = d.pop("impact", UNSET)
 
         title = d.pop("title", UNSET)
 
@@ -580,12 +598,100 @@ class Flaw:
 
                 package_versions.append(package_versions_item)
 
+        _created_dt = d.pop("created_dt", UNSET)
+        created_dt: datetime.datetime
+        if isinstance(_created_dt, Unset):
+            created_dt = UNSET
+        else:
+            created_dt = isoparse(_created_dt)
+
+        _updated_dt = d.pop("updated_dt", UNSET)
+        updated_dt: datetime.datetime
+        if isinstance(_updated_dt, Unset):
+            updated_dt = UNSET
+        else:
+            updated_dt = isoparse(_updated_dt)
+
         _classification = d.pop("classification", UNSET)
         classification: FlawClassification
         if isinstance(_classification, Unset):
             classification = UNSET
         else:
             classification = FlawClassification.from_dict(_classification)
+
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, FlawTypeEnum]
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = FlawTypeEnum(_type)
+
+        cve_id = d.pop("cve_id", UNSET)
+
+        _state = d.pop("state", UNSET)
+        state: Union[Unset, StateEnum]
+        if isinstance(_state, Unset):
+            state = UNSET
+        else:
+            state = StateEnum(_state)
+
+        def _parse_resolution(data: object) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _resolution_type_0 = data
+                resolution_type_0: Union[Unset, FlawResolutionEnum]
+                if isinstance(_resolution_type_0, Unset):
+                    resolution_type_0 = UNSET
+                else:
+                    resolution_type_0 = FlawResolutionEnum(_resolution_type_0)
+
+                return resolution_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _resolution_type_1 = data
+            resolution_type_1: Union[Unset, BlankEnum]
+            if isinstance(_resolution_type_1, Unset):
+                resolution_type_1 = UNSET
+            else:
+                resolution_type_1 = BlankEnum(_resolution_type_1)
+
+            return resolution_type_1
+
+        resolution = _parse_resolution(d.pop("resolution", UNSET))
+
+        def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _impact_type_0 = data
+                impact_type_0: Union[Unset, ImpactEnum]
+                if isinstance(_impact_type_0, Unset):
+                    impact_type_0 = UNSET
+                else:
+                    impact_type_0 = ImpactEnum(_impact_type_0)
+
+                return impact_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _impact_type_1 = data
+            impact_type_1: Union[Unset, BlankEnum]
+            if isinstance(_impact_type_1, Unset):
+                impact_type_1 = UNSET
+            else:
+                impact_type_1 = BlankEnum(_impact_type_1)
+
+            return impact_type_1
+
+        impact = _parse_impact(d.pop("impact", UNSET))
 
         summary = d.pop("summary", UNSET)
 
@@ -602,9 +708,7 @@ class Flaw:
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, None, SourceEnum, Unset]:
-            if data is None:
-                return data
+        def _parse_source(data: object) -> Union[BlankEnum, SourceEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -620,20 +724,16 @@ class Flaw:
                 return source_type_0
             except:  # noqa: E722
                 pass
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _source_type_1 = data
-                source_type_1: Union[Unset, BlankEnum]
-                if isinstance(_source_type_1, Unset):
-                    source_type_1 = UNSET
-                else:
-                    source_type_1 = BlankEnum(_source_type_1)
+            if not isinstance(data, str):
+                raise TypeError()
+            _source_type_1 = data
+            source_type_1: Union[Unset, BlankEnum]
+            if isinstance(_source_type_1, Unset):
+                source_type_1 = UNSET
+            else:
+                source_type_1 = BlankEnum(_source_type_1)
 
-                return source_type_1
-            except:  # noqa: E722
-                pass
-            return cast(Union[BlankEnum, None, SourceEnum, Unset], data)
+            return source_type_1
 
         source = _parse_source(d.pop("source", UNSET))
 
@@ -646,9 +746,7 @@ class Flaw:
         else:
             reported_dt = isoparse(_reported_dt)
 
-        def _parse_mitigated_by(data: object) -> Union[BlankEnum, MitigatedByEnum, None, Unset]:
-            if data is None:
-                return data
+        def _parse_mitigated_by(data: object) -> Union[BlankEnum, MitigatedByEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -664,20 +762,16 @@ class Flaw:
                 return mitigated_by_type_0
             except:  # noqa: E722
                 pass
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _mitigated_by_type_1 = data
-                mitigated_by_type_1: Union[Unset, BlankEnum]
-                if isinstance(_mitigated_by_type_1, Unset):
-                    mitigated_by_type_1 = UNSET
-                else:
-                    mitigated_by_type_1 = BlankEnum(_mitigated_by_type_1)
+            if not isinstance(data, str):
+                raise TypeError()
+            _mitigated_by_type_1 = data
+            mitigated_by_type_1: Union[Unset, BlankEnum]
+            if isinstance(_mitigated_by_type_1, Unset):
+                mitigated_by_type_1 = UNSET
+            else:
+                mitigated_by_type_1 = BlankEnum(_mitigated_by_type_1)
 
-                return mitigated_by_type_1
-            except:  # noqa: E722
-                pass
-            return cast(Union[BlankEnum, MitigatedByEnum, None, Unset], data)
+            return mitigated_by_type_1
 
         mitigated_by = _parse_mitigated_by(d.pop("mitigated_by", UNSET))
 
@@ -697,13 +791,6 @@ class Flaw:
 
         flaw = cls(
             uuid=uuid,
-            created_dt=created_dt,
-            updated_dt=updated_dt,
-            type=type,
-            cve_id=cve_id,
-            state=state,
-            resolution=resolution,
-            impact=impact,
             title=title,
             trackers=trackers,
             description=description,
@@ -713,7 +800,14 @@ class Flaw:
             comments=comments,
             meta_attr=meta_attr,
             package_versions=package_versions,
+            created_dt=created_dt,
+            updated_dt=updated_dt,
             classification=classification,
+            type=type,
+            cve_id=cve_id,
+            state=state,
+            resolution=resolution,
+            impact=impact,
             summary=summary,
             statement=statement,
             cwe_id=cwe_id,

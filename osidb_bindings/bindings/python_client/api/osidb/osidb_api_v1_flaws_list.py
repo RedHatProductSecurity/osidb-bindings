@@ -7,10 +7,10 @@ from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
 from ...models.osidb_api_v1_flaws_list_mitigated_by import OsidbApiV1FlawsListMitigatedBy
 from ...models.osidb_api_v1_flaws_list_resolution import OsidbApiV1FlawsListResolution
+from ...models.osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from ...models.osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from ...models.osidb_api_v1_flaws_list_state import OsidbApiV1FlawsListState
 from ...models.osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
-from ...models.paginated_flaw_list import PaginatedFlawList
 from ...types import UNSET, Response, Unset
 
 
@@ -197,20 +197,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[PaginatedFlawList]:
+def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsListResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: PaginatedFlawList
+        response_200: OsidbApiV1FlawsListResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = PaginatedFlawList.from_dict(_response_200)
+            response_200 = OsidbApiV1FlawsListResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[PaginatedFlawList]:
+def _build_response(*, response: requests.Response) -> Response[OsidbApiV1FlawsListResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -255,7 +255,7 @@ def sync_detailed(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Response[PaginatedFlawList]:
+) -> Response[OsidbApiV1FlawsListResponse200]:
     kwargs = _get_kwargs(
         client=client,
         bz_id=bz_id,
@@ -340,7 +340,7 @@ def sync(
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
-) -> Optional[PaginatedFlawList]:
+) -> Optional[OsidbApiV1FlawsListResponse200]:
     """ """
 
     return sync_detailed(

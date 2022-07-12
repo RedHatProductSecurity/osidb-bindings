@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import Client
+from ...models.auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
 from ...models.token_refresh import TokenRefresh
 from ...types import UNSET, Response, Unset
 
@@ -35,20 +36,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[TokenRefresh]:
+def _parse_response(*, response: requests.Response) -> Optional[AuthTokenRefreshCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TokenRefresh
+        response_200: AuthTokenRefreshCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TokenRefresh.from_dict(_response_200)
+            response_200 = AuthTokenRefreshCreateResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[TokenRefresh]:
+def _build_response(*, response: requests.Response) -> Response[AuthTokenRefreshCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -63,7 +64,7 @@ def sync_detailed(
     form_data: TokenRefresh,
     multipart_data: TokenRefresh,
     json_body: TokenRefresh,
-) -> Response[TokenRefresh]:
+) -> Response[AuthTokenRefreshCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -88,7 +89,7 @@ def sync(
     form_data: TokenRefresh,
     multipart_data: TokenRefresh,
     json_body: TokenRefresh,
-) -> Optional[TokenRefresh]:
+) -> Optional[AuthTokenRefreshCreateResponse200]:
     """Takes a refresh type JSON web token and returns an access type JSON web
     token if the refresh token is valid."""
 
