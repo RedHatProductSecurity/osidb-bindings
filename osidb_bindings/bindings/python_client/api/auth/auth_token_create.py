@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import Client
+from ...models.auth_token_create_response_200 import AuthTokenCreateResponse200
 from ...models.token_obtain_pair import TokenObtainPair
 from ...types import UNSET, Response, Unset
 
@@ -35,20 +36,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[TokenObtainPair]:
+def _parse_response(*, response: requests.Response) -> Optional[AuthTokenCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TokenObtainPair
+        response_200: AuthTokenCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TokenObtainPair.from_dict(_response_200)
+            response_200 = AuthTokenCreateResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[TokenObtainPair]:
+def _build_response(*, response: requests.Response) -> Response[AuthTokenCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -63,7 +64,7 @@ def sync_detailed(
     form_data: TokenObtainPair,
     multipart_data: TokenObtainPair,
     json_body: TokenObtainPair,
-) -> Response[TokenObtainPair]:
+) -> Response[AuthTokenCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -88,7 +89,7 @@ def sync(
     form_data: TokenObtainPair,
     multipart_data: TokenObtainPair,
     json_body: TokenObtainPair,
-) -> Optional[TokenObtainPair]:
+) -> Optional[AuthTokenCreateResponse200]:
     """Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials."""
 

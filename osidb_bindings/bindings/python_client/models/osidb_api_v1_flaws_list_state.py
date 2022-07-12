@@ -6,6 +6,7 @@ class OsidbApiV1FlawsListState(str, Enum):
     CLOSED = "CLOSED"
     MODIFIED = "MODIFIED"
     NEW = "NEW"
+    ON_DEV = "ON_DEV"
     ON_QA = "ON_QA"
     POST = "POST"
     RELEASE_PENDING = "RELEASE_PENDING"

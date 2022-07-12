@@ -18,6 +18,9 @@ class CollectorsApiV1StatusRetrieveResponse200:
 
     collectors: Union[Unset, List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem]] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
+    env: Union[Unset, str] = UNSET
+    revision: Union[Unset, str] = UNSET
+    version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -35,12 +38,22 @@ class CollectorsApiV1StatusRetrieveResponse200:
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
+        env = self.env
+        revision = self.revision
+        version = self.version
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if collectors is not UNSET:
             field_dict["collectors"] = collectors
         if dt is not UNSET:
             field_dict["dt"] = dt
+        if env is not UNSET:
+            field_dict["env"] = env
+        if revision is not UNSET:
+            field_dict["revision"] = revision
+        if version is not UNSET:
+            field_dict["version"] = version
 
         return field_dict
 
@@ -69,9 +82,18 @@ class CollectorsApiV1StatusRetrieveResponse200:
         else:
             dt = isoparse(_dt)
 
+        env = d.pop("env", UNSET)
+
+        revision = d.pop("revision", UNSET)
+
+        version = d.pop("version", UNSET)
+
         collectors_api_v1_status_retrieve_response_200 = cls(
             collectors=collectors,
             dt=dt,
+            env=env,
+            revision=revision,
+            version=version,
         )
 
         collectors_api_v1_status_retrieve_response_200.additional_properties = d

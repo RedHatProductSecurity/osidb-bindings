@@ -1,6 +1,10 @@
-from typing import Any, Dict, List, Type, TypeVar
+import datetime
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
+from dateutil.parser import isoparse
+
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="OsidbApiV1SchemaRetrieveResponse200")
 
@@ -9,19 +13,56 @@ T = TypeVar("T", bound="OsidbApiV1SchemaRetrieveResponse200")
 class OsidbApiV1SchemaRetrieveResponse200:
     """ """
 
+    dt: Union[Unset, datetime.datetime] = UNSET
+    env: Union[Unset, str] = UNSET
+    revision: Union[Unset, str] = UNSET
+    version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        dt: Union[Unset, str] = UNSET
+        if not isinstance(self.dt, Unset):
+            dt = self.dt.isoformat()
+
+        env = self.env
+        revision = self.revision
+        version = self.version
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if dt is not UNSET:
+            field_dict["dt"] = dt
+        if env is not UNSET:
+            field_dict["env"] = env
+        if revision is not UNSET:
+            field_dict["revision"] = revision
+        if version is not UNSET:
+            field_dict["version"] = version
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        osidb_api_v1_schema_retrieve_response_200 = cls()
+        _dt = d.pop("dt", UNSET)
+        dt: Union[Unset, datetime.datetime]
+        if isinstance(_dt, Unset):
+            dt = UNSET
+        else:
+            dt = isoparse(_dt)
+
+        env = d.pop("env", UNSET)
+
+        revision = d.pop("revision", UNSET)
+
+        version = d.pop("version", UNSET)
+
+        osidb_api_v1_schema_retrieve_response_200 = cls(
+            dt=dt,
+            env=env,
+            revision=revision,
+            version=version,
+        )
 
         osidb_api_v1_schema_retrieve_response_200.additional_properties = d
         return osidb_api_v1_schema_retrieve_response_200

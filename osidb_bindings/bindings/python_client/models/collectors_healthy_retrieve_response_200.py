@@ -14,7 +14,9 @@ class CollectorsHealthyRetrieveResponse200:
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET
-    status: Union[Unset, str] = UNSET
+    env: Union[Unset, str] = UNSET
+    revision: Union[Unset, str] = UNSET
+    version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -22,14 +24,20 @@ class CollectorsHealthyRetrieveResponse200:
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
-        status = self.status
+        env = self.env
+        revision = self.revision
+        version = self.version
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if dt is not UNSET:
             field_dict["dt"] = dt
-        if status is not UNSET:
-            field_dict["status"] = status
+        if env is not UNSET:
+            field_dict["env"] = env
+        if revision is not UNSET:
+            field_dict["revision"] = revision
+        if version is not UNSET:
+            field_dict["version"] = version
 
         return field_dict
 
@@ -43,11 +51,17 @@ class CollectorsHealthyRetrieveResponse200:
         else:
             dt = isoparse(_dt)
 
-        status = d.pop("status", UNSET)
+        env = d.pop("env", UNSET)
+
+        revision = d.pop("revision", UNSET)
+
+        version = d.pop("version", UNSET)
 
         collectors_healthy_retrieve_response_200 = cls(
             dt=dt,
-            status=status,
+            env=env,
+            revision=revision,
+            version=version,
         )
 
         collectors_healthy_retrieve_response_200.additional_properties = d

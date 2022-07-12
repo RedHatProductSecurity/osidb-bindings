@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import Client
+from ...models.auth_token_verify_create_response_200 import AuthTokenVerifyCreateResponse200
 from ...models.token_verify import TokenVerify
 from ...types import UNSET, Response, Unset
 
@@ -35,20 +36,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[TokenVerify]:
+def _parse_response(*, response: requests.Response) -> Optional[AuthTokenVerifyCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TokenVerify
+        response_200: AuthTokenVerifyCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TokenVerify.from_dict(_response_200)
+            response_200 = AuthTokenVerifyCreateResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[TokenVerify]:
+def _build_response(*, response: requests.Response) -> Response[AuthTokenVerifyCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -63,7 +64,7 @@ def sync_detailed(
     form_data: TokenVerify,
     multipart_data: TokenVerify,
     json_body: TokenVerify,
-) -> Response[TokenVerify]:
+) -> Response[AuthTokenVerifyCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -88,7 +89,7 @@ def sync(
     form_data: TokenVerify,
     multipart_data: TokenVerify,
     json_body: TokenVerify,
-) -> Optional[TokenVerify]:
+) -> Optional[AuthTokenVerifyCreateResponse200]:
     """Takes a token and indicates if it is valid.  This view provides no
     information about a token's fitness for a particular use."""
 

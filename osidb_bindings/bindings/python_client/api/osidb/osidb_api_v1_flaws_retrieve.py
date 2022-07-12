@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.flaw import Flaw
+from ...models.osidb_api_v1_flaws_retrieve_response_200 import OsidbApiV1FlawsRetrieveResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -75,20 +75,20 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[Flaw]:
+def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: Flaw
+        response_200: OsidbApiV1FlawsRetrieveResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = Flaw.from_dict(_response_200)
+            response_200 = OsidbApiV1FlawsRetrieveResponse200.from_dict(_response_200)
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[Flaw]:
+def _build_response(*, response: requests.Response) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -106,7 +106,7 @@ def sync_detailed(
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
-) -> Response[Flaw]:
+) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
     kwargs = _get_kwargs(
         id=id,
         client=client,
@@ -137,7 +137,7 @@ def sync(
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
-) -> Optional[Flaw]:
+) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
     """ """
 
     return sync_detailed(

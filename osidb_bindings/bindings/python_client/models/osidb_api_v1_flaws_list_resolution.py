@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class OsidbApiV1FlawsListResolution(str, Enum):
+    VALUE_0 = ""
     CANTFIX = "CANTFIX"
     CURRENTRELEASE = "CURRENTRELEASE"
     DEFERRED = "DEFERRED"
@@ -10,7 +11,6 @@ class OsidbApiV1FlawsListResolution(str, Enum):
     ERRATA = "ERRATA"
     INSUFFICIENT_DATA = "INSUFFICIENT_DATA"
     NEXTRELEASE = "NEXTRELEASE"
-    NONE = "NONE"
     NOTABUG = "NOTABUG"
     RAWHIDE = "RAWHIDE"
     UPSTREAM = "UPSTREAM"
