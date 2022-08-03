@@ -133,11 +133,14 @@ replaces the original templates from the [openapi-python-client](https://github.
     $ tox -e unit-tests
     ```
 
-4) Push to branch
+4) Update [CHANGELOG.md](CHANGELOG.md) in case of some breaking changes
+   which affects the user
 
-5) confirm branch passes CI - ***do not raise an MR if CI does not pass***
+5) Push to branch
 
-6) raise MR against master ensuring good title/description and bullet point
+6) confirm branch passes CI - ***do not raise an MR if CI does not pass***
+
+7) raise MR against master ensuring good title/description and bullet point
    all significant commits
 
 ## Release
