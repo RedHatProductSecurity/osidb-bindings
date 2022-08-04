@@ -10,6 +10,11 @@ setup(
     author_email="jfrejlac@redhat.com",
     description="Python bindings for accessing OSIDB API",
     url="https://github.com/RedHatProductSecurity/osidb-bindings",
+    project_urls={
+        "Changelog": "https://github.com/RedHatProductSecurity/osidb-bindings/blob/master/CHANGELOG.md",
+        "Documentation": "https://github.com/RedHatProductSecurity/osidb-bindings/blob/master/TUTORIAL.md",
+        "Source": "https://github.com/RedHatProductSecurity/osidb-bindings",
+    },
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
