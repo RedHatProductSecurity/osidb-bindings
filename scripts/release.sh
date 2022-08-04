@@ -3,37 +3,12 @@
 
 source scripts/helpers.sh
 
-# Check for gitlab private token for gitlab API access
-get_gitlab_token() {
-    if [ -z ${GITLAB_TOKEN} ]; then
-        echo "No GitLab token found in GITLAB_TOKEN variable!"
-        read -ersp "Gitlab token: " GITLAB_TOKEN
-        echo
-        echo
-    fi
-}
-
 # Check for python dependencies needed for release
 check_python_deps() {
     if [ -z $(command -v openapi-python-client) ]; then
         echo "openapi-python-client python dependency not found"
         exit 1
     fi
-}
-
-# Make cURL request to GitLab, handle status code and return body
-# $1: url
-gitlab_request() {
-    local url=$1
-
-
-    if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${url}\" [HTTP status: ${status}]"
-        exit 1
-    fi
-
-    echo ${body}
-    return 0
 }
 
 # Commit changed files
@@ -62,19 +37,17 @@ commit_bindings_changes() {
 
 # Get number of the latest OSIDB version
 get_new_version() {
-    # TODO: switch to GitHub repository once it is ready and includes tags
-    osidb_gitlab_id="9477"
-    osidb_gitlab_base_link="https://gitlab.corp.redhat.com/api/v4/projects/${osidb_gitlab_id}/repository"
+    osidb_github_base_link="https://api.github.com/repos/RedHatProductSecurity/osidb"
 
     # Get latest tagged OSIDB version
-    local response=$(curl -s -f "${osidb_gitlab_base_link}/tags" -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
+    local response=$(curl -s -f "${osidb_github_base_link}/tags" \
     -f -w 'HTTPSTATUS:%{http_code}\n')
 
     local body=$(echo ${response} | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
     local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
 
     if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${osidb_gitlab_base_link}/tags\" [HTTP status: ${status}]"
+        echo "Error accessing \"${osidb_github_base_link}/tags\" [HTTP status: ${status}]"
         exit 1
     fi
 
@@ -113,13 +86,13 @@ get_schema() {
     local version=$1
 
     echo "Downloading OSIDB schema version "
-    local response=$(curl -s "${osidb_gitlab_base_link}/files/openapi.yml/raw?ref=${version}" -H "PRIVATE-TOKEN: ${GITLAB_TOKEN}" \
+    local response=$(curl -s "https://raw.githubusercontent.com/RedHatProductSecurity/osidb/${version}/openapi.yml" \
     -o osidb_bindings/openapi_schema.yml -f -w 'HTTPSTATUS:%{http_code}\n')
 
     local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
 
     if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${osidb_gitlab_base_link}/files/openapi.yml/raw?ref=${version}\" [HTTP status: ${status}]"
+        echo "Error accessing \"https://raw.githubusercontent.com/RedHatProductSecurity/osidb/${version}/openapi.yml\" [HTTP status: ${status}]"
         exit 1
     fi
 }
@@ -128,7 +101,6 @@ get_schema() {
 check_are_you_serious
 check_python_deps
 check_master_branch
-get_gitlab_token
 get_new_version
 
 create_new_branch "v${new_version}"

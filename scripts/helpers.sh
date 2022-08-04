@@ -53,6 +53,9 @@ update_version() {
     echo "Replacing user agent version in constants.py to ${version}"
     sed -i 's/"osidb-bindings-[0-9]*\.[0-9]*\.[0-9]*"/"osidb-bindings-'${version}'"/g' osidb_bindings/constants.py
 
+    echo "Updating the CHANGELOG.md to ${version}"
+    sed -i 's/^## Unreleased.*/## Unreleased\n\n## ['"${version}"'] - '$(date '+%Y-%m-%d')'/' CHANGELOG.md
+
     echo
 }
 
