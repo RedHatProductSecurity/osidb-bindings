@@ -18,7 +18,7 @@ commit_version_changes() {
 
     echo "Committing version changes"
 
-    git add setup.py osidb_bindings
+    git add setup.py CHANGELOG.md osidb_bindings
     git commit -m "Preparation of ${version} release"
     echo
 }

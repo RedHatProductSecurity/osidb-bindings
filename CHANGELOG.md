@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [2.1.0] - 2022-08-04
+
 ## [2.0.0] - 2022-07-16
 ### Changed
 - add additional resources for queries (affects and trackers),

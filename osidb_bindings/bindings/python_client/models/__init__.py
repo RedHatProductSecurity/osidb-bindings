@@ -33,6 +33,27 @@ from .cv_ev_5_versions import CVEv5Versions
 from .erratum import Erratum
 from .exploits_api_v1_collect_update_response_200 import ExploitsApiV1CollectUpdateResponse200
 from .exploits_api_v1_cve_map_retrieve_response_200 import ExploitsApiV1CveMapRetrieveResponse200
+from .exploits_api_v1_cve_map_retrieve_response_200_cves import ExploitsApiV1CveMapRetrieveResponse200Cves
+from .exploits_api_v1_report_date_retrieve_response_200 import ExploitsApiV1ReportDateRetrieveResponse200
+from .exploits_api_v1_report_date_retrieve_response_200_action_required_item import (
+    ExploitsApiV1ReportDateRetrieveResponse200ActionRequiredItem,
+)
+from .exploits_api_v1_report_date_retrieve_response_200_no_action_item import (
+    ExploitsApiV1ReportDateRetrieveResponse200NoActionItem,
+)
+from .exploits_api_v1_report_date_retrieve_response_200_not_relevant_item import (
+    ExploitsApiV1ReportDateRetrieveResponse200NotRelevantItem,
+)
+from .exploits_api_v1_report_explanations_retrieve_response_200 import (
+    ExploitsApiV1ReportExplanationsRetrieveResponse200,
+)
+from .exploits_api_v1_report_explanations_retrieve_response_200_explanations_item import (
+    ExploitsApiV1ReportExplanationsRetrieveResponse200ExplanationsItem,
+)
+from .exploits_api_v1_report_pending_retrieve_response_200 import ExploitsApiV1ReportPendingRetrieveResponse200
+from .exploits_api_v1_report_pending_retrieve_response_200_pending_actions_item import (
+    ExploitsApiV1ReportPendingRetrieveResponse200PendingActionsItem,
+)
 from .exploits_api_v1_status_retrieve_response_200 import ExploitsApiV1StatusRetrieveResponse200
 from .flaw import Flaw
 from .flaw_classification import FlawClassification
