@@ -90,17 +90,17 @@ push_branch() {
 
 # Commit changed files
 # $1: version
-merge_request() {
+pull_request() {
     local version="${1}"
 
-    base_link="https://git.prodsec.redhat.com/devops/osidb-bindings/merge_requests/new"
-    url_with_args="${base_link}?merge_request%5Bsource_branch%5D=v${version}&merge_request%5Btitle%5D=preparation%20of%20${version}%20release"
-    echo "Trying to open the following link in browser to create a merge request into the master branch:"
+    base_link="https://github.com/RedHatProductSecurity/osidb-bindings/pull/new"
+    url_with_args="${base_link}/v${version}?pull_request%5Btitle%5D=preparation%20of%20${version}%20release"
+    echo "Trying to open the following link in browser to create a pull request into the master branch:"
     echo
     echo "    ${url_with_args}"
     echo
     xdg-open "${url_with_args}" || (
-        echo "Failed to open URL to create merge request automatically."
+        echo "Failed to open URL to create pull request automatically."
         echo "Please open URL manually in your browser"
         echo
     )

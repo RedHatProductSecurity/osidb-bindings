@@ -15,14 +15,14 @@ You can install the bindings via Python 3 pip:
     ```
     pip install osidb-bindings
     ```
-* directly from the [GitLab](https://git.prodsec.redhat.com/devops/osidb-bindings) repository (will install the version
+* directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository (will install the version
     from master branch)
     ```
-    pip install -e git+https://git.prodsec.redhat.com/devops/osidb-bindings.git#egg=osidb_bindings
+    pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git#egg=osidb_bindings
     ```
-* OPTIONAL - directly from the [GitLab](https://git.prodsec.redhat.com/devops/osidb-bindings) repository with branch specification
+* OPTIONAL - directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository with branch specification
     ```
-    pip install -e git+https://git.prodsec.redhat.com/devops/osidb-bindings.git@<branch_name>#egg=osidb_bindings
+    pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git@<branch_name>#egg=osidb_bindings
     ```
 
 ## OSIDB Compatibility
