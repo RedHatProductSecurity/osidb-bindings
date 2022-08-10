@@ -138,9 +138,9 @@ replaces the original templates from the [openapi-python-client](https://github.
 
 5) Push to branch
 
-6) confirm branch passes CI - ***do not raise an MR if CI does not pass***
+6) confirm branch passes CI - ***do not raise an PR if CI does not pass***
 
-7) raise MR against master ensuring good title/description and bullet point
+7) raise PR against master ensuring good title/description and bullet point
    all significant commits
 
 ## Release
@@ -194,13 +194,13 @@ patch release is prefered.
     * create a new branch
     * increment the patch part of the version in all necessary places (eg. x.x.1 -> x.x.2)
     * commit and push the changes
-    * open merge request creation in browser
+    * open pull request creation in browser
 
-4) Confirm MR creation opened by the relase script
+4) Confirm PR creation opened by the relase script
 
 5) Confirm CI passes
 
-6) Merge MR
+6) Merge PR
 
 7) Tag new release in git - this will trigger the build and upload to PyPI
     ```
@@ -219,7 +219,7 @@ When new major/minor OSIDB version is released, major/minor release of the osidb
     $ git pull
     ```
 
-2) Start release script and follow instructions (GitLab token will be needed to access GitLab API)
+2) Start release script and follow instructions
 
     ```
     $ make release
@@ -232,13 +232,13 @@ When new major/minor OSIDB version is released, major/minor release of the osidb
     * regenerate bindings
     * replace version on all places with new OSIDB bindings based on the latest OSIDB version
     * commit and push the changes
-    * open merge request creation in browser
+    * open pull request creation in browser
 
-3) Confirm MR creation opened by the relase script
+3) Confirm PR creation opened by the relase script
 
 4) Confirm CI passes
 
-5) Merge MR
+5) Merge PR
 
 6) Tag new release in git - this will trigger the build and upload to PyPI
     ```

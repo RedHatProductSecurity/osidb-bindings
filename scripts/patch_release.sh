@@ -32,6 +32,6 @@ review
 
 commit ${new_version}
 push_branch "v${new_version}"
-merge_request ${new_version}
+pull_request ${new_version}
 
 exit 0

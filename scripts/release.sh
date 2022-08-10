@@ -80,7 +80,7 @@ get_new_version() {
     echo
 }
 
-# Get OpenAPI schema from gitlab API
+# Get OpenAPI schema from github API
 # $1: version
 get_schema() {
     local version=$1
@@ -114,6 +114,6 @@ review
 commit_version_changes ${new_version}
 
 push_branch "v${new_version}"
-merge_request ${new_version}
+pull_request ${new_version}
 
 exit 0
