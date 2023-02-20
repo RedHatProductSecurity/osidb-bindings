@@ -23,7 +23,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbWhoamiRetrieveResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbWhoamiRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbWhoamiRetrieveResponse200
@@ -36,7 +38,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbWhoamiRetri
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbWhoamiRetrieveResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbWhoamiRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

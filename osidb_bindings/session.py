@@ -29,8 +29,6 @@ osidb_status_retrieve = importlib.import_module(
 class OperationUnsupported(Exception):
     """Session operation is unsupported exception"""
 
-    pass
-
 
 def get_sync_function(api_module: ModuleType) -> Callable:
     """

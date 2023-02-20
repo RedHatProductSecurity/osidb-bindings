@@ -287,14 +287,24 @@ class Flaw:
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        title = self.title if self.title is UNSET else (None, str(self.title), "text/plain")
+        title = (
+            self.title if self.title is UNSET else (None, str(self.title), "text/plain")
+        )
         trackers: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.trackers, Unset):
             _temp_trackers = self.trackers
             trackers = (None, json.dumps(_temp_trackers), "application/json")
 
-        description = self.description if self.description is UNSET else (None, str(self.description), "text/plain")
-        embargoed = self.embargoed if self.embargoed is UNSET else (None, str(self.embargoed), "text/plain")
+        description = (
+            self.description
+            if self.description is UNSET
+            else (None, str(self.description), "text/plain")
+        )
+        embargoed = (
+            self.embargoed
+            if self.embargoed is UNSET
+            else (None, str(self.embargoed), "text/plain")
+        )
         affects: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.affects, Unset):
             _temp_affects = []
@@ -341,7 +351,11 @@ class Flaw:
                     package_versions_item = package_versions_item_data.to_dict()
 
                 _temp_package_versions.append(package_versions_item)
-            package_versions = (None, json.dumps(_temp_package_versions), "application/json")
+            package_versions = (
+                None,
+                json.dumps(_temp_package_versions),
+                "application/json",
+            )
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -353,14 +367,22 @@ class Flaw:
 
         classification: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.classification, Unset):
-            classification = (None, json.dumps(self.classification.to_dict()), "application/json")
+            classification = (
+                None,
+                json.dumps(self.classification.to_dict()),
+                "application/json",
+            )
 
         type: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.type, Unset):
 
             type = FlawTypeEnum(self.type).value
 
-        cve_id = self.cve_id if self.cve_id is UNSET else (None, str(self.cve_id), "text/plain")
+        cve_id = (
+            self.cve_id
+            if self.cve_id is UNSET
+            else (None, str(self.cve_id), "text/plain")
+        )
         state: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.state, Unset):
 
@@ -396,9 +418,21 @@ class Flaw:
 
                 impact = BlankEnum(self.impact).value
 
-        summary = self.summary if self.summary is UNSET else (None, str(self.summary), "text/plain")
-        statement = self.statement if self.statement is UNSET else (None, str(self.statement), "text/plain")
-        cwe_id = self.cwe_id if self.cwe_id is UNSET else (None, str(self.cwe_id), "text/plain")
+        summary = (
+            self.summary
+            if self.summary is UNSET
+            else (None, str(self.summary), "text/plain")
+        )
+        statement = (
+            self.statement
+            if self.statement is UNSET
+            else (None, str(self.statement), "text/plain")
+        )
+        cwe_id = (
+            self.cwe_id
+            if self.cwe_id is UNSET
+            else (None, str(self.cwe_id), "text/plain")
+        )
         unembargo_dt: Union[Unset, None, str] = UNSET
         if not isinstance(self.unembargo_dt, Unset):
             unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
@@ -437,12 +471,32 @@ class Flaw:
 
                 mitigated_by = BlankEnum(self.mitigated_by).value
 
-        cvss2 = self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
-        cvss2_score = self.cvss2_score if self.cvss2_score is UNSET else (None, str(self.cvss2_score), "text/plain")
-        nvd_cvss2 = self.nvd_cvss2 if self.nvd_cvss2 is UNSET else (None, str(self.nvd_cvss2), "text/plain")
-        cvss3 = self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
-        cvss3_score = self.cvss3_score if self.cvss3_score is UNSET else (None, str(self.cvss3_score), "text/plain")
-        nvd_cvss3 = self.nvd_cvss3 if self.nvd_cvss3 is UNSET else (None, str(self.nvd_cvss3), "text/plain")
+        cvss2 = (
+            self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
+        )
+        cvss2_score = (
+            self.cvss2_score
+            if self.cvss2_score is UNSET
+            else (None, str(self.cvss2_score), "text/plain")
+        )
+        nvd_cvss2 = (
+            self.nvd_cvss2
+            if self.nvd_cvss2 is UNSET
+            else (None, str(self.nvd_cvss2), "text/plain")
+        )
+        cvss3 = (
+            self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
+        )
+        cvss3_score = (
+            self.cvss3_score
+            if self.cvss3_score is UNSET
+            else (None, str(self.cvss3_score), "text/plain")
+        )
+        nvd_cvss3 = (
+            self.nvd_cvss3
+            if self.nvd_cvss3 is UNSET
+            else (None, str(self.nvd_cvss3), "text/plain")
+        )
         is_major_incident = (
             self.is_major_incident
             if self.is_major_incident is UNSET
@@ -450,7 +504,12 @@ class Flaw:
         )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
         if title is not UNSET:
@@ -594,7 +653,9 @@ class Flaw:
                 if isinstance(_package_versions_item, Unset):
                     package_versions_item = UNSET
                 else:
-                    package_versions_item = CVEv5PackageVersions.from_dict(_package_versions_item)
+                    package_versions_item = CVEv5PackageVersions.from_dict(
+                        _package_versions_item
+                    )
 
                 package_versions.append(package_versions_item)
 
@@ -635,7 +696,9 @@ class Flaw:
         else:
             state = StateEnum(_state)
 
-        def _parse_resolution(data: object) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
+        def _parse_resolution(
+            data: object,
+        ) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -746,7 +809,9 @@ class Flaw:
         else:
             reported_dt = isoparse(_reported_dt)
 
-        def _parse_mitigated_by(data: object) -> Union[BlankEnum, MitigatedByEnum, Unset]:
+        def _parse_mitigated_by(
+            data: object,
+        ) -> Union[BlankEnum, MitigatedByEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:

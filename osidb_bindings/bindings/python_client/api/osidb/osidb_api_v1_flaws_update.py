@@ -4,7 +4,9 @@ import requests
 
 from ...client import AuthenticatedClient
 from ...models.flaw import Flaw
-from ...models.osidb_api_v1_flaws_update_response_200 import OsidbApiV1FlawsUpdateResponse200
+from ...models.osidb_api_v1_flaws_update_response_200 import (
+    OsidbApiV1FlawsUpdateResponse200,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -38,7 +40,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbApiV1FlawsUpdateResponse200
@@ -51,7 +55,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsU
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1FlawsUpdateResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1FlawsUpdateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

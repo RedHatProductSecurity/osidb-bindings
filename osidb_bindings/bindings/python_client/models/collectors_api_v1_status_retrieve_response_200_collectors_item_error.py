@@ -23,7 +23,9 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItemError:
         d = src_dict.copy()
         collectors_api_v1_status_retrieve_response_200_collectors_item_error = cls()
 
-        collectors_api_v1_status_retrieve_response_200_collectors_item_error.additional_properties = d
+        collectors_api_v1_status_retrieve_response_200_collectors_item_error.additional_properties = (
+            d
+        )
         return collectors_api_v1_status_retrieve_response_200_collectors_item_error
 
     @property

@@ -164,8 +164,16 @@ class Affect:
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        ps_module = self.ps_module if self.ps_module is UNSET else (None, str(self.ps_module), "text/plain")
-        ps_component = self.ps_component if self.ps_component is UNSET else (None, str(self.ps_component), "text/plain")
+        ps_module = (
+            self.ps_module
+            if self.ps_module is UNSET
+            else (None, str(self.ps_module), "text/plain")
+        )
+        ps_component = (
+            self.ps_component
+            if self.ps_component is UNSET
+            else (None, str(self.ps_component), "text/plain")
+        )
         trackers: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.trackers, Unset):
             _temp_trackers = []
@@ -245,13 +253,30 @@ class Affect:
 
                 impact = BlankEnum(self.impact).value
 
-        cvss2 = self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
-        cvss2_score = self.cvss2_score if self.cvss2_score is UNSET else (None, str(self.cvss2_score), "text/plain")
-        cvss3 = self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
-        cvss3_score = self.cvss3_score if self.cvss3_score is UNSET else (None, str(self.cvss3_score), "text/plain")
+        cvss2 = (
+            self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
+        )
+        cvss2_score = (
+            self.cvss2_score
+            if self.cvss2_score is UNSET
+            else (None, str(self.cvss2_score), "text/plain")
+        )
+        cvss3 = (
+            self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
+        )
+        cvss3_score = (
+            self.cvss3_score
+            if self.cvss3_score is UNSET
+            else (None, str(self.cvss3_score), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
         if ps_module is not UNSET:
@@ -345,7 +370,9 @@ class Affect:
         else:
             type = AffectTypeEnum(_type)
 
-        def _parse_affectedness(data: object) -> Union[AffectednessEnum, BlankEnum, Unset]:
+        def _parse_affectedness(
+            data: object,
+        ) -> Union[AffectednessEnum, BlankEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -374,7 +401,9 @@ class Affect:
 
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
-        def _parse_resolution(data: object) -> Union[AffectResolutionEnum, BlankEnum, Unset]:
+        def _parse_resolution(
+            data: object,
+        ) -> Union[AffectResolutionEnum, BlankEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:

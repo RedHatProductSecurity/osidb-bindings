@@ -103,7 +103,11 @@ class Tracker:
             if self.external_system_id is UNSET
             else (None, str(self.external_system_id), "text/plain")
         )
-        status = self.status if self.status is UNSET else (None, str(self.status), "text/plain")
+        status = (
+            self.status
+            if self.status is UNSET
+            else (None, str(self.status), "text/plain")
+        )
         errata: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.errata, Unset):
             _temp_errata = []
@@ -132,10 +136,19 @@ class Tracker:
             _temp_affects = self.affects
             affects = (None, json.dumps(_temp_affects), "application/json")
 
-        resolution = self.resolution if self.resolution is UNSET else (None, str(self.resolution), "text/plain")
+        resolution = (
+            self.resolution
+            if self.resolution is UNSET
+            else (None, str(self.resolution), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
         if type is not UNSET:

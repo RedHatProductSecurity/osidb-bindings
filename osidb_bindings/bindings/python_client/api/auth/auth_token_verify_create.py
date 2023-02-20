@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import Client
-from ...models.auth_token_verify_create_response_200 import AuthTokenVerifyCreateResponse200
+from ...models.auth_token_verify_create_response_200 import (
+    AuthTokenVerifyCreateResponse200,
+)
 from ...models.token_verify import TokenVerify
 from ...types import UNSET, Response, Unset
 
@@ -36,7 +38,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[AuthTokenVerifyCreateResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[AuthTokenVerifyCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: AuthTokenVerifyCreateResponse200
@@ -49,7 +53,9 @@ def _parse_response(*, response: requests.Response) -> Optional[AuthTokenVerifyC
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[AuthTokenVerifyCreateResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[AuthTokenVerifyCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

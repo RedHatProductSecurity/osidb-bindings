@@ -5,7 +5,9 @@ import requests
 from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_schema_retrieve_format import OsidbApiV1SchemaRetrieveFormat
 from ...models.osidb_api_v1_schema_retrieve_lang import OsidbApiV1SchemaRetrieveLang
-from ...models.osidb_api_v1_schema_retrieve_response_200 import OsidbApiV1SchemaRetrieveResponse200
+from ...models.osidb_api_v1_schema_retrieve_response_200 import (
+    OsidbApiV1SchemaRetrieveResponse200,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -24,7 +26,9 @@ def _get_kwargs(
     json_format_: Union[Unset, None, str] = UNSET
     if not isinstance(format_, Unset):
 
-        json_format_ = OsidbApiV1SchemaRetrieveFormat(format_).value if format_ else None
+        json_format_ = (
+            OsidbApiV1SchemaRetrieveFormat(format_).value if format_ else None
+        )
 
     json_lang: Union[Unset, None, str] = UNSET
     if not isinstance(lang, Unset):
@@ -44,7 +48,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1SchemaRetrieveResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1SchemaRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbApiV1SchemaRetrieveResponse200
@@ -57,7 +63,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1Schema
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1SchemaRetrieveResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1SchemaRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

@@ -5,9 +5,13 @@ import requests
 
 from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
-from ...models.osidb_api_v1_flaws_list_mitigated_by import OsidbApiV1FlawsListMitigatedBy
+from ...models.osidb_api_v1_flaws_list_mitigated_by import (
+    OsidbApiV1FlawsListMitigatedBy,
+)
 from ...models.osidb_api_v1_flaws_list_resolution import OsidbApiV1FlawsListResolution
-from ...models.osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
+from ...models.osidb_api_v1_flaws_list_response_200 import (
+    OsidbApiV1FlawsListResponse200,
+)
 from ...models.osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from ...models.osidb_api_v1_flaws_list_state import OsidbApiV1FlawsListState
 from ...models.osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
@@ -112,7 +116,9 @@ def _get_kwargs(
     json_mitigated_by: Union[Unset, None, str] = UNSET
     if not isinstance(mitigated_by, Unset):
 
-        json_mitigated_by = OsidbApiV1FlawsListMitigatedBy(mitigated_by).value if mitigated_by else None
+        json_mitigated_by = (
+            OsidbApiV1FlawsListMitigatedBy(mitigated_by).value if mitigated_by else None
+        )
 
     json_reported_dt: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt, Unset):
@@ -121,7 +127,9 @@ def _get_kwargs(
     json_resolution: Union[Unset, None, str] = UNSET
     if not isinstance(resolution, Unset):
 
-        json_resolution = OsidbApiV1FlawsListResolution(resolution).value if resolution else None
+        json_resolution = (
+            OsidbApiV1FlawsListResolution(resolution).value if resolution else None
+        )
 
     json_source: Union[Unset, None, str] = UNSET
     if not isinstance(source, Unset):
@@ -197,7 +205,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsListResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1FlawsListResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbApiV1FlawsListResponse200
@@ -210,7 +220,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1FlawsL
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1FlawsListResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1FlawsListResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

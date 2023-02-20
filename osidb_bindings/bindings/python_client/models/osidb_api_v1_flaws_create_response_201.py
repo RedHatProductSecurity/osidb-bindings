@@ -379,7 +379,9 @@ class OsidbApiV1FlawsCreateResponse201:
                 if isinstance(_package_versions_item, Unset):
                     package_versions_item = UNSET
                 else:
-                    package_versions_item = CVEv5PackageVersions.from_dict(_package_versions_item)
+                    package_versions_item = CVEv5PackageVersions.from_dict(
+                        _package_versions_item
+                    )
 
                 package_versions.append(package_versions_item)
 
@@ -420,7 +422,9 @@ class OsidbApiV1FlawsCreateResponse201:
         else:
             state = StateEnum(_state)
 
-        def _parse_resolution(data: object) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
+        def _parse_resolution(
+            data: object,
+        ) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -531,7 +535,9 @@ class OsidbApiV1FlawsCreateResponse201:
         else:
             reported_dt = isoparse(_reported_dt)
 
-        def _parse_mitigated_by(data: object) -> Union[BlankEnum, MitigatedByEnum, Unset]:
+        def _parse_mitigated_by(
+            data: object,
+        ) -> Union[BlankEnum, MitigatedByEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:

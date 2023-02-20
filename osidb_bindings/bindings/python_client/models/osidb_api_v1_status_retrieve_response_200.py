@@ -4,7 +4,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import OsidbApiV1StatusRetrieveResponse200OsidbData
+from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import (
+    OsidbApiV1StatusRetrieveResponse200OsidbData,
+)
 from ..models.osidb_api_v1_status_retrieve_response_200_osidb_service import (
     OsidbApiV1StatusRetrieveResponse200OsidbService,
 )
@@ -76,14 +78,18 @@ class OsidbApiV1StatusRetrieveResponse200:
         if isinstance(_osidb_data, Unset):
             osidb_data = UNSET
         else:
-            osidb_data = OsidbApiV1StatusRetrieveResponse200OsidbData.from_dict(_osidb_data)
+            osidb_data = OsidbApiV1StatusRetrieveResponse200OsidbData.from_dict(
+                _osidb_data
+            )
 
         _osidb_service = d.pop("osidb_service", UNSET)
         osidb_service: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbService]
         if isinstance(_osidb_service, Unset):
             osidb_service = UNSET
         else:
-            osidb_service = OsidbApiV1StatusRetrieveResponse200OsidbService.from_dict(_osidb_service)
+            osidb_service = OsidbApiV1StatusRetrieveResponse200OsidbService.from_dict(
+                _osidb_service
+            )
 
         revision = d.pop("revision", UNSET)
 
