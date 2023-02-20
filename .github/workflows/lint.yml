@@ -1,0 +1,25 @@
+name: Lint
+on: [push]
+jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: pip install tox==3.24.5
+      - name: Check that code is formatted with black
+        run: tox -e black
+  isort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: pip install tox==3.24.5
+      - name: Check that imports are formatted with isort
+        run: tox -e isort
