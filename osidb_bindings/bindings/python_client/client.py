@@ -42,11 +42,15 @@ class Client:
 class AuthenticatedClient(Client):
     """A Client which has been authenticated for use on secured endpoints"""
 
-    auth: Union[None, Tuple[str, str], Type[requests.auth.AuthBase]] = attr.ib(None, kw_only=True)
+    auth: Union[None, Tuple[str, str], Type[requests.auth.AuthBase]] = attr.ib(
+        None, kw_only=True
+    )
 
     def get_auth(self) -> Union[None, Tuple[str, str], Type[requests.auth.AuthBase]]:
         return self.auth
 
-    def with_auth(self, auth: Union[None, Tuple[str, str], Type[requests.auth.AuthBase]]) -> "Client":
+    def with_auth(
+        self, auth: Union[None, Tuple[str, str], Type[requests.auth.AuthBase]]
+    ) -> "Client":
         """Get a new client matching this one with a new auth method"""
         return attr.evolve(self, auth=auth)

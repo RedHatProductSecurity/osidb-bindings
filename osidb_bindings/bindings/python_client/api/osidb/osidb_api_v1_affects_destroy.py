@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osidb_api_v1_affects_destroy_response_204 import OsidbApiV1AffectsDestroyResponse204
+from ...models.osidb_api_v1_affects_destroy_response_204 import (
+    OsidbApiV1AffectsDestroyResponse204,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -25,7 +27,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1AffectsDestroyResponse204]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1AffectsDestroyResponse204]:
     if response.status_code == 204:
         _response_204 = response.json()
         response_204: OsidbApiV1AffectsDestroyResponse204
@@ -38,7 +42,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1Affect
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1AffectsDestroyResponse204]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1AffectsDestroyResponse204]:
     return Response(
         status_code=response.status_code,
         content=response.content,

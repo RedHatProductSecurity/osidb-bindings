@@ -16,7 +16,9 @@ T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200")
 class CollectorsApiV1StatusRetrieveResponse200:
     """ """
 
-    collectors: Union[Unset, List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem]] = UNSET
+    collectors: Union[
+        Unset, List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem]
+    ] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -71,7 +73,9 @@ class CollectorsApiV1StatusRetrieveResponse200:
                 if isinstance(_collectors_item, Unset):
                     collectors_item = UNSET
                 else:
-                    collectors_item = CollectorsApiV1StatusRetrieveResponse200CollectorsItem.from_dict(_collectors_item)
+                    collectors_item = CollectorsApiV1StatusRetrieveResponse200CollectorsItem.from_dict(
+                        _collectors_item
+                    )
 
                 collectors.append(collectors_item)
 

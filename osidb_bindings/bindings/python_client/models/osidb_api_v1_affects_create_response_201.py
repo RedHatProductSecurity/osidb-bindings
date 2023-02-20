@@ -236,7 +236,9 @@ class OsidbApiV1AffectsCreateResponse201:
         else:
             type = AffectTypeEnum(_type)
 
-        def _parse_affectedness(data: object) -> Union[AffectednessEnum, BlankEnum, Unset]:
+        def _parse_affectedness(
+            data: object,
+        ) -> Union[AffectednessEnum, BlankEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
@@ -265,7 +267,9 @@ class OsidbApiV1AffectsCreateResponse201:
 
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
-        def _parse_resolution(data: object) -> Union[AffectResolutionEnum, BlankEnum, Unset]:
+        def _parse_resolution(
+            data: object,
+        ) -> Union[AffectResolutionEnum, BlankEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:

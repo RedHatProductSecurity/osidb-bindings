@@ -22,12 +22,18 @@ T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItem")
 class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
     """ """
 
-    data: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData] = UNSET
+    data: Union[
+        Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData
+    ] = UNSET
     depends_on: Union[Unset, List[str]] = UNSET
-    error: Union[Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError] = UNSET
+    error: Union[
+        Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError
+    ] = UNSET
     is_complete: Union[Unset, bool] = UNSET
     data_models: Union[Unset, List[str]] = UNSET
-    state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState] = UNSET
+    state: Union[
+        Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState
+    ] = UNSET
     updated_until: Union[Unset, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -35,7 +41,9 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
         data: Union[Unset, str] = UNSET
         if not isinstance(self.data, Unset):
 
-            data = CollectorsApiV1StatusRetrieveResponse200CollectorsItemData(self.data).value
+            data = CollectorsApiV1StatusRetrieveResponse200CollectorsItemData(
+                self.data
+            ).value
 
         depends_on: Union[Unset, List[str]] = UNSET
         if not isinstance(self.depends_on, Unset):
@@ -53,7 +61,9 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
 
-            state = CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(self.state).value
+            state = CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(
+                self.state
+            ).value
 
         updated_until: Union[Unset, str] = UNSET
         if not isinstance(self.updated_until, Unset):
@@ -91,13 +101,19 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
         depends_on = cast(List[str], d.pop("depends_on", UNSET))
 
         _error = d.pop("error", UNSET)
-        error: Union[Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError]
+        error: Union[
+            Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError
+        ]
         if _error is None:
             error = None
         elif isinstance(_error, Unset):
             error = UNSET
         else:
-            error = CollectorsApiV1StatusRetrieveResponse200CollectorsItemError.from_dict(_error)
+            error = (
+                CollectorsApiV1StatusRetrieveResponse200CollectorsItemError.from_dict(
+                    _error
+                )
+            )
 
         is_complete = d.pop("is_complete", UNSET)
 
@@ -127,7 +143,9 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
             updated_until=updated_until,
         )
 
-        collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = d
+        collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = (
+            d
+        )
         return collectors_api_v1_status_retrieve_response_200_collectors_item
 
     @property

@@ -23,7 +23,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsimHealthyRetrieveResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsimHealthyRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsimHealthyRetrieveResponse200
@@ -36,7 +38,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsimHealthyRetri
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsimHealthyRetrieveResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsimHealthyRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

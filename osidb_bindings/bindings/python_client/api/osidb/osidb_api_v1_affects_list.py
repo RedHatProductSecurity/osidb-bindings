@@ -3,10 +3,16 @@ from typing import Any, Dict, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osidb_api_v1_affects_list_affectedness import OsidbApiV1AffectsListAffectedness
+from ...models.osidb_api_v1_affects_list_affectedness import (
+    OsidbApiV1AffectsListAffectedness,
+)
 from ...models.osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
-from ...models.osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
-from ...models.osidb_api_v1_affects_list_response_200 import OsidbApiV1AffectsListResponse200
+from ...models.osidb_api_v1_affects_list_resolution import (
+    OsidbApiV1AffectsListResolution,
+)
+from ...models.osidb_api_v1_affects_list_response_200 import (
+    OsidbApiV1AffectsListResponse200,
+)
 from ...models.osidb_api_v1_affects_list_type import OsidbApiV1AffectsListType
 from ...types import UNSET, Response, Unset
 
@@ -34,7 +40,11 @@ def _get_kwargs(
     json_affectedness: Union[Unset, None, str] = UNSET
     if not isinstance(affectedness, Unset):
 
-        json_affectedness = OsidbApiV1AffectsListAffectedness(affectedness).value if affectedness else None
+        json_affectedness = (
+            OsidbApiV1AffectsListAffectedness(affectedness).value
+            if affectedness
+            else None
+        )
 
     json_impact: Union[Unset, None, str] = UNSET
     if not isinstance(impact, Unset):
@@ -44,7 +54,9 @@ def _get_kwargs(
     json_resolution: Union[Unset, None, str] = UNSET
     if not isinstance(resolution, Unset):
 
-        json_resolution = OsidbApiV1AffectsListResolution(resolution).value if resolution else None
+        json_resolution = (
+            OsidbApiV1AffectsListResolution(resolution).value if resolution else None
+        )
 
     json_type: Union[Unset, None, str] = UNSET
     if not isinstance(type, Unset):
@@ -72,7 +84,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1AffectsListResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1AffectsListResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbApiV1AffectsListResponse200
@@ -85,7 +99,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1Affect
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1AffectsListResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1AffectsListResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

@@ -37,13 +37,34 @@ class TokenObtainPair:
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        username = self.username if self.username is UNSET else (None, str(self.username), "text/plain")
-        password = self.password if self.password is UNSET else (None, str(self.password), "text/plain")
-        access = self.access if self.access is UNSET else (None, str(self.access), "text/plain")
-        refresh = self.refresh if self.refresh is UNSET else (None, str(self.refresh), "text/plain")
+        username = (
+            self.username
+            if self.username is UNSET
+            else (None, str(self.username), "text/plain")
+        )
+        password = (
+            self.password
+            if self.password is UNSET
+            else (None, str(self.password), "text/plain")
+        )
+        access = (
+            self.access
+            if self.access is UNSET
+            else (None, str(self.access), "text/plain")
+        )
+        refresh = (
+            self.refresh
+            if self.refresh is UNSET
+            else (None, str(self.refresh), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if username is not UNSET:
             field_dict["username"] = username
         if password is not UNSET:

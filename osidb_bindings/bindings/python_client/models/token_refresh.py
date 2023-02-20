@@ -29,11 +29,24 @@ class TokenRefresh:
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        access = self.access if self.access is UNSET else (None, str(self.access), "text/plain")
-        refresh = self.refresh if self.refresh is UNSET else (None, str(self.refresh), "text/plain")
+        access = (
+            self.access
+            if self.access is UNSET
+            else (None, str(self.access), "text/plain")
+        )
+        refresh = (
+            self.refresh
+            if self.refresh is UNSET
+            else (None, str(self.refresh), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if access is not UNSET:
             field_dict["access"] = access
         if refresh is not UNSET:

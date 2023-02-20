@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osim_api_v1_workflows_retrieve_2_response_200 import OsimApiV1WorkflowsRetrieve2Response200
+from ...models.osim_api_v1_workflows_retrieve_2_response_200 import (
+    OsimApiV1WorkflowsRetrieve2Response200,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -32,20 +34,26 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsimApiV1WorkflowsRetrieve2Response200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsimApiV1WorkflowsRetrieve2Response200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsimApiV1WorkflowsRetrieve2Response200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsimApiV1WorkflowsRetrieve2Response200.from_dict(_response_200)
+            response_200 = OsimApiV1WorkflowsRetrieve2Response200.from_dict(
+                _response_200
+            )
 
         return response_200
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsimApiV1WorkflowsRetrieve2Response200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsimApiV1WorkflowsRetrieve2Response200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

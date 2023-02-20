@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osidb_healthy_retrieve_response_200 import OsidbHealthyRetrieveResponse200
+from ...models.osidb_healthy_retrieve_response_200 import (
+    OsidbHealthyRetrieveResponse200,
+)
 from ...types import UNSET, Response, Unset
 
 
@@ -23,7 +25,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbHealthyRetrieveResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbHealthyRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbHealthyRetrieveResponse200
@@ -36,7 +40,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbHealthyRetr
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbHealthyRetrieveResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbHealthyRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

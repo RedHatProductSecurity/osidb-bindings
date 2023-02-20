@@ -36,7 +36,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[AuthTokenCreateResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[AuthTokenCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: AuthTokenCreateResponse200
@@ -49,7 +51,9 @@ def _parse_response(*, response: requests.Response) -> Optional[AuthTokenCreateR
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[AuthTokenCreateResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[AuthTokenCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

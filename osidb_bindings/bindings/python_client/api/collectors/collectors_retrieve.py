@@ -23,7 +23,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[CollectorsRetrieveResponse200]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[CollectorsRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: CollectorsRetrieveResponse200
@@ -36,7 +38,9 @@ def _parse_response(*, response: requests.Response) -> Optional[CollectorsRetrie
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[CollectorsRetrieveResponse200]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[CollectorsRetrieveResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,

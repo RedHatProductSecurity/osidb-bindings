@@ -25,10 +25,17 @@ class TokenVerify:
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        token = self.token if self.token is UNSET else (None, str(self.token), "text/plain")
+        token = (
+            self.token if self.token is UNSET else (None, str(self.token), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
-        field_dict.update({key: (None, str(value), "text/plain") for key, value in self.additional_properties.items()})
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
         if token is not UNSET:
             field_dict["token"] = token
 

@@ -23,7 +23,9 @@ class OsidbApiV1StatusRetrieveResponse200OsidbService:
         d = src_dict.copy()
         osidb_api_v1_status_retrieve_response_200_osidb_service = cls()
 
-        osidb_api_v1_status_retrieve_response_200_osidb_service.additional_properties = d
+        osidb_api_v1_status_retrieve_response_200_osidb_service.additional_properties = (
+            d
+        )
         return osidb_api_v1_status_retrieve_response_200_osidb_service
 
     @property

@@ -3,7 +3,9 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osidb_api_v1_trackers_create_response_201 import OsidbApiV1TrackersCreateResponse201
+from ...models.osidb_api_v1_trackers_create_response_201 import (
+    OsidbApiV1TrackersCreateResponse201,
+)
 from ...models.tracker import Tracker
 from ...types import UNSET, Response, Unset
 
@@ -36,7 +38,9 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1TrackersCreateResponse201]:
+def _parse_response(
+    *, response: requests.Response
+) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     if response.status_code == 201:
         _response_201 = response.json()
         response_201: OsidbApiV1TrackersCreateResponse201
@@ -49,7 +53,9 @@ def _parse_response(*, response: requests.Response) -> Optional[OsidbApiV1Tracke
     return None
 
 
-def _build_response(*, response: requests.Response) -> Response[OsidbApiV1TrackersCreateResponse201]:
+def _build_response(
+    *, response: requests.Response
+) -> Response[OsidbApiV1TrackersCreateResponse201]:
     return Response(
         status_code=response.status_code,
         content=response.content,

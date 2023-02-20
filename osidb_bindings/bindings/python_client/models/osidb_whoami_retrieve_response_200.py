@@ -4,7 +4,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
-from ..models.osidb_whoami_retrieve_response_200_profile import OsidbWhoamiRetrieveResponse200Profile
+from ..models.osidb_whoami_retrieve_response_200_profile import (
+    OsidbWhoamiRetrieveResponse200Profile,
+)
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200")
