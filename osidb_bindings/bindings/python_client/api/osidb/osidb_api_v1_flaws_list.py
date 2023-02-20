@@ -5,9 +5,6 @@ import requests
 
 from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
-from ...models.osidb_api_v1_flaws_list_mitigated_by import (
-    OsidbApiV1FlawsListMitigatedBy,
-)
 from ...models.osidb_api_v1_flaws_list_resolution import OsidbApiV1FlawsListResolution
 from ...models.osidb_api_v1_flaws_list_response_200 import (
     OsidbApiV1FlawsListResponse200,
@@ -39,7 +36,6 @@ def _get_kwargs(
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
-    mitigated_by: Union[Unset, None, OsidbApiV1FlawsListMitigatedBy] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     resolution: Union[Unset, None, OsidbApiV1FlawsListResolution] = UNSET,
@@ -113,13 +109,6 @@ def _get_kwargs(
         else:
             json_include_meta_attr = include_meta_attr
 
-    json_mitigated_by: Union[Unset, None, str] = UNSET
-    if not isinstance(mitigated_by, Unset):
-
-        json_mitigated_by = (
-            OsidbApiV1FlawsListMitigatedBy(mitigated_by).value if mitigated_by else None
-        )
-
     json_reported_dt: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt, Unset):
         json_reported_dt = reported_dt.isoformat() if reported_dt else None
@@ -180,7 +169,6 @@ def _get_kwargs(
         "include_fields": json_include_fields,
         "include_meta_attr": json_include_meta_attr,
         "limit": limit,
-        "mitigated_by": json_mitigated_by,
         "offset": offset,
         "reported_dt": json_reported_dt,
         "resolution": json_resolution,
@@ -252,7 +240,6 @@ def sync_detailed(
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
-    mitigated_by: Union[Unset, None, OsidbApiV1FlawsListMitigatedBy] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     resolution: Union[Unset, None, OsidbApiV1FlawsListResolution] = UNSET,
@@ -288,7 +275,6 @@ def sync_detailed(
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         limit=limit,
-        mitigated_by=mitigated_by,
         offset=offset,
         reported_dt=reported_dt,
         resolution=resolution,
@@ -337,7 +323,6 @@ def sync(
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
-    mitigated_by: Union[Unset, None, OsidbApiV1FlawsListMitigatedBy] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     resolution: Union[Unset, None, OsidbApiV1FlawsListResolution] = UNSET,
@@ -375,7 +360,6 @@ def sync(
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         limit=limit,
-        mitigated_by=mitigated_by,
         offset=offset,
         reported_dt=reported_dt,
         resolution=resolution,

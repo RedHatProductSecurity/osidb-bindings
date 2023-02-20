@@ -34,6 +34,7 @@ from .comment_meta_attr import CommentMetaAttr
 from .comment_type_enum import CommentTypeEnum
 from .cv_ev_5_package_versions import CVEv5PackageVersions
 from .cv_ev_5_versions import CVEv5Versions
+from .epss import EPSS
 from .erratum import Erratum
 from .exploits_api_v1_collect_update_response_200 import (
     ExploitsApiV1CollectUpdateResponse200,
@@ -44,6 +45,7 @@ from .exploits_api_v1_cve_map_retrieve_response_200 import (
 from .exploits_api_v1_cve_map_retrieve_response_200_cves import (
     ExploitsApiV1CveMapRetrieveResponse200Cves,
 )
+from .exploits_api_v1_epss_list_response_200 import ExploitsApiV1EpssListResponse200
 from .exploits_api_v1_report_date_retrieve_response_200 import (
     ExploitsApiV1ReportDateRetrieveResponse200,
 )
@@ -81,7 +83,6 @@ from .impact_enum import ImpactEnum
 from .meta import Meta
 from .meta_meta_attr import MetaMetaAttr
 from .meta_type_enum import MetaTypeEnum
-from .mitigated_by_enum import MitigatedByEnum
 from .osidb_api_v1_affects_create_response_201 import OsidbApiV1AffectsCreateResponse201
 from .osidb_api_v1_affects_destroy_response_204 import (
     OsidbApiV1AffectsDestroyResponse204,
@@ -98,7 +99,6 @@ from .osidb_api_v1_affects_update_response_200 import OsidbApiV1AffectsUpdateRes
 from .osidb_api_v1_flaws_create_response_201 import OsidbApiV1FlawsCreateResponse201
 from .osidb_api_v1_flaws_destroy_response_204 import OsidbApiV1FlawsDestroyResponse204
 from .osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
-from .osidb_api_v1_flaws_list_mitigated_by import OsidbApiV1FlawsListMitigatedBy
 from .osidb_api_v1_flaws_list_resolution import OsidbApiV1FlawsListResolution
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
@@ -154,6 +154,7 @@ from .osim_api_v1_workflows_retrieve_response_200 import (
 from .osim_healthy_retrieve_response_200 import OsimHealthyRetrieveResponse200
 from .osim_retrieve_response_200 import OsimRetrieveResponse200
 from .paginated_affect_list import PaginatedAffectList
+from .paginated_epss_list import PaginatedEPSSList
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_tracker_list import PaginatedTrackerList
 from .source_enum import SourceEnum

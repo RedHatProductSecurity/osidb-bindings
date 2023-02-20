@@ -15,7 +15,6 @@ from ..models.flaw_resolution_enum import FlawResolutionEnum
 from ..models.flaw_type_enum import FlawTypeEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
-from ..models.mitigated_by_enum import MitigatedByEnum
 from ..models.source_enum import SourceEnum
 from ..models.state_enum import StateEnum
 from ..types import UNSET, Unset
@@ -32,6 +31,7 @@ class Flaw:
     trackers: List[str]
     description: str
     embargoed: bool
+    mitigated_by: str
     affects: List[Affect]
     meta: List[Meta]
     comments: List[Comment]
@@ -51,7 +51,6 @@ class Flaw:
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
     source: Union[BlankEnum, SourceEnum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
-    mitigated_by: Union[BlankEnum, MitigatedByEnum, Unset] = UNSET
     cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
     nvd_cvss2: Union[Unset, str] = UNSET
@@ -70,6 +69,7 @@ class Flaw:
 
         description = self.description
         embargoed = self.embargoed
+        mitigated_by = self.mitigated_by
         affects: List[Dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
@@ -193,21 +193,6 @@ class Flaw:
         if not isinstance(self.reported_dt, Unset):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
-        mitigated_by: Union[Unset, str]
-        if isinstance(self.mitigated_by, Unset):
-            mitigated_by = UNSET
-        elif isinstance(self.mitigated_by, MitigatedByEnum):
-            mitigated_by = UNSET
-            if not isinstance(self.mitigated_by, Unset):
-
-                mitigated_by = MitigatedByEnum(self.mitigated_by).value
-
-        else:
-            mitigated_by = UNSET
-            if not isinstance(self.mitigated_by, Unset):
-
-                mitigated_by = BlankEnum(self.mitigated_by).value
-
         cvss2 = self.cvss2
         cvss2_score = self.cvss2_score
         nvd_cvss2 = self.nvd_cvss2
@@ -228,6 +213,8 @@ class Flaw:
             field_dict["description"] = description
         if embargoed is not UNSET:
             field_dict["embargoed"] = embargoed
+        if mitigated_by is not UNSET:
+            field_dict["mitigated_by"] = mitigated_by
         if affects is not UNSET:
             field_dict["affects"] = affects
         if meta is not UNSET:
@@ -266,8 +253,6 @@ class Flaw:
             field_dict["source"] = source
         if reported_dt is not UNSET:
             field_dict["reported_dt"] = reported_dt
-        if mitigated_by is not UNSET:
-            field_dict["mitigated_by"] = mitigated_by
         if cvss2 is not UNSET:
             field_dict["cvss2"] = cvss2
         if cvss2_score is not UNSET:
@@ -304,6 +289,11 @@ class Flaw:
             self.embargoed
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
+        )
+        mitigated_by = (
+            self.mitigated_by
+            if self.mitigated_by is UNSET
+            else (None, str(self.mitigated_by), "text/plain")
         )
         affects: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.affects, Unset):
@@ -456,21 +446,6 @@ class Flaw:
         if not isinstance(self.reported_dt, Unset):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
-        mitigated_by: Union[Unset, str]
-        if isinstance(self.mitigated_by, Unset):
-            mitigated_by = UNSET
-        elif isinstance(self.mitigated_by, MitigatedByEnum):
-            mitigated_by = UNSET
-            if not isinstance(self.mitigated_by, Unset):
-
-                mitigated_by = MitigatedByEnum(self.mitigated_by).value
-
-        else:
-            mitigated_by = UNSET
-            if not isinstance(self.mitigated_by, Unset):
-
-                mitigated_by = BlankEnum(self.mitigated_by).value
-
         cvss2 = (
             self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
         )
@@ -520,6 +495,8 @@ class Flaw:
             field_dict["description"] = description
         if embargoed is not UNSET:
             field_dict["embargoed"] = embargoed
+        if mitigated_by is not UNSET:
+            field_dict["mitigated_by"] = mitigated_by
         if affects is not UNSET:
             field_dict["affects"] = affects
         if meta is not UNSET:
@@ -558,8 +535,6 @@ class Flaw:
             field_dict["source"] = source
         if reported_dt is not UNSET:
             field_dict["reported_dt"] = reported_dt
-        if mitigated_by is not UNSET:
-            field_dict["mitigated_by"] = mitigated_by
         if cvss2 is not UNSET:
             field_dict["cvss2"] = cvss2
         if cvss2_score is not UNSET:
@@ -589,6 +564,8 @@ class Flaw:
         description = d.pop("description", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        mitigated_by = d.pop("mitigated_by", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -809,37 +786,6 @@ class Flaw:
         else:
             reported_dt = isoparse(_reported_dt)
 
-        def _parse_mitigated_by(
-            data: object,
-        ) -> Union[BlankEnum, MitigatedByEnum, Unset]:
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _mitigated_by_type_0 = data
-                mitigated_by_type_0: Union[Unset, MitigatedByEnum]
-                if isinstance(_mitigated_by_type_0, Unset):
-                    mitigated_by_type_0 = UNSET
-                else:
-                    mitigated_by_type_0 = MitigatedByEnum(_mitigated_by_type_0)
-
-                return mitigated_by_type_0
-            except:  # noqa: E722
-                pass
-            if not isinstance(data, str):
-                raise TypeError()
-            _mitigated_by_type_1 = data
-            mitigated_by_type_1: Union[Unset, BlankEnum]
-            if isinstance(_mitigated_by_type_1, Unset):
-                mitigated_by_type_1 = UNSET
-            else:
-                mitigated_by_type_1 = BlankEnum(_mitigated_by_type_1)
-
-            return mitigated_by_type_1
-
-        mitigated_by = _parse_mitigated_by(d.pop("mitigated_by", UNSET))
-
         cvss2 = d.pop("cvss2", UNSET)
 
         cvss2_score = d.pop("cvss2_score", UNSET)
@@ -860,6 +806,7 @@ class Flaw:
             trackers=trackers,
             description=description,
             embargoed=embargoed,
+            mitigated_by=mitigated_by,
             affects=affects,
             meta=meta,
             comments=comments,
@@ -879,7 +826,6 @@ class Flaw:
             unembargo_dt=unembargo_dt,
             source=source,
             reported_dt=reported_dt,
-            mitigated_by=mitigated_by,
             cvss2=cvss2,
             cvss2_score=cvss2_score,
             nvd_cvss2=nvd_cvss2,
