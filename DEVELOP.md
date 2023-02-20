@@ -138,7 +138,7 @@ replaces the original templates from the [openapi-python-client](https://github.
 
 5) Push to branch
 
-6) confirm branch passes CI - ***do not raise an PR if CI does not pass***
+6) confirm branch passes checks
 
 7) raise PR against master ensuring good title/description and bullet point
    all significant commits
@@ -198,14 +198,14 @@ patch release is prefered.
 
 4) Confirm PR creation opened by the relase script
 
-5) Confirm CI passes
+5) Confirm checks passes
 
 6) Merge PR
 
-7) Tag new release in git - this will trigger the build and upload to PyPI
-    ```
-    $ git tag <release version> vX.X.X
-    $ git push origin <release version> vX.X.X
+7) Create a new release and tag via [GitHub WebUI](https://github.com/RedHatProductSecurity/osidb-bindings/releases/new) - this will also trigger the build and upload to PyPI
+    * Tag and release needs be in format x.x.x to comply with [semantic versioning](#version-policy)
+    * Tag needs to point to the latest commit
+    * Release description should include the newest section of the [CHANGELOG.md](CHANGELOG.md)
     ```
 
 ### Release with OSIDB
@@ -236,11 +236,11 @@ When new major/minor OSIDB version is released, major/minor release of the osidb
 
 3) Confirm PR creation opened by the relase script
 
-4) Confirm CI passes
+4) Confirm checks passes
 
 5) Merge PR
 
-6) Tag new release in git - this will trigger the build and upload to PyPI
-    ```
-    $ git tag <release version> vX.X.X
-    $ git push origin <release version> vX.X.X
+6) Create a new release and tag via [GitHub WebUI](https://github.com/RedHatProductSecurity/osidb-bindings/releases/new) - this will also trigger the build and upload to PyPI
+    * Tag and release needs be in format x.x.x to comply with [semantic versioning](#version-policy)
+    * Tag needs to point to the latest commit
+    * Release description should include the newest section of the [CHANGELOG.md](CHANGELOG.md)
