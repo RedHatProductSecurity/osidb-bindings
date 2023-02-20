@@ -1,2 +1,6 @@
 project_name_override: bindings
 package_name_override: python_client
+post_hooks:
+   - "autoflake -i -r --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .."
+   - "isort .."
+   - "black .."
