@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [2.3.0] - 2023-02-20
+## [2.3.0] - 2023-02-23
 ### Added
 - bring back `session.operation()` as an alias for flaws operations
   to prevent breaking changes
