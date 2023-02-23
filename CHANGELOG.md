@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - bring back `session.operation()` as an alias for flaws operations
   to prevent breaking changes
+
+### Changed
+- fix session.status call error
+
 ## [2.1.0] - 2022-08-04
 
 ## [2.0.0] - 2022-07-16

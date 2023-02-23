@@ -111,8 +111,8 @@ class Session:
         self.refresh_token = self.__get_refresh_token()
 
     def status(self):
-        status_fn = self.__get_sync_function(osidb_status_retrieve)
-        return status_fn(client=self.__client_with_new_access_token)
+        status_fn = get_sync_function(osidb_status_retrieve)
+        return status_fn(client=self.__get_client_with_new_access_token())
 
     def __get_refresh_token(self) -> str:
         """Get resfresh token based on the auth type"""
