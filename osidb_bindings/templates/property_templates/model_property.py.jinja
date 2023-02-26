@@ -1,6 +1,6 @@
 {#
     This is a custom template derived from:
-    https://github.com/openapi-generators/openapi-python-client/blob/ccf1fab06dc5cb4838b5c444c786e9352331f1b2/openapi_python_client/templates/property_templates/model_property.py.jinja
+    https://github.com/openapi-generators/openapi-python-client/blob/v.0.10.7/openapi_python_client/templates/property_templates/model_property.py.jinja
 #}
 {% macro construct_function(property, source) %}
 {{ property.class_info.name }}.from_dict({{ source }})
