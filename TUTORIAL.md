@@ -278,6 +278,38 @@ paginated_response.results[0]
 # FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
 ```
 
+Each paginated response comes also with pagination helpers which allows user to conveniently browse through all the pages without the need to adjust offset or limit. These methods are `.next()`, `.prev()` for basic navigation in both directions:
+
+```python
+paginated_response_page_1 = session.flaws.retrieve_list()
+
+paginated_response_page_1
+# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+
+paginated_response_page_1.prev()
+# None
+
+paginated_response_page_2 = paginated_response_page_1.next()
+
+paginated_response_page_2
+# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100&offset=100', previous=None, results=[FlawList(uuid='0ac7a852-c973-4f7b-8c78-978fbbb59c71', updated_dt=datetime.datetime(2021, 11, 20, 14, 45, 15, 724222, tzinfo=tzutc()), ... )
+
+previous_response = paginated_response_page_2.prev()
+
+previous_response
+# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+# Same as paginated_response_page_1
+```
+
+And `.iterator()` which returns iterable enabling looping through the responses in for loop:
+
+```python
+paginated_response_page_1 = session.flaws.retrieve_list()
+
+for response in paginated_response_page_1.iterator():
+    # do stuff with response
+```
+
 Work with each item of the results is basically identical to work with [single response](#single-response)
 
 ### Utils
