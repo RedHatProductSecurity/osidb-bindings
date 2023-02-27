@@ -1,6 +1,8 @@
 import importlib
+import re
+from functools import partial
 from types import ModuleType
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 from warnings import warn
 
 import requests
@@ -265,6 +267,33 @@ class SessionOperationsGroup:
             package="osidb_bindings",
         )
 
+    def __make_iterable(self, response, **kwargs):
+        """
+        Populate next, prev and iterator helper methods for paginated responses
+        """
+
+        response.iterator = Paginator(
+            session_operation=self.retrieve_list, init_response=response
+        )
+
+        for param_name, func_name in (("next_", "next"), ("previous", "prev")):
+            kwargs.pop("limit", None)
+            kwargs.pop("offset", None)
+            param = getattr(response, param_name, None)
+            if param is None:
+                setattr(response, func_name, lambda: None)
+            else:
+                limit = re.search("limit=(\d+)", param)
+                if limit is not None:
+                    kwargs["limit"] = limit.group(1)
+                offset = re.search("offset=(\d+)", param)
+                if offset is not None:
+                    kwargs["offset"] = offset.group(1)
+
+                setattr(response, func_name, partial(self.retrieve_list, **kwargs))
+
+        return response
+
     # CRUD operations
 
     def retrieve(self, id, **kwargs):
@@ -286,7 +315,9 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list"
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(client=self.client(), **kwargs)
+            return self.__make_iterable(
+                sync_fn(client=self.client(), **kwargs), **kwargs
+            )
         else:
             raise OperationUnsupported(
                 'Operation "update" is not supported for the '
@@ -365,3 +396,48 @@ class SessionOperationsGroup:
                 'Operation "search" is not supported for the '
                 f'"{self.resource_name}" resource.'
             )
+
+
+class Paginator:
+    """
+    Iterable for handling API pagination.
+
+    Receives either starting limit and offset or already existing response from which
+    it should continue.
+
+    It keeps calling `.next()` response until pages are exhausted.
+    """
+
+    def __init__(
+        self,
+        session_operation: Callable,
+        limit: int = 100,
+        offset: int = 0,
+        init_response=None,
+        **kwargs,
+    ):
+        self.session_operation = session_operation
+        self.__init_limit = limit
+        self.__init_offset = offset
+        self.__init_response = init_response
+        self.current_response = init_response
+        self.kwargs = kwargs
+
+    def __iter__(self):
+        self.current_response = self.__init_response
+        return self
+
+    def __next__(self):
+        if self.current_response is None:
+            response = self.session_operation(
+                limit=self.__init_limit, offset=self.__init_offset, **self.kwargs
+            )
+            self.current_response = response
+            return response
+        else:
+            response = self.current_response.next()
+            if response is not None:
+                self.current_response = response
+                return response
+            else:
+                raise StopIteration
