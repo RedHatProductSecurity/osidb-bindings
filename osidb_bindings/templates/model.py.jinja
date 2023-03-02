@@ -124,6 +124,14 @@ return field_dict
 {% endif %}
         return {{ module_name }}
 
+    @staticmethod
+    def get_fields():
+        return {
+            {% for property in model.required_properties + model.optional_properties %}
+            "{{ property.name }}": {{ property.get_type_string(no_optional=True) }},
+            {% endfor %}
+        }
+
     {% if model.additional_properties %}
     @property
     def additional_keys(self) -> List[str]:
