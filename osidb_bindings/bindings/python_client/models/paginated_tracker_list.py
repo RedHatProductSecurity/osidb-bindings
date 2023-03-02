@@ -79,6 +79,15 @@ class PaginatedTrackerList:
         paginated_tracker_list.additional_properties = d
         return paginated_tracker_list
 
+    @staticmethod
+    def get_fields():
+        return {
+            "count": int,
+            "next": str,
+            "previous": str,
+            "results": List[Tracker],
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

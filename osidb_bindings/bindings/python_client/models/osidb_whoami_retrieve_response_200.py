@@ -109,6 +109,19 @@ class OsidbWhoamiRetrieveResponse200:
         osidb_whoami_retrieve_response_200.additional_properties = d
         return osidb_whoami_retrieve_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "dt": datetime.datetime,
+            "email": str,
+            "env": str,
+            "groups": List[str],
+            "profile": OsidbWhoamiRetrieveResponse200Profile,
+            "revision": str,
+            "username": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

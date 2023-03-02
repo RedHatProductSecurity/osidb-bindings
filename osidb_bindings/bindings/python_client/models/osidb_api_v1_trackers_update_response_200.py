@@ -198,6 +198,25 @@ class OsidbApiV1TrackersUpdateResponse200:
         osidb_api_v1_trackers_update_response_200.additional_properties = d
         return osidb_api_v1_trackers_update_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "type": TrackerTypeEnum,
+            "external_system_id": str,
+            "status": str,
+            "errata": List[Erratum],
+            "meta_attr": TrackerMetaAttr,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "affects": List[str],
+            "resolution": str,
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

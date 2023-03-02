@@ -52,6 +52,13 @@ class FlawClassification:
         flaw_classification.additional_properties = d
         return flaw_classification
 
+    @staticmethod
+    def get_fields():
+        return {
+            "workflow": str,
+            "state": FlawClassificationState,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -28,6 +28,10 @@ class OsidbApiV1StatusRetrieveResponse200OsidbService:
         )
         return osidb_api_v1_status_retrieve_response_200_osidb_service
 
+    @staticmethod
+    def get_fields():
+        return {}
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

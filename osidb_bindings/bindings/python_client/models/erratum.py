@@ -74,6 +74,15 @@ class Erratum:
         erratum.additional_properties = d
         return erratum
 
+    @staticmethod
+    def get_fields():
+        return {
+            "et_id": int,
+            "advisory_name": str,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

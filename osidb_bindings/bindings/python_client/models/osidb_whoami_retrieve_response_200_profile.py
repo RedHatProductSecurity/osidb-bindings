@@ -43,6 +43,13 @@ class OsidbWhoamiRetrieveResponse200Profile:
         osidb_whoami_retrieve_response_200_profile.additional_properties = d
         return osidb_whoami_retrieve_response_200_profile
 
+    @staticmethod
+    def get_fields():
+        return {
+            "bz_user_id": str,
+            "jira_user_id": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

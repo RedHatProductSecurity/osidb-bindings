@@ -2,7 +2,7 @@ import importlib
 import re
 from functools import partial
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List
 from warnings import warn
 
 import requests

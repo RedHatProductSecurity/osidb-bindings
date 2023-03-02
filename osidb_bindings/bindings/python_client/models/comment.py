@@ -114,6 +114,18 @@ class Comment:
         comment.additional_properties = d
         return comment
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "external_system_id": str,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "type": CommentTypeEnum,
+            "order": int,
+            "meta_attr": CommentMetaAttr,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

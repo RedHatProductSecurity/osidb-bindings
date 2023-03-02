@@ -591,6 +591,47 @@ class OsidbApiV1FlawsCreateResponse201:
         osidb_api_v1_flaws_create_response_201.additional_properties = d
         return osidb_api_v1_flaws_create_response_201
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "title": str,
+            "trackers": List[str],
+            "description": str,
+            "embargoed": bool,
+            "mitigated_by": str,
+            "affects": List[Affect],
+            "meta": List[Meta],
+            "comments": List[Comment],
+            "meta_attr": FlawMetaAttr,
+            "package_versions": List[CVEv5PackageVersions],
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "classification": FlawClassification,
+            "type": FlawTypeEnum,
+            "cve_id": str,
+            "state": StateEnum,
+            "resolution": Union[BlankEnum, FlawResolutionEnum],
+            "impact": Union[BlankEnum, ImpactEnum],
+            "summary": str,
+            "statement": str,
+            "cwe_id": str,
+            "unembargo_dt": datetime.datetime,
+            "source": Union[BlankEnum, SourceEnum],
+            "reported_dt": datetime.datetime,
+            "cvss2": str,
+            "cvss2_score": float,
+            "nvd_cvss2": str,
+            "cvss3": str,
+            "cvss3_score": float,
+            "nvd_cvss3": str,
+            "is_major_incident": bool,
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

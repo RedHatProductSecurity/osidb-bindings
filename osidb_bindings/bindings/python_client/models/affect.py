@@ -492,6 +492,28 @@ class Affect:
         affect.additional_properties = d
         return affect
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "ps_module": str,
+            "ps_component": str,
+            "trackers": List[Tracker],
+            "meta_attr": AffectMetaAttr,
+            "delegated_resolution": str,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "flaw": str,
+            "type": AffectTypeEnum,
+            "affectedness": Union[AffectednessEnum, BlankEnum],
+            "resolution": Union[AffectResolutionEnum, BlankEnum],
+            "impact": Union[BlankEnum, ImpactEnum],
+            "cvss2": str,
+            "cvss2_score": float,
+            "cvss3": str,
+            "cvss3_score": float,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

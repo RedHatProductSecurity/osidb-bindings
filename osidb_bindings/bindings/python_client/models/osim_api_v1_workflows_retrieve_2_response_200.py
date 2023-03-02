@@ -67,6 +67,15 @@ class OsimApiV1WorkflowsRetrieve2Response200:
         osim_api_v1_workflows_retrieve_2_response_200.additional_properties = d
         return osim_api_v1_workflows_retrieve_2_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

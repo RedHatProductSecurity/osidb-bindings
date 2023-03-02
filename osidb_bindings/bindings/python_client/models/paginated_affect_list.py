@@ -79,6 +79,15 @@ class PaginatedAffectList:
         paginated_affect_list.additional_properties = d
         return paginated_affect_list
 
+    @staticmethod
+    def get_fields():
+        return {
+            "count": int,
+            "next": str,
+            "previous": str,
+            "results": List[Affect],
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

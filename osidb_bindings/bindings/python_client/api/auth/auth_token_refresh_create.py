@@ -105,3 +105,6 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
+
+
+QUERY_PARAMS = {}

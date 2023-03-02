@@ -103,6 +103,16 @@ class CollectorsApiV1StatusRetrieveResponse200:
         collectors_api_v1_status_retrieve_response_200.additional_properties = d
         return collectors_api_v1_status_retrieve_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "collectors": List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem],
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -97,6 +97,15 @@ class TokenObtainPair:
         token_obtain_pair.additional_properties = d
         return token_obtain_pair
 
+    @staticmethod
+    def get_fields():
+        return {
+            "username": str,
+            "password": str,
+            "access": str,
+            "refresh": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
