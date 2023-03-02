@@ -43,6 +43,13 @@ class EPSS:
         epss.additional_properties = d
         return epss
 
+    @staticmethod
+    def get_fields():
+        return {
+            "cve": str,
+            "epss": float,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -244,6 +244,21 @@ class Tracker:
         tracker.additional_properties = d
         return tracker
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "type": TrackerTypeEnum,
+            "external_system_id": str,
+            "status": str,
+            "errata": List[Erratum],
+            "meta_attr": TrackerMetaAttr,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "affects": List[str],
+            "resolution": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

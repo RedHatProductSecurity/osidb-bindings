@@ -99,6 +99,21 @@ class AffectMetaAttr:
         affect_meta_attr.additional_properties = d
         return affect_meta_attr
 
+    @staticmethod
+    def get_fields():
+        return {
+            "affectedness": str,
+            "component": str,
+            "cvss2": str,
+            "cvss3": str,
+            "impact": str,
+            "module_name": str,
+            "module_stream": str,
+            "ps_component": str,
+            "ps_module": str,
+            "resolution": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

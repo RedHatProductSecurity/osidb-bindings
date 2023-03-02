@@ -28,6 +28,10 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItemError:
         )
         return collectors_api_v1_status_retrieve_response_200_collectors_item_error
 
+    @staticmethod
+    def get_fields():
+        return {}
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

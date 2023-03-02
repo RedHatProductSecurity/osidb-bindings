@@ -138,3 +138,15 @@ def sync(
         type=type,
         uuid=uuid,
     ).parsed
+
+
+QUERY_PARAMS = {
+    "external_system_id": str,
+    "limit": int,
+    "offset": int,
+    "ps_update_stream": str,
+    "resolution": str,
+    "status": str,
+    "type": OsidbApiV1TrackersListType,
+    "uuid": str,
+}

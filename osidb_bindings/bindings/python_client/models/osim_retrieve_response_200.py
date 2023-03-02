@@ -67,6 +67,15 @@ class OsimRetrieveResponse200:
         osim_retrieve_response_200.additional_properties = d
         return osim_retrieve_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

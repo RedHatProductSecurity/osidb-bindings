@@ -113,3 +113,9 @@ def sync(
         format_=format_,
         lang=lang,
     ).parsed
+
+
+QUERY_PARAMS = {
+    "format": OsidbApiV1SchemaRetrieveFormat,
+    "lang": OsidbApiV1SchemaRetrieveLang,
+}

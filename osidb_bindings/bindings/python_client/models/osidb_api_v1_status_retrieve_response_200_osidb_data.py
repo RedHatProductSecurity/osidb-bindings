@@ -36,6 +36,12 @@ class OsidbApiV1StatusRetrieveResponse200OsidbData:
         osidb_api_v1_status_retrieve_response_200_osidb_data.additional_properties = d
         return osidb_api_v1_status_retrieve_response_200_osidb_data
 
+    @staticmethod
+    def get_fields():
+        return {
+            "flaw_count": int,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

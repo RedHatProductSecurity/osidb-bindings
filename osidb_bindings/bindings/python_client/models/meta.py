@@ -100,6 +100,16 @@ class Meta:
         meta.additional_properties = d
         return meta
 
+    @staticmethod
+    def get_fields():
+        return {
+            "uuid": str,
+            "type": MetaTypeEnum,
+            "created_dt": datetime.datetime,
+            "updated_dt": datetime.datetime,
+            "meta_attr": MetaMetaAttr,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

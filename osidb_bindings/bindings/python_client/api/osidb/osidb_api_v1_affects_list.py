@@ -178,3 +178,17 @@ def sync(
         type=type,
         uuid=uuid,
     ).parsed
+
+
+QUERY_PARAMS = {
+    "affectedness": OsidbApiV1AffectsListAffectedness,
+    "flaw": str,
+    "impact": OsidbApiV1AffectsListImpact,
+    "limit": int,
+    "offset": int,
+    "ps_component": str,
+    "ps_module": str,
+    "resolution": OsidbApiV1AffectsListResolution,
+    "type": OsidbApiV1AffectsListType,
+    "uuid": str,
+}

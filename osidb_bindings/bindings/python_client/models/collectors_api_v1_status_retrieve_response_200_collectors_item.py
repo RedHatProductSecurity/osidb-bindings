@@ -148,6 +148,18 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
         )
         return collectors_api_v1_status_retrieve_response_200_collectors_item
 
+    @staticmethod
+    def get_fields():
+        return {
+            "data": CollectorsApiV1StatusRetrieveResponse200CollectorsItemData,
+            "depends_on": List[str],
+            "error": CollectorsApiV1StatusRetrieveResponse200CollectorsItemError,
+            "is_complete": bool,
+            "data_models": List[str],
+            "state": CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
+            "updated_until": datetime.datetime,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -105,3 +105,8 @@ def sync(
         client=client,
         verbose=verbose,
     ).parsed
+
+
+QUERY_PARAMS = {
+    "verbose": bool,
+}

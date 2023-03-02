@@ -26,6 +26,10 @@ class CommentMetaAttr:
         comment_meta_attr.additional_properties = d
         return comment_meta_attr
 
+    @staticmethod
+    def get_fields():
+        return {}
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

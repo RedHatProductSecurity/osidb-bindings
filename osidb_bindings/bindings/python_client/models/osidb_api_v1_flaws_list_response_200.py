@@ -118,6 +118,19 @@ class OsidbApiV1FlawsListResponse200:
         osidb_api_v1_flaws_list_response_200.additional_properties = d
         return osidb_api_v1_flaws_list_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "count": int,
+            "next": str,
+            "previous": str,
+            "results": List[Flaw],
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

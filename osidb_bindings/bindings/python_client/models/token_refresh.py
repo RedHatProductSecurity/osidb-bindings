@@ -69,6 +69,13 @@ class TokenRefresh:
         token_refresh.additional_properties = d
         return token_refresh
 
+    @staticmethod
+    def get_fields():
+        return {
+            "access": str,
+            "refresh": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

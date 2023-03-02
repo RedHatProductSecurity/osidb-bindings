@@ -85,6 +85,19 @@ class TrackerMetaAttr:
         tracker_meta_attr.additional_properties = d
         return tracker_meta_attr
 
+    @staticmethod
+    def get_fields():
+        return {
+            "bz_id": str,
+            "owner": str,
+            "qe_owner": str,
+            "ps_component": str,
+            "ps_module": str,
+            "ps_update_stream": str,
+            "resolution": str,
+            "status": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -52,6 +52,13 @@ class CVEv5Versions:
         cv_ev_5_versions.additional_properties = d
         return cv_ev_5_versions
 
+    @staticmethod
+    def get_fields():
+        return {
+            "version": str,
+            "status": StatusEnum,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

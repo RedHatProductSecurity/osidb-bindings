@@ -81,6 +81,17 @@ class AuthTokenRefreshCreateResponse200:
         auth_token_refresh_create_response_200.additional_properties = d
         return auth_token_refresh_create_response_200
 
+    @staticmethod
+    def get_fields():
+        return {
+            "access": str,
+            "refresh": str,
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

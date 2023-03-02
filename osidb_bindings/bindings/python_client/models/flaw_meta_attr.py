@@ -232,6 +232,40 @@ class FlawMetaAttr:
         flaw_meta_attr.additional_properties = d
         return flaw_meta_attr
 
+    @staticmethod
+    def get_fields():
+        return {
+            "acknowledgments": str,
+            "acks_not_needed": str,
+            "affects": str,
+            "alias": str,
+            "bz_datascore": str,
+            "bz_id": str,
+            "checklists": str,
+            "classification": str,
+            "cvss2": str,
+            "cvss2_score": str,
+            "cvss2_vector": str,
+            "cvss3": str,
+            "cvss3_comment": str,
+            "cvss3_score": str,
+            "cvss3_vector": str,
+            "cwe": str,
+            "depends_on": str,
+            "impact": str,
+            "jira_trackers": str,
+            "mitigate": str,
+            "mitigation": str,
+            "prestage_eligible_date": str,
+            "public": str,
+            "references": str,
+            "related_cves": str,
+            "reported": str,
+            "source": str,
+            "statement": str,
+            "task_owner": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

@@ -67,6 +67,15 @@ class OsidbApiV1FlawsDestroyResponse204:
         osidb_api_v1_flaws_destroy_response_204.additional_properties = d
         return osidb_api_v1_flaws_destroy_response_204
 
+    @staticmethod
+    def get_fields():
+        return {
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

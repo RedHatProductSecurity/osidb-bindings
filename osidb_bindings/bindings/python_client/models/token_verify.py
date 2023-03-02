@@ -53,6 +53,12 @@ class TokenVerify:
         token_verify.additional_properties = d
         return token_verify
 
+    @staticmethod
+    def get_fields():
+        return {
+            "token": str,
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())

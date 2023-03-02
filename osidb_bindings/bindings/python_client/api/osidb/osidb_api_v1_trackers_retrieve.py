@@ -87,3 +87,6 @@ def sync(
         uuid=uuid,
         client=client,
     ).parsed
+
+
+QUERY_PARAMS = {}

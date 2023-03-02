@@ -79,6 +79,15 @@ class PaginatedEPSSList:
         paginated_epss_list.additional_properties = d
         return paginated_epss_list
 
+    @staticmethod
+    def get_fields():
+        return {
+            "count": int,
+            "next": str,
+            "previous": str,
+            "results": List[EPSS],
+        }
+
     @property
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
