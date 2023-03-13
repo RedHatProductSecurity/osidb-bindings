@@ -111,4 +111,12 @@ def sync(
     return sync_detailed(
         {{ kwargs(endpoint) }}
     ).parsed
+
+QUERY_PARAMS = {
+    {% for parameter in endpoint.query_parameters.values() %}
+    "{{ parameter.name }}": {{ parameter.get_type_string(no_optional=True) }},
+    {% endfor %}
+}
 {% endif %}
+
+
