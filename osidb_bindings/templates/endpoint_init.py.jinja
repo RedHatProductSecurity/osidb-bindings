@@ -2,3 +2,6 @@
     This is a custom template derived from:
     https://github.com/openapi-generators/openapi-python-client/blob/v.0.10.7/openapi_python_client/templates/endpoint_init.py.jinja
 #}
+{% for endpoint in endpoint_collection.endpoints %}
+from .{{ endpoint.name }} import *
+{% endfor %}
