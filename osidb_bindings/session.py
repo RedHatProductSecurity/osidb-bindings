@@ -87,7 +87,6 @@ class Session:
                 "update",
                 "list",
                 "create",
-                "destroy",
                 "search",
             ),
         )
@@ -107,10 +106,7 @@ class Session:
             "trackers",
             allowed_operations=(
                 "retrieve",
-                "update",
                 "list",
-                "create",
-                "destroy",
             ),
         )
 
