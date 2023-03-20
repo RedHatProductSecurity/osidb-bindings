@@ -4,7 +4,6 @@ import re
 from functools import partial
 from types import ModuleType
 from typing import Any, Callable, Dict, List
-from warnings import warn
 
 import requests
 from requests_gssapi import HTTPSPNEGOAuth
@@ -167,67 +166,6 @@ class Session:
         return self.__client.with_headers(
             {"Authorization": f"Bearer {self.__get_access_token()}"}
         )
-
-    # TODO remove following methods with OSIDB 3.0.0 release
-    def retrieve(self, id, **kwargs):
-        warn(
-            (
-                'This is only alias to ".flaws.retrieve" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        return self.flaws.retrieve(id=id, **kwargs)
-
-    def retrieve_list(self, **kwargs):
-        warn(
-            (
-                'This is only alias to ".flaws.retrieve_list" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        return self.flaws.retrieve_list(**kwargs)
-
-    def search(self, searched_text):
-        warn(
-            (
-                'This is only alias to ".flaws.search" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        return self.flaws.search(searched_text=searched_text)
-
-    def create(self, form_data):
-        warn(
-            (
-                'This is only alias to ".flaws.create" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        return self.flaws.create(form_data=form_data)
-
-    def update(self, id, form_data, **kwargs):
-        warn(
-            (
-                'This is only alias to ".flaws.update" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        return self.flaws.update(id=id, form_data=form_data)
-
-    def delete(self):
-        warn(
-            (
-                'This is only alias to ".flaws.delete" and it'
-                "will be deprecated in OSIDB 3.0.0"
-            ),
-            DeprecationWarning,
-        )
-        raise NotImplementedError("Flaw delete not implemented yet.")
 
 
 class SessionOperationsGroup:
