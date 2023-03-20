@@ -62,6 +62,12 @@ OSIDB uses token (JWT) authentication on most of the endpoints. Bindings handles
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
     ```
 
+Some operations mentioned in [operations section](#session-operations) (mainly unsafe operations which creates or modify content) will require Bugzilla API key to work properly. Valid Bugzilla API key is provided via `BUGZILLA_API_KEY` environment variable.
+
+```bash
+export BUGZILLA_API_KEY="bugzilla api key"
+```
+
 The SSL verification is enabled by the default and in order to work properly you should export the `REQUESTS_CA_BUNDLE` environment variable to point to the location with the proper CA bundle. For example:
 
 ```bash

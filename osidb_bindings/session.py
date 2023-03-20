@@ -1,4 +1,5 @@
 import importlib
+import os
 import re
 from functools import partial
 from types import ModuleType
@@ -71,7 +72,10 @@ class Session:
 
         self.__client = AuthenticatedClient(
             base_url=base_url,
-            headers={"User-Agent": OSIDB_BINDINGS_USERAGENT},
+            headers={
+                "User-Agent": OSIDB_BINDINGS_USERAGENT,
+                "Bugzilla-Api-Key": os.getenv("BUGZILLA_API_KEY"),
+            },
             verify_ssl=verify_ssl,
         )
 
