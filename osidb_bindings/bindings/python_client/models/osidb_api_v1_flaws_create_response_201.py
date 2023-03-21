@@ -10,11 +10,11 @@ from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
-from ..models.flaw_resolution_enum import FlawResolutionEnum
+from ..models.flaw_source_enum import FlawSourceEnum
 from ..models.flaw_type_enum import FlawTypeEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
-from ..models.source_enum import SourceEnum
+from ..models.resolution_01f_enum import Resolution01FEnum
 from ..models.state_enum import StateEnum
 from ..types import UNSET, Unset
 
@@ -29,26 +29,25 @@ class OsidbApiV1FlawsCreateResponse201:
     title: str
     trackers: List[str]
     description: str
-    embargoed: bool
-    mitigated_by: str
     affects: List[Affect]
     meta: List[Meta]
     comments: List[Comment]
     meta_attr: FlawMetaAttr
     package_versions: List[CVEv5PackageVersions]
+    embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: FlawClassification
     type: Union[Unset, FlawTypeEnum] = UNSET
     cve_id: Union[Unset, None, str] = UNSET
     state: Union[Unset, StateEnum] = UNSET
-    resolution: Union[BlankEnum, FlawResolutionEnum, Unset] = UNSET
+    resolution: Union[BlankEnum, Resolution01FEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     summary: Union[Unset, str] = UNSET
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, SourceEnum, Unset] = UNSET
+    source: Union[BlankEnum, FlawSourceEnum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
@@ -71,8 +70,6 @@ class OsidbApiV1FlawsCreateResponse201:
             trackers = self.trackers
 
         description = self.description
-        embargoed = self.embargoed
-        mitigated_by = self.mitigated_by
         affects: List[Dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
@@ -117,6 +114,7 @@ class OsidbApiV1FlawsCreateResponse201:
 
                 package_versions.append(package_versions_item)
 
+        embargoed = self.embargoed
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -143,11 +141,11 @@ class OsidbApiV1FlawsCreateResponse201:
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, FlawResolutionEnum):
+        elif isinstance(self.resolution, Resolution01FEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = FlawResolutionEnum(self.resolution).value
+                resolution = Resolution01FEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -180,11 +178,11 @@ class OsidbApiV1FlawsCreateResponse201:
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, SourceEnum):
+        elif isinstance(self.source, FlawSourceEnum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = SourceEnum(self.source).value
+                source = FlawSourceEnum(self.source).value
 
         else:
             source = UNSET
@@ -221,10 +219,6 @@ class OsidbApiV1FlawsCreateResponse201:
             field_dict["trackers"] = trackers
         if description is not UNSET:
             field_dict["description"] = description
-        if embargoed is not UNSET:
-            field_dict["embargoed"] = embargoed
-        if mitigated_by is not UNSET:
-            field_dict["mitigated_by"] = mitigated_by
         if affects is not UNSET:
             field_dict["affects"] = affects
         if meta is not UNSET:
@@ -235,6 +229,8 @@ class OsidbApiV1FlawsCreateResponse201:
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
@@ -298,10 +294,6 @@ class OsidbApiV1FlawsCreateResponse201:
         trackers = cast(List[str], d.pop("trackers", UNSET))
 
         description = d.pop("description", UNSET)
-
-        embargoed = d.pop("embargoed", UNSET)
-
-        mitigated_by = d.pop("mitigated_by", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -372,6 +364,8 @@ class OsidbApiV1FlawsCreateResponse201:
 
                 package_versions.append(package_versions_item)
 
+        embargoed = d.pop("embargoed", UNSET)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -411,18 +405,18 @@ class OsidbApiV1FlawsCreateResponse201:
 
         def _parse_resolution(
             data: object,
-        ) -> Union[BlankEnum, FlawResolutionEnum, Unset]:
+        ) -> Union[BlankEnum, Resolution01FEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _resolution_type_0 = data
-                resolution_type_0: Union[Unset, FlawResolutionEnum]
+                resolution_type_0: Union[Unset, Resolution01FEnum]
                 if isinstance(_resolution_type_0, Unset):
                     resolution_type_0 = UNSET
                 else:
-                    resolution_type_0 = FlawResolutionEnum(_resolution_type_0)
+                    resolution_type_0 = Resolution01FEnum(_resolution_type_0)
 
                 return resolution_type_0
             except:  # noqa: E722
@@ -484,18 +478,18 @@ class OsidbApiV1FlawsCreateResponse201:
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, SourceEnum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, FlawSourceEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, SourceEnum]
+                source_type_0: Union[Unset, FlawSourceEnum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = SourceEnum(_source_type_0)
+                    source_type_0 = FlawSourceEnum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -554,13 +548,12 @@ class OsidbApiV1FlawsCreateResponse201:
             title=title,
             trackers=trackers,
             description=description,
-            embargoed=embargoed,
-            mitigated_by=mitigated_by,
             affects=affects,
             meta=meta,
             comments=comments,
             meta_attr=meta_attr,
             package_versions=package_versions,
+            embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
             classification=classification,
@@ -598,26 +591,25 @@ class OsidbApiV1FlawsCreateResponse201:
             "title": str,
             "trackers": List[str],
             "description": str,
-            "embargoed": bool,
-            "mitigated_by": str,
             "affects": List[Affect],
             "meta": List[Meta],
             "comments": List[Comment],
             "meta_attr": FlawMetaAttr,
             "package_versions": List[CVEv5PackageVersions],
+            "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
             "type": FlawTypeEnum,
             "cve_id": str,
             "state": StateEnum,
-            "resolution": Union[BlankEnum, FlawResolutionEnum],
+            "resolution": Union[BlankEnum, Resolution01FEnum],
             "impact": Union[BlankEnum, ImpactEnum],
             "summary": str,
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, SourceEnum],
+            "source": Union[BlankEnum, FlawSourceEnum],
             "reported_dt": datetime.datetime,
             "cvss2": str,
             "cvss2_score": float,

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
@@ -21,8 +21,11 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw: Union[Unset, None, str] = UNSET,
     impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     ps_component: Union[Unset, None, str] = UNSET,
@@ -46,10 +49,31 @@ def _get_kwargs(
             else None
         )
 
+    json_exclude_fields: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(exclude_fields, Unset):
+        if exclude_fields is None:
+            json_exclude_fields = None
+        else:
+            json_exclude_fields = exclude_fields
+
     json_impact: Union[Unset, None, str] = UNSET
     if not isinstance(impact, Unset):
 
         json_impact = OsidbApiV1AffectsListImpact(impact).value if impact else None
+
+    json_include_fields: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(include_fields, Unset):
+        if include_fields is None:
+            json_include_fields = None
+        else:
+            json_include_fields = include_fields
+
+    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(include_meta_attr, Unset):
+        if include_meta_attr is None:
+            json_include_meta_attr = None
+        else:
+            json_include_meta_attr = include_meta_attr
 
     json_resolution: Union[Unset, None, str] = UNSET
     if not isinstance(resolution, Unset):
@@ -65,8 +89,11 @@ def _get_kwargs(
 
     params: Dict[str, Any] = {
         "affectedness": json_affectedness,
+        "exclude_fields": json_exclude_fields,
         "flaw": flaw,
         "impact": json_impact,
+        "include_fields": json_include_fields,
+        "include_meta_attr": json_include_meta_attr,
         "limit": limit,
         "offset": offset,
         "ps_component": ps_component,
@@ -114,8 +141,11 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw: Union[Unset, None, str] = UNSET,
     impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     ps_component: Union[Unset, None, str] = UNSET,
@@ -127,8 +157,11 @@ def sync_detailed(
     kwargs = _get_kwargs(
         client=client,
         affectedness=affectedness,
+        exclude_fields=exclude_fields,
         flaw=flaw,
         impact=impact,
+        include_fields=include_fields,
+        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         ps_component=ps_component,
@@ -153,8 +186,11 @@ def sync(
     *,
     client: AuthenticatedClient,
     affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw: Union[Unset, None, str] = UNSET,
     impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     ps_component: Union[Unset, None, str] = UNSET,
@@ -168,8 +204,11 @@ def sync(
     return sync_detailed(
         client=client,
         affectedness=affectedness,
+        exclude_fields=exclude_fields,
         flaw=flaw,
         impact=impact,
+        include_fields=include_fields,
+        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         ps_component=ps_component,
@@ -182,8 +221,11 @@ def sync(
 
 QUERY_PARAMS = {
     "affectedness": OsidbApiV1AffectsListAffectedness,
+    "exclude_fields": List[str],
     "flaw": str,
     "impact": OsidbApiV1AffectsListImpact,
+    "include_fields": List[str],
+    "include_meta_attr": List[str],
     "limit": int,
     "offset": int,
     "ps_component": str,

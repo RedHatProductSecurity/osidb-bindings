@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class SourceEnum(str, Enum):
+class FlawSourceEnum(str, Enum):
     ADOBE = "ADOBE"
     APPLE = "APPLE"
     ASF = "ASF"

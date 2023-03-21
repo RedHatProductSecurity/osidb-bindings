@@ -17,6 +17,7 @@ class Meta:
 
     uuid: str
     type: MetaTypeEnum
+    embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     meta_attr: Union[Unset, MetaMetaAttr] = UNSET
@@ -29,6 +30,7 @@ class Meta:
 
             type = MetaTypeEnum(self.type).value
 
+        embargoed = self.embargoed
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -47,6 +49,8 @@ class Meta:
             field_dict["uuid"] = uuid
         if type is not UNSET:
             field_dict["type"] = type
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
@@ -67,6 +71,8 @@ class Meta:
             type = UNSET
         else:
             type = MetaTypeEnum(_type)
+
+        embargoed = d.pop("embargoed", UNSET)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -92,6 +98,7 @@ class Meta:
         meta = cls(
             uuid=uuid,
             type=type,
+            embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
             meta_attr=meta_attr,
@@ -105,6 +112,7 @@ class Meta:
         return {
             "uuid": str,
             "type": MetaTypeEnum,
+            "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "meta_attr": MetaMetaAttr,

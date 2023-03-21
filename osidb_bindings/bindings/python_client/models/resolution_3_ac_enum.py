@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class AffectResolutionEnum(str, Enum):
+class Resolution3AcEnum(str, Enum):
     FIX = "FIX"
     DEFER = "DEFER"
     WONTFIX = "WONTFIX"

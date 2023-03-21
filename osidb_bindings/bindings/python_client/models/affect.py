@@ -6,11 +6,11 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect_meta_attr import AffectMetaAttr
-from ..models.affect_resolution_enum import AffectResolutionEnum
 from ..models.affect_type_enum import AffectTypeEnum
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
+from ..models.resolution_3_ac_enum import Resolution3AcEnum
 from ..models.tracker import Tracker
 from ..types import UNSET, Unset
 
@@ -27,12 +27,13 @@ class Affect:
     trackers: List[Tracker]
     meta_attr: AffectMetaAttr
     delegated_resolution: str
+    embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     flaw: Optional[str]
     type: Union[Unset, AffectTypeEnum] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
-    resolution: Union[AffectResolutionEnum, BlankEnum, Unset] = UNSET
+    resolution: Union[BlankEnum, Resolution3AcEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
@@ -59,6 +60,7 @@ class Affect:
             meta_attr = self.meta_attr.to_dict()
 
         delegated_resolution = self.delegated_resolution
+        embargoed = self.embargoed
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -91,11 +93,11 @@ class Affect:
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, AffectResolutionEnum):
+        elif isinstance(self.resolution, Resolution3AcEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = AffectResolutionEnum(self.resolution).value
+                resolution = Resolution3AcEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -137,6 +139,8 @@ class Affect:
             field_dict["meta_attr"] = meta_attr
         if delegated_resolution is not UNSET:
             field_dict["delegated_resolution"] = delegated_resolution
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
@@ -194,6 +198,11 @@ class Affect:
             if self.delegated_resolution is UNSET
             else (None, str(self.delegated_resolution), "text/plain")
         )
+        embargoed = (
+            self.embargoed
+            if self.embargoed is UNSET
+            else (None, str(self.embargoed), "text/plain")
+        )
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -226,11 +235,11 @@ class Affect:
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, AffectResolutionEnum):
+        elif isinstance(self.resolution, Resolution3AcEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = AffectResolutionEnum(self.resolution).value
+                resolution = Resolution3AcEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -289,6 +298,8 @@ class Affect:
             field_dict["meta_attr"] = meta_attr
         if delegated_resolution is not UNSET:
             field_dict["delegated_resolution"] = delegated_resolution
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
@@ -347,6 +358,8 @@ class Affect:
 
         delegated_resolution = d.pop("delegated_resolution", UNSET)
 
+        embargoed = d.pop("embargoed", UNSET)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -403,18 +416,18 @@ class Affect:
 
         def _parse_resolution(
             data: object,
-        ) -> Union[AffectResolutionEnum, BlankEnum, Unset]:
+        ) -> Union[BlankEnum, Resolution3AcEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _resolution_type_0 = data
-                resolution_type_0: Union[Unset, AffectResolutionEnum]
+                resolution_type_0: Union[Unset, Resolution3AcEnum]
                 if isinstance(_resolution_type_0, Unset):
                     resolution_type_0 = UNSET
                 else:
-                    resolution_type_0 = AffectResolutionEnum(_resolution_type_0)
+                    resolution_type_0 = Resolution3AcEnum(_resolution_type_0)
 
                 return resolution_type_0
             except:  # noqa: E722
@@ -476,6 +489,7 @@ class Affect:
             trackers=trackers,
             meta_attr=meta_attr,
             delegated_resolution=delegated_resolution,
+            embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
             flaw=flaw,
@@ -501,12 +515,13 @@ class Affect:
             "trackers": List[Tracker],
             "meta_attr": AffectMetaAttr,
             "delegated_resolution": str,
+            "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "flaw": str,
             "type": AffectTypeEnum,
             "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[AffectResolutionEnum, BlankEnum],
+            "resolution": Union[BlankEnum, Resolution3AcEnum],
             "impact": Union[BlankEnum, ImpactEnum],
             "cvss2": str,
             "cvss2_score": float,
