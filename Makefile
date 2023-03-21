@@ -45,6 +45,10 @@ patch-release:
 	@echo ">preparing patch release"
 	scripts/patch_release.sh
 
+pre-release:
+	@echo ">preparing major/minor pre-release"
+	scripts/pre_release.sh
+
 release:
 	@echo ">preparing major/minor release"
 	scripts/release.sh

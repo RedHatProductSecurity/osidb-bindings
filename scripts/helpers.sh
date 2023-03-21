@@ -56,6 +56,9 @@ update_version() {
     echo "Updating the CHANGELOG.md to ${version}"
     sed -i 's/^## Unreleased.*/## Unreleased\n\n## ['"${version}"'] - '$(date '+%Y-%m-%d')'/' CHANGELOG.md
 
+    echo "Replacing version in OpenAPI schema (if not already updated from the OSIDB repository) to ${version}"
+    sed -i 's/version: [0-9]*\.[0-9]*\.[0-9]*/version: '${version}'/g' osidb_bindings/openapi_schema.yml
+
     echo
 }
 
@@ -118,4 +121,53 @@ review() {
         exit 1
     fi
     echo
+}
+
+# Check for python dependencies needed for release
+check_python_deps() {
+    if [ -z $(command -v openapi-python-client) ]; then
+        echo "openapi-python-client python dependency not found"
+        exit 1
+    fi
+}
+
+# Commit changed files
+# $1: version
+commit_version_changes() {
+    local version=${1}
+
+    echo "Committing version changes"
+
+    git add setup.py CHANGELOG.md osidb_bindings
+    git commit -m "Preparation of ${version} release"
+    echo
+}
+
+# Commit changed files
+# $1: version
+commit_bindings_changes() {
+    local version=${1}
+
+    echo "Committing bindings changes"
+
+    git add setup.py osidb_bindings
+    git commit -m "Regenerate bindings for ${version} release"
+    echo
+}
+
+# Get OpenAPI schema from github API
+# $1: version
+get_schema() {
+    local version=$1
+
+    echo "Downloading OSIDB schema version "
+    local response=$(curl -s "https://raw.githubusercontent.com/RedHatProductSecurity/osidb/${version}/openapi.yml" \
+    -o osidb_bindings/openapi_schema.yml -f -w 'HTTPSTATUS:%{http_code}\n')
+
+    local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
+
+    if [ ! ${status} -eq 200 ]; then
+        echo "Error accessing \"https://raw.githubusercontent.com/RedHatProductSecurity/osidb/${version}/openapi.yml\" [HTTP status: ${status}]"
+        exit 1
+    fi
 }
