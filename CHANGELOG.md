@@ -11,9 +11,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [3.0.0] - 2023-03-21
 ### Added
-- added `next()`, `prev()` and `iterator()` methods for paginated
+- add `next()`, `prev()` and `iterator()` methods for paginated
   responses to make page browsing easier
+- require exported `BUGZILLA_API_KEY` environment variable for
+  some session operations which are particulary unsafe (create, update, etc.)
+  for authentication/authorization against Bugzilla
+
+### Changed
+- update allowed session operations for each resource
+
+### Removed
+- remove old aliases for session operations with flaws (eg. `session.retrieve()`,
+  `session.retrieve_list()`, etc.) in favor of new resource operations
+  (eg. `session.flaws.retrieve()`, `session.flaws.retrieve_list()`, etc.)
 
 ## [2.3.0] - 2023-02-23
 ### Added
