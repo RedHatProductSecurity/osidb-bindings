@@ -32,7 +32,6 @@ class FlawMetaAttr:
     jira_trackers: Union[Unset, str] = UNSET
     mitigate: Union[Unset, str] = UNSET
     mitigation: Union[Unset, str] = UNSET
-    prestage_eligible_date: Union[Unset, str] = UNSET
     public: Union[Unset, str] = UNSET
     references: Union[Unset, str] = UNSET
     related_cves: Union[Unset, str] = UNSET
@@ -64,7 +63,6 @@ class FlawMetaAttr:
         jira_trackers = self.jira_trackers
         mitigate = self.mitigate
         mitigation = self.mitigation
-        prestage_eligible_date = self.prestage_eligible_date
         public = self.public
         references = self.references
         related_cves = self.related_cves
@@ -117,8 +115,6 @@ class FlawMetaAttr:
             field_dict["mitigate"] = mitigate
         if mitigation is not UNSET:
             field_dict["mitigation"] = mitigation
-        if prestage_eligible_date is not UNSET:
-            field_dict["prestage_eligible_date"] = prestage_eligible_date
         if public is not UNSET:
             field_dict["public"] = public
         if references is not UNSET:
@@ -181,8 +177,6 @@ class FlawMetaAttr:
 
         mitigation = d.pop("mitigation", UNSET)
 
-        prestage_eligible_date = d.pop("prestage_eligible_date", UNSET)
-
         public = d.pop("public", UNSET)
 
         references = d.pop("references", UNSET)
@@ -219,7 +213,6 @@ class FlawMetaAttr:
             jira_trackers=jira_trackers,
             mitigate=mitigate,
             mitigation=mitigation,
-            prestage_eligible_date=prestage_eligible_date,
             public=public,
             references=references,
             related_cves=related_cves,
@@ -256,7 +249,6 @@ class FlawMetaAttr:
             "jira_trackers": str,
             "mitigate": str,
             "mitigation": str,
-            "prestage_eligible_date": str,
             "public": str,
             "references": str,
             "related_cves": str,

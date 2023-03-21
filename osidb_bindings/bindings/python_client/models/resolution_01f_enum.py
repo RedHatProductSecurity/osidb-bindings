@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class FlawResolutionEnum(str, Enum):
+class Resolution01FEnum(str, Enum):
     DUPLICATE = "DUPLICATE"
     WONTFIX = "WONTFIX"
     NOTABUG = "NOTABUG"

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class TrackerTypeEnum(str, Enum):
+class Type0D0Enum(str, Enum):
     JIRA = "JIRA"
     BUGZILLA = "BUGZILLA"
 

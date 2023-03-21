@@ -1,13 +1,12 @@
 import datetime
-import json
-from typing import Any, Dict, List, Tuple, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
 
 from ..models.erratum import Erratum
 from ..models.tracker_meta_attr import TrackerMetaAttr
-from ..models.tracker_type_enum import TrackerTypeEnum
+from ..models.type_0d0_enum import Type0D0Enum
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Tracker")
@@ -18,7 +17,7 @@ class Tracker:
     """Tracker serializer"""
 
     uuid: str
-    type: TrackerTypeEnum
+    type: Type0D0Enum
     external_system_id: str
     status: str
     errata: List[Erratum]
@@ -34,7 +33,7 @@ class Tracker:
         type: str = UNSET
         if not isinstance(self.type, Unset):
 
-            type = TrackerTypeEnum(self.type).value
+            type = Type0D0Enum(self.type).value
 
         external_system_id = self.external_system_id
         status = self.status
@@ -91,98 +90,17 @@ class Tracker:
 
         return field_dict
 
-    def to_multipart(self) -> Dict[str, Any]:
-        uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = TrackerTypeEnum(self.type).value
-
-        external_system_id = (
-            self.external_system_id
-            if self.external_system_id is UNSET
-            else (None, str(self.external_system_id), "text/plain")
-        )
-        status = (
-            self.status
-            if self.status is UNSET
-            else (None, str(self.status), "text/plain")
-        )
-        errata: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.errata, Unset):
-            _temp_errata = []
-            for errata_item_data in self.errata:
-                errata_item: Dict[str, Any] = UNSET
-                if not isinstance(errata_item_data, Unset):
-                    errata_item = errata_item_data.to_dict()
-
-                _temp_errata.append(errata_item)
-            errata = (None, json.dumps(_temp_errata), "application/json")
-
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
-
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
-        affects: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.affects, Unset):
-            _temp_affects = self.affects
-            affects = (None, json.dumps(_temp_affects), "application/json")
-
-        resolution = (
-            self.resolution
-            if self.resolution is UNSET
-            else (None, str(self.resolution), "text/plain")
-        )
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
-        )
-        if uuid is not UNSET:
-            field_dict["uuid"] = uuid
-        if type is not UNSET:
-            field_dict["type"] = type
-        if external_system_id is not UNSET:
-            field_dict["external_system_id"] = external_system_id
-        if status is not UNSET:
-            field_dict["status"] = status
-        if errata is not UNSET:
-            field_dict["errata"] = errata
-        if meta_attr is not UNSET:
-            field_dict["meta_attr"] = meta_attr
-        if created_dt is not UNSET:
-            field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
-            field_dict["updated_dt"] = updated_dt
-        if affects is not UNSET:
-            field_dict["affects"] = affects
-        if resolution is not UNSET:
-            field_dict["resolution"] = resolution
-
-        return field_dict
-
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: TrackerTypeEnum
+        type: Type0D0Enum
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = TrackerTypeEnum(_type)
+            type = Type0D0Enum(_type)
 
         external_system_id = d.pop("external_system_id", UNSET)
 
@@ -248,7 +166,7 @@ class Tracker:
     def get_fields():
         return {
             "uuid": str,
-            "type": TrackerTypeEnum,
+            "type": Type0D0Enum,
             "external_system_id": str,
             "status": str,
             "errata": List[Erratum],
