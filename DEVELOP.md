@@ -230,7 +230,43 @@ When new major/minor OSIDB version is released, major/minor release of the osidb
     * download OpenAPI schema of latest OSIDB version
     * create a new branch
     * regenerate bindings
-    * replace version on all places with new OSIDB bindings based on the latest OSIDB version
+    * replace version on all places with new OSIDB bindings version based on the latest OSIDB version
+    * commit and push the changes
+    * open pull request creation in browser
+
+3) Confirm PR creation opened by the relase script
+
+4) Confirm checks passes
+
+5) Merge PR
+
+6) Create a new release and tag via [GitHub WebUI](https://github.com/RedHatProductSecurity/osidb-bindings/releases/new) - this will also trigger the build and upload to PyPI
+    * Tag and release needs be in format x.x.x to comply with [semantic versioning](#version-policy)
+    * Tag needs to point to the latest commit
+    * Release description should include the newest section of the [CHANGELOG.md](CHANGELOG.md)
+
+### Pre-Release with OSIDB
+When new major/minor OSIDB version is being released, we can do a pre-release of the osidb-bindings so they are once the OSIDB is released.
+
+1) Clone/update master branch
+
+    ```
+    $ git checkout master
+    $ git pull
+    ```
+
+2) Start release script and follow instructions
+
+    ```
+    $ make pre-release
+    ```
+
+    This will:
+    * compare latest OSIDB release branch version (release-x.x.x) and bindings version (safe check before release)
+    * download OpenAPI schema of latest OSIDB release branch
+    * create a new branch
+    * regenerate bindings
+    * replace version on all places with new OSIDB bindings version based on the latest OSIDB version
     * commit and push the changes
     * open pull request creation in browser
 

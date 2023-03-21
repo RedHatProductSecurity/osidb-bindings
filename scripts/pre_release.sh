@@ -7,19 +7,21 @@ source scripts/helpers.sh
 get_new_version() {
     osidb_github_base_link="https://api.github.com/repos/RedHatProductSecurity/osidb"
 
-    # Get latest tagged OSIDB version
-    local response=$(curl -s -f "${osidb_github_base_link}/tags" \
+    # Get latest OSIDB release branch name
+    local response=$(curl -s -f "${osidb_github_base_link}/branches" \
     -f -w 'HTTPSTATUS:%{http_code}\n')
 
     local body=$(echo ${response} | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
     local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
 
     if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${osidb_github_base_link}/tags\" [HTTP status: ${status}]"
+        echo "Error accessing \"${osidb_github_base_link}/branches\" [HTTP status: ${status}]"
         exit 1
     fi
 
-    latest_osidb_version=$(echo ${body} | jq -r ".[0] | .name")
+    latest_osidb_release_branch=$(echo ${body} | jq -r '.[] | .name | select(match("^release-[0-9]+\\.[0-9]+\\.[0-9]+$"))' |\
+    sort -r -V | head -n 1)
+    latest_osidb_version=${latest_osidb_release_branch#"release-"}
     local split_osidb_version=($(echo "${latest_osidb_version}" | tr "." '\n'))
 
     # PATCH version is not synced between OSIDB and bindings, set it to zero
@@ -54,8 +56,10 @@ check_python_deps
 check_master_branch
 get_new_version
 
-create_new_branch "v${new_version}"
-get_schema ${latest_osidb_version}
+exit 0
+
+create_new_branch "v${new_version}-test"
+get_schema ${latest_osidb_release_branch}
 make update
 review
 commit_bindings_changes ${new_version}
