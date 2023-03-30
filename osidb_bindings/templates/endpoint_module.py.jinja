@@ -18,6 +18,16 @@ from ...types import Response, UNSET, Unset
 {% set return_string = endpoint.response_type() %}
 {% set parsed_responses = (endpoint.responses | length > 0) and return_string != "Any" %}
 
+
+QUERY_PARAMS = {
+    {% for parameter in endpoint.query_parameters.values() %}
+    "{{ parameter.name }}": {{ parameter.get_type_string(no_optional=True) }},
+    {% endfor %}
+}
+{% if endpoint.form_body_class %}
+REQUEST_BODY_TYPE = {{ endpoint.form_body_class.name }}
+{% endif %}
+
 def _get_kwargs(
     {{ arguments(endpoint) | indent(4) }}
 ) -> Dict[str, Any]:
@@ -111,12 +121,6 @@ def sync(
     return sync_detailed(
         {{ kwargs(endpoint) }}
     ).parsed
-
-QUERY_PARAMS = {
-    {% for parameter in endpoint.query_parameters.values() %}
-    "{{ parameter.name }}": {{ parameter.get_type_string(no_optional=True) }},
-    {% endfor %}
-}
 {% endif %}
 
 
