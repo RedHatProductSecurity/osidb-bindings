@@ -6,13 +6,13 @@ from ..models.affect_report_data import AffectReportData
 from ..models.blank_enum import BlankEnum
 from ..models.resolution_01f_enum import Resolution01FEnum
 from ..models.state_enum import StateEnum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawReportData")
 
 
 @attr.s(auto_attribs=True)
-class FlawReportData:
+class FlawReportData(OSIDBModel):
     """ """
 
     cve_id: Union[Unset, None, str] = UNSET

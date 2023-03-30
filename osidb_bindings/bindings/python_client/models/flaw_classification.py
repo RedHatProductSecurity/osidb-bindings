@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.flaw_classification_state import FlawClassificationState
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawClassification")
 
 
 @attr.s(auto_attribs=True)
-class FlawClassification:
+class FlawClassification(OSIDBModel):
     """ """
 
     workflow: Union[Unset, str] = UNSET

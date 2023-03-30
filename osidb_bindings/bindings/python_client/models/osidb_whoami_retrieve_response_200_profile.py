@@ -2,13 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200Profile")
 
 
 @attr.s(auto_attribs=True)
-class OsidbWhoamiRetrieveResponse200Profile:
+class OsidbWhoamiRetrieveResponse200Profile(OSIDBModel):
     """ """
 
     bz_user_id: Union[Unset, str] = UNSET

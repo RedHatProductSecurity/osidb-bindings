@@ -2,11 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
+from ..types import OSIDBModel
+
 T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItemError")
 
 
 @attr.s(auto_attribs=True)
-class CollectorsApiV1StatusRetrieveResponse200CollectorsItemError:
+class CollectorsApiV1StatusRetrieveResponse200CollectorsItemError(OSIDBModel):
     """ """
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

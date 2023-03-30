@@ -13,13 +13,13 @@ from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_err
 from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_state import (
     CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
 )
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItem")
 
 
 @attr.s(auto_attribs=True)
-class CollectorsApiV1StatusRetrieveResponse200CollectorsItem:
+class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
     """ """
 
     data: Union[

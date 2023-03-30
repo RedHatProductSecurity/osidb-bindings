@@ -2,13 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET
+from ..types import UNSET, OSIDBModel
 
 T = TypeVar("T", bound="SupportedProducts")
 
 
 @attr.s(auto_attribs=True)
-class SupportedProducts:
+class SupportedProducts(OSIDBModel):
     """ """
 
     name: str

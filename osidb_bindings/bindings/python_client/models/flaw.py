@@ -17,13 +17,13 @@ from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
 from ..models.resolution_01f_enum import Resolution01FEnum
 from ..models.state_enum import StateEnum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Flaw")
 
 
 @attr.s(auto_attribs=True)
-class Flaw:
+class Flaw(OSIDBModel):
     """serialize flaw model"""
 
     uuid: str

@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.affect import Affect
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="PaginatedAffectList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedAffectList:
+class PaginatedAffectList(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

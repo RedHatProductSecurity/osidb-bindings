@@ -5,13 +5,13 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.tracker import Tracker
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1TrackersListResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1TrackersListResponse200:
+class OsidbApiV1TrackersListResponse200(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

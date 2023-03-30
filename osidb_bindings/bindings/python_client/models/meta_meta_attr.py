@@ -2,11 +2,13 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import attr
 
+from ..types import OSIDBModel
+
 T = TypeVar("T", bound="MetaMetaAttr")
 
 
 @attr.s(auto_attribs=True)
-class MetaMetaAttr:
+class MetaMetaAttr(OSIDBModel):
     """ """
 
     additional_properties: Dict[str, Optional[str]] = attr.ib(init=False, factory=dict)

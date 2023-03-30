@@ -6,13 +6,13 @@ from dateutil.parser import isoparse
 
 from ..models.meta_meta_attr import MetaMetaAttr
 from ..models.meta_type_enum import MetaTypeEnum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Meta")
 
 
 @attr.s(auto_attribs=True)
-class Meta:
+class Meta(OSIDBModel):
     """FlawMeta serializer"""
 
     uuid: str

@@ -2,13 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TrackerMetaAttr")
 
 
 @attr.s(auto_attribs=True)
-class TrackerMetaAttr:
+class TrackerMetaAttr(OSIDBModel):
     """ """
 
     bz_id: Union[Unset, str] = UNSET

@@ -7,13 +7,13 @@ from dateutil.parser import isoparse
 from ..models.osidb_whoami_retrieve_response_200_profile import (
     OsidbWhoamiRetrieveResponse200Profile,
 )
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbWhoamiRetrieveResponse200:
+class OsidbWhoamiRetrieveResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET

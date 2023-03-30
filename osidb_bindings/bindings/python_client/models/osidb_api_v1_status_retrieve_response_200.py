@@ -10,13 +10,13 @@ from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import (
 from ..models.osidb_api_v1_status_retrieve_response_200_osidb_service import (
     OsidbApiV1StatusRetrieveResponse200OsidbService,
 )
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1StatusRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1StatusRetrieveResponse200:
+class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET

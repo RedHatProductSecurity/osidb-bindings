@@ -2,13 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET
+from ..types import UNSET, OSIDBModel
 
 T = TypeVar("T", bound="TokenRefresh")
 
 
 @attr.s(auto_attribs=True)
-class TokenRefresh:
+class TokenRefresh(OSIDBModel):
     """ """
 
     access: str

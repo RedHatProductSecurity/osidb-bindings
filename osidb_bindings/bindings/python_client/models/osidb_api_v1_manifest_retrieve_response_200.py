@@ -4,13 +4,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1ManifestRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1ManifestRetrieveResponse200:
+class OsidbApiV1ManifestRetrieveResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET

@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.epss import EPSS
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="PaginatedEPSSList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedEPSSList:
+class PaginatedEPSSList(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET
