@@ -8,6 +8,10 @@ from ...models.osim_api_v1_workflows_retrieve_2_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "verbose": bool,
+}
+
 
 def _get_kwargs(
     id: str,
@@ -105,8 +109,3 @@ def sync(
         client=client,
         verbose=verbose,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "verbose": bool,
-}

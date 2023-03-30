@@ -8,6 +8,8 @@ from ...models.osidb_api_v1_manifest_retrieve_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+
 
 def _get_kwargs(
     *,
@@ -81,6 +83,3 @@ def sync(
     return sync_detailed(
         client=client,
     ).parsed
-
-
-QUERY_PARAMS = {}

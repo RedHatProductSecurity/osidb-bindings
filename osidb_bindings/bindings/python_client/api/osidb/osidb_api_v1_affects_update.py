@@ -9,6 +9,9 @@ from ...models.osidb_api_v1_affects_update_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = Affect
+
 
 def _get_kwargs(
     uuid: str,
@@ -110,6 +113,3 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
-
-
-QUERY_PARAMS = {}

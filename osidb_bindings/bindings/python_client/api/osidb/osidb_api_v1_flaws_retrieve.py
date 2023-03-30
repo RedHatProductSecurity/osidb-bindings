@@ -8,6 +8,14 @@ from ...models.osidb_api_v1_flaws_retrieve_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "exclude_fields": List[str],
+    "flaw_meta_type": List[str],
+    "include_fields": List[str],
+    "include_meta_attr": List[str],
+    "tracker_ids": List[str],
+}
+
 
 def _get_kwargs(
     id: str,
@@ -155,12 +163,3 @@ def sync(
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "exclude_fields": List[str],
-    "flaw_meta_type": List[str],
-    "include_fields": List[str],
-    "include_meta_attr": List[str],
-    "tracker_ids": List[str],
-}

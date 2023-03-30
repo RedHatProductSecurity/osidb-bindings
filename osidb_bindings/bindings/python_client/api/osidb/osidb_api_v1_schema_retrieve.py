@@ -10,6 +10,11 @@ from ...models.osidb_api_v1_schema_retrieve_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "format": OsidbApiV1SchemaRetrieveFormat,
+    "lang": OsidbApiV1SchemaRetrieveLang,
+}
+
 
 def _get_kwargs(
     *,
@@ -113,9 +118,3 @@ def sync(
         format_=format_,
         lang=lang,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "format": OsidbApiV1SchemaRetrieveFormat,
-    "lang": OsidbApiV1SchemaRetrieveLang,
-}

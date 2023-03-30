@@ -9,6 +9,9 @@ from ...models.osidb_api_v1_flaws_create_response_201 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = Flaw
+
 
 def _get_kwargs(
     *,
@@ -104,6 +107,3 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
-
-
-QUERY_PARAMS = {}

@@ -16,6 +16,22 @@ from ...models.osidb_api_v1_affects_list_response_200 import (
 from ...models.osidb_api_v1_affects_list_type import OsidbApiV1AffectsListType
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "affectedness": OsidbApiV1AffectsListAffectedness,
+    "exclude_fields": List[str],
+    "flaw": str,
+    "impact": OsidbApiV1AffectsListImpact,
+    "include_fields": List[str],
+    "include_meta_attr": List[str],
+    "limit": int,
+    "offset": int,
+    "ps_component": str,
+    "ps_module": str,
+    "resolution": OsidbApiV1AffectsListResolution,
+    "type": OsidbApiV1AffectsListType,
+    "uuid": str,
+}
+
 
 def _get_kwargs(
     *,
@@ -217,20 +233,3 @@ def sync(
         type=type,
         uuid=uuid,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "affectedness": OsidbApiV1AffectsListAffectedness,
-    "exclude_fields": List[str],
-    "flaw": str,
-    "impact": OsidbApiV1AffectsListImpact,
-    "include_fields": List[str],
-    "include_meta_attr": List[str],
-    "limit": int,
-    "offset": int,
-    "ps_component": str,
-    "ps_module": str,
-    "resolution": OsidbApiV1AffectsListResolution,
-    "type": OsidbApiV1AffectsListType,
-    "uuid": str,
-}

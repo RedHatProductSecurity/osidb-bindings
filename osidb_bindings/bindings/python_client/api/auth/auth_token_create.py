@@ -7,6 +7,9 @@ from ...models.auth_token_create_response_200 import AuthTokenCreateResponse200
 from ...models.token_obtain_pair import TokenObtainPair
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = TokenObtainPair
+
 
 def _get_kwargs(
     *,
@@ -103,6 +106,3 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
-
-
-QUERY_PARAMS = {}

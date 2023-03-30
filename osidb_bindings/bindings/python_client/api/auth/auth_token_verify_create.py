@@ -9,6 +9,9 @@ from ...models.auth_token_verify_create_response_200 import (
 from ...models.token_verify import TokenVerify
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = TokenVerify
+
 
 def _get_kwargs(
     *,
@@ -105,6 +108,3 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
-
-
-QUERY_PARAMS = {}
