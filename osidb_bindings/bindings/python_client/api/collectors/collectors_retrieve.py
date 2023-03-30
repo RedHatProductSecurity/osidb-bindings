@@ -6,6 +6,8 @@ from ...client import AuthenticatedClient
 from ...models.collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+
 
 def _get_kwargs(
     *,
@@ -77,6 +79,3 @@ def sync(
     return sync_detailed(
         client=client,
     ).parsed
-
-
-QUERY_PARAMS = {}

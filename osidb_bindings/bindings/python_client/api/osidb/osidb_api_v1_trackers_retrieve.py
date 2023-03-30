@@ -8,6 +8,12 @@ from ...models.osidb_api_v1_trackers_retrieve_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "exclude_fields": List[str],
+    "include_fields": List[str],
+    "include_meta_attr": List[str],
+}
+
 
 def _get_kwargs(
     uuid: str,
@@ -131,10 +137,3 @@ def sync(
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "exclude_fields": List[str],
-    "include_fields": List[str],
-    "include_meta_attr": List[str],
-}

@@ -8,6 +8,8 @@ from ...models.osim_api_v1_workflows_adjust_create_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+
 
 def _get_kwargs(
     id: str,
@@ -93,6 +95,3 @@ def sync(
         id=id,
         client=client,
     ).parsed
-
-
-QUERY_PARAMS = {}

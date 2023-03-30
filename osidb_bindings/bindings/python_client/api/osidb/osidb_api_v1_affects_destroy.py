@@ -8,6 +8,8 @@ from ...models.osidb_api_v1_affects_destroy_response_204 import (
 )
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {}
+
 
 def _get_kwargs(
     uuid: str,
@@ -85,6 +87,3 @@ def sync(
         uuid=uuid,
         client=client,
     ).parsed
-
-
-QUERY_PARAMS = {}

@@ -9,6 +9,20 @@ from ...models.osidb_api_v1_trackers_list_response_200 import (
 from ...models.osidb_api_v1_trackers_list_type import OsidbApiV1TrackersListType
 from ...types import UNSET, Response, Unset
 
+QUERY_PARAMS = {
+    "exclude_fields": List[str],
+    "external_system_id": str,
+    "include_fields": List[str],
+    "include_meta_attr": List[str],
+    "limit": int,
+    "offset": int,
+    "ps_update_stream": str,
+    "resolution": str,
+    "status": str,
+    "type": OsidbApiV1TrackersListType,
+    "uuid": str,
+}
+
 
 def _get_kwargs(
     *,
@@ -177,18 +191,3 @@ def sync(
         type=type,
         uuid=uuid,
     ).parsed
-
-
-QUERY_PARAMS = {
-    "exclude_fields": List[str],
-    "external_system_id": str,
-    "include_fields": List[str],
-    "include_meta_attr": List[str],
-    "limit": int,
-    "offset": int,
-    "ps_update_stream": str,
-    "resolution": str,
-    "status": str,
-    "type": OsidbApiV1TrackersListType,
-    "uuid": str,
-}
