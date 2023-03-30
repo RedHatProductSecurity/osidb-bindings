@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.supported_products import SupportedProducts
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="PaginatedSupportedProductsList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedSupportedProductsList:
+class PaginatedSupportedProductsList(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

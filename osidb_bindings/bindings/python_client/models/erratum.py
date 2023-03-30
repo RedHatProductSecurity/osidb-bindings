@@ -4,13 +4,13 @@ from typing import Any, Dict, List, Type, TypeVar
 import attr
 from dateutil.parser import isoparse
 
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Erratum")
 
 
 @attr.s(auto_attribs=True)
-class Erratum:
+class Erratum(OSIDBModel):
     """Erratum serializer"""
 
     et_id: int

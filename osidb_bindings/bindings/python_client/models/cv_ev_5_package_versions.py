@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar
 import attr
 
 from ..models.cv_ev_5_versions import CVEv5Versions
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="CVEv5PackageVersions")
 
 
 @attr.s(auto_attribs=True)
-class CVEv5PackageVersions:
+class CVEv5PackageVersions(OSIDBModel):
     """CVEv5 package versions serializer"""
 
     package: str

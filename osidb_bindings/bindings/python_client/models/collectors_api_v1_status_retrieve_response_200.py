@@ -7,13 +7,13 @@ from dateutil.parser import isoparse
 from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item import (
     CollectorsApiV1StatusRetrieveResponse200CollectorsItem,
 )
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class CollectorsApiV1StatusRetrieveResponse200:
+class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
     """ """
 
     collectors: Union[

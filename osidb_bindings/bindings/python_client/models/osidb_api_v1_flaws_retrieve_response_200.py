@@ -16,13 +16,13 @@ from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
 from ..models.resolution_01f_enum import Resolution01FEnum
 from ..models.state_enum import StateEnum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1FlawsRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1FlawsRetrieveResponse200:
+class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
     """ """
 
     uuid: str

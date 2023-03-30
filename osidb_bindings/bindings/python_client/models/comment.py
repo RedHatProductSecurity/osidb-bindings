@@ -6,13 +6,13 @@ from dateutil.parser import isoparse
 
 from ..models.comment_meta_attr import CommentMetaAttr
 from ..models.comment_type_enum import CommentTypeEnum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Comment")
 
 
 @attr.s(auto_attribs=True)
-class Comment:
+class Comment(OSIDBModel):
     """FlawComment serializer"""
 
     uuid: str

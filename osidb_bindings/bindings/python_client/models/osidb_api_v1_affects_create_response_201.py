@@ -11,13 +11,13 @@ from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.resolution_3_ac_enum import Resolution3AcEnum
 from ..models.tracker import Tracker
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1AffectsCreateResponse201")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1AffectsCreateResponse201:
+class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
     """ """
 
     uuid: str

@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.type_0d0_enum import Type0D0Enum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TrackerReportData")
 
 
 @attr.s(auto_attribs=True)
-class TrackerReportData:
+class TrackerReportData(OSIDBModel):
     """ """
 
     type: Type0D0Enum

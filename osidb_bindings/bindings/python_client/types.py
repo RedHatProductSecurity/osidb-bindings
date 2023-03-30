@@ -50,3 +50,7 @@ class Response(Generic[T]):
 
 
 __all__ = ["File", "Response", "FileJsonType"]
+
+
+class OSIDBModel:
+    """Base class for all 'non-primitive' and 'non-enum' models"""

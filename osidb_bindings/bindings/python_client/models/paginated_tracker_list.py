@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.tracker import Tracker
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="PaginatedTrackerList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedTrackerList:
+class PaginatedTrackerList(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

@@ -5,13 +5,13 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.flaw import Flaw
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1FlawsListResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1FlawsListResponse200:
+class OsidbApiV1FlawsListResponse200(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

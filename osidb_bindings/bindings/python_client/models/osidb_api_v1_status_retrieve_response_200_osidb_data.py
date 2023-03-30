@@ -2,13 +2,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1StatusRetrieveResponse200OsidbData")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1StatusRetrieveResponse200OsidbData:
+class OsidbApiV1StatusRetrieveResponse200OsidbData(OSIDBModel):
     """ """
 
     flaw_count: Union[Unset, int] = UNSET

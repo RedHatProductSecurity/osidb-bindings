@@ -7,13 +7,13 @@ from dateutil.parser import isoparse
 from ..models.erratum import Erratum
 from ..models.tracker_meta_attr import TrackerMetaAttr
 from ..models.type_0d0_enum import Type0D0Enum
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1TrackersRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1TrackersRetrieveResponse200:
+class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     """ """
 
     uuid: str

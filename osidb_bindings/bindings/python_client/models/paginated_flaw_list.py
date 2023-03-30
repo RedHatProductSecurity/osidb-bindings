@@ -3,13 +3,13 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.flaw import Flaw
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="PaginatedFlawList")
 
 
 @attr.s(auto_attribs=True)
-class PaginatedFlawList:
+class PaginatedFlawList(OSIDBModel):
     """ """
 
     count: Union[Unset, int] = UNSET

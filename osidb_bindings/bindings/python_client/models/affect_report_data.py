@@ -6,13 +6,13 @@ from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.resolution_3_ac_enum import Resolution3AcEnum
 from ..models.tracker_report_data import TrackerReportData
-from ..types import UNSET, Unset
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="AffectReportData")
 
 
 @attr.s(auto_attribs=True)
-class AffectReportData:
+class AffectReportData(OSIDBModel):
     """ """
 
     ps_module: str
