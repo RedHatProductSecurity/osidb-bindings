@@ -65,6 +65,7 @@ review
 commit_bindings_changes ${new_version}
 
 update_version ${new_version}
+update_schema_version ${new_version}
 review
 commit_version_changes ${new_version}
 

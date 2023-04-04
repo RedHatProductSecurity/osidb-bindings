@@ -56,6 +56,16 @@ update_version() {
     echo "Updating the CHANGELOG.md to ${version}"
     sed -i 's/^## Unreleased.*/## Unreleased\n\n## ['"${version}"'] - '$(date '+%Y-%m-%d')'/' CHANGELOG.md
 
+    echo
+}
+
+# Update the version in API schema file
+# $1: new version
+update_schema_version() {
+    local version=$1
+
+    echo
+
     echo "Replacing version in OpenAPI schema (if not already updated from the OSIDB repository) to ${version}"
     sed -i 's/version: [0-9]*\.[0-9]*\.[0-9]*/version: '${version}'/g' osidb_bindings/openapi_schema.yml
 
