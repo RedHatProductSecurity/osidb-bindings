@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class FlawTypeEnum(str, Enum):
+class OsidbApiV1TrackersListAffectsFlawType(str, Enum):
     VULNERABILITY = "VULNERABILITY"
     WEAKNESS = "WEAKNESS"
 

@@ -2,8 +2,9 @@
 
 from .affect import Affect
 from .affect_meta_attr import AffectMetaAttr
+from .affect_post import AffectPost
+from .affect_post_meta_attr import AffectPostMetaAttr
 from .affect_report_data import AffectReportData
-from .affect_type_enum import AffectTypeEnum
 from .affectedness_enum import AffectednessEnum
 from .auth_token_create_response_200 import AuthTokenCreateResponse200
 from .auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
@@ -88,10 +89,18 @@ from .flaw import Flaw
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
 from .flaw_meta_attr import FlawMetaAttr
+from .flaw_post import FlawPost
+from .flaw_post_classification import FlawPostClassification
+from .flaw_post_classification_state import FlawPostClassificationState
+from .flaw_post_meta_attr import FlawPostMetaAttr
 from .flaw_report_data import FlawReportData
-from .flaw_source_enum import FlawSourceEnum
-from .flaw_type_enum import FlawTypeEnum
 from .impact_enum import ImpactEnum
+from .jira_comment import JiraComment
+from .jira_issue import JiraIssue
+from .jira_issue_fields import JiraIssueFields
+from .jira_issue_query_result import JiraIssueQueryResult
+from .jira_issue_type import JiraIssueType
+from .jira_user import JiraUser
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .meta import Meta
 from .meta_meta_attr import MetaMetaAttr
@@ -101,20 +110,35 @@ from .osidb_api_v1_affects_destroy_response_204 import (
     OsidbApiV1AffectsDestroyResponse204,
 )
 from .osidb_api_v1_affects_list_affectedness import OsidbApiV1AffectsListAffectedness
+from .osidb_api_v1_affects_list_flaw_impact import OsidbApiV1AffectsListFlawImpact
+from .osidb_api_v1_affects_list_flaw_source import OsidbApiV1AffectsListFlawSource
+from .osidb_api_v1_affects_list_flaw_type import OsidbApiV1AffectsListFlawType
 from .osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
+from .osidb_api_v1_affects_list_order_item import OsidbApiV1AffectsListOrderItem
 from .osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
 from .osidb_api_v1_affects_list_response_200 import OsidbApiV1AffectsListResponse200
+from .osidb_api_v1_affects_list_trackers_type import OsidbApiV1AffectsListTrackersType
 from .osidb_api_v1_affects_list_type import OsidbApiV1AffectsListType
 from .osidb_api_v1_affects_retrieve_response_200 import (
     OsidbApiV1AffectsRetrieveResponse200,
 )
 from .osidb_api_v1_affects_update_response_200 import OsidbApiV1AffectsUpdateResponse200
 from .osidb_api_v1_flaws_create_response_201 import OsidbApiV1FlawsCreateResponse201
+from .osidb_api_v1_flaws_list_affects_affectedness import (
+    OsidbApiV1FlawsListAffectsAffectedness,
+)
+from .osidb_api_v1_flaws_list_affects_impact import OsidbApiV1FlawsListAffectsImpact
+from .osidb_api_v1_flaws_list_affects_resolution import (
+    OsidbApiV1FlawsListAffectsResolution,
+)
+from .osidb_api_v1_flaws_list_affects_trackers_type import (
+    OsidbApiV1FlawsListAffectsTrackersType,
+)
+from .osidb_api_v1_flaws_list_affects_type import OsidbApiV1FlawsListAffectsType
 from .osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
-from .osidb_api_v1_flaws_list_resolution import OsidbApiV1FlawsListResolution
+from .osidb_api_v1_flaws_list_order_item import OsidbApiV1FlawsListOrderItem
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
-from .osidb_api_v1_flaws_list_state import OsidbApiV1FlawsListState
 from .osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
 from .osidb_api_v1_flaws_retrieve_response_200 import OsidbApiV1FlawsRetrieveResponse200
 from .osidb_api_v1_flaws_update_response_200 import OsidbApiV1FlawsUpdateResponse200
@@ -135,6 +159,26 @@ from .osidb_api_v1_status_retrieve_response_200_osidb_data import (
 from .osidb_api_v1_status_retrieve_response_200_osidb_service import (
     OsidbApiV1StatusRetrieveResponse200OsidbService,
 )
+from .osidb_api_v1_trackers_list_affects_affectedness import (
+    OsidbApiV1TrackersListAffectsAffectedness,
+)
+from .osidb_api_v1_trackers_list_affects_flaw_impact import (
+    OsidbApiV1TrackersListAffectsFlawImpact,
+)
+from .osidb_api_v1_trackers_list_affects_flaw_source import (
+    OsidbApiV1TrackersListAffectsFlawSource,
+)
+from .osidb_api_v1_trackers_list_affects_flaw_type import (
+    OsidbApiV1TrackersListAffectsFlawType,
+)
+from .osidb_api_v1_trackers_list_affects_impact import (
+    OsidbApiV1TrackersListAffectsImpact,
+)
+from .osidb_api_v1_trackers_list_affects_resolution import (
+    OsidbApiV1TrackersListAffectsResolution,
+)
+from .osidb_api_v1_trackers_list_affects_type import OsidbApiV1TrackersListAffectsType
+from .osidb_api_v1_trackers_list_order_item import OsidbApiV1TrackersListOrderItem
 from .osidb_api_v1_trackers_list_response_200 import OsidbApiV1TrackersListResponse200
 from .osidb_api_v1_trackers_list_type import OsidbApiV1TrackersListType
 from .osidb_api_v1_trackers_retrieve_response_200 import (
@@ -163,11 +207,38 @@ from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_tracker_list import PaginatedTrackerList
-from .resolution_01f_enum import Resolution01FEnum
-from .resolution_3_ac_enum import Resolution3AcEnum
-from .state_enum import StateEnum
+from .resolution_enum import ResolutionEnum
+from .source_666_enum import Source666Enum
 from .status_enum import StatusEnum
 from .supported_products import SupportedProducts
+from .taskman_api_v1_group_create_response_200 import TaskmanApiV1GroupCreateResponse200
+from .taskman_api_v1_group_retrieve_response_200 import (
+    TaskmanApiV1GroupRetrieveResponse200,
+)
+from .taskman_api_v1_group_update_response_204 import TaskmanApiV1GroupUpdateResponse204
+from .taskman_api_v1_task_comment_create_response_200 import (
+    TaskmanApiV1TaskCommentCreateResponse200,
+)
+from .taskman_api_v1_task_comment_update_response_200 import (
+    TaskmanApiV1TaskCommentUpdateResponse200,
+)
+from .taskman_api_v1_task_flaw_create_response_200 import (
+    TaskmanApiV1TaskFlawCreateResponse200,
+)
+from .taskman_api_v1_task_flaw_retrieve_response_200 import (
+    TaskmanApiV1TaskFlawRetrieveResponse200,
+)
+from .taskman_api_v1_task_flaw_update_response_204 import (
+    TaskmanApiV1TaskFlawUpdateResponse204,
+)
+from .taskman_api_v1_task_retrieve_response_200 import (
+    TaskmanApiV1TaskRetrieveResponse200,
+)
+from .taskman_api_v1_task_status_update_response_204 import (
+    TaskmanApiV1TaskStatusUpdateResponse204,
+)
+from .taskman_api_v1_task_status_update_status import TaskmanApiV1TaskStatusUpdateStatus
+from .taskman_healthy_retrieve_response_200 import TaskmanHealthyRetrieveResponse200
 from .token_obtain_pair import TokenObtainPair
 from .token_refresh import TokenRefresh
 from .token_verify import TokenVerify
@@ -175,3 +246,5 @@ from .tracker import Tracker
 from .tracker_meta_attr import TrackerMetaAttr
 from .tracker_report_data import TrackerReportData
 from .type_0d0_enum import Type0D0Enum
+from .type_5b2_enum import Type5B2Enum
+from .type_824_enum import Type824Enum

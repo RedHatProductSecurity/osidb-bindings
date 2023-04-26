@@ -1,7 +1,8 @@
 from enum import Enum
 
 
-class FlawSourceEnum(str, Enum):
+class OsidbApiV1AffectsListFlawSource(str, Enum):
+    VALUE_0 = ""
     ADOBE = "ADOBE"
     APPLE = "APPLE"
     ASF = "ASF"

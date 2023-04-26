@@ -3,9 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.affect_report_data import AffectReportData
-from ..models.blank_enum import BlankEnum
-from ..models.resolution_01f_enum import Resolution01FEnum
-from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawReportData")
@@ -15,34 +12,16 @@ T = TypeVar("T", bound="FlawReportData")
 class FlawReportData(OSIDBModel):
     """ """
 
+    state: str
+    resolution: str
     cve_id: Union[Unset, None, str] = UNSET
-    state: Union[Unset, StateEnum] = UNSET
-    resolution: Union[BlankEnum, Resolution01FEnum, Unset] = UNSET
     affects: Union[Unset, List[AffectReportData]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        state = self.state
+        resolution = self.resolution
         cve_id = self.cve_id
-        state: Union[Unset, str] = UNSET
-        if not isinstance(self.state, Unset):
-
-            state = StateEnum(self.state).value
-
-        resolution: Union[Unset, str]
-        if isinstance(self.resolution, Unset):
-            resolution = UNSET
-        elif isinstance(self.resolution, Resolution01FEnum):
-            resolution = UNSET
-            if not isinstance(self.resolution, Unset):
-
-                resolution = Resolution01FEnum(self.resolution).value
-
-        else:
-            resolution = UNSET
-            if not isinstance(self.resolution, Unset):
-
-                resolution = BlankEnum(self.resolution).value
-
         affects: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
@@ -55,12 +34,12 @@ class FlawReportData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if cve_id is not UNSET:
-            field_dict["cve_id"] = cve_id
         if state is not UNSET:
             field_dict["state"] = state
         if resolution is not UNSET:
             field_dict["resolution"] = resolution
+        if cve_id is not UNSET:
+            field_dict["cve_id"] = cve_id
         if affects is not UNSET:
             field_dict["affects"] = affects
 
@@ -69,45 +48,11 @@ class FlawReportData(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        state = d.pop("state", UNSET)
+
+        resolution = d.pop("resolution", UNSET)
+
         cve_id = d.pop("cve_id", UNSET)
-
-        _state = d.pop("state", UNSET)
-        state: Union[Unset, StateEnum]
-        if isinstance(_state, Unset):
-            state = UNSET
-        else:
-            state = StateEnum(_state)
-
-        def _parse_resolution(
-            data: object,
-        ) -> Union[BlankEnum, Resolution01FEnum, Unset]:
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _resolution_type_0 = data
-                resolution_type_0: Union[Unset, Resolution01FEnum]
-                if isinstance(_resolution_type_0, Unset):
-                    resolution_type_0 = UNSET
-                else:
-                    resolution_type_0 = Resolution01FEnum(_resolution_type_0)
-
-                return resolution_type_0
-            except:  # noqa: E722
-                pass
-            if not isinstance(data, str):
-                raise TypeError()
-            _resolution_type_1 = data
-            resolution_type_1: Union[Unset, BlankEnum]
-            if isinstance(_resolution_type_1, Unset):
-                resolution_type_1 = UNSET
-            else:
-                resolution_type_1 = BlankEnum(_resolution_type_1)
-
-            return resolution_type_1
-
-        resolution = _parse_resolution(d.pop("resolution", UNSET))
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -125,9 +70,9 @@ class FlawReportData(OSIDBModel):
                 affects.append(affects_item)
 
         flaw_report_data = cls(
-            cve_id=cve_id,
             state=state,
             resolution=resolution,
+            cve_id=cve_id,
             affects=affects,
         )
 
@@ -137,9 +82,9 @@ class FlawReportData(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
+            "state": str,
+            "resolution": str,
             "cve_id": str,
-            "state": StateEnum,
-            "resolution": Union[BlankEnum, Resolution01FEnum],
             "affects": List[AffectReportData],
         }
 

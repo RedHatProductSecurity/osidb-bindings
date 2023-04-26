@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class AffectTypeEnum(str, Enum):
+class OsidbApiV1TrackersListAffectsType(str, Enum):
     DEFAULT = "DEFAULT"
 
     def __str__(self) -> str:

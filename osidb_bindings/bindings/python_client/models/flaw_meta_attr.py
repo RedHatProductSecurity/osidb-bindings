@@ -36,7 +36,9 @@ class FlawMetaAttr(OSIDBModel):
     references: Union[Unset, str] = UNSET
     related_cves: Union[Unset, str] = UNSET
     reported: Union[Unset, str] = UNSET
+    resolution: Union[Unset, str] = UNSET
     source: Union[Unset, str] = UNSET
+    state: Union[Unset, str] = UNSET
     statement: Union[Unset, str] = UNSET
     task_owner: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -67,7 +69,9 @@ class FlawMetaAttr(OSIDBModel):
         references = self.references
         related_cves = self.related_cves
         reported = self.reported
+        resolution = self.resolution
         source = self.source
+        state = self.state
         statement = self.statement
         task_owner = self.task_owner
 
@@ -123,8 +127,12 @@ class FlawMetaAttr(OSIDBModel):
             field_dict["related_cves"] = related_cves
         if reported is not UNSET:
             field_dict["reported"] = reported
+        if resolution is not UNSET:
+            field_dict["resolution"] = resolution
         if source is not UNSET:
             field_dict["source"] = source
+        if state is not UNSET:
+            field_dict["state"] = state
         if statement is not UNSET:
             field_dict["statement"] = statement
         if task_owner is not UNSET:
@@ -185,7 +193,11 @@ class FlawMetaAttr(OSIDBModel):
 
         reported = d.pop("reported", UNSET)
 
+        resolution = d.pop("resolution", UNSET)
+
         source = d.pop("source", UNSET)
+
+        state = d.pop("state", UNSET)
 
         statement = d.pop("statement", UNSET)
 
@@ -217,7 +229,9 @@ class FlawMetaAttr(OSIDBModel):
             references=references,
             related_cves=related_cves,
             reported=reported,
+            resolution=resolution,
             source=source,
+            state=state,
             statement=statement,
             task_owner=task_owner,
         )
@@ -253,7 +267,9 @@ class FlawMetaAttr(OSIDBModel):
             "references": str,
             "related_cves": str,
             "reported": str,
+            "resolution": str,
             "source": str,
+            "state": str,
             "statement": str,
             "task_owner": str,
         }
