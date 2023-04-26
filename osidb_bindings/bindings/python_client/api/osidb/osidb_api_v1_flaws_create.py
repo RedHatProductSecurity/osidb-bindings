@@ -3,22 +3,22 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.flaw import Flaw
+from ...models.flaw_post import FlawPost
 from ...models.osidb_api_v1_flaws_create_response_201 import (
     OsidbApiV1FlawsCreateResponse201,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-REQUEST_BODY_TYPE = Flaw
+REQUEST_BODY_TYPE = FlawPost
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    form_data: Flaw,
-    multipart_data: Flaw,
-    json_body: Flaw,
+    form_data: FlawPost,
+    multipart_data: FlawPost,
+    json_body: FlawPost,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws".format(
         client.base_url,
@@ -70,9 +70,9 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    form_data: Flaw,
-    multipart_data: Flaw,
-    json_body: Flaw,
+    form_data: FlawPost,
+    multipart_data: FlawPost,
+    json_body: FlawPost,
 ) -> Response[OsidbApiV1FlawsCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
@@ -95,9 +95,9 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    form_data: Flaw,
-    multipart_data: Flaw,
-    json_body: Flaw,
+    form_data: FlawPost,
+    multipart_data: FlawPost,
+    json_body: FlawPost,
 ) -> Optional[OsidbApiV1FlawsCreateResponse201]:
     """ """
 

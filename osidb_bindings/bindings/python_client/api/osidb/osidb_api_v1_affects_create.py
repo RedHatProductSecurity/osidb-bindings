@@ -3,22 +3,22 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.affect import Affect
+from ...models.affect_post import AffectPost
 from ...models.osidb_api_v1_affects_create_response_201 import (
     OsidbApiV1AffectsCreateResponse201,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-REQUEST_BODY_TYPE = Affect
+REQUEST_BODY_TYPE = AffectPost
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    form_data: Affect,
-    multipart_data: Affect,
-    json_body: Affect,
+    form_data: AffectPost,
+    multipart_data: AffectPost,
+    json_body: AffectPost,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/affects".format(
         client.base_url,
@@ -70,9 +70,9 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    form_data: Affect,
-    multipart_data: Affect,
-    json_body: Affect,
+    form_data: AffectPost,
+    multipart_data: AffectPost,
+    json_body: AffectPost,
 ) -> Response[OsidbApiV1AffectsCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
@@ -95,9 +95,9 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    form_data: Affect,
-    multipart_data: Affect,
-    json_body: Affect,
+    form_data: AffectPost,
+    multipart_data: AffectPost,
+    json_body: AffectPost,
 ) -> Optional[OsidbApiV1AffectsCreateResponse201]:
     """ """
 

@@ -1,12 +1,13 @@
 from enum import Enum
 
 
-class Resolution3AcEnum(str, Enum):
-    FIX = "FIX"
+class OsidbApiV1TrackersListAffectsResolution(str, Enum):
+    VALUE_0 = ""
     DEFER = "DEFER"
-    WONTFIX = "WONTFIX"
-    OOSS = "OOSS"
     DELEGATED = "DELEGATED"
+    FIX = "FIX"
+    OOSS = "OOSS"
+    WONTFIX = "WONTFIX"
     WONTREPORT = "WONTREPORT"
 
     def __str__(self) -> str:

@@ -4,7 +4,7 @@ import attr
 
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
-from ..models.resolution_3_ac_enum import Resolution3AcEnum
+from ..models.resolution_enum import ResolutionEnum
 from ..models.tracker_report_data import TrackerReportData
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,7 +18,7 @@ class AffectReportData(OSIDBModel):
     ps_module: str
     ps_component: str
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
-    resolution: Union[BlankEnum, Resolution3AcEnum, Unset] = UNSET
+    resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     trackers: Union[Unset, List[TrackerReportData]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -43,11 +43,11 @@ class AffectReportData(OSIDBModel):
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, Resolution3AcEnum):
+        elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = Resolution3AcEnum(self.resolution).value
+                resolution = ResolutionEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -118,20 +118,18 @@ class AffectReportData(OSIDBModel):
 
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
-        def _parse_resolution(
-            data: object,
-        ) -> Union[BlankEnum, Resolution3AcEnum, Unset]:
+        def _parse_resolution(data: object) -> Union[BlankEnum, ResolutionEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _resolution_type_0 = data
-                resolution_type_0: Union[Unset, Resolution3AcEnum]
+                resolution_type_0: Union[Unset, ResolutionEnum]
                 if isinstance(_resolution_type_0, Unset):
                     resolution_type_0 = UNSET
                 else:
-                    resolution_type_0 = Resolution3AcEnum(_resolution_type_0)
+                    resolution_type_0 = ResolutionEnum(_resolution_type_0)
 
                 return resolution_type_0
             except:  # noqa: E722
@@ -181,7 +179,7 @@ class AffectReportData(OSIDBModel):
             "ps_module": str,
             "ps_component": str,
             "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[BlankEnum, Resolution3AcEnum],
+            "resolution": Union[BlankEnum, ResolutionEnum],
             "trackers": List[TrackerReportData],
         }
 

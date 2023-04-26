@@ -10,12 +10,10 @@ from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
-from ..models.flaw_source_enum import FlawSourceEnum
-from ..models.flaw_type_enum import FlawTypeEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
-from ..models.resolution_01f_enum import Resolution01FEnum
-from ..models.state_enum import StateEnum
+from ..models.source_666_enum import Source666Enum
+from ..models.type_824_enum import Type824Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1FlawsUpdateResponse200")
@@ -26,6 +24,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     """ """
 
     uuid: str
+    state: str
+    resolution: str
     title: str
     trackers: List[str]
     description: str
@@ -38,17 +38,17 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: FlawClassification
-    type: Union[Unset, FlawTypeEnum] = UNSET
+    type: Union[Unset, Type824Enum] = UNSET
     cve_id: Union[Unset, None, str] = UNSET
-    state: Union[Unset, StateEnum] = UNSET
-    resolution: Union[BlankEnum, Resolution01FEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
+    component: Union[Unset, str] = UNSET
     summary: Union[Unset, str] = UNSET
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, FlawSourceEnum, Unset] = UNSET
+    source: Union[BlankEnum, Source666Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
+    mitigation: Union[Unset, str] = UNSET
     cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
     nvd_cvss2: Union[Unset, str] = UNSET
@@ -64,6 +64,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
+        state = self.state
+        resolution = self.resolution
         title = self.title
         trackers: List[str] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -130,29 +132,9 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = FlawTypeEnum(self.type).value
+            type = Type824Enum(self.type).value
 
         cve_id = self.cve_id
-        state: Union[Unset, str] = UNSET
-        if not isinstance(self.state, Unset):
-
-            state = StateEnum(self.state).value
-
-        resolution: Union[Unset, str]
-        if isinstance(self.resolution, Unset):
-            resolution = UNSET
-        elif isinstance(self.resolution, Resolution01FEnum):
-            resolution = UNSET
-            if not isinstance(self.resolution, Unset):
-
-                resolution = Resolution01FEnum(self.resolution).value
-
-        else:
-            resolution = UNSET
-            if not isinstance(self.resolution, Unset):
-
-                resolution = BlankEnum(self.resolution).value
-
         impact: Union[Unset, str]
         if isinstance(self.impact, Unset):
             impact = UNSET
@@ -168,6 +150,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
+        component = self.component
         summary = self.summary
         statement = self.statement
         cwe_id = self.cwe_id
@@ -178,11 +161,11 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, FlawSourceEnum):
+        elif isinstance(self.source, Source666Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = FlawSourceEnum(self.source).value
+                source = Source666Enum(self.source).value
 
         else:
             source = UNSET
@@ -194,6 +177,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         if not isinstance(self.reported_dt, Unset):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
+        mitigation = self.mitigation
         cvss2 = self.cvss2
         cvss2_score = self.cvss2_score
         nvd_cvss2 = self.nvd_cvss2
@@ -213,6 +197,10 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         field_dict.update(self.additional_properties)
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
+        if state is not UNSET:
+            field_dict["state"] = state
+        if resolution is not UNSET:
+            field_dict["resolution"] = resolution
         if title is not UNSET:
             field_dict["title"] = title
         if trackers is not UNSET:
@@ -241,12 +229,10 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["type"] = type
         if cve_id is not UNSET:
             field_dict["cve_id"] = cve_id
-        if state is not UNSET:
-            field_dict["state"] = state
-        if resolution is not UNSET:
-            field_dict["resolution"] = resolution
         if impact is not UNSET:
             field_dict["impact"] = impact
+        if component is not UNSET:
+            field_dict["component"] = component
         if summary is not UNSET:
             field_dict["summary"] = summary
         if statement is not UNSET:
@@ -259,6 +245,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["source"] = source
         if reported_dt is not UNSET:
             field_dict["reported_dt"] = reported_dt
+        if mitigation is not UNSET:
+            field_dict["mitigation"] = mitigation
         if cvss2 is not UNSET:
             field_dict["cvss2"] = cvss2
         if cvss2_score is not UNSET:
@@ -288,6 +276,10 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
+
+        state = d.pop("state", UNSET)
+
+        resolution = d.pop("resolution", UNSET)
 
         title = d.pop("title", UNSET)
 
@@ -388,51 +380,13 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             classification = FlawClassification.from_dict(_classification)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, FlawTypeEnum]
+        type: Union[Unset, Type824Enum]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = FlawTypeEnum(_type)
+            type = Type824Enum(_type)
 
         cve_id = d.pop("cve_id", UNSET)
-
-        _state = d.pop("state", UNSET)
-        state: Union[Unset, StateEnum]
-        if isinstance(_state, Unset):
-            state = UNSET
-        else:
-            state = StateEnum(_state)
-
-        def _parse_resolution(
-            data: object,
-        ) -> Union[BlankEnum, Resolution01FEnum, Unset]:
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _resolution_type_0 = data
-                resolution_type_0: Union[Unset, Resolution01FEnum]
-                if isinstance(_resolution_type_0, Unset):
-                    resolution_type_0 = UNSET
-                else:
-                    resolution_type_0 = Resolution01FEnum(_resolution_type_0)
-
-                return resolution_type_0
-            except:  # noqa: E722
-                pass
-            if not isinstance(data, str):
-                raise TypeError()
-            _resolution_type_1 = data
-            resolution_type_1: Union[Unset, BlankEnum]
-            if isinstance(_resolution_type_1, Unset):
-                resolution_type_1 = UNSET
-            else:
-                resolution_type_1 = BlankEnum(_resolution_type_1)
-
-            return resolution_type_1
-
-        resolution = _parse_resolution(d.pop("resolution", UNSET))
 
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
             if isinstance(data, Unset):
@@ -463,6 +417,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
+        component = d.pop("component", UNSET)
+
         summary = d.pop("summary", UNSET)
 
         statement = d.pop("statement", UNSET)
@@ -478,18 +434,18 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, FlawSourceEnum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, Source666Enum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, FlawSourceEnum]
+                source_type_0: Union[Unset, Source666Enum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = FlawSourceEnum(_source_type_0)
+                    source_type_0 = Source666Enum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -515,6 +471,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             reported_dt = UNSET
         else:
             reported_dt = isoparse(_reported_dt)
+
+        mitigation = d.pop("mitigation", UNSET)
 
         cvss2 = d.pop("cvss2", UNSET)
 
@@ -545,6 +503,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         osidb_api_v1_flaws_update_response_200 = cls(
             uuid=uuid,
+            state=state,
+            resolution=resolution,
             title=title,
             trackers=trackers,
             description=description,
@@ -559,15 +519,15 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             classification=classification,
             type=type,
             cve_id=cve_id,
-            state=state,
-            resolution=resolution,
             impact=impact,
+            component=component,
             summary=summary,
             statement=statement,
             cwe_id=cwe_id,
             unembargo_dt=unembargo_dt,
             source=source,
             reported_dt=reported_dt,
+            mitigation=mitigation,
             cvss2=cvss2,
             cvss2_score=cvss2_score,
             nvd_cvss2=nvd_cvss2,
@@ -588,6 +548,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     def get_fields():
         return {
             "uuid": str,
+            "state": str,
+            "resolution": str,
             "title": str,
             "trackers": List[str],
             "description": str,
@@ -600,17 +562,17 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
-            "type": FlawTypeEnum,
+            "type": Type824Enum,
             "cve_id": str,
-            "state": StateEnum,
-            "resolution": Union[BlankEnum, Resolution01FEnum],
             "impact": Union[BlankEnum, ImpactEnum],
+            "component": str,
             "summary": str,
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, FlawSourceEnum],
+            "source": Union[BlankEnum, Source666Enum],
             "reported_dt": datetime.datetime,
+            "mitigation": str,
             "cvss2": str,
             "cvss2_score": float,
             "nvd_cvss2": str,

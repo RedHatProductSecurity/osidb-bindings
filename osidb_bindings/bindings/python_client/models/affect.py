@@ -6,12 +6,12 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect_meta_attr import AffectMetaAttr
-from ..models.affect_type_enum import AffectTypeEnum
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
-from ..models.resolution_3_ac_enum import Resolution3AcEnum
+from ..models.resolution_enum import ResolutionEnum
 from ..models.tracker import Tracker
+from ..models.type_5b2_enum import Type5B2Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Affect")
@@ -31,9 +31,9 @@ class Affect(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     flaw: Optional[str]
-    type: Union[Unset, AffectTypeEnum] = UNSET
+    type: Union[Unset, Type5B2Enum] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
-    resolution: Union[BlankEnum, Resolution3AcEnum, Unset] = UNSET
+    resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     cvss2: Union[Unset, str] = UNSET
     cvss2_score: Union[Unset, None, float] = UNSET
@@ -73,7 +73,7 @@ class Affect(OSIDBModel):
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = AffectTypeEnum(self.type).value
+            type = Type5B2Enum(self.type).value
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -93,11 +93,11 @@ class Affect(OSIDBModel):
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, Resolution3AcEnum):
+        elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = Resolution3AcEnum(self.resolution).value
+                resolution = ResolutionEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -215,7 +215,7 @@ class Affect(OSIDBModel):
         type: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = AffectTypeEnum(self.type).value
+            type = Type5B2Enum(self.type).value
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -235,11 +235,11 @@ class Affect(OSIDBModel):
         resolution: Union[Unset, str]
         if isinstance(self.resolution, Unset):
             resolution = UNSET
-        elif isinstance(self.resolution, Resolution3AcEnum):
+        elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
 
-                resolution = Resolution3AcEnum(self.resolution).value
+                resolution = ResolutionEnum(self.resolution).value
 
         else:
             resolution = UNSET
@@ -377,11 +377,11 @@ class Affect(OSIDBModel):
         flaw = d.pop("flaw", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, AffectTypeEnum]
+        type: Union[Unset, Type5B2Enum]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = AffectTypeEnum(_type)
+            type = Type5B2Enum(_type)
 
         def _parse_affectedness(
             data: object,
@@ -414,20 +414,18 @@ class Affect(OSIDBModel):
 
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
-        def _parse_resolution(
-            data: object,
-        ) -> Union[BlankEnum, Resolution3AcEnum, Unset]:
+        def _parse_resolution(data: object) -> Union[BlankEnum, ResolutionEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _resolution_type_0 = data
-                resolution_type_0: Union[Unset, Resolution3AcEnum]
+                resolution_type_0: Union[Unset, ResolutionEnum]
                 if isinstance(_resolution_type_0, Unset):
                     resolution_type_0 = UNSET
                 else:
-                    resolution_type_0 = Resolution3AcEnum(_resolution_type_0)
+                    resolution_type_0 = ResolutionEnum(_resolution_type_0)
 
                 return resolution_type_0
             except:  # noqa: E722
@@ -519,9 +517,9 @@ class Affect(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "flaw": str,
-            "type": AffectTypeEnum,
+            "type": Type5B2Enum,
             "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[BlankEnum, Resolution3AcEnum],
+            "resolution": Union[BlankEnum, ResolutionEnum],
             "impact": Union[BlankEnum, ImpactEnum],
             "cvss2": str,
             "cvss2_score": float,
