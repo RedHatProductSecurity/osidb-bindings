@@ -56,9 +56,7 @@ check_python_deps
 check_master_branch
 get_new_version
 
-exit 0
-
-create_new_branch "v${new_version}-test"
+create_new_branch "v${new_version}"
 get_schema ${latest_osidb_release_branch}
 make update
 review
