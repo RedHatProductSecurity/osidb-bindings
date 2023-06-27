@@ -94,6 +94,18 @@ class Session:
                 "create",
                 "search",
             ),
+            subresources={
+                "comments": {"allowed_operations": ["retrieve", "list", "create"]},
+                "references": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
+            },
         )
         self.affects = SessionOperationsGroup(
             self.__get_client_with_new_access_token,
@@ -184,10 +196,27 @@ class SessionOperationsGroup:
         client: Callable,
         resource_name: str,
         allowed_operations: List[str] = ALL_SESSION_OPERATIONS,
+        subresources: Dict[str, dict] = None,
     ):
         self.client = client
         self.resource_name = resource_name
         self.allowed_operations = allowed_operations
+
+        if subresources is None:
+            subresources = {}
+
+        # Create a session operation group for each subresource with respective
+        # allowed session operations
+        for subresource_name, subresource_metadata in subresources.items():
+            setattr(
+                self,
+                subresource_name,
+                SessionOperationsGroup(
+                    client,
+                    resource_name=f"{resource_name}_{subresource_name}",
+                    **subresource_metadata,
+                ),
+            )
 
     def __get_method_module(self, resource_name: str, method: str) -> ModuleType:
         # import endpoint module based on a method
@@ -196,7 +225,7 @@ class SessionOperationsGroup:
             package="osidb_bindings",
         )
 
-    def __make_iterable(self, response, **kwargs):
+    def __make_iterable(self, response, *args, **kwargs):
         """
         Populate next, prev and iterator helper methods for paginated responses
         """
@@ -219,33 +248,35 @@ class SessionOperationsGroup:
                 if offset is not None:
                     kwargs["offset"] = offset.group(1)
 
-                setattr(response, func_name, partial(self.retrieve_list, **kwargs))
+                setattr(
+                    response, func_name, partial(self.retrieve_list, *args, **kwargs)
+                )
 
         return response
 
     # CRUD operations
 
-    def retrieve(self, id, **kwargs):
+    def retrieve(self, id, *args, **kwargs):
         if "retrieve" in self.allowed_operations:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="retrieve"
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(id, client=self.client(), **kwargs)
+            return sync_fn(id, *args, client=self.client(), **kwargs)
         else:
             raise OperationUnsupported(
                 'Operation "update" is not supported for the '
                 f'"{self.resource_name}" resource.'
             )
 
-    def retrieve_list(self, **kwargs):
+    def retrieve_list(self, *args, **kwargs):
         if "list" in self.allowed_operations:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="list"
             )
             sync_fn = get_sync_function(method_module)
             return self.__make_iterable(
-                sync_fn(client=self.client(), **kwargs), **kwargs
+                sync_fn(*args, client=self.client(), **kwargs), *args, **kwargs
             )
         else:
             raise OperationUnsupported(
@@ -253,12 +284,12 @@ class SessionOperationsGroup:
                 f'"{self.resource_name}" resource.'
             )
 
-    def create(self, form_data: Dict[str, Any]):
+    def create(self, form_data: Dict[str, Any], *args, **kwargs):
         if "create" in self.allowed_operations:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="create"
             )
-            model = getattr(method_module, "REQUEST_BODY_TYPEs", None)
+            model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
                 raise UndefinedRequestBody(
                     "There is no defined request body "
@@ -269,10 +300,12 @@ class SessionOperationsGroup:
             transformed_data = model.from_dict(form_data)
             sync_fn = get_sync_function(method_module)
             return sync_fn(
+                *args,
                 client=self.client(),
                 form_data=transformed_data,
                 multipart_data=UNSET,
                 json_body=UNSET,
+                **kwargs,
             )
         else:
             raise OperationUnsupported(
@@ -280,7 +313,7 @@ class SessionOperationsGroup:
                 f'"{self.resource_name}" resource.'
             )
 
-    def update(self, id, form_data: Dict[str, Any]):
+    def update(self, id, form_data: Dict[str, Any], *args, **kwargs):
         if "update" in self.allowed_operations:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="update"
@@ -297,10 +330,12 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 id,
+                *args,
                 client=self.client(),
                 form_data=transformed_data,
                 multipart_data=UNSET,
                 json_body=UNSET,
+                **kwargs,
             )
         else:
             raise OperationUnsupported(
@@ -308,7 +343,7 @@ class SessionOperationsGroup:
                 f'"{self.resource_name}" resource.'
             )
 
-    def delete(self, id):
+    def delete(self, id, *args, **kwargs):
         if "destroy" in self.allowed_operations:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="destroy"
@@ -316,7 +351,9 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 id,
+                *args,
                 client=self.client(),
+                **kwargs,
             )
         else:
             raise OperationUnsupported(
