@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class MetaTypeEnum(str, Enum):
+class FlawMetaType(str, Enum):
     ERRATA = "ERRATA"
     REFERENCE = "REFERENCE"
     ACKNOWLEDGMENT = "ACKNOWLEDGMENT"

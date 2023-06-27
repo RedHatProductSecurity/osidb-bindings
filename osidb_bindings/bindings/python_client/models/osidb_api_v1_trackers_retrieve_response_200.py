@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.erratum import Erratum
 from ..models.tracker_meta_attr import TrackerMetaAttr
-from ..models.type_0d0_enum import Type0D0Enum
+from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1TrackersRetrieveResponse200")
@@ -17,7 +17,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     """ """
 
     uuid: str
-    type: Type0D0Enum
+    type: TrackerType
     external_system_id: str
     status: str
     errata: List[Erratum]
@@ -37,7 +37,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         type: str = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type0D0Enum(self.type).value
+            type = TrackerType(self.type).value
 
         external_system_id = self.external_system_id
         status = self.status
@@ -115,11 +115,11 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         uuid = d.pop("uuid", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Type0D0Enum
+        type: TrackerType
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = Type0D0Enum(_type)
+            type = TrackerType(_type)
 
         external_system_id = d.pop("external_system_id", UNSET)
 
@@ -202,7 +202,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     def get_fields():
         return {
             "uuid": str,
-            "type": Type0D0Enum,
+            "type": TrackerType,
             "external_system_id": str,
             "status": str,
             "errata": List[Erratum],

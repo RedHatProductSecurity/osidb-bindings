@@ -17,6 +17,8 @@ class JiraIssueFields(OSIDBModel):
     summary: str
     description: str
     assignee: JiraUser
+    reporter: JiraUser
+    creator: JiraUser
     customfield_12311140: str
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -31,6 +33,14 @@ class JiraIssueFields(OSIDBModel):
         if not isinstance(self.assignee, Unset):
             assignee = self.assignee.to_dict()
 
+        reporter: Dict[str, Any] = UNSET
+        if not isinstance(self.reporter, Unset):
+            reporter = self.reporter.to_dict()
+
+        creator: Dict[str, Any] = UNSET
+        if not isinstance(self.creator, Unset):
+            creator = self.creator.to_dict()
+
         customfield_12311140 = self.customfield_12311140
 
         field_dict: Dict[str, Any] = {}
@@ -43,6 +53,10 @@ class JiraIssueFields(OSIDBModel):
             field_dict["description"] = description
         if assignee is not UNSET:
             field_dict["assignee"] = assignee
+        if reporter is not UNSET:
+            field_dict["reporter"] = reporter
+        if creator is not UNSET:
+            field_dict["creator"] = creator
         if customfield_12311140 is not UNSET:
             field_dict["customfield_12311140"] = customfield_12311140
 
@@ -69,6 +83,20 @@ class JiraIssueFields(OSIDBModel):
         else:
             assignee = JiraUser.from_dict(_assignee)
 
+        _reporter = d.pop("reporter", UNSET)
+        reporter: JiraUser
+        if isinstance(_reporter, Unset):
+            reporter = UNSET
+        else:
+            reporter = JiraUser.from_dict(_reporter)
+
+        _creator = d.pop("creator", UNSET)
+        creator: JiraUser
+        if isinstance(_creator, Unset):
+            creator = UNSET
+        else:
+            creator = JiraUser.from_dict(_creator)
+
         customfield_12311140 = d.pop("customfield_12311140", UNSET)
 
         jira_issue_fields = cls(
@@ -76,6 +104,8 @@ class JiraIssueFields(OSIDBModel):
             summary=summary,
             description=description,
             assignee=assignee,
+            reporter=reporter,
+            creator=creator,
             customfield_12311140=customfield_12311140,
         )
 
@@ -89,6 +119,8 @@ class JiraIssueFields(OSIDBModel):
             "summary": str,
             "description": str,
             "assignee": JiraUser,
+            "reporter": JiraUser,
+            "creator": JiraUser,
             "customfield_12311140": str,
         }
 

@@ -1,8 +1,9 @@
 from enum import Enum
 
 
-class Type5B2Enum(str, Enum):
-    DEFAULT = "DEFAULT"
+class FlawReferenceType(str, Enum):
+    ARTICLE = "ARTICLE"
+    EXTERNAL = "EXTERNAL"
 
     def __str__(self) -> str:
         return str(self.value)

@@ -11,10 +11,11 @@ from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
+from ..models.flaw_reference import FlawReference
+from ..models.flaw_type import FlawType
 from ..models.impact_enum import ImpactEnum
 from ..models.meta import Meta
 from ..models.source_666_enum import Source666Enum
-from ..models.type_824_enum import Type824Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Flaw")
@@ -35,11 +36,12 @@ class Flaw(OSIDBModel):
     comments: List[Comment]
     meta_attr: FlawMetaAttr
     package_versions: List[CVEv5PackageVersions]
+    references: List[FlawReference]
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: FlawClassification
-    type: Union[Unset, Type824Enum] = UNSET
+    type: Union[Unset, FlawType] = UNSET
     cve_id: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     component: Union[Unset, str] = UNSET
@@ -113,6 +115,16 @@ class Flaw(OSIDBModel):
 
                 package_versions.append(package_versions_item)
 
+        references: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.references, Unset):
+            references = []
+            for references_item_data in self.references:
+                references_item: Dict[str, Any] = UNSET
+                if not isinstance(references_item_data, Unset):
+                    references_item = references_item_data.to_dict()
+
+                references.append(references_item)
+
         embargoed = self.embargoed
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -129,7 +141,7 @@ class Flaw(OSIDBModel):
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type824Enum(self.type).value
+            type = FlawType(self.type).value
 
         cve_id = self.cve_id
         impact: Union[Unset, str]
@@ -207,6 +219,8 @@ class Flaw(OSIDBModel):
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if references is not UNSET:
+            field_dict["references"] = references
         if embargoed is not UNSET:
             field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
@@ -329,6 +343,17 @@ class Flaw(OSIDBModel):
                 "application/json",
             )
 
+        references: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.references, Unset):
+            _temp_references = []
+            for references_item_data in self.references:
+                references_item: Dict[str, Any] = UNSET
+                if not isinstance(references_item_data, Unset):
+                    references_item = references_item_data.to_dict()
+
+                _temp_references.append(references_item)
+            references = (None, json.dumps(_temp_references), "application/json")
+
         embargoed = (
             self.embargoed
             if self.embargoed is UNSET
@@ -353,7 +378,7 @@ class Flaw(OSIDBModel):
         type: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type824Enum(self.type).value
+            type = FlawType(self.type).value
 
         cve_id = (
             self.cve_id
@@ -484,6 +509,8 @@ class Flaw(OSIDBModel):
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if references is not UNSET:
+            field_dict["references"] = references
         if embargoed is not UNSET:
             field_dict["embargoed"] = embargoed
         if created_dt is not UNSET:
@@ -615,6 +642,21 @@ class Flaw(OSIDBModel):
 
                 package_versions.append(package_versions_item)
 
+        references = []
+        _references = d.pop("references", UNSET)
+        if _references is UNSET:
+            references = UNSET
+        else:
+            for references_item_data in _references or []:
+                _references_item = references_item_data
+                references_item: FlawReference
+                if isinstance(_references_item, Unset):
+                    references_item = UNSET
+                else:
+                    references_item = FlawReference.from_dict(_references_item)
+
+                references.append(references_item)
+
         embargoed = d.pop("embargoed", UNSET)
 
         _created_dt = d.pop("created_dt", UNSET)
@@ -639,11 +681,11 @@ class Flaw(OSIDBModel):
             classification = FlawClassification.from_dict(_classification)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, Type824Enum]
+        type: Union[Unset, FlawType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = Type824Enum(_type)
+            type = FlawType(_type)
 
         cve_id = d.pop("cve_id", UNSET)
 
@@ -759,6 +801,7 @@ class Flaw(OSIDBModel):
             comments=comments,
             meta_attr=meta_attr,
             package_versions=package_versions,
+            references=references,
             embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
@@ -800,11 +843,12 @@ class Flaw(OSIDBModel):
             "comments": List[Comment],
             "meta_attr": FlawMetaAttr,
             "package_versions": List[CVEv5PackageVersions],
+            "references": List[FlawReference],
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
-            "type": Type824Enum,
+            "type": FlawType,
             "cve_id": str,
             "impact": Union[BlankEnum, ImpactEnum],
             "component": str,
