@@ -20,7 +20,6 @@ from .constants import (
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_USERAGENT,
-    RESOURCE_TO_MODEL_MAPPING,
 )
 
 osidb_status_retrieve = importlib.import_module(
@@ -31,6 +30,13 @@ osidb_status_retrieve = importlib.import_module(
 
 class OperationUnsupported(Exception):
     """Session operation is unsupported exception"""
+
+
+class UndefinedRequestBody(Exception):
+    """
+    Request body is not defined for the particular
+    resource and operation combination
+    """
 
 
 def get_sync_function(api_module: ModuleType) -> Callable:
@@ -183,21 +189,6 @@ class SessionOperationsGroup:
         self.resource_name = resource_name
         self.allowed_operations = allowed_operations
 
-    @property
-    def model_name(self) -> str:
-        if self.resource_name in RESOURCE_TO_MODEL_MAPPING:
-            # from mapping
-            return RESOURCE_TO_MODEL_MAPPING[self.resource_name]
-        else:
-            # parse it from the resource name
-            name_components = self.resource_name.split("_")
-            name_components[-1] = name_components[-1][:-1]
-            return "".join(name_component.title() for name_component in name_components)
-
-    @property
-    def model(self):
-        return getattr(models, self.model_name)
-
     def __get_method_module(self, resource_name: str, method: str) -> ModuleType:
         # import endpoint module based on a method
         return importlib.import_module(
@@ -264,12 +255,18 @@ class SessionOperationsGroup:
 
     def create(self, form_data: Dict[str, Any]):
         if "create" in self.allowed_operations:
-            model = getattr(models, self.model_name)
-            transformed_data = model.from_dict(form_data)
-
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="create"
             )
+            model = getattr(method_module, "REQUEST_BODY_TYPEs", None)
+            if model is None:
+                raise UndefinedRequestBody(
+                    "There is no defined request body "
+                    f'for the resource "{self.resource_name}" '
+                    'and "create" operation.'
+                )
+
+            transformed_data = model.from_dict(form_data)
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 client=self.client(),
@@ -285,11 +282,18 @@ class SessionOperationsGroup:
 
     def update(self, id, form_data: Dict[str, Any]):
         if "update" in self.allowed_operations:
-            transformed_data = self.model.from_dict(form_data)
-
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="update"
             )
+            model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+            if model is None:
+                raise UndefinedRequestBody(
+                    "There is no defined request body "
+                    f'for the resource "{self.resource_name}" '
+                    'and "update" operation.'
+                )
+
+            transformed_data = model.from_dict(form_data)
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 id,
