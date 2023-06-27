@@ -24,6 +24,9 @@ dmypy.json
 /.coverage
 
 local-requirements.*
+/instance
 
 # Visual Studio Code
 .vscode
+
+
