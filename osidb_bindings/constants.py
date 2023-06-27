@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import List
 
 OSIDB_API_VERSION: str = "v1"
 OSIDB_BINDINGS_VERSION: str = "3.1.0"
@@ -14,6 +14,3 @@ ALL_SESSION_OPERATIONS: List[str] = (
     "destroy",
     "search",
 )
-
-# mapping for resources which model names are different from the endpoint name
-RESOURCE_TO_MODEL_MAPPING: Dict[str, str] = {}
