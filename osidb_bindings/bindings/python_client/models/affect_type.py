@@ -1,8 +1,8 @@
 from enum import Enum
 
 
-class CommentTypeEnum(str, Enum):
-    BUGZILLA = "BUGZILLA"
+class AffectType(str, Enum):
+    DEFAULT = "DEFAULT"
 
     def __str__(self) -> str:
         return str(self.value)

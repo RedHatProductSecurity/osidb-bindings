@@ -4,33 +4,32 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.flaw_meta_type import FlawMetaType
-from ..models.meta_meta_attr import MetaMetaAttr
+from ..models.flaw_comment_type import FlawCommentType
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="Meta")
+T = TypeVar("T", bound="FlawComment")
 
 
 @attr.s(auto_attribs=True)
-class Meta(OSIDBModel):
-    """FlawMeta serializer"""
+class FlawComment(OSIDBModel):
+    """FlawComment serializer for use by flaw_comments endpoint"""
 
+    flaw: str
+    text: str
     uuid: str
-    type: FlawMetaType
-    embargoed: bool
+    external_system_id: str
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    meta_attr: Union[Unset, MetaMetaAttr] = UNSET
+    embargoed: bool
+    type: Union[Unset, FlawCommentType] = UNSET
+    order: Union[Unset, None, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        flaw = self.flaw
+        text = self.text
         uuid = self.uuid
-        type: str = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawMetaType(self.type).value
-
-        embargoed = self.embargoed
+        external_system_id = self.external_system_id
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -39,40 +38,47 @@ class Meta(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
+        embargoed = self.embargoed
+        type: Union[Unset, str] = UNSET
+        if not isinstance(self.type, Unset):
+
+            type = FlawCommentType(self.type).value
+
+        order = self.order
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if flaw is not UNSET:
+            field_dict["flaw"] = flaw
+        if text is not UNSET:
+            field_dict["text"] = text
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
-        if type is not UNSET:
-            field_dict["type"] = type
-        if embargoed is not UNSET:
-            field_dict["embargoed"] = embargoed
+        if external_system_id is not UNSET:
+            field_dict["external_system_id"] = external_system_id
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
             field_dict["updated_dt"] = updated_dt
-        if meta_attr is not UNSET:
-            field_dict["meta_attr"] = meta_attr
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
+        if type is not UNSET:
+            field_dict["type"] = type
+        if order is not UNSET:
+            field_dict["order"] = order
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        flaw = d.pop("flaw", UNSET)
+
+        text = d.pop("text", UNSET)
+
         uuid = d.pop("uuid", UNSET)
 
-        _type = d.pop("type", UNSET)
-        type: FlawMetaType
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawMetaType(_type)
-
-        embargoed = d.pop("embargoed", UNSET)
+        external_system_id = d.pop("external_system_id", UNSET)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -88,34 +94,44 @@ class Meta(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, MetaMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = MetaMetaAttr.from_dict(_meta_attr)
+        embargoed = d.pop("embargoed", UNSET)
 
-        meta = cls(
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, FlawCommentType]
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = FlawCommentType(_type)
+
+        order = d.pop("order", UNSET)
+
+        flaw_comment = cls(
+            flaw=flaw,
+            text=text,
             uuid=uuid,
-            type=type,
-            embargoed=embargoed,
+            external_system_id=external_system_id,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            meta_attr=meta_attr,
+            embargoed=embargoed,
+            type=type,
+            order=order,
         )
 
-        meta.additional_properties = d
-        return meta
+        flaw_comment.additional_properties = d
+        return flaw_comment
 
     @staticmethod
     def get_fields():
         return {
+            "flaw": str,
+            "text": str,
             "uuid": str,
-            "type": FlawMetaType,
-            "embargoed": bool,
+            "external_system_id": str,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
-            "meta_attr": MetaMetaAttr,
+            "embargoed": bool,
+            "type": FlawCommentType,
+            "order": int,
         }
 
     @property

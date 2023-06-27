@@ -3,8 +3,8 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.taskman_api_v1_group_update_response_204 import (
-    TaskmanApiV1GroupUpdateResponse204,
+from ...models.taskman_api_v1_group_update_response_200 import (
+    TaskmanApiV1GroupUpdateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
@@ -43,22 +43,22 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[TaskmanApiV1GroupUpdateResponse204]:
-    if response.status_code == 204:
-        _response_204 = response.json()
-        response_204: TaskmanApiV1GroupUpdateResponse204
-        if isinstance(_response_204, Unset):
-            response_204 = UNSET
+) -> Optional[TaskmanApiV1GroupUpdateResponse200]:
+    if response.status_code == 200:
+        _response_200 = response.json()
+        response_200: TaskmanApiV1GroupUpdateResponse200
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
         else:
-            response_204 = TaskmanApiV1GroupUpdateResponse204.from_dict(_response_204)
+            response_200 = TaskmanApiV1GroupUpdateResponse200.from_dict(_response_200)
 
-        return response_204
+        return response_200
     return None
 
 
 def _build_response(
     *, response: requests.Response
-) -> Response[TaskmanApiV1GroupUpdateResponse204]:
+) -> Response[TaskmanApiV1GroupUpdateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -73,7 +73,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     task_key: str,
     jira_authentication: str,
-) -> Response[TaskmanApiV1GroupUpdateResponse204]:
+) -> Response[TaskmanApiV1GroupUpdateResponse200]:
     kwargs = _get_kwargs(
         group_key=group_key,
         client=client,
@@ -98,7 +98,7 @@ def sync(
     client: AuthenticatedClient,
     task_key: str,
     jira_authentication: str,
-) -> Optional[TaskmanApiV1GroupUpdateResponse204]:
+) -> Optional[TaskmanApiV1GroupUpdateResponse200]:
     """Add a task into a group"""
 
     return sync_detailed(

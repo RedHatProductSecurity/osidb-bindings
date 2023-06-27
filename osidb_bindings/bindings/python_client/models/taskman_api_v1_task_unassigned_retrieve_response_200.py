@@ -4,15 +4,18 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.jira_issue import JiraIssue
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="TaskmanApiV1TaskFlawUpdateResponse204")
+T = TypeVar("T", bound="TaskmanApiV1TaskUnassignedRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class TaskmanApiV1TaskFlawUpdateResponse204(OSIDBModel):
+class TaskmanApiV1TaskUnassignedRetrieveResponse200(OSIDBModel):
     """ """
 
+    total: int
+    issues: List[JiraIssue]
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -20,6 +23,17 @@ class TaskmanApiV1TaskFlawUpdateResponse204(OSIDBModel):
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        total = self.total
+        issues: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.issues, Unset):
+            issues = []
+            for issues_item_data in self.issues:
+                issues_item: Dict[str, Any] = UNSET
+                if not isinstance(issues_item_data, Unset):
+                    issues_item = issues_item_data.to_dict()
+
+                issues.append(issues_item)
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -30,6 +44,10 @@ class TaskmanApiV1TaskFlawUpdateResponse204(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if total is not UNSET:
+            field_dict["total"] = total
+        if issues is not UNSET:
+            field_dict["issues"] = issues
         if dt is not UNSET:
             field_dict["dt"] = dt
         if env is not UNSET:
@@ -44,6 +62,23 @@ class TaskmanApiV1TaskFlawUpdateResponse204(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        total = d.pop("total", UNSET)
+
+        issues = []
+        _issues = d.pop("issues", UNSET)
+        if _issues is UNSET:
+            issues = UNSET
+        else:
+            for issues_item_data in _issues or []:
+                _issues_item = issues_item_data
+                issues_item: JiraIssue
+                if isinstance(_issues_item, Unset):
+                    issues_item = UNSET
+                else:
+                    issues_item = JiraIssue.from_dict(_issues_item)
+
+                issues.append(issues_item)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -57,19 +92,23 @@ class TaskmanApiV1TaskFlawUpdateResponse204(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        taskman_api_v1_task_flaw_update_response_204 = cls(
+        taskman_api_v1_task_unassigned_retrieve_response_200 = cls(
+            total=total,
+            issues=issues,
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        taskman_api_v1_task_flaw_update_response_204.additional_properties = d
-        return taskman_api_v1_task_flaw_update_response_204
+        taskman_api_v1_task_unassigned_retrieve_response_200.additional_properties = d
+        return taskman_api_v1_task_unassigned_retrieve_response_200
 
     @staticmethod
     def get_fields():
         return {
+            "total": int,
+            "issues": List[JiraIssue],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

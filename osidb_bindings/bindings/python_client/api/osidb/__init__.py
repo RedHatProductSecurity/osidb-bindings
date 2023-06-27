@@ -3,8 +3,16 @@ from .osidb_api_v1_affects_destroy import *
 from .osidb_api_v1_affects_list import *
 from .osidb_api_v1_affects_retrieve import *
 from .osidb_api_v1_affects_update import *
+from .osidb_api_v1_flaws_comments_create import *
+from .osidb_api_v1_flaws_comments_list import *
+from .osidb_api_v1_flaws_comments_retrieve import *
 from .osidb_api_v1_flaws_create import *
 from .osidb_api_v1_flaws_list import *
+from .osidb_api_v1_flaws_references_create import *
+from .osidb_api_v1_flaws_references_destroy import *
+from .osidb_api_v1_flaws_references_list import *
+from .osidb_api_v1_flaws_references_retrieve import *
+from .osidb_api_v1_flaws_references_update import *
 from .osidb_api_v1_flaws_retrieve import *
 from .osidb_api_v1_flaws_update import *
 from .osidb_api_v1_manifest_retrieve import *

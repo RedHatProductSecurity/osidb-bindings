@@ -6,12 +6,12 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect_meta_attr import AffectMetaAttr
+from ..models.affect_type import AffectType
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.resolution_enum import ResolutionEnum
 from ..models.tracker import Tracker
-from ..models.type_5b2_enum import Type5B2Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Affect")
@@ -31,7 +31,7 @@ class Affect(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     flaw: Optional[str]
-    type: Union[Unset, Type5B2Enum] = UNSET
+    type: Union[Unset, AffectType] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
@@ -73,7 +73,7 @@ class Affect(OSIDBModel):
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type5B2Enum(self.type).value
+            type = AffectType(self.type).value
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -215,7 +215,7 @@ class Affect(OSIDBModel):
         type: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type5B2Enum(self.type).value
+            type = AffectType(self.type).value
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -377,11 +377,11 @@ class Affect(OSIDBModel):
         flaw = d.pop("flaw", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, Type5B2Enum]
+        type: Union[Unset, AffectType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = Type5B2Enum(_type)
+            type = AffectType(_type)
 
         def _parse_affectedness(
             data: object,
@@ -517,7 +517,7 @@ class Affect(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "flaw": str,
-            "type": Type5B2Enum,
+            "type": AffectType,
             "affectedness": Union[AffectednessEnum, BlankEnum],
             "resolution": Union[BlankEnum, ResolutionEnum],
             "impact": Union[BlankEnum, ImpactEnum],

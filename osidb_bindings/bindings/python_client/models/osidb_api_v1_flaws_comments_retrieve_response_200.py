@@ -4,28 +4,36 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.comment_meta_attr import CommentMetaAttr
 from ..models.flaw_comment_type import FlawCommentType
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="Comment")
+T = TypeVar("T", bound="OsidbApiV1FlawsCommentsRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class Comment(OSIDBModel):
-    """FlawComment serializer for use by FlawSerializer"""
+class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
+    """ """
 
+    flaw: str
+    text: str
     uuid: str
+    external_system_id: str
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
+    embargoed: bool
     type: Union[Unset, FlawCommentType] = UNSET
-    external_system_id: Union[Unset, str] = UNSET
     order: Union[Unset, None, int] = UNSET
-    meta_attr: Union[Unset, CommentMetaAttr] = UNSET
+    dt: Union[Unset, datetime.datetime] = UNSET
+    env: Union[Unset, str] = UNSET
+    revision: Union[Unset, str] = UNSET
+    version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        flaw = self.flaw
+        text = self.text
         uuid = self.uuid
+        external_system_id = self.external_system_id
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -34,40 +42,62 @@ class Comment(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
+        embargoed = self.embargoed
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
             type = FlawCommentType(self.type).value
 
-        external_system_id = self.external_system_id
         order = self.order
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
+        dt: Union[Unset, str] = UNSET
+        if not isinstance(self.dt, Unset):
+            dt = self.dt.isoformat()
+
+        env = self.env
+        revision = self.revision
+        version = self.version
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if flaw is not UNSET:
+            field_dict["flaw"] = flaw
+        if text is not UNSET:
+            field_dict["text"] = text
         if uuid is not UNSET:
             field_dict["uuid"] = uuid
+        if external_system_id is not UNSET:
+            field_dict["external_system_id"] = external_system_id
         if created_dt is not UNSET:
             field_dict["created_dt"] = created_dt
         if updated_dt is not UNSET:
             field_dict["updated_dt"] = updated_dt
+        if embargoed is not UNSET:
+            field_dict["embargoed"] = embargoed
         if type is not UNSET:
             field_dict["type"] = type
-        if external_system_id is not UNSET:
-            field_dict["external_system_id"] = external_system_id
         if order is not UNSET:
             field_dict["order"] = order
-        if meta_attr is not UNSET:
-            field_dict["meta_attr"] = meta_attr
+        if dt is not UNSET:
+            field_dict["dt"] = dt
+        if env is not UNSET:
+            field_dict["env"] = env
+        if revision is not UNSET:
+            field_dict["revision"] = revision
+        if version is not UNSET:
+            field_dict["version"] = version
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        flaw = d.pop("flaw", UNSET)
+
+        text = d.pop("text", UNSET)
+
         uuid = d.pop("uuid", UNSET)
+
+        external_system_id = d.pop("external_system_id", UNSET)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -83,6 +113,8 @@ class Comment(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
+        embargoed = d.pop("embargoed", UNSET)
+
         _type = d.pop("type", UNSET)
         type: Union[Unset, FlawCommentType]
         if isinstance(_type, Unset):
@@ -90,40 +122,56 @@ class Comment(OSIDBModel):
         else:
             type = FlawCommentType(_type)
 
-        external_system_id = d.pop("external_system_id", UNSET)
-
         order = d.pop("order", UNSET)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, CommentMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
+        _dt = d.pop("dt", UNSET)
+        dt: Union[Unset, datetime.datetime]
+        if isinstance(_dt, Unset):
+            dt = UNSET
         else:
-            meta_attr = CommentMetaAttr.from_dict(_meta_attr)
+            dt = isoparse(_dt)
 
-        comment = cls(
+        env = d.pop("env", UNSET)
+
+        revision = d.pop("revision", UNSET)
+
+        version = d.pop("version", UNSET)
+
+        osidb_api_v1_flaws_comments_retrieve_response_200 = cls(
+            flaw=flaw,
+            text=text,
             uuid=uuid,
+            external_system_id=external_system_id,
             created_dt=created_dt,
             updated_dt=updated_dt,
+            embargoed=embargoed,
             type=type,
-            external_system_id=external_system_id,
             order=order,
-            meta_attr=meta_attr,
+            dt=dt,
+            env=env,
+            revision=revision,
+            version=version,
         )
 
-        comment.additional_properties = d
-        return comment
+        osidb_api_v1_flaws_comments_retrieve_response_200.additional_properties = d
+        return osidb_api_v1_flaws_comments_retrieve_response_200
 
     @staticmethod
     def get_fields():
         return {
+            "flaw": str,
+            "text": str,
             "uuid": str,
+            "external_system_id": str,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
+            "embargoed": bool,
             "type": FlawCommentType,
-            "external_system_id": str,
             "order": int,
-            "meta_attr": CommentMetaAttr,
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
         }
 
     @property

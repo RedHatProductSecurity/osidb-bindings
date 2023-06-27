@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.type_0d0_enum import Type0D0Enum
+from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TrackerReportData")
@@ -12,7 +12,7 @@ T = TypeVar("T", bound="TrackerReportData")
 class TrackerReportData(OSIDBModel):
     """ """
 
-    type: Type0D0Enum
+    type: TrackerType
     external_system_id: str
     status: str
     resolution: Union[Unset, str] = UNSET
@@ -22,7 +22,7 @@ class TrackerReportData(OSIDBModel):
         type: str = UNSET
         if not isinstance(self.type, Unset):
 
-            type = Type0D0Enum(self.type).value
+            type = TrackerType(self.type).value
 
         external_system_id = self.external_system_id
         status = self.status
@@ -45,11 +45,11 @@ class TrackerReportData(OSIDBModel):
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _type = d.pop("type", UNSET)
-        type: Type0D0Enum
+        type: TrackerType
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = Type0D0Enum(_type)
+            type = TrackerType(_type)
 
         external_system_id = d.pop("external_system_id", UNSET)
 
@@ -70,7 +70,7 @@ class TrackerReportData(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "type": Type0D0Enum,
+            "type": TrackerType,
             "external_system_id": str,
             "status": str,
             "resolution": str,

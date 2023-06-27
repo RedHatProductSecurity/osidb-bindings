@@ -1,8 +1,7 @@
 from enum import Enum
 
 
-class Type0D0Enum(str, Enum):
-    JIRA = "JIRA"
+class FlawCommentType(str, Enum):
     BUGZILLA = "BUGZILLA"
 
     def __str__(self) -> str:
