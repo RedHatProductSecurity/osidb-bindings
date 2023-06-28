@@ -13,14 +13,14 @@ QUERY_PARAMS = {}
 
 def _get_kwargs(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{uuid}".format(
+    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{id}".format(
         client.base_url,
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -61,13 +61,13 @@ def _build_response(
 
 def sync_detailed(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
 ) -> Response[OsidbApiV1FlawsReferencesDestroyResponse204]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
     )
 
@@ -84,7 +84,7 @@ def sync_detailed(
 
 def sync(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
 ) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse204]:
@@ -92,6 +92,6 @@ def sync(
 
     return sync_detailed(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
     ).parsed
