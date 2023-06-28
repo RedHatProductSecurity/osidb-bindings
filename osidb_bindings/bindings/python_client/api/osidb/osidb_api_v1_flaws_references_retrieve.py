@@ -17,17 +17,17 @@ QUERY_PARAMS = {
 
 def _get_kwargs(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{uuid}".format(
+    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{id}".format(
         client.base_url,
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -97,7 +97,7 @@ def _build_response(
 
 def sync_detailed(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
@@ -106,7 +106,7 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsReferencesRetrieveResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
@@ -126,7 +126,7 @@ def sync_detailed(
 
 def sync(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
@@ -137,7 +137,7 @@ def sync(
 
     return sync_detailed(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,

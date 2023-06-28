@@ -15,17 +15,17 @@ REQUEST_BODY_TYPE = FlawReference
 
 def _get_kwargs(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     form_data: FlawReference,
     multipart_data: FlawReference,
     json_body: FlawReference,
 ) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{uuid}".format(
+    url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{id}".format(
         client.base_url,
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
@@ -75,7 +75,7 @@ def _build_response(
 
 def sync_detailed(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     form_data: FlawReference,
@@ -84,7 +84,7 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsReferencesUpdateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
@@ -104,7 +104,7 @@ def sync_detailed(
 
 def sync(
     flaw_id: str,
-    uuid: str,
+    id: str,
     *,
     client: AuthenticatedClient,
     form_data: FlawReference,
@@ -115,7 +115,7 @@ def sync(
 
     return sync_detailed(
         flaw_id=flaw_id,
-        uuid=uuid,
+        id=id,
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,

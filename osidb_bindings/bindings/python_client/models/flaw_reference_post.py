@@ -14,7 +14,6 @@ T = TypeVar("T", bound="FlawReferencePost")
 class FlawReferencePost(OSIDBModel):
     """FlawReference serializer"""
 
-    flaw: str
     url: str
     uuid: str
     embargoed: bool
@@ -24,7 +23,6 @@ class FlawReferencePost(OSIDBModel):
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        flaw = self.flaw
         url = self.url
         uuid = self.uuid
         embargoed = self.embargoed
@@ -40,8 +38,6 @@ class FlawReferencePost(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if flaw is not UNSET:
-            field_dict["flaw"] = flaw
         if url is not UNSET:
             field_dict["url"] = url
         if uuid is not UNSET:
@@ -58,7 +54,6 @@ class FlawReferencePost(OSIDBModel):
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        flaw = self.flaw if self.flaw is UNSET else (None, str(self.flaw), "text/plain")
         url = self.url if self.url is UNSET else (None, str(self.url), "text/plain")
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
         embargoed = (
@@ -87,8 +82,6 @@ class FlawReferencePost(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if flaw is not UNSET:
-            field_dict["flaw"] = flaw
         if url is not UNSET:
             field_dict["url"] = url
         if uuid is not UNSET:
@@ -107,8 +100,6 @@ class FlawReferencePost(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        flaw = d.pop("flaw", UNSET)
-
         url = d.pop("url", UNSET)
 
         uuid = d.pop("uuid", UNSET)
@@ -132,7 +123,6 @@ class FlawReferencePost(OSIDBModel):
             type = FlawReferenceType(_type)
 
         flaw_reference_post = cls(
-            flaw=flaw,
             url=url,
             uuid=uuid,
             embargoed=embargoed,
@@ -147,7 +137,6 @@ class FlawReferencePost(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "flaw": str,
             "url": str,
             "uuid": str,
             "embargoed": bool,
