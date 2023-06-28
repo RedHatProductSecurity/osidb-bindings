@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.3.0] - 2023-06-28
+### Added
+- support for nested resources (eg. Flaw references, Flaw comments)
+- CRUD operations for Flaw References (create, update, retrieve, retrieve_list, delete)
+- CRUD operations for Flaw Comments (create, retrieve, retrieve_list)
 ## [3.1.0] - 2023-04-26
 
 ## [3.0.2] - 2023-04-04
