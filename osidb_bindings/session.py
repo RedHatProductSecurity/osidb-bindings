@@ -64,7 +64,9 @@ def new_session(
         # OSIDB instances with the kerberos auth for token acquirement
         auth = "kerberos"
 
-    return Session(base_url=osidb_server_uri, auth=auth, verify_ssl=verify_ssl)
+    return Session(
+        base_url=osidb_server_uri.strip("/"), auth=auth, verify_ssl=verify_ssl
+    )
 
 
 class Session:
