@@ -39,12 +39,35 @@ class UndefinedRequestBody(Exception):
     """
 
 
+def double_underscores_to_single_underscores(fn):
+    """
+    Function decorator which changes all the keyword arguments which include
+    double underscore to use single underscore instead.
+
+    eg. affect__affectedness -> affect_affectedness
+
+    This change is needed because in OpenAPI schema query parameters might contain
+    double underscore, howerver OpenAPI Python Client package converts all these
+    double underscores into single ones and thus this creates a confusion as user
+    tries to use query parameter from the OpenAPI schema specification unaware of
+    the underscore change.
+    """
+
+    def inner(*args, **kwargs):
+        new_kwargs = {name.replace("__", "_"): value for name, value in kwargs.items()}
+        return fn(*args, **new_kwargs)
+
+    return inner
+
+
 def get_sync_function(api_module: ModuleType) -> Callable:
     """
     Get 'sync' function from API module if available (response example is defined in schema)
     or get basic 'sync_detailed' function (response example is not defined in schema)
     """
-    return getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
+    return double_underscores_to_single_underscores(
+        getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
+    )
 
 
 def new_session(
