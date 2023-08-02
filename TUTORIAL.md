@@ -90,6 +90,8 @@ This section describes possible session operations. See [response section](#resp
 
 Operations can be performed on the following entities:
 * flaws
+    * comments
+    * references
 * affects
 * trackers
 
@@ -101,7 +103,7 @@ Operations can be performed on the following entities:
     status_response = session.status()
     ```
 
-Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource
+Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource. In case of subresources like `flaw comments`, `flaw references`, etc. you can use the dot notation like this `session.flaws.comments.retrieve(...)`.
 
 * #### ```retrieve```
     Retrieve a single resource with specified `id`.
@@ -117,7 +119,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     ```
 
 * #### ```retrieve_list```
-    Retrieve a list of Flaws. You can filter the flaws using the query parameters.
+    Retrieve a list of Flaws. You can filter the flaws using the query parameters. Results are paginated, see [paginated response section](#paginated-response).
 
     See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
@@ -142,6 +144,23 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 
     multiple_criteria_flaws_response = session.flaws.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime(2021,7,12))
     ```
+
+* #### ```retrieve_list_iterator```
+    Retrieve a list of Flaws. You can filter the flaws using the query parameters. Handles the pagination and returns the generator of individual resource entities.
+
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+
+    ```python
+    all_flaws = session.flaws.retrieve_list_iterator()
+    for flaw in all_flaws:
+        do_calc(flaw)
+
+    # string query parameters
+    critical_impact_flaws = session.flaws.retrieve_list_iterator(impact="CRITICAL")
+    for flaw in critical_impact_flaws:
+        print(flaw.impact)
+    ```
+    For the rest of the examples refer to the [retrieve_list](#retrieve_list)
 
 * #### ```search```
     Retrieve a list of Flaws. Performs full text search filter.
@@ -258,7 +277,6 @@ single_response_dict["affects"][0]
 ```
 
 #### Paginated response
-
 Paginated responses are typically retrieved from [retrieve_list](#retrieve_list) or [search](#search) operations.
 You can view overall count of responses, previous and next segment query (based on the `offset` and `limit` values) and content of the current segment.
 
@@ -307,16 +325,31 @@ previous_response
 # Same as paginated_response_page_1
 ```
 
-And `.iterator()` which returns iterable enabling looping through the responses in for loop:
+And `.iterator` which returns iterable enabling looping through the rest of responses in for loop:
 
 ```python
-paginated_response_page_1 = session.flaws.retrieve_list()
-
-for response in paginated_response_page_1.iterator():
-    # do stuff with response
+paginated_response = session.flaws.retrieve_list()
+for page in paginated_response.iterator:
+    for flaw in page:
+        do_calc(flaw)
 ```
 
-Work with each item of the results is basically identical to work with [single response](#single-response)
+Iterator may begin from whichever page:
+
+```python
+# first response page
+paginated_response_page_1 = session.flaws.retrieve_list()
+
+# fourth response page
+paginated_response_page_4 = paginated_response_page_1.next().next().next()
+
+# iterator starting with fifth page
+for response in paginated_response_page_4.iterator:
+    for flaw in page:
+        do_calc(flaw)
+```
+
+Working with each item of the results is basically identical to work with [single response](#single-response)
 
 ### Utils
 
