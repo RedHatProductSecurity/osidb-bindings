@@ -1,3 +1,8 @@
+"""
+osidb-bindings session
+"""
+
+
 import importlib
 import os
 import re
@@ -21,22 +26,13 @@ from .constants import (
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_USERAGENT,
 )
+from .exceptions import OperationUnsupported, UndefinedRequestBody
+from .iterators import Paginator
 
 osidb_status_retrieve = importlib.import_module(
     f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
     package="osidb_bindings",
 )
-
-
-class OperationUnsupported(Exception):
-    """Session operation is unsupported exception"""
-
-
-class UndefinedRequestBody(Exception):
-    """
-    Request body is not defined for the particular
-    resource and operation combination
-    """
 
 
 def double_underscores_to_single_underscores(fn):
@@ -400,48 +396,3 @@ class SessionOperationsGroup:
                 'Operation "search" is not supported for the '
                 f'"{self.resource_name}" resource.'
             )
-
-
-class Paginator:
-    """
-    Iterable for handling API pagination.
-
-    Receives either starting limit and offset or already existing response from which
-    it should continue.
-
-    It keeps calling `.next()` response until pages are exhausted.
-    """
-
-    def __init__(
-        self,
-        session_operation: Callable,
-        limit: int = 100,
-        offset: int = 0,
-        init_response=None,
-        **kwargs,
-    ):
-        self.session_operation = session_operation
-        self.__init_limit = limit
-        self.__init_offset = offset
-        self.__init_response = init_response
-        self.current_response = init_response
-        self.kwargs = kwargs
-
-    def __iter__(self):
-        self.current_response = self.__init_response
-        return self
-
-    def __next__(self):
-        if self.current_response is None:
-            response = self.session_operation(
-                limit=self.__init_limit, offset=self.__init_offset, **self.kwargs
-            )
-            self.current_response = response
-            return response
-        else:
-            response = self.current_response.next()
-            if response is not None:
-                self.current_response = response
-                return response
-            else:
-                raise StopIteration
