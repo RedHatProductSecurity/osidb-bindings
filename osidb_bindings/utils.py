@@ -1,3 +1,8 @@
+"""
+osidb-bindings user utilities
+"""
+
+
 from typing import List
 
 from .session import Session
