@@ -239,6 +239,22 @@ class SessionOperationsGroup:
                 ),
             )
 
+    def __raise_operation_unsupported(self, operation_name: str):
+        """Operation unsupported exception shortcut"""
+
+        raise OperationUnsupported(
+            f'Operation "{operation_name}" is not supported for the '
+            f'"{self.resource_name}" resource.'
+        )
+
+    def __raise_undefined_request_body(self, operation_name: str):
+        """Undefined request body shortcut"""
+
+        raise UndefinedRequestBody(
+            f'The request body for the resource "{self.resource_name}" '
+            f'and the operation "{operation_name}" is not defined.'
+        )
+
     def __get_method_module(self, resource_name: str, method: str) -> ModuleType:
         # import endpoint module based on a method
         return importlib.import_module(
@@ -285,10 +301,7 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(id, *args, client=self.client(), **kwargs)
         else:
-            raise OperationUnsupported(
-                'Operation "update" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("retrieve")
 
     def retrieve_list(self, *args, **kwargs):
         if "list" in self.allowed_operations:
@@ -300,10 +313,7 @@ class SessionOperationsGroup:
                 sync_fn(*args, client=self.client(), **kwargs), *args, **kwargs
             )
         else:
-            raise OperationUnsupported(
-                'Operation "update" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("retrieve_list")
 
     def create(self, form_data: Dict[str, Any], *args, **kwargs):
         if "create" in self.allowed_operations:
@@ -312,11 +322,7 @@ class SessionOperationsGroup:
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
-                raise UndefinedRequestBody(
-                    "There is no defined request body "
-                    f'for the resource "{self.resource_name}" '
-                    'and "create" operation.'
-                )
+                self.__raise_undefined_request_body("create")
 
             transformed_data = model.from_dict(form_data)
             sync_fn = get_sync_function(method_module)
@@ -329,10 +335,7 @@ class SessionOperationsGroup:
                 **kwargs,
             )
         else:
-            raise OperationUnsupported(
-                'Operation "update" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("create")
 
     def update(self, id, form_data: Dict[str, Any], *args, **kwargs):
         if "update" in self.allowed_operations:
@@ -341,11 +344,7 @@ class SessionOperationsGroup:
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
-                raise UndefinedRequestBody(
-                    "There is no defined request body "
-                    f'for the resource "{self.resource_name}" '
-                    'and "update" operation.'
-                )
+                self.__raise_undefined_request_body("update")
 
             transformed_data = model.from_dict(form_data)
             sync_fn = get_sync_function(method_module)
@@ -359,10 +358,7 @@ class SessionOperationsGroup:
                 **kwargs,
             )
         else:
-            raise OperationUnsupported(
-                'Operation "update" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("update")
 
     def delete(self, id, *args, **kwargs):
         if "destroy" in self.allowed_operations:
@@ -377,10 +373,7 @@ class SessionOperationsGroup:
                 **kwargs,
             )
         else:
-            raise OperationUnsupported(
-                'Operation "delete" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("delete")
 
     # Extra operations
 
@@ -392,7 +385,4 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(client=self.client(), search=searched_text)
         else:
-            raise OperationUnsupported(
-                'Operation "search" is not supported for the '
-                f'"{self.resource_name}" resource.'
-            )
+            self.__raise_operation_unsupported("search")
