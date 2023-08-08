@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Changed
 - fix usage of query parameters with double underscore [#17](https://github.com/RedHatProductSecurity/osidb-bindings/issues/17)
+- implement smarter pagination [#16](https://github.com/RedHatProductSecurity/osidb-bindings/issues/16)
 
 ## [3.3.0] - 2023-06-28
 ### Added
