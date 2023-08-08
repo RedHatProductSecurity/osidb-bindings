@@ -262,35 +262,6 @@ class SessionOperationsGroup:
             package="osidb_bindings",
         )
 
-    def __make_iterable(self, response, *args, **kwargs):
-        """
-        Populate next, prev and iterator helper methods for paginated responses
-        """
-
-        response.iterator = Paginator(
-            session_operation=self.retrieve_list, init_response=response
-        )
-
-        for param_name, func_name in (("next_", "next"), ("previous", "prev")):
-            kwargs.pop("limit", None)
-            kwargs.pop("offset", None)
-            param = getattr(response, param_name, None)
-            if param is None:
-                setattr(response, func_name, lambda: None)
-            else:
-                limit = re.search("limit=(\d+)", param)
-                if limit is not None:
-                    kwargs["limit"] = limit.group(1)
-                offset = re.search("offset=(\d+)", param)
-                if offset is not None:
-                    kwargs["offset"] = offset.group(1)
-
-                setattr(
-                    response, func_name, partial(self.retrieve_list, *args, **kwargs)
-                )
-
-        return response
-
     # CRUD operations
 
     def retrieve(self, id, *args, **kwargs):
@@ -309,8 +280,9 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list"
             )
             sync_fn = get_sync_function(method_module)
-            return self.__make_iterable(
-                sync_fn(*args, client=self.client(), **kwargs), *args, **kwargs
+            response = sync_fn(*args, client=self.client(), **kwargs)
+            return Paginator.make_response_iterable(
+                response, self.retrieve_list, *args, **kwargs
             )
         else:
             self.__raise_operation_unsupported("retrieve_list")
@@ -386,3 +358,17 @@ class SessionOperationsGroup:
             return sync_fn(client=self.client(), search=searched_text)
         else:
             self.__raise_operation_unsupported("search")
+
+    def retrieve_list_iterator(self, *args, **kwargs):
+        if "list" in self.allowed_operations:
+            paginator = Paginator(
+                *args,
+                retrieve_list_fn=self.retrieve_list,
+                **kwargs,
+            )
+
+            for page in paginator:
+                for resource in page.results:
+                    yield resource
+        else:
+            self.__raise_operation_unsupported("retrieve_list")
