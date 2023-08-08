@@ -3,11 +3,15 @@ osidb-bindings exceptions
 """
 
 
-class OperationUnsupported(Exception):
+class OSIDBBindingsException(Exception):
+    """Base osidb-bindings exception"""
+
+
+class OperationUnsupported(OSIDBBindingsException):
     """Session operation is unsupported exception"""
 
 
-class UndefinedRequestBody(Exception):
+class UndefinedRequestBody(OSIDBBindingsException):
     """
     Request body is not defined for the particular
     resource and operation combination exceptiéon
