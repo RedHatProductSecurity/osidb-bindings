@@ -5,8 +5,6 @@ osidb-bindings session
 
 import importlib
 import os
-import re
-from functools import partial
 from types import ModuleType
 from typing import Any, Callable, Dict, List
 

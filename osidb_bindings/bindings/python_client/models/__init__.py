@@ -86,6 +86,9 @@ from .exploits_api_v1_supported_products_list_response_200 import (
     ExploitsApiV1SupportedProductsListResponse200,
 )
 from .flaw import Flaw
+from .flaw_acknowledgment import FlawAcknowledgment
+from .flaw_acknowledgment_post import FlawAcknowledgmentPost
+from .flaw_acknowledgment_put import FlawAcknowledgmentPut
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
 from .flaw_comment import FlawComment
@@ -110,9 +113,11 @@ from .jira_issue_fields import JiraIssueFields
 from .jira_issue_query_result import JiraIssueQueryResult
 from .jira_issue_type import JiraIssueType
 from .jira_user import JiraUser
+from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .meta import Meta
 from .meta_meta_attr import MetaMetaAttr
+from .nist_cvss_validation_enum import NistCvssValidationEnum
 from .osidb_api_v1_affects_create_response_201 import OsidbApiV1AffectsCreateResponse201
 from .osidb_api_v1_affects_destroy_response_204 import (
     OsidbApiV1AffectsDestroyResponse204,
@@ -131,6 +136,21 @@ from .osidb_api_v1_affects_retrieve_response_200 import (
     OsidbApiV1AffectsRetrieveResponse200,
 )
 from .osidb_api_v1_affects_update_response_200 import OsidbApiV1AffectsUpdateResponse200
+from .osidb_api_v1_flaws_acknowledgments_create_response_201 import (
+    OsidbApiV1FlawsAcknowledgmentsCreateResponse201,
+)
+from .osidb_api_v1_flaws_acknowledgments_destroy_response_204 import (
+    OsidbApiV1FlawsAcknowledgmentsDestroyResponse204,
+)
+from .osidb_api_v1_flaws_acknowledgments_list_response_200 import (
+    OsidbApiV1FlawsAcknowledgmentsListResponse200,
+)
+from .osidb_api_v1_flaws_acknowledgments_retrieve_response_200 import (
+    OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200,
+)
+from .osidb_api_v1_flaws_acknowledgments_update_response_200 import (
+    OsidbApiV1FlawsAcknowledgmentsUpdateResponse200,
+)
 from .osidb_api_v1_flaws_comments_create_response_201 import (
     OsidbApiV1FlawsCommentsCreateResponse201,
 )
@@ -153,7 +173,14 @@ from .osidb_api_v1_flaws_list_affects_trackers_type import (
 )
 from .osidb_api_v1_flaws_list_affects_type import OsidbApiV1FlawsListAffectsType
 from .osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
+from .osidb_api_v1_flaws_list_major_incident_state import (
+    OsidbApiV1FlawsListMajorIncidentState,
+)
+from .osidb_api_v1_flaws_list_nist_cvss_validation import (
+    OsidbApiV1FlawsListNistCvssValidation,
+)
 from .osidb_api_v1_flaws_list_order_item import OsidbApiV1FlawsListOrderItem
+from .osidb_api_v1_flaws_list_requires_summary import OsidbApiV1FlawsListRequiresSummary
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from .osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
@@ -235,12 +262,14 @@ from .osim_retrieve_response_200 import OsimRetrieveResponse200
 from .paginated_affect_list import PaginatedAffectList
 from .paginated_epss_list import PaginatedEPSSList
 from .paginated_exploit_only_report_data_list import PaginatedExploitOnlyReportDataList
+from .paginated_flaw_acknowledgment_list import PaginatedFlawAcknowledgmentList
 from .paginated_flaw_comment_list import PaginatedFlawCommentList
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_reference_list import PaginatedFlawReferenceList
 from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_tracker_list import PaginatedTrackerList
+from .requires_summary_enum import RequiresSummaryEnum
 from .resolution_enum import ResolutionEnum
 from .source_666_enum import Source666Enum
 from .status_enum import StatusEnum

@@ -3,6 +3,11 @@ from .osidb_api_v1_affects_destroy import *
 from .osidb_api_v1_affects_list import *
 from .osidb_api_v1_affects_retrieve import *
 from .osidb_api_v1_affects_update import *
+from .osidb_api_v1_flaws_acknowledgments_create import *
+from .osidb_api_v1_flaws_acknowledgments_destroy import *
+from .osidb_api_v1_flaws_acknowledgments_list import *
+from .osidb_api_v1_flaws_acknowledgments_retrieve import *
+from .osidb_api_v1_flaws_acknowledgments_update import *
 from .osidb_api_v1_flaws_comments_create import *
 from .osidb_api_v1_flaws_comments_list import *
 from .osidb_api_v1_flaws_comments_retrieve import *

@@ -20,7 +20,16 @@ from ...models.osidb_api_v1_flaws_list_affects_type import (
     OsidbApiV1FlawsListAffectsType,
 )
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
+from ...models.osidb_api_v1_flaws_list_major_incident_state import (
+    OsidbApiV1FlawsListMajorIncidentState,
+)
+from ...models.osidb_api_v1_flaws_list_nist_cvss_validation import (
+    OsidbApiV1FlawsListNistCvssValidation,
+)
 from ...models.osidb_api_v1_flaws_list_order_item import OsidbApiV1FlawsListOrderItem
+from ...models.osidb_api_v1_flaws_list_requires_summary import (
+    OsidbApiV1FlawsListRequiresSummary,
+)
 from ...models.osidb_api_v1_flaws_list_response_200 import (
     OsidbApiV1FlawsListResponse200,
 )
@@ -29,6 +38,26 @@ from ...models.osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
+    "acknowledgments__affiliation": str,
+    "acknowledgments__created_dt": datetime.datetime,
+    "acknowledgments__created_dt__date": datetime.date,
+    "acknowledgments__created_dt__date__gte": datetime.date,
+    "acknowledgments__created_dt__date__lte": datetime.date,
+    "acknowledgments__created_dt__gt": datetime.datetime,
+    "acknowledgments__created_dt__gte": datetime.datetime,
+    "acknowledgments__created_dt__lt": datetime.datetime,
+    "acknowledgments__created_dt__lte": datetime.datetime,
+    "acknowledgments__from_upstream": bool,
+    "acknowledgments__name": str,
+    "acknowledgments__updated_dt": datetime.datetime,
+    "acknowledgments__updated_dt__date": datetime.date,
+    "acknowledgments__updated_dt__date__gte": datetime.date,
+    "acknowledgments__updated_dt__date__lte": datetime.date,
+    "acknowledgments__updated_dt__gt": datetime.datetime,
+    "acknowledgments__updated_dt__gte": datetime.datetime,
+    "acknowledgments__updated_dt__lt": datetime.datetime,
+    "acknowledgments__updated_dt__lte": datetime.datetime,
+    "acknowledgments__uuid": str,
     "affects__affectedness": OsidbApiV1FlawsListAffectsAffectedness,
     "affects__created_dt": datetime.datetime,
     "affects__created_dt__date": datetime.date,
@@ -124,6 +153,8 @@ QUERY_PARAMS = {
     "include_meta_attr": List[str],
     "is_major_incident": bool,
     "limit": int,
+    "major_incident_state": OsidbApiV1FlawsListMajorIncidentState,
+    "nist_cvss_validation": OsidbApiV1FlawsListNistCvssValidation,
     "nvd_cvss2": str,
     "nvd_cvss3": str,
     "offset": int,
@@ -136,6 +167,7 @@ QUERY_PARAMS = {
     "reported_dt__gte": datetime.datetime,
     "reported_dt__lt": datetime.datetime,
     "reported_dt__lte": datetime.datetime,
+    "requires_summary": OsidbApiV1FlawsListRequiresSummary,
     "search": str,
     "source": OsidbApiV1FlawsListSource,
     "statement": str,
@@ -159,6 +191,26 @@ QUERY_PARAMS = {
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
+    acknowledgments_affiliation: Union[Unset, None, str] = UNSET,
+    acknowledgments_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_from_upstream: Union[Unset, None, bool] = UNSET,
+    acknowledgments_name: Union[Unset, None, str] = UNSET,
+    acknowledgments_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_uuid: Union[Unset, None, str] = UNSET,
     affects_affectedness: Union[
         Unset, None, OsidbApiV1FlawsListAffectsAffectedness
     ] = UNSET,
@@ -260,6 +312,12 @@ def _get_kwargs(
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     is_major_incident: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    major_incident_state: Union[
+        Unset, None, OsidbApiV1FlawsListMajorIncidentState
+    ] = UNSET,
+    nist_cvss_validation: Union[
+        Unset, None, OsidbApiV1FlawsListNistCvssValidation
+    ] = UNSET,
     nvd_cvss2: Union[Unset, None, str] = UNSET,
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -272,6 +330,7 @@ def _get_kwargs(
     reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    requires_summary: Union[Unset, None, OsidbApiV1FlawsListRequiresSummary] = UNSET,
     search: Union[Unset, None, str] = UNSET,
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
@@ -295,6 +354,134 @@ def _get_kwargs(
     )
 
     headers: Dict[str, Any] = client.get_headers()
+
+    json_acknowledgments_created_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt, Unset):
+        json_acknowledgments_created_dt = (
+            acknowledgments_created_dt.isoformat()
+            if acknowledgments_created_dt
+            else None
+        )
+
+    json_acknowledgments_created_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_date, Unset):
+        json_acknowledgments_created_dt_date = (
+            acknowledgments_created_dt_date.isoformat()
+            if acknowledgments_created_dt_date
+            else None
+        )
+
+    json_acknowledgments_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_date_gte, Unset):
+        json_acknowledgments_created_dt_date_gte = (
+            acknowledgments_created_dt_date_gte.isoformat()
+            if acknowledgments_created_dt_date_gte
+            else None
+        )
+
+    json_acknowledgments_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_date_lte, Unset):
+        json_acknowledgments_created_dt_date_lte = (
+            acknowledgments_created_dt_date_lte.isoformat()
+            if acknowledgments_created_dt_date_lte
+            else None
+        )
+
+    json_acknowledgments_created_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_gt, Unset):
+        json_acknowledgments_created_dt_gt = (
+            acknowledgments_created_dt_gt.isoformat()
+            if acknowledgments_created_dt_gt
+            else None
+        )
+
+    json_acknowledgments_created_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_gte, Unset):
+        json_acknowledgments_created_dt_gte = (
+            acknowledgments_created_dt_gte.isoformat()
+            if acknowledgments_created_dt_gte
+            else None
+        )
+
+    json_acknowledgments_created_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_lt, Unset):
+        json_acknowledgments_created_dt_lt = (
+            acknowledgments_created_dt_lt.isoformat()
+            if acknowledgments_created_dt_lt
+            else None
+        )
+
+    json_acknowledgments_created_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_created_dt_lte, Unset):
+        json_acknowledgments_created_dt_lte = (
+            acknowledgments_created_dt_lte.isoformat()
+            if acknowledgments_created_dt_lte
+            else None
+        )
+
+    json_acknowledgments_updated_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt, Unset):
+        json_acknowledgments_updated_dt = (
+            acknowledgments_updated_dt.isoformat()
+            if acknowledgments_updated_dt
+            else None
+        )
+
+    json_acknowledgments_updated_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_date, Unset):
+        json_acknowledgments_updated_dt_date = (
+            acknowledgments_updated_dt_date.isoformat()
+            if acknowledgments_updated_dt_date
+            else None
+        )
+
+    json_acknowledgments_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_date_gte, Unset):
+        json_acknowledgments_updated_dt_date_gte = (
+            acknowledgments_updated_dt_date_gte.isoformat()
+            if acknowledgments_updated_dt_date_gte
+            else None
+        )
+
+    json_acknowledgments_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_date_lte, Unset):
+        json_acknowledgments_updated_dt_date_lte = (
+            acknowledgments_updated_dt_date_lte.isoformat()
+            if acknowledgments_updated_dt_date_lte
+            else None
+        )
+
+    json_acknowledgments_updated_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_gt, Unset):
+        json_acknowledgments_updated_dt_gt = (
+            acknowledgments_updated_dt_gt.isoformat()
+            if acknowledgments_updated_dt_gt
+            else None
+        )
+
+    json_acknowledgments_updated_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_gte, Unset):
+        json_acknowledgments_updated_dt_gte = (
+            acknowledgments_updated_dt_gte.isoformat()
+            if acknowledgments_updated_dt_gte
+            else None
+        )
+
+    json_acknowledgments_updated_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_lt, Unset):
+        json_acknowledgments_updated_dt_lt = (
+            acknowledgments_updated_dt_lt.isoformat()
+            if acknowledgments_updated_dt_lt
+            else None
+        )
+
+    json_acknowledgments_updated_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(acknowledgments_updated_dt_lte, Unset):
+        json_acknowledgments_updated_dt_lte = (
+            acknowledgments_updated_dt_lte.isoformat()
+            if acknowledgments_updated_dt_lte
+            else None
+        )
 
     json_affects_affectedness: Union[Unset, None, str] = UNSET
     if not isinstance(affects_affectedness, Unset):
@@ -655,6 +842,24 @@ def _get_kwargs(
         else:
             json_include_meta_attr = include_meta_attr
 
+    json_major_incident_state: Union[Unset, None, str] = UNSET
+    if not isinstance(major_incident_state, Unset):
+
+        json_major_incident_state = (
+            OsidbApiV1FlawsListMajorIncidentState(major_incident_state).value
+            if major_incident_state
+            else None
+        )
+
+    json_nist_cvss_validation: Union[Unset, None, str] = UNSET
+    if not isinstance(nist_cvss_validation, Unset):
+
+        json_nist_cvss_validation = (
+            OsidbApiV1FlawsListNistCvssValidation(nist_cvss_validation).value
+            if nist_cvss_validation
+            else None
+        )
+
     json_order: Union[Unset, None, List[str]] = UNSET
     if not isinstance(order, Unset):
         if order is None:
@@ -706,6 +911,15 @@ def _get_kwargs(
     json_reported_dt_lte: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt_lte, Unset):
         json_reported_dt_lte = reported_dt_lte.isoformat() if reported_dt_lte else None
+
+    json_requires_summary: Union[Unset, None, str] = UNSET
+    if not isinstance(requires_summary, Unset):
+
+        json_requires_summary = (
+            OsidbApiV1FlawsListRequiresSummary(requires_summary).value
+            if requires_summary
+            else None
+        )
 
     json_source: Union[Unset, None, str] = UNSET
     if not isinstance(source, Unset):
@@ -765,6 +979,26 @@ def _get_kwargs(
         json_updated_dt_lte = updated_dt_lte.isoformat() if updated_dt_lte else None
 
     params: Dict[str, Any] = {
+        "acknowledgments__affiliation": acknowledgments_affiliation,
+        "acknowledgments__created_dt": json_acknowledgments_created_dt,
+        "acknowledgments__created_dt__date": json_acknowledgments_created_dt_date,
+        "acknowledgments__created_dt__date__gte": json_acknowledgments_created_dt_date_gte,
+        "acknowledgments__created_dt__date__lte": json_acknowledgments_created_dt_date_lte,
+        "acknowledgments__created_dt__gt": json_acknowledgments_created_dt_gt,
+        "acknowledgments__created_dt__gte": json_acknowledgments_created_dt_gte,
+        "acknowledgments__created_dt__lt": json_acknowledgments_created_dt_lt,
+        "acknowledgments__created_dt__lte": json_acknowledgments_created_dt_lte,
+        "acknowledgments__from_upstream": acknowledgments_from_upstream,
+        "acknowledgments__name": acknowledgments_name,
+        "acknowledgments__updated_dt": json_acknowledgments_updated_dt,
+        "acknowledgments__updated_dt__date": json_acknowledgments_updated_dt_date,
+        "acknowledgments__updated_dt__date__gte": json_acknowledgments_updated_dt_date_gte,
+        "acknowledgments__updated_dt__date__lte": json_acknowledgments_updated_dt_date_lte,
+        "acknowledgments__updated_dt__gt": json_acknowledgments_updated_dt_gt,
+        "acknowledgments__updated_dt__gte": json_acknowledgments_updated_dt_gte,
+        "acknowledgments__updated_dt__lt": json_acknowledgments_updated_dt_lt,
+        "acknowledgments__updated_dt__lte": json_acknowledgments_updated_dt_lte,
+        "acknowledgments__uuid": acknowledgments_uuid,
         "affects__affectedness": json_affects_affectedness,
         "affects__created_dt": json_affects_created_dt,
         "affects__created_dt__date": json_affects_created_dt_date,
@@ -860,6 +1094,8 @@ def _get_kwargs(
         "include_meta_attr": json_include_meta_attr,
         "is_major_incident": is_major_incident,
         "limit": limit,
+        "major_incident_state": json_major_incident_state,
+        "nist_cvss_validation": json_nist_cvss_validation,
         "nvd_cvss2": nvd_cvss2,
         "nvd_cvss3": nvd_cvss3,
         "offset": offset,
@@ -872,6 +1108,7 @@ def _get_kwargs(
         "reported_dt__gte": json_reported_dt_gte,
         "reported_dt__lt": json_reported_dt_lt,
         "reported_dt__lte": json_reported_dt_lte,
+        "requires_summary": json_requires_summary,
         "search": search,
         "source": json_source,
         "statement": statement,
@@ -928,6 +1165,26 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    acknowledgments_affiliation: Union[Unset, None, str] = UNSET,
+    acknowledgments_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_from_upstream: Union[Unset, None, bool] = UNSET,
+    acknowledgments_name: Union[Unset, None, str] = UNSET,
+    acknowledgments_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_uuid: Union[Unset, None, str] = UNSET,
     affects_affectedness: Union[
         Unset, None, OsidbApiV1FlawsListAffectsAffectedness
     ] = UNSET,
@@ -1029,6 +1286,12 @@ def sync_detailed(
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     is_major_incident: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    major_incident_state: Union[
+        Unset, None, OsidbApiV1FlawsListMajorIncidentState
+    ] = UNSET,
+    nist_cvss_validation: Union[
+        Unset, None, OsidbApiV1FlawsListNistCvssValidation
+    ] = UNSET,
     nvd_cvss2: Union[Unset, None, str] = UNSET,
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -1041,6 +1304,7 @@ def sync_detailed(
     reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    requires_summary: Union[Unset, None, OsidbApiV1FlawsListRequiresSummary] = UNSET,
     search: Union[Unset, None, str] = UNSET,
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
@@ -1061,6 +1325,26 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsListResponse200]:
     kwargs = _get_kwargs(
         client=client,
+        acknowledgments_affiliation=acknowledgments_affiliation,
+        acknowledgments_created_dt=acknowledgments_created_dt,
+        acknowledgments_created_dt_date=acknowledgments_created_dt_date,
+        acknowledgments_created_dt_date_gte=acknowledgments_created_dt_date_gte,
+        acknowledgments_created_dt_date_lte=acknowledgments_created_dt_date_lte,
+        acknowledgments_created_dt_gt=acknowledgments_created_dt_gt,
+        acknowledgments_created_dt_gte=acknowledgments_created_dt_gte,
+        acknowledgments_created_dt_lt=acknowledgments_created_dt_lt,
+        acknowledgments_created_dt_lte=acknowledgments_created_dt_lte,
+        acknowledgments_from_upstream=acknowledgments_from_upstream,
+        acknowledgments_name=acknowledgments_name,
+        acknowledgments_updated_dt=acknowledgments_updated_dt,
+        acknowledgments_updated_dt_date=acknowledgments_updated_dt_date,
+        acknowledgments_updated_dt_date_gte=acknowledgments_updated_dt_date_gte,
+        acknowledgments_updated_dt_date_lte=acknowledgments_updated_dt_date_lte,
+        acknowledgments_updated_dt_gt=acknowledgments_updated_dt_gt,
+        acknowledgments_updated_dt_gte=acknowledgments_updated_dt_gte,
+        acknowledgments_updated_dt_lt=acknowledgments_updated_dt_lt,
+        acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
+        acknowledgments_uuid=acknowledgments_uuid,
         affects_affectedness=affects_affectedness,
         affects_created_dt=affects_created_dt,
         affects_created_dt_date=affects_created_dt_date,
@@ -1156,6 +1440,8 @@ def sync_detailed(
         include_meta_attr=include_meta_attr,
         is_major_incident=is_major_incident,
         limit=limit,
+        major_incident_state=major_incident_state,
+        nist_cvss_validation=nist_cvss_validation,
         nvd_cvss2=nvd_cvss2,
         nvd_cvss3=nvd_cvss3,
         offset=offset,
@@ -1168,6 +1454,7 @@ def sync_detailed(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
+        requires_summary=requires_summary,
         search=search,
         source=source,
         statement=statement,
@@ -1201,6 +1488,26 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    acknowledgments_affiliation: Union[Unset, None, str] = UNSET,
+    acknowledgments_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_from_upstream: Union[Unset, None, bool] = UNSET,
+    acknowledgments_name: Union[Unset, None, str] = UNSET,
+    acknowledgments_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    acknowledgments_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    acknowledgments_uuid: Union[Unset, None, str] = UNSET,
     affects_affectedness: Union[
         Unset, None, OsidbApiV1FlawsListAffectsAffectedness
     ] = UNSET,
@@ -1302,6 +1609,12 @@ def sync(
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     is_major_incident: Union[Unset, None, bool] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
+    major_incident_state: Union[
+        Unset, None, OsidbApiV1FlawsListMajorIncidentState
+    ] = UNSET,
+    nist_cvss_validation: Union[
+        Unset, None, OsidbApiV1FlawsListNistCvssValidation
+    ] = UNSET,
     nvd_cvss2: Union[Unset, None, str] = UNSET,
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -1314,6 +1627,7 @@ def sync(
     reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    requires_summary: Union[Unset, None, OsidbApiV1FlawsListRequiresSummary] = UNSET,
     search: Union[Unset, None, str] = UNSET,
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
@@ -1336,6 +1650,26 @@ def sync(
 
     return sync_detailed(
         client=client,
+        acknowledgments_affiliation=acknowledgments_affiliation,
+        acknowledgments_created_dt=acknowledgments_created_dt,
+        acknowledgments_created_dt_date=acknowledgments_created_dt_date,
+        acknowledgments_created_dt_date_gte=acknowledgments_created_dt_date_gte,
+        acknowledgments_created_dt_date_lte=acknowledgments_created_dt_date_lte,
+        acknowledgments_created_dt_gt=acknowledgments_created_dt_gt,
+        acknowledgments_created_dt_gte=acknowledgments_created_dt_gte,
+        acknowledgments_created_dt_lt=acknowledgments_created_dt_lt,
+        acknowledgments_created_dt_lte=acknowledgments_created_dt_lte,
+        acknowledgments_from_upstream=acknowledgments_from_upstream,
+        acknowledgments_name=acknowledgments_name,
+        acknowledgments_updated_dt=acknowledgments_updated_dt,
+        acknowledgments_updated_dt_date=acknowledgments_updated_dt_date,
+        acknowledgments_updated_dt_date_gte=acknowledgments_updated_dt_date_gte,
+        acknowledgments_updated_dt_date_lte=acknowledgments_updated_dt_date_lte,
+        acknowledgments_updated_dt_gt=acknowledgments_updated_dt_gt,
+        acknowledgments_updated_dt_gte=acknowledgments_updated_dt_gte,
+        acknowledgments_updated_dt_lt=acknowledgments_updated_dt_lt,
+        acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
+        acknowledgments_uuid=acknowledgments_uuid,
         affects_affectedness=affects_affectedness,
         affects_created_dt=affects_created_dt,
         affects_created_dt_date=affects_created_dt_date,
@@ -1431,6 +1765,8 @@ def sync(
         include_meta_attr=include_meta_attr,
         is_major_incident=is_major_incident,
         limit=limit,
+        major_incident_state=major_incident_state,
+        nist_cvss_validation=nist_cvss_validation,
         nvd_cvss2=nvd_cvss2,
         nvd_cvss3=nvd_cvss3,
         offset=offset,
@@ -1443,6 +1779,7 @@ def sync(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
+        requires_summary=requires_summary,
         search=search,
         source=source,
         statement=statement,
