@@ -92,6 +92,7 @@ Operations can be performed on the following entities:
 * flaws
     * comments
     * references
+    * acknowledgments
 * affects
 * trackers
 

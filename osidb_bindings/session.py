@@ -124,6 +124,15 @@ class Session:
                         "destroy",
                     ]
                 },
+                "acknowledgments": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
             },
         )
         self.affects = SessionOperationsGroup(
