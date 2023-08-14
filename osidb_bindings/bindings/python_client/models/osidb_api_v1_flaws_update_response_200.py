@@ -8,12 +8,16 @@ from ..models.affect import Affect
 from ..models.blank_enum import BlankEnum
 from ..models.comment import Comment
 from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
+from ..models.flaw_acknowledgment import FlawAcknowledgment
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_meta_attr import FlawMetaAttr
 from ..models.flaw_reference import FlawReference
 from ..models.flaw_type import FlawType
 from ..models.impact_enum import ImpactEnum
+from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.meta import Meta
+from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
+from ..models.requires_summary_enum import RequiresSummaryEnum
 from ..models.source_666_enum import Source666Enum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -35,6 +39,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     comments: List[Comment]
     meta_attr: FlawMetaAttr
     package_versions: List[CVEv5PackageVersions]
+    acknowledgments: List[FlawAcknowledgment]
     references: List[FlawReference]
     embargoed: bool
     created_dt: datetime.datetime
@@ -45,6 +50,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     component: Union[Unset, str] = UNSET
     summary: Union[Unset, str] = UNSET
+    requires_summary: Union[BlankEnum, RequiresSummaryEnum, Unset] = UNSET
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
@@ -58,6 +64,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     cvss3_score: Union[Unset, None, float] = UNSET
     nvd_cvss3: Union[Unset, str] = UNSET
     is_major_incident: Union[Unset, bool] = UNSET
+    major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
+    nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -118,6 +126,16 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
                 package_versions.append(package_versions_item)
 
+        acknowledgments: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.acknowledgments, Unset):
+            acknowledgments = []
+            for acknowledgments_item_data in self.acknowledgments:
+                acknowledgments_item: Dict[str, Any] = UNSET
+                if not isinstance(acknowledgments_item_data, Unset):
+                    acknowledgments_item = acknowledgments_item_data.to_dict()
+
+                acknowledgments.append(acknowledgments_item)
+
         references: List[Dict[str, Any]] = UNSET
         if not isinstance(self.references, Unset):
             references = []
@@ -164,6 +182,21 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         component = self.component
         summary = self.summary
+        requires_summary: Union[Unset, str]
+        if isinstance(self.requires_summary, Unset):
+            requires_summary = UNSET
+        elif isinstance(self.requires_summary, RequiresSummaryEnum):
+            requires_summary = UNSET
+            if not isinstance(self.requires_summary, Unset):
+
+                requires_summary = RequiresSummaryEnum(self.requires_summary).value
+
+        else:
+            requires_summary = UNSET
+            if not isinstance(self.requires_summary, Unset):
+
+                requires_summary = BlankEnum(self.requires_summary).value
+
         statement = self.statement
         cwe_id = self.cwe_id
         unembargo_dt: Union[Unset, None, str] = UNSET
@@ -197,6 +230,40 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         cvss3_score = self.cvss3_score
         nvd_cvss3 = self.nvd_cvss3
         is_major_incident = self.is_major_incident
+        major_incident_state: Union[Unset, str]
+        if isinstance(self.major_incident_state, Unset):
+            major_incident_state = UNSET
+        elif isinstance(self.major_incident_state, MajorIncidentStateEnum):
+            major_incident_state = UNSET
+            if not isinstance(self.major_incident_state, Unset):
+
+                major_incident_state = MajorIncidentStateEnum(
+                    self.major_incident_state
+                ).value
+
+        else:
+            major_incident_state = UNSET
+            if not isinstance(self.major_incident_state, Unset):
+
+                major_incident_state = BlankEnum(self.major_incident_state).value
+
+        nist_cvss_validation: Union[Unset, str]
+        if isinstance(self.nist_cvss_validation, Unset):
+            nist_cvss_validation = UNSET
+        elif isinstance(self.nist_cvss_validation, NistCvssValidationEnum):
+            nist_cvss_validation = UNSET
+            if not isinstance(self.nist_cvss_validation, Unset):
+
+                nist_cvss_validation = NistCvssValidationEnum(
+                    self.nist_cvss_validation
+                ).value
+
+        else:
+            nist_cvss_validation = UNSET
+            if not isinstance(self.nist_cvss_validation, Unset):
+
+                nist_cvss_validation = BlankEnum(self.nist_cvss_validation).value
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -229,6 +296,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["meta_attr"] = meta_attr
         if package_versions is not UNSET:
             field_dict["package_versions"] = package_versions
+        if acknowledgments is not UNSET:
+            field_dict["acknowledgments"] = acknowledgments
         if references is not UNSET:
             field_dict["references"] = references
         if embargoed is not UNSET:
@@ -249,6 +318,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["component"] = component
         if summary is not UNSET:
             field_dict["summary"] = summary
+        if requires_summary is not UNSET:
+            field_dict["requires_summary"] = requires_summary
         if statement is not UNSET:
             field_dict["statement"] = statement
         if cwe_id is not UNSET:
@@ -275,6 +346,10 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["nvd_cvss3"] = nvd_cvss3
         if is_major_incident is not UNSET:
             field_dict["is_major_incident"] = is_major_incident
+        if major_incident_state is not UNSET:
+            field_dict["major_incident_state"] = major_incident_state
+        if nist_cvss_validation is not UNSET:
+            field_dict["nist_cvss_validation"] = nist_cvss_validation
         if dt is not UNSET:
             field_dict["dt"] = dt
         if env is not UNSET:
@@ -370,6 +445,23 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
                 package_versions.append(package_versions_item)
 
+        acknowledgments = []
+        _acknowledgments = d.pop("acknowledgments", UNSET)
+        if _acknowledgments is UNSET:
+            acknowledgments = UNSET
+        else:
+            for acknowledgments_item_data in _acknowledgments or []:
+                _acknowledgments_item = acknowledgments_item_data
+                acknowledgments_item: FlawAcknowledgment
+                if isinstance(_acknowledgments_item, Unset):
+                    acknowledgments_item = UNSET
+                else:
+                    acknowledgments_item = FlawAcknowledgment.from_dict(
+                        _acknowledgments_item
+                    )
+
+                acknowledgments.append(acknowledgments_item)
+
         references = []
         _references = d.pop("references", UNSET)
         if _references is UNSET:
@@ -450,6 +542,39 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         summary = d.pop("summary", UNSET)
 
+        def _parse_requires_summary(
+            data: object,
+        ) -> Union[BlankEnum, RequiresSummaryEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _requires_summary_type_0 = data
+                requires_summary_type_0: Union[Unset, RequiresSummaryEnum]
+                if isinstance(_requires_summary_type_0, Unset):
+                    requires_summary_type_0 = UNSET
+                else:
+                    requires_summary_type_0 = RequiresSummaryEnum(
+                        _requires_summary_type_0
+                    )
+
+                return requires_summary_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _requires_summary_type_1 = data
+            requires_summary_type_1: Union[Unset, BlankEnum]
+            if isinstance(_requires_summary_type_1, Unset):
+                requires_summary_type_1 = UNSET
+            else:
+                requires_summary_type_1 = BlankEnum(_requires_summary_type_1)
+
+            return requires_summary_type_1
+
+        requires_summary = _parse_requires_summary(d.pop("requires_summary", UNSET))
+
         statement = d.pop("statement", UNSET)
 
         cwe_id = d.pop("cwe_id", UNSET)
@@ -517,6 +642,76 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         is_major_incident = d.pop("is_major_incident", UNSET)
 
+        def _parse_major_incident_state(
+            data: object,
+        ) -> Union[BlankEnum, MajorIncidentStateEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _major_incident_state_type_0 = data
+                major_incident_state_type_0: Union[Unset, MajorIncidentStateEnum]
+                if isinstance(_major_incident_state_type_0, Unset):
+                    major_incident_state_type_0 = UNSET
+                else:
+                    major_incident_state_type_0 = MajorIncidentStateEnum(
+                        _major_incident_state_type_0
+                    )
+
+                return major_incident_state_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _major_incident_state_type_1 = data
+            major_incident_state_type_1: Union[Unset, BlankEnum]
+            if isinstance(_major_incident_state_type_1, Unset):
+                major_incident_state_type_1 = UNSET
+            else:
+                major_incident_state_type_1 = BlankEnum(_major_incident_state_type_1)
+
+            return major_incident_state_type_1
+
+        major_incident_state = _parse_major_incident_state(
+            d.pop("major_incident_state", UNSET)
+        )
+
+        def _parse_nist_cvss_validation(
+            data: object,
+        ) -> Union[BlankEnum, NistCvssValidationEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _nist_cvss_validation_type_0 = data
+                nist_cvss_validation_type_0: Union[Unset, NistCvssValidationEnum]
+                if isinstance(_nist_cvss_validation_type_0, Unset):
+                    nist_cvss_validation_type_0 = UNSET
+                else:
+                    nist_cvss_validation_type_0 = NistCvssValidationEnum(
+                        _nist_cvss_validation_type_0
+                    )
+
+                return nist_cvss_validation_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _nist_cvss_validation_type_1 = data
+            nist_cvss_validation_type_1: Union[Unset, BlankEnum]
+            if isinstance(_nist_cvss_validation_type_1, Unset):
+                nist_cvss_validation_type_1 = UNSET
+            else:
+                nist_cvss_validation_type_1 = BlankEnum(_nist_cvss_validation_type_1)
+
+            return nist_cvss_validation_type_1
+
+        nist_cvss_validation = _parse_nist_cvss_validation(
+            d.pop("nist_cvss_validation", UNSET)
+        )
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -542,6 +737,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             comments=comments,
             meta_attr=meta_attr,
             package_versions=package_versions,
+            acknowledgments=acknowledgments,
             references=references,
             embargoed=embargoed,
             created_dt=created_dt,
@@ -552,6 +748,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             impact=impact,
             component=component,
             summary=summary,
+            requires_summary=requires_summary,
             statement=statement,
             cwe_id=cwe_id,
             unembargo_dt=unembargo_dt,
@@ -565,6 +762,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             cvss3_score=cvss3_score,
             nvd_cvss3=nvd_cvss3,
             is_major_incident=is_major_incident,
+            major_incident_state=major_incident_state,
+            nist_cvss_validation=nist_cvss_validation,
             dt=dt,
             env=env,
             revision=revision,
@@ -588,6 +787,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             "comments": List[Comment],
             "meta_attr": FlawMetaAttr,
             "package_versions": List[CVEv5PackageVersions],
+            "acknowledgments": List[FlawAcknowledgment],
             "references": List[FlawReference],
             "embargoed": bool,
             "created_dt": datetime.datetime,
@@ -598,6 +798,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             "impact": Union[BlankEnum, ImpactEnum],
             "component": str,
             "summary": str,
+            "requires_summary": Union[BlankEnum, RequiresSummaryEnum],
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
@@ -611,6 +812,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             "cvss3_score": float,
             "nvd_cvss3": str,
             "is_major_incident": bool,
+            "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
+            "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

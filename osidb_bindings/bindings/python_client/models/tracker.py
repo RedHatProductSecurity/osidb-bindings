@@ -26,6 +26,7 @@ class Tracker(OSIDBModel):
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
     resolution: Union[Unset, str] = UNSET
+    ps_update_stream: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -64,6 +65,7 @@ class Tracker(OSIDBModel):
             affects = self.affects
 
         resolution = self.resolution
+        ps_update_stream = self.ps_update_stream
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -87,6 +89,8 @@ class Tracker(OSIDBModel):
             field_dict["affects"] = affects
         if resolution is not UNSET:
             field_dict["resolution"] = resolution
+        if ps_update_stream is not UNSET:
+            field_dict["ps_update_stream"] = ps_update_stream
 
         return field_dict
 
@@ -146,6 +150,8 @@ class Tracker(OSIDBModel):
 
         resolution = d.pop("resolution", UNSET)
 
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
+
         tracker = cls(
             uuid=uuid,
             type=type,
@@ -157,6 +163,7 @@ class Tracker(OSIDBModel):
             updated_dt=updated_dt,
             affects=affects,
             resolution=resolution,
+            ps_update_stream=ps_update_stream,
         )
 
         tracker.additional_properties = d
@@ -175,6 +182,7 @@ class Tracker(OSIDBModel):
             "updated_dt": datetime.datetime,
             "affects": List[str],
             "resolution": str,
+            "ps_update_stream": str,
         }
 
     @property
