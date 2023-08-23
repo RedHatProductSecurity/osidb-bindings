@@ -96,3 +96,43 @@ def sync(
         client=client,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    flaw_uuid: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1TaskFlawRetrieveResponse200]:
+    kwargs = _get_kwargs(
+        flaw_uuid=flaw_uuid,
+        client=client,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    flaw_uuid: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1TaskFlawRetrieveResponse200]:
+    """Get a task from Jira given a Flaw uuid"""
+
+    return (
+        await async_detailed(
+            flaw_uuid=flaw_uuid,
+            client=client,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

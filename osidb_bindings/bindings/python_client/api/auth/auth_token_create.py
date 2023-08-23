@@ -106,3 +106,48 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
+
+
+async def async_detailed(
+    *,
+    client: Client,
+    form_data: TokenObtainPair,
+    multipart_data: TokenObtainPair,
+    json_body: TokenObtainPair,
+) -> Response[AuthTokenCreateResponse200]:
+    kwargs = _get_kwargs(
+        client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    *,
+    client: Client,
+    form_data: TokenObtainPair,
+    multipart_data: TokenObtainPair,
+    json_body: TokenObtainPair,
+) -> Optional[AuthTokenCreateResponse200]:
+    """Takes a set of user credentials and returns an access and refresh JSON web
+    token pair to prove the authentication of those credentials."""
+
+    return (
+        await async_detailed(
+            client=client,
+            form_data=form_data,
+            multipart_data=multipart_data,
+            json_body=json_body,
+        )
+    ).parsed

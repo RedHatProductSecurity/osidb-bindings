@@ -94,3 +94,43 @@ def sync(
         client=client,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1TaskRetrieveResponse200]:
+    kwargs = _get_kwargs(
+        task_key=task_key,
+        client=client,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1TaskRetrieveResponse200]:
+    """Get a task from Jira given a task key"""
+
+    return (
+        await async_detailed(
+            task_key=task_key,
+            client=client,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

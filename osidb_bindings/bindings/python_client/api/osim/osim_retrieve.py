@@ -79,3 +79,35 @@ def sync(
     return sync_detailed(
         client=client,
     ).parsed
+
+
+async def async_detailed(
+    *,
+    client: AuthenticatedClient,
+) -> Response[OsimRetrieveResponse200]:
+    kwargs = _get_kwargs(
+        client=client,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    *,
+    client: AuthenticatedClient,
+) -> Optional[OsimRetrieveResponse200]:
+    """index API endpoint listing available API endpoints"""
+
+    return (
+        await async_detailed(
+            client=client,
+        )
+    ).parsed

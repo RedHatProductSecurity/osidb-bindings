@@ -94,3 +94,43 @@ def sync(
         client=client,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    group_key: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1GroupRetrieveResponse200]:
+    kwargs = _get_kwargs(
+        group_key=group_key,
+        client=client,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    group_key: str,
+    *,
+    client: AuthenticatedClient,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1GroupRetrieveResponse200]:
+    """Get a list of tasks from a group"""
+
+    return (
+        await async_detailed(
+            group_key=group_key,
+            client=client,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

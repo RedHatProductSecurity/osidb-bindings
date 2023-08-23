@@ -108,3 +108,48 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
+
+
+async def async_detailed(
+    *,
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Response[AuthTokenRefreshCreateResponse200]:
+    kwargs = _get_kwargs(
+        client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    *,
+    client: Client,
+    form_data: TokenRefresh,
+    multipart_data: TokenRefresh,
+    json_body: TokenRefresh,
+) -> Optional[AuthTokenRefreshCreateResponse200]:
+    """Takes a refresh type JSON web token and returns an access type JSON web
+    token if the refresh token is valid."""
+
+    return (
+        await async_detailed(
+            client=client,
+            form_data=form_data,
+            multipart_data=multipart_data,
+            json_body=json_body,
+        )
+    ).parsed
