@@ -123,4 +123,31 @@ def sync(
     ).parsed
 {% endif %}
 
+async def async_detailed(
+    {{ arguments(endpoint) | indent(4) }}
+) -> Response[{{ return_string }}]:
+    kwargs = _get_kwargs(
+        {{ kwargs(endpoint) }}
+    )
+
+    async with client.get_async_session().{{ endpoint.method }}(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+{% if parsed_responses %}
+async def async_(
+    {{ arguments(endpoint) | indent(4) }}
+) -> Optional[{{ return_string }}]:
+    """ {{ endpoint.description }} """
+
+    return (await async_detailed(
+        {{ kwargs(endpoint) }}
+    )).parsed
+{% endif %}
 
