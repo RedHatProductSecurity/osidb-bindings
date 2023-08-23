@@ -23,7 +23,7 @@ class Paginator:
         self,
         *args,
         retrieve_list_fn: Optional[Callable] = None,
-        limit: int = 100,
+        limit: int = 50,
         offset: int = 0,
         init_response=None,
         **kwargs,
