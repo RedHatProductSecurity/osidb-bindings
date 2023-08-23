@@ -109,3 +109,50 @@ def sync(
         client=client,
         verbose=verbose,
     ).parsed
+
+
+async def async_detailed(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+    verbose: Union[Unset, None, bool] = UNSET,
+) -> Response[OsimApiV1WorkflowsRetrieve2Response200]:
+    kwargs = _get_kwargs(
+        id=id,
+        client=client,
+        verbose=verbose,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+    verbose: Union[Unset, None, bool] = UNSET,
+) -> Optional[OsimApiV1WorkflowsRetrieve2Response200]:
+    """workflow classification API endpoint
+
+    for flaw identified by UUID or CVE returns its workflow:state classification
+
+    params:
+
+        verbose - return also workflows with flaw classification
+                  which represents the reasoning of the result"""
+
+    return (
+        await async_detailed(
+            id=id,
+            client=client,
+            verbose=verbose,
+        )
+    ).parsed

@@ -163,3 +163,59 @@ def sync(
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
     ).parsed
+
+
+async def async_detailed(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    tracker_ids: Union[Unset, None, List[str]] = UNSET,
+) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
+    kwargs = _get_kwargs(
+        id=id,
+        client=client,
+        exclude_fields=exclude_fields,
+        flaw_meta_type=flaw_meta_type,
+        include_fields=include_fields,
+        include_meta_attr=include_meta_attr,
+        tracker_ids=tracker_ids,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    tracker_ids: Union[Unset, None, List[str]] = UNSET,
+) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
+    """ """
+
+    return (
+        await async_detailed(
+            id=id,
+            client=client,
+            exclude_fields=exclude_fields,
+            flaw_meta_type=flaw_meta_type,
+            include_fields=include_fields,
+            include_meta_attr=include_meta_attr,
+            tracker_ids=tracker_ids,
+        )
+    ).parsed

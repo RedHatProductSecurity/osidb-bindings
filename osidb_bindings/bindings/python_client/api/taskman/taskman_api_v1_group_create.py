@@ -108,3 +108,47 @@ def sync(
         name=name,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    *,
+    client: AuthenticatedClient,
+    description: Union[Unset, None, str] = UNSET,
+    name: str,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1GroupCreateResponse200]:
+    kwargs = _get_kwargs(
+        client=client,
+        description=description,
+        name=name,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    *,
+    client: AuthenticatedClient,
+    description: Union[Unset, None, str] = UNSET,
+    name: str,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1GroupCreateResponse200]:
+    """Create a new group of tasks"""
+
+    return (
+        await async_detailed(
+            client=client,
+            description=description,
+            name=name,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

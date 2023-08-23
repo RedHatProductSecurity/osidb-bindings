@@ -151,3 +151,59 @@ def sync(
         limit=limit,
         offset=offset,
     ).parsed
+
+
+async def async_detailed(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    limit: Union[Unset, None, int] = UNSET,
+    offset: Union[Unset, None, int] = UNSET,
+) -> Response[OsidbApiV1FlawsReferencesListResponse200]:
+    kwargs = _get_kwargs(
+        flaw_id=flaw_id,
+        client=client,
+        exclude_fields=exclude_fields,
+        include_fields=include_fields,
+        include_meta_attr=include_meta_attr,
+        limit=limit,
+        offset=offset,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    limit: Union[Unset, None, int] = UNSET,
+    offset: Union[Unset, None, int] = UNSET,
+) -> Optional[OsidbApiV1FlawsReferencesListResponse200]:
+    """ """
+
+    return (
+        await async_detailed(
+            flaw_id=flaw_id,
+            client=client,
+            exclude_fields=exclude_fields,
+            include_fields=include_fields,
+            include_meta_attr=include_meta_attr,
+            limit=limit,
+            offset=offset,
+        )
+    ).parsed

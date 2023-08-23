@@ -115,3 +115,51 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
+
+
+async def async_detailed(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    form_data: FlawAcknowledgmentPost,
+    multipart_data: FlawAcknowledgmentPost,
+    json_body: FlawAcknowledgmentPost,
+) -> Response[OsidbApiV1FlawsAcknowledgmentsCreateResponse201]:
+    kwargs = _get_kwargs(
+        flaw_id=flaw_id,
+        client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    form_data: FlawAcknowledgmentPost,
+    multipart_data: FlawAcknowledgmentPost,
+    json_body: FlawAcknowledgmentPost,
+) -> Optional[OsidbApiV1FlawsAcknowledgmentsCreateResponse201]:
+    """ """
+
+    return (
+        await async_detailed(
+            flaw_id=flaw_id,
+            client=client,
+            form_data=form_data,
+            multipart_data=multipart_data,
+            json_body=json_body,
+        )
+    ).parsed

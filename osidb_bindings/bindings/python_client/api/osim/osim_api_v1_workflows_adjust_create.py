@@ -95,3 +95,45 @@ def sync(
         id=id,
         client=client,
     ).parsed
+
+
+async def async_detailed(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+) -> Response[OsimApiV1WorkflowsAdjustCreateResponse200]:
+    kwargs = _get_kwargs(
+        id=id,
+        client=client,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    id: str,
+    *,
+    client: AuthenticatedClient,
+) -> Optional[OsimApiV1WorkflowsAdjustCreateResponse200]:
+    """workflow adjustion API endpoint
+
+    adjust workflow classification of flaw identified by UUID or CVE
+    and return its workflow:state classification (new if changed and old otherwise)
+
+    adjust operation is idempotent so when the classification
+    is already adjusted running it results in no operation"""
+
+    return (
+        await async_detailed(
+            id=id,
+            client=client,
+        )
+    ).parsed

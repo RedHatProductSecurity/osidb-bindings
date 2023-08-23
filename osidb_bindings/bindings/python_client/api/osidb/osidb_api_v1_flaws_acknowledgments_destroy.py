@@ -95,3 +95,43 @@ def sync(
         id=id,
         client=client,
     ).parsed
+
+
+async def async_detailed(
+    flaw_id: str,
+    id: str,
+    *,
+    client: AuthenticatedClient,
+) -> Response[OsidbApiV1FlawsAcknowledgmentsDestroyResponse204]:
+    kwargs = _get_kwargs(
+        flaw_id=flaw_id,
+        id=id,
+        client=client,
+    )
+
+    async with client.get_async_session().delete(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    flaw_id: str,
+    id: str,
+    *,
+    client: AuthenticatedClient,
+) -> Optional[OsidbApiV1FlawsAcknowledgmentsDestroyResponse204]:
+    """ """
+
+    return (
+        await async_detailed(
+            flaw_id=flaw_id,
+            id=id,
+            client=client,
+        )
+    ).parsed

@@ -1,6 +1,7 @@
 import ssl
 from typing import Dict, Tuple, Type, Union
 
+import aiohttp
 import attr
 import requests
 
@@ -45,6 +46,7 @@ class AuthenticatedClient(Client):
     auth: Union[None, Tuple[str, str], Type[requests.auth.AuthBase]] = attr.ib(
         None, kw_only=True
     )
+    async_session: Union[None, aiohttp.ClientSession] = attr.ib(None, kw_only=True)
 
     def get_auth(self) -> Union[None, Tuple[str, str], Type[requests.auth.AuthBase]]:
         return self.auth
@@ -54,3 +56,12 @@ class AuthenticatedClient(Client):
     ) -> "Client":
         """Get a new client matching this one with a new auth method"""
         return attr.evolve(self, auth=auth)
+
+    def get_async_session(self) -> Union[None, aiohttp.ClientSession]:
+        return self.async_session
+
+    def with_async_session(
+        self, async_session: Union[None, aiohttp.ClientSession]
+    ) -> "Client":
+        """Get a new client matching this one with a new async session"""
+        return attr.evolve(self, async_session=async_session)

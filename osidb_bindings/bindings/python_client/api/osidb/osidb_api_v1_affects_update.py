@@ -113,3 +113,51 @@ def sync(
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
+
+
+async def async_detailed(
+    uuid: str,
+    *,
+    client: AuthenticatedClient,
+    form_data: Affect,
+    multipart_data: Affect,
+    json_body: Affect,
+) -> Response[OsidbApiV1AffectsUpdateResponse200]:
+    kwargs = _get_kwargs(
+        uuid=uuid,
+        client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
+    )
+
+    async with client.get_async_session().put(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    uuid: str,
+    *,
+    client: AuthenticatedClient,
+    form_data: Affect,
+    multipart_data: Affect,
+    json_body: Affect,
+) -> Optional[OsidbApiV1AffectsUpdateResponse200]:
+    """ """
+
+    return (
+        await async_detailed(
+            uuid=uuid,
+            client=client,
+            form_data=form_data,
+            multipart_data=multipart_data,
+            json_body=json_body,
+        )
+    ).parsed

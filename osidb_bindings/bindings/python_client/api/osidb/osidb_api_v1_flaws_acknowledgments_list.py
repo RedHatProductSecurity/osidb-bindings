@@ -364,3 +364,139 @@ def sync(
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
     ).parsed
+
+
+async def async_detailed(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    affiliation: Union[Unset, None, str] = UNSET,
+    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    from_upstream: Union[Unset, None, bool] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
+    offset: Union[Unset, None, int] = UNSET,
+    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    uuid: Union[Unset, None, str] = UNSET,
+) -> Response[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
+    kwargs = _get_kwargs(
+        flaw_id=flaw_id,
+        client=client,
+        affiliation=affiliation,
+        created_dt=created_dt,
+        created_dt_date=created_dt_date,
+        created_dt_date_gte=created_dt_date_gte,
+        created_dt_date_lte=created_dt_date_lte,
+        created_dt_gt=created_dt_gt,
+        created_dt_gte=created_dt_gte,
+        created_dt_lt=created_dt_lt,
+        created_dt_lte=created_dt_lte,
+        exclude_fields=exclude_fields,
+        from_upstream=from_upstream,
+        include_fields=include_fields,
+        include_meta_attr=include_meta_attr,
+        limit=limit,
+        name=name,
+        offset=offset,
+        updated_dt=updated_dt,
+        updated_dt_date=updated_dt_date,
+        updated_dt_date_gte=updated_dt_date_gte,
+        updated_dt_date_lte=updated_dt_date_lte,
+        updated_dt_gt=updated_dt_gt,
+        updated_dt_gte=updated_dt_gte,
+        updated_dt_lt=updated_dt_lt,
+        updated_dt_lte=updated_dt_lte,
+        uuid=uuid,
+    )
+
+    async with client.get_async_session().get(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    flaw_id: str,
+    *,
+    client: AuthenticatedClient,
+    affiliation: Union[Unset, None, str] = UNSET,
+    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    exclude_fields: Union[Unset, None, List[str]] = UNSET,
+    from_upstream: Union[Unset, None, bool] = UNSET,
+    include_fields: Union[Unset, None, List[str]] = UNSET,
+    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    limit: Union[Unset, None, int] = UNSET,
+    name: Union[Unset, None, str] = UNSET,
+    offset: Union[Unset, None, int] = UNSET,
+    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    uuid: Union[Unset, None, str] = UNSET,
+) -> Optional[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
+    """ """
+
+    return (
+        await async_detailed(
+            flaw_id=flaw_id,
+            client=client,
+            affiliation=affiliation,
+            created_dt=created_dt,
+            created_dt_date=created_dt_date,
+            created_dt_date_gte=created_dt_date_gte,
+            created_dt_date_lte=created_dt_date_lte,
+            created_dt_gt=created_dt_gt,
+            created_dt_gte=created_dt_gte,
+            created_dt_lt=created_dt_lt,
+            created_dt_lte=created_dt_lte,
+            exclude_fields=exclude_fields,
+            from_upstream=from_upstream,
+            include_fields=include_fields,
+            include_meta_attr=include_meta_attr,
+            limit=limit,
+            name=name,
+            offset=offset,
+            updated_dt=updated_dt,
+            updated_dt_date=updated_dt_date,
+            updated_dt_date_gte=updated_dt_date_gte,
+            updated_dt_date_lte=updated_dt_date_lte,
+            updated_dt_gt=updated_dt_gt,
+            updated_dt_gte=updated_dt_gte,
+            updated_dt_lt=updated_dt_lt,
+            updated_dt_lte=updated_dt_lte,
+            uuid=uuid,
+        )
+    ).parsed

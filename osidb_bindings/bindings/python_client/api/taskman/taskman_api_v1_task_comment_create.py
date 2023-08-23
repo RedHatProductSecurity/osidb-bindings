@@ -109,3 +109,47 @@ def sync(
         content=content,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    content: str,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1TaskCommentCreateResponse200]:
+    kwargs = _get_kwargs(
+        task_key=task_key,
+        client=client,
+        content=content,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().post(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    content: str,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1TaskCommentCreateResponse200]:
+    """Create a new comment in a task"""
+
+    return (
+        await async_detailed(
+            task_key=task_key,
+            client=client,
+            content=content,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

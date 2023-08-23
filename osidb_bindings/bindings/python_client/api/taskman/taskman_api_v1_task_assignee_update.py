@@ -109,3 +109,47 @@ def sync(
         task_key=task_key,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    user: str,
+    *,
+    client: AuthenticatedClient,
+    task_key: str,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1TaskAssigneeUpdateResponse200]:
+    kwargs = _get_kwargs(
+        user=user,
+        client=client,
+        task_key=task_key,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().put(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    user: str,
+    *,
+    client: AuthenticatedClient,
+    task_key: str,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1TaskAssigneeUpdateResponse200]:
+    """Assign a task to a user"""
+
+    return (
+        await async_detailed(
+            user=user,
+            client=client,
+            task_key=task_key,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed

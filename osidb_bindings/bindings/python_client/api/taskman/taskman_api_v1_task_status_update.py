@@ -153,3 +153,55 @@ def sync(
         status=status,
         jira_authentication=jira_authentication,
     ).parsed
+
+
+async def async_detailed(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
+    resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
+    status: TaskmanApiV1TaskStatusUpdateStatus,
+    jira_authentication: str,
+) -> Response[TaskmanApiV1TaskStatusUpdateResponse200]:
+    kwargs = _get_kwargs(
+        task_key=task_key,
+        client=client,
+        reason=reason,
+        resolution=resolution,
+        status=status,
+        jira_authentication=jira_authentication,
+    )
+
+    async with client.get_async_session().put(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
+
+    return _build_response(response=resp)
+
+
+async def async_(
+    task_key: str,
+    *,
+    client: AuthenticatedClient,
+    reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
+    resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
+    status: TaskmanApiV1TaskStatusUpdateStatus,
+    jira_authentication: str,
+) -> Optional[TaskmanApiV1TaskStatusUpdateResponse200]:
+    """Change a task workflow status"""
+
+    return (
+        await async_detailed(
+            task_key=task_key,
+            client=client,
+            reason=reason,
+            resolution=resolution,
+            status=status,
+            jira_authentication=jira_authentication,
+        )
+    ).parsed
