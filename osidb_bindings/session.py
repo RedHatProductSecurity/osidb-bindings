@@ -22,6 +22,7 @@ from .constants import (
     ALL_SESSION_OPERATIONS,
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
+    OSIDB_BINDINGS_PLACEHOLDER_FIELD,
     OSIDB_BINDINGS_USERAGENT,
 )
 from .exceptions import OperationUnsupported, UndefinedRequestBody
@@ -355,6 +356,21 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("delete")
 
     # Extra operations
+
+    def count(self, *args, **kwargs):
+        if "list" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="list"
+            )
+            sync_fn = get_sync_function(method_module)
+            kwargs.pop("offset", None)
+            kwargs["limit"] = 1
+            kwargs["include_fields"] = OSIDB_BINDINGS_PLACEHOLDER_FIELD
+
+            response = sync_fn(*args, client=self.client(), **kwargs)
+            return response.count
+        else:
+            self.__raise_operation_unsupported("retrieve_list")
 
     def search(self, searched_text: str):
         if "search" in self.allowed_operations:
