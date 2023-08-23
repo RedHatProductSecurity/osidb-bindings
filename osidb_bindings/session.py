@@ -2,12 +2,13 @@
 osidb-bindings session
 """
 
-
+import asyncio
 import importlib
 import os
 from types import ModuleType
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Optional
 
+import aiohttp
 import requests
 from requests_gssapi import HTTPSPNEGOAuth
 
@@ -26,11 +27,16 @@ from .constants import (
     OSIDB_BINDINGS_USERAGENT,
 )
 from .exceptions import OperationUnsupported, UndefinedRequestBody
+from .helpers import get_env
 from .iterators import Paginator
 
 osidb_status_retrieve = importlib.import_module(
     f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
     package="osidb_bindings",
+)
+
+MAX_CONCURRENCY = get_env(
+    "COMPONENT_REGISTRY_BINDINGS_MAX_CONCURRENCY", "10", is_int=True
 )
 
 
@@ -62,6 +68,16 @@ def get_sync_function(api_module: ModuleType) -> Callable:
     """
     return double_underscores_to_single_underscores(
         getattr(api_module, "sync", getattr(api_module, "sync_detailed"))
+    )
+
+
+def get_async_function(api_module: ModuleType) -> Callable:
+    """
+    Get 'sync' function from API module if available (response example is defined in schema)
+    or get basic 'sync_detailed' function (response example is not defined in schema)
+    """
+    return double_underscores_to_single_underscores(
+        getattr(api_module, "async_", getattr(api_module, "async_detailed"))
     )
 
 
@@ -393,5 +409,43 @@ class SessionOperationsGroup:
             for page in paginator:
                 for resource in page.results:
                     yield resource
+        else:
+            self.__raise_operation_unsupported("retrieve_list")
+
+    def retrieve_list_iterator_async(
+        self, *args, max_results: Optional[int] = None, **kwargs
+    ):
+        if "list" in self.allowed_operations:
+            for page in asyncio.run(
+                self.__retrieve_list_async(*args, max_results=max_results, **kwargs)
+            ):
+                for resource in page.results:
+                    yield resource
+        else:
+            self.__raise_operation_unsupported("retrieve_list")
+
+    async def __retrieve_list_async(
+        self, *args, max_results: Optional[int] = None, **kwargs
+    ):
+        if "list" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="list"
+            )
+            async_fn = get_async_function(method_module)
+
+            kwargs.pop("offset", None)
+            limit = kwargs.pop("limit", 50)
+            results_count = max_results or self.count(*args, **kwargs)
+
+            connector = aiohttp.TCPConnector(limit=MAX_CONCURRENCY)
+            async with aiohttp.ClientSession(connector=connector) as async_session:
+                client = self.client().with_async_session(async_session)
+                tasks = [
+                    async_fn(*args, limit=limit, offset=offset, client=client, **kwargs)
+                    for offset in range(0, results_count, limit)
+                ]
+                results = await asyncio.gather(*tasks)
+
+            return results
         else:
             self.__raise_operation_unsupported("retrieve_list")
