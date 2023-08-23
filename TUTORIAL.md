@@ -163,6 +163,41 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     ```
     For the rest of the examples refer to the [retrieve_list](#retrieve_list)
 
+* #### ```retrieve_list_iterator_async```
+    Retrieve a list of Flaws. Handles the pagination and returns the generator of individual resource entities. Uses asynchronous communitation
+    to speed up the data retrieval.
+
+    By default there is a limit which allows up to 10 concurrent connections. This limit can be changed by setting the `OSIDB_BINDINGS_MAX_CONCURRENCY` environmental variable. It is strongly recommended to keep this limit between 1-50 concurrent connections. Exceeding this limit may cause service overload which might by considered as the Denial-of-Service attack.
+
+    ```python
+    export OSIDB_BINDINGS_MAX_CONCURRENCY=30
+    ```
+
+    Using the argument `max_results` you can limit the number of results returned.
+
+
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+
+    ```python
+    all_flaws = session.flaws.retrieve_list_iterator_async()
+    for flaw in all_flaws:
+        do_calc(flaw)
+
+    # string query parameters
+    critical_impact_flaws = session.flaws.retrieve_list_iterator_async(impact="CRITICAL")
+    for flaw in critical_impact_flaws:
+        print(flaw.impact)
+
+    # get the first 200 results
+    for flaw in session.flaws.retrieve_list_iterator_async(max_results=200):
+        do_calc(flaw)
+    ```
+    For the rest of the examples refer to the [retrieve_list](#retrieve_list)
+
+#### components.count
+
+Retrieve the the total count number of entities which would be returned by the same `retrieve_list` call. In terms of the input arguments this operation behaves the same as `retrieve_list`.
+
 * #### ```search```
     Retrieve a list of Flaws. Performs full text search filter.
     ```python
