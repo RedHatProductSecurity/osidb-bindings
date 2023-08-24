@@ -6,6 +6,7 @@ import re
 from functools import partial
 from typing import Callable, Optional
 
+from .constants import DEFAULT_LIMIT
 from .exceptions import OSIDBBindingsException
 
 
@@ -23,7 +24,7 @@ class Paginator:
         self,
         *args,
         retrieve_list_fn: Optional[Callable] = None,
-        limit: int = 50,
+        limit: int = DEFAULT_LIMIT,
         offset: int = 0,
         init_response=None,
         **kwargs,

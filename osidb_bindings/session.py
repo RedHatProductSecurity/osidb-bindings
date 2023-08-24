@@ -21,6 +21,7 @@ from .bindings.python_client.api.auth import (
 from .bindings.python_client.types import UNSET
 from .constants import (
     ALL_SESSION_OPERATIONS,
+    DEFAULT_LIMIT,
     OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_PLACEHOLDER_FIELD,
@@ -434,7 +435,7 @@ class SessionOperationsGroup:
             async_fn = get_async_function(method_module)
 
             kwargs.pop("offset", None)
-            limit = kwargs.pop("limit", 50)
+            limit = kwargs.pop("limit", None) or DEFAULT_LIMIT
             results_count = max_results or self.count(*args, **kwargs)
 
             connector = aiohttp.TCPConnector(limit=MAX_CONCURRENCY)
