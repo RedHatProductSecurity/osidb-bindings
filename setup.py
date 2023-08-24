@@ -22,5 +22,11 @@ setup(
     ],
     packages=find_packages(),
     python_requires=">=3.6",
-    install_requires=["attrs", "requests", "requests-gssapi", "python-dateutil"],
+    install_requires=[
+        "aiohttp",
+        "attrs",
+        "requests",
+        "requests-gssapi",
+        "python-dateutil",
+    ],
 )
