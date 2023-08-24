@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Changed
 - fix missing aiohttp dependency in setup script
+- fix aiohttp error when `BUGZILLA_API_KEY` environmental variable
+  is not supplied
+- fix error caused by supplying empty limit to async iterator
 ## [3.4.1] - 2023-08-23
 ### Added
 - async iterator operation
