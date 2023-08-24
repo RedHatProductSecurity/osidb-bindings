@@ -4,7 +4,6 @@ osidb-bindings session
 
 import asyncio
 import importlib
-import os
 from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional
 
@@ -116,7 +115,7 @@ class Session:
             base_url=base_url,
             headers={
                 "User-Agent": OSIDB_BINDINGS_USERAGENT,
-                "Bugzilla-Api-Key": os.getenv("BUGZILLA_API_KEY"),
+                "Bugzilla-Api-Key": get_env("BUGZILLA_API_KEY", ""),
             },
             verify_ssl=verify_ssl,
         )
