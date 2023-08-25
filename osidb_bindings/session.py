@@ -435,16 +435,34 @@ class SessionOperationsGroup:
 
             kwargs.pop("offset", None)
             limit = kwargs.pop("limit", None) or DEFAULT_LIMIT
-            results_count = max_results or self.count(*args, **kwargs)
 
+            results = []
             connector = aiohttp.TCPConnector(limit=MAX_CONCURRENCY)
             async with aiohttp.ClientSession(connector=connector) as async_session:
                 client = self.client().with_async_session(async_session)
+
+                # await first response page
+                first_response = await async_fn(
+                    *args, limit=limit, client=client, **kwargs
+                )
+                results.append(first_response)
+
+                # no additional pages
+                if first_response.next_ is None:
+                    return results
+
+                results_count = (
+                    min(max_results, first_response.count)
+                    if max_results is not None
+                    else first_response.count
+                )
+
+                # retrieve rest of the pages
                 tasks = [
                     async_fn(*args, limit=limit, offset=offset, client=client, **kwargs)
-                    for offset in range(0, results_count, limit)
+                    for offset in range(limit, results_count, limit)
                 ]
-                results = await asyncio.gather(*tasks)
+                results.extend(await asyncio.gather(*tasks))
 
             return results
         else:
