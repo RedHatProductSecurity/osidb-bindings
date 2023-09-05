@@ -19,7 +19,7 @@ class TokenVerify(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(token, Unset):
+        if not isinstance(token, Unset):
             field_dict["token"] = token
 
         return field_dict
@@ -36,7 +36,7 @@ class TokenVerify(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if isinstance(token, Unset):
+        if not isinstance(token, Unset):
             field_dict["token"] = token
 
         return field_dict

@@ -19,7 +19,7 @@ class SupportedProducts(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(name, Unset):
+        if not isinstance(name, Unset):
             field_dict["name"] = name
 
         return field_dict

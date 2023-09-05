@@ -37,25 +37,25 @@ class AffectMetaAttr(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(affectedness, Unset):
+        if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
-        if isinstance(component, Unset):
+        if not isinstance(component, Unset):
             field_dict["component"] = component
-        if isinstance(cvss2, Unset):
+        if not isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if isinstance(cvss3, Unset):
+        if not isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if isinstance(impact, Unset):
+        if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if isinstance(module_name, Unset):
+        if not isinstance(module_name, Unset):
             field_dict["module_name"] = module_name
-        if isinstance(module_stream, Unset):
+        if not isinstance(module_stream, Unset):
             field_dict["module_stream"] = module_stream
-        if isinstance(ps_component, Unset):
+        if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
-        if isinstance(ps_module, Unset):
+        if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
 
         return field_dict

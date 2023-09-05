@@ -25,13 +25,13 @@ class JiraUser(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(name, Unset):
+        if not isinstance(name, Unset):
             field_dict["name"] = name
-        if isinstance(key, Unset):
+        if not isinstance(key, Unset):
             field_dict["key"] = key
-        if isinstance(email_address, Unset):
+        if not isinstance(email_address, Unset):
             field_dict["emailAddress"] = email_address
-        if isinstance(display_name, Unset):
+        if not isinstance(display_name, Unset):
             field_dict["displayName"] = display_name
 
         return field_dict

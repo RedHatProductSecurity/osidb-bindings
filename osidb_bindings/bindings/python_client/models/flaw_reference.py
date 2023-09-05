@@ -45,21 +45,21 @@ class FlawReference(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(flaw, Unset):
+        if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if isinstance(url, Unset):
+        if not isinstance(url, Unset):
             field_dict["url"] = url
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(updated_dt, Unset):
+        if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if isinstance(description, Unset):
+        if not isinstance(description, Unset):
             field_dict["description"] = description
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
 
         return field_dict
@@ -98,21 +98,21 @@ class FlawReference(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if isinstance(flaw, Unset):
+        if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if isinstance(url, Unset):
+        if not isinstance(url, Unset):
             field_dict["url"] = url
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(updated_dt, Unset):
+        if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if isinstance(description, Unset):
+        if not isinstance(description, Unset):
             field_dict["description"] = description
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
 
         return field_dict
