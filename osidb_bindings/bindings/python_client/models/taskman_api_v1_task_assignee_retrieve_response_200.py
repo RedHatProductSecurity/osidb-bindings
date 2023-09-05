@@ -44,17 +44,17 @@ class TaskmanApiV1TaskAssigneeRetrieveResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if total is not UNSET:
+        if isinstance(total, Unset):
             field_dict["total"] = total
-        if issues is not UNSET:
+        if isinstance(issues, Unset):
             field_dict["issues"] = issues
-        if dt is not UNSET:
+        if isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if env is not UNSET:
+        if isinstance(env, Unset):
             field_dict["env"] = env
-        if revision is not UNSET:
+        if isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

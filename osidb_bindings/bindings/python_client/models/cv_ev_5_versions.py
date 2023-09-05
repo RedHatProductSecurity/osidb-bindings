@@ -25,9 +25,9 @@ class CVEv5Versions(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
-        if status is not UNSET:
+        if isinstance(status, Unset):
             field_dict["status"] = status
 
         return field_dict

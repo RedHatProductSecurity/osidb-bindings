@@ -30,13 +30,13 @@ class TrackerReportData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if external_system_id is not UNSET:
+        if isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if status is not UNSET:
+        if isinstance(status, Unset):
             field_dict["status"] = status
-        if resolution is not UNSET:
+        if isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
 
         return field_dict

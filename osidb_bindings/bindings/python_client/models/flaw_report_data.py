@@ -34,13 +34,13 @@ class FlawReportData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if state is not UNSET:
+        if isinstance(state, Unset):
             field_dict["state"] = state
-        if resolution is not UNSET:
+        if isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if cve_id is not UNSET:
+        if isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
-        if affects is not UNSET:
+        if isinstance(affects, Unset):
             field_dict["affects"] = affects
 
         return field_dict

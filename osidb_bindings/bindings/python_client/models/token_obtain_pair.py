@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET, OSIDBModel
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TokenObtainPair")
 
@@ -25,13 +25,13 @@ class TokenObtainPair(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if username is not UNSET:
+        if isinstance(username, Unset):
             field_dict["username"] = username
-        if password is not UNSET:
+        if isinstance(password, Unset):
             field_dict["password"] = password
-        if access is not UNSET:
+        if isinstance(access, Unset):
             field_dict["access"] = access
-        if refresh is not UNSET:
+        if isinstance(refresh, Unset):
             field_dict["refresh"] = refresh
 
         return field_dict
@@ -65,13 +65,13 @@ class TokenObtainPair(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if username is not UNSET:
+        if isinstance(username, Unset):
             field_dict["username"] = username
-        if password is not UNSET:
+        if isinstance(password, Unset):
             field_dict["password"] = password
-        if access is not UNSET:
+        if isinstance(access, Unset):
             field_dict["access"] = access
-        if refresh is not UNSET:
+        if isinstance(refresh, Unset):
             field_dict["refresh"] = refresh
 
         return field_dict

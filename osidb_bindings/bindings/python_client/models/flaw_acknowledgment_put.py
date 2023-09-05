@@ -38,19 +38,19 @@ class FlawAcknowledgmentPut(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if name is not UNSET:
+        if isinstance(name, Unset):
             field_dict["name"] = name
-        if affiliation is not UNSET:
+        if isinstance(affiliation, Unset):
             field_dict["affiliation"] = affiliation
-        if from_upstream is not UNSET:
+        if isinstance(from_upstream, Unset):
             field_dict["from_upstream"] = from_upstream
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
 
         return field_dict
@@ -88,19 +88,19 @@ class FlawAcknowledgmentPut(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if name is not UNSET:
+        if isinstance(name, Unset):
             field_dict["name"] = name
-        if affiliation is not UNSET:
+        if isinstance(affiliation, Unset):
             field_dict["affiliation"] = affiliation
-        if from_upstream is not UNSET:
+        if isinstance(from_upstream, Unset):
             field_dict["from_upstream"] = from_upstream
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
 
         return field_dict

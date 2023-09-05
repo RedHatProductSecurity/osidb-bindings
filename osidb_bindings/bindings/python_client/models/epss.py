@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET, OSIDBModel
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="EPSS")
 
@@ -21,9 +21,9 @@ class EPSS(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if cve is not UNSET:
+        if isinstance(cve, Unset):
             field_dict["cve"] = cve
-        if epss is not UNSET:
+        if isinstance(epss, Unset):
             field_dict["epss"] = epss
 
         return field_dict

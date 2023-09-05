@@ -274,89 +274,89 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if state is not UNSET:
+        if isinstance(state, Unset):
             field_dict["state"] = state
-        if resolution is not UNSET:
+        if isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if title is not UNSET:
+        if isinstance(title, Unset):
             field_dict["title"] = title
-        if trackers is not UNSET:
+        if isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if description is not UNSET:
+        if isinstance(description, Unset):
             field_dict["description"] = description
-        if affects is not UNSET:
+        if isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if meta is not UNSET:
+        if isinstance(meta, Unset):
             field_dict["meta"] = meta
-        if comments is not UNSET:
+        if isinstance(comments, Unset):
             field_dict["comments"] = comments
-        if meta_attr is not UNSET:
+        if isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
-        if package_versions is not UNSET:
+        if isinstance(package_versions, Unset):
             field_dict["package_versions"] = package_versions
-        if acknowledgments is not UNSET:
+        if isinstance(acknowledgments, Unset):
             field_dict["acknowledgments"] = acknowledgments
-        if references is not UNSET:
+        if isinstance(references, Unset):
             field_dict["references"] = references
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if classification is not UNSET:
+        if isinstance(classification, Unset):
             field_dict["classification"] = classification
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if cve_id is not UNSET:
+        if isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
-        if impact is not UNSET:
+        if isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if component is not UNSET:
+        if isinstance(component, Unset):
             field_dict["component"] = component
-        if summary is not UNSET:
+        if isinstance(summary, Unset):
             field_dict["summary"] = summary
-        if requires_summary is not UNSET:
+        if isinstance(requires_summary, Unset):
             field_dict["requires_summary"] = requires_summary
-        if statement is not UNSET:
+        if isinstance(statement, Unset):
             field_dict["statement"] = statement
-        if cwe_id is not UNSET:
+        if isinstance(cwe_id, Unset):
             field_dict["cwe_id"] = cwe_id
-        if unembargo_dt is not UNSET:
+        if isinstance(unembargo_dt, Unset):
             field_dict["unembargo_dt"] = unembargo_dt
-        if source is not UNSET:
+        if isinstance(source, Unset):
             field_dict["source"] = source
-        if reported_dt is not UNSET:
+        if isinstance(reported_dt, Unset):
             field_dict["reported_dt"] = reported_dt
-        if mitigation is not UNSET:
+        if isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if cvss2 is not UNSET:
+        if isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if cvss2_score is not UNSET:
+        if isinstance(cvss2_score, Unset):
             field_dict["cvss2_score"] = cvss2_score
-        if nvd_cvss2 is not UNSET:
+        if isinstance(nvd_cvss2, Unset):
             field_dict["nvd_cvss2"] = nvd_cvss2
-        if cvss3 is not UNSET:
+        if isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if cvss3_score is not UNSET:
+        if isinstance(cvss3_score, Unset):
             field_dict["cvss3_score"] = cvss3_score
-        if nvd_cvss3 is not UNSET:
+        if isinstance(nvd_cvss3, Unset):
             field_dict["nvd_cvss3"] = nvd_cvss3
-        if is_major_incident is not UNSET:
+        if isinstance(is_major_incident, Unset):
             field_dict["is_major_incident"] = is_major_incident
-        if major_incident_state is not UNSET:
+        if isinstance(major_incident_state, Unset):
             field_dict["major_incident_state"] = major_incident_state
-        if nist_cvss_validation is not UNSET:
+        if isinstance(nist_cvss_validation, Unset):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
-        if dt is not UNSET:
+        if isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if env is not UNSET:
+        if isinstance(env, Unset):
             field_dict["env"] = env
-        if revision is not UNSET:
+        if isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

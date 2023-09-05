@@ -43,17 +43,17 @@ class FlawCommentPost(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if text is not UNSET:
+        if isinstance(text, Unset):
             field_dict["text"] = text
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if meta_attr is not UNSET:
+        if isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
 
         return field_dict
@@ -86,17 +86,17 @@ class FlawCommentPost(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if text is not UNSET:
+        if isinstance(text, Unset):
             field_dict["text"] = text
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if meta_attr is not UNSET:
+        if isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
 
         return field_dict

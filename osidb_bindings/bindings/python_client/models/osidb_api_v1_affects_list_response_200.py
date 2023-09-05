@@ -48,21 +48,21 @@ class OsidbApiV1AffectsListResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if count is not UNSET:
+        if isinstance(count, Unset):
             field_dict["count"] = count
-        if next_ is not UNSET:
+        if isinstance(next_, Unset):
             field_dict["next"] = next_
-        if previous is not UNSET:
+        if isinstance(previous, Unset):
             field_dict["previous"] = previous
-        if results is not UNSET:
+        if isinstance(results, Unset):
             field_dict["results"] = results
-        if dt is not UNSET:
+        if isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if env is not UNSET:
+        if isinstance(env, Unset):
             field_dict["env"] = env
-        if revision is not UNSET:
+        if isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

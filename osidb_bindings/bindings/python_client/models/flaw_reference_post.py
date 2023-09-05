@@ -38,17 +38,17 @@ class FlawReferencePost(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if url is not UNSET:
+        if isinstance(url, Unset):
             field_dict["url"] = url
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if description is not UNSET:
+        if isinstance(description, Unset):
             field_dict["description"] = description
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
 
         return field_dict
@@ -82,17 +82,17 @@ class FlawReferencePost(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if url is not UNSET:
+        if isinstance(url, Unset):
             field_dict["url"] = url
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if description is not UNSET:
+        if isinstance(description, Unset):
             field_dict["description"] = description
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
 
         return field_dict

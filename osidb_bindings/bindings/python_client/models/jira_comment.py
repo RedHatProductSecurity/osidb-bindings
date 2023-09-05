@@ -38,15 +38,15 @@ class JiraComment(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if id is not UNSET:
+        if isinstance(id, Unset):
             field_dict["id"] = id
-        if author is not UNSET:
+        if isinstance(author, Unset):
             field_dict["author"] = author
-        if body is not UNSET:
+        if isinstance(body, Unset):
             field_dict["body"] = body
-        if created is not UNSET:
+        if isinstance(created, Unset):
             field_dict["created"] = created
-        if updated is not UNSET:
+        if isinstance(updated, Unset):
             field_dict["updated"] = updated
 
         return field_dict
