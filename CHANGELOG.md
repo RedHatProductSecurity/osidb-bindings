@@ -11,8 +11,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [3.4.5] - 2023-09-05
 ### Fixed
-- fix regresion in `to_dict` introduced in 3.4.4 by
+- fix regression in `to_dict` introduced in 3.4.4 by
   fliped condition
 
 ## [3.4.4] - 2023-09-05
