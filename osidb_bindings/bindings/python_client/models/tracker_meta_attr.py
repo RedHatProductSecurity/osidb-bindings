@@ -33,21 +33,21 @@ class TrackerMetaAttr(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(bz_id, Unset):
+        if not isinstance(bz_id, Unset):
             field_dict["bz_id"] = bz_id
-        if isinstance(owner, Unset):
+        if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if isinstance(qe_owner, Unset):
+        if not isinstance(qe_owner, Unset):
             field_dict["qe_owner"] = qe_owner
-        if isinstance(ps_component, Unset):
+        if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
-        if isinstance(ps_module, Unset):
+        if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
-        if isinstance(ps_update_stream, Unset):
+        if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if isinstance(status, Unset):
+        if not isinstance(status, Unset):
             field_dict["status"] = status
 
         return field_dict

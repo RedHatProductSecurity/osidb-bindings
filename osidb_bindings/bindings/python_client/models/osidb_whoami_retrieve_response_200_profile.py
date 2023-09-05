@@ -21,9 +21,9 @@ class OsidbWhoamiRetrieveResponse200Profile(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(bz_user_id, Unset):
+        if not isinstance(bz_user_id, Unset):
             field_dict["bz_user_id"] = bz_user_id
-        if isinstance(jira_user_id, Unset):
+        if not isinstance(jira_user_id, Unset):
             field_dict["jira_user_id"] = jira_user_id
 
         return field_dict

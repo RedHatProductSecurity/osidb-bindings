@@ -182,6 +182,11 @@ class Session:
         """Get resfresh token based on the auth type"""
 
         if isinstance(self.auth, tuple):
+            print(
+                models.TokenObtainPair.from_dict(
+                    {"username": self.auth[0], "password": self.auth[1]}
+                ).to_dict()
+            )
             response = auth_token_create.sync(
                 client=self.__client,
                 form_data=models.TokenObtainPair.from_dict(

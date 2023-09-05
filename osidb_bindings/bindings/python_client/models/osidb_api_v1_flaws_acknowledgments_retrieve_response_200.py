@@ -52,29 +52,29 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(name, Unset):
+        if not isinstance(name, Unset):
             field_dict["name"] = name
-        if isinstance(affiliation, Unset):
+        if not isinstance(affiliation, Unset):
             field_dict["affiliation"] = affiliation
-        if isinstance(from_upstream, Unset):
+        if not isinstance(from_upstream, Unset):
             field_dict["from_upstream"] = from_upstream
-        if isinstance(flaw, Unset):
+        if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(updated_dt, Unset):
+        if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if isinstance(dt, Unset):
+        if not isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if isinstance(env, Unset):
+        if not isinstance(env, Unset):
             field_dict["env"] = env
-        if isinstance(revision, Unset):
+        if not isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if isinstance(version, Unset):
+        if not isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

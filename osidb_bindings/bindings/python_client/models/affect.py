@@ -127,41 +127,41 @@ class Affect(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(ps_module, Unset):
+        if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
-        if isinstance(ps_component, Unset):
+        if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
-        if isinstance(trackers, Unset):
+        if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if isinstance(meta_attr, Unset):
+        if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
-        if isinstance(delegated_resolution, Unset):
+        if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(updated_dt, Unset):
+        if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if isinstance(flaw, Unset):
+        if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
-        if isinstance(affectedness, Unset):
+        if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if isinstance(impact, Unset):
+        if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if isinstance(cvss2, Unset):
+        if not isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if isinstance(cvss2_score, Unset):
+        if not isinstance(cvss2_score, Unset):
             field_dict["cvss2_score"] = cvss2_score
-        if isinstance(cvss3, Unset):
+        if not isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if isinstance(cvss3_score, Unset):
+        if not isinstance(cvss3_score, Unset):
             field_dict["cvss3_score"] = cvss3_score
 
         return field_dict
@@ -286,41 +286,41 @@ class Affect(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(ps_module, Unset):
+        if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
-        if isinstance(ps_component, Unset):
+        if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
-        if isinstance(trackers, Unset):
+        if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if isinstance(meta_attr, Unset):
+        if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
-        if isinstance(delegated_resolution, Unset):
+        if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(updated_dt, Unset):
+        if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if isinstance(flaw, Unset):
+        if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
-        if isinstance(affectedness, Unset):
+        if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if isinstance(impact, Unset):
+        if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if isinstance(cvss2, Unset):
+        if not isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if isinstance(cvss2_score, Unset):
+        if not isinstance(cvss2_score, Unset):
             field_dict["cvss2_score"] = cvss2_score
-        if isinstance(cvss3, Unset):
+        if not isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if isinstance(cvss3_score, Unset):
+        if not isinstance(cvss3_score, Unset):
             field_dict["cvss3_score"] = cvss3_score
 
         return field_dict

@@ -21,9 +21,9 @@ class EPSS(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(cve, Unset):
+        if not isinstance(cve, Unset):
             field_dict["cve"] = cve
-        if isinstance(epss, Unset):
+        if not isinstance(epss, Unset):
             field_dict["epss"] = epss
 
         return field_dict

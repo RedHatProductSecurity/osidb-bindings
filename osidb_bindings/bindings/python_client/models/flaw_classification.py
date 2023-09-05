@@ -25,9 +25,9 @@ class FlawClassification(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(workflow, Unset):
+        if not isinstance(workflow, Unset):
             field_dict["workflow"] = workflow
-        if isinstance(state, Unset):
+        if not isinstance(state, Unset):
             field_dict["state"] = state
 
         return field_dict

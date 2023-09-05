@@ -47,21 +47,21 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(dt, Unset):
+        if not isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if isinstance(email, Unset):
+        if not isinstance(email, Unset):
             field_dict["email"] = email
-        if isinstance(env, Unset):
+        if not isinstance(env, Unset):
             field_dict["env"] = env
-        if isinstance(groups, Unset):
+        if not isinstance(groups, Unset):
             field_dict["groups"] = groups
-        if isinstance(profile, Unset):
+        if not isinstance(profile, Unset):
             field_dict["profile"] = profile
-        if isinstance(revision, Unset):
+        if not isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if isinstance(username, Unset):
+        if not isinstance(username, Unset):
             field_dict["username"] = username
-        if isinstance(version, Unset):
+        if not isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

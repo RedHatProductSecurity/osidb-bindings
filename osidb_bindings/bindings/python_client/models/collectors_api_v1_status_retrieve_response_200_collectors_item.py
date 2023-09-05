@@ -71,19 +71,19 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(data, Unset):
+        if not isinstance(data, Unset):
             field_dict["data"] = data
-        if isinstance(depends_on, Unset):
+        if not isinstance(depends_on, Unset):
             field_dict["depends_on"] = depends_on
-        if isinstance(error, Unset):
+        if not isinstance(error, Unset):
             field_dict["error"] = error
-        if isinstance(is_complete, Unset):
+        if not isinstance(is_complete, Unset):
             field_dict["is_complete"] = is_complete
-        if isinstance(data_models, Unset):
+        if not isinstance(data_models, Unset):
             field_dict["data_models"] = data_models
-        if isinstance(state, Unset):
+        if not isinstance(state, Unset):
             field_dict["state"] = state
-        if isinstance(updated_until, Unset):
+        if not isinstance(updated_until, Unset):
             field_dict["updated_until"] = updated_until
 
         return field_dict

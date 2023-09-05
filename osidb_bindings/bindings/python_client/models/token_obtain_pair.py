@@ -25,13 +25,13 @@ class TokenObtainPair(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(username, Unset):
+        if not isinstance(username, Unset):
             field_dict["username"] = username
-        if isinstance(password, Unset):
+        if not isinstance(password, Unset):
             field_dict["password"] = password
-        if isinstance(access, Unset):
+        if not isinstance(access, Unset):
             field_dict["access"] = access
-        if isinstance(refresh, Unset):
+        if not isinstance(refresh, Unset):
             field_dict["refresh"] = refresh
 
         return field_dict
@@ -65,13 +65,13 @@ class TokenObtainPair(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if isinstance(username, Unset):
+        if not isinstance(username, Unset):
             field_dict["username"] = username
-        if isinstance(password, Unset):
+        if not isinstance(password, Unset):
             field_dict["password"] = password
-        if isinstance(access, Unset):
+        if not isinstance(access, Unset):
             field_dict["access"] = access
-        if isinstance(refresh, Unset):
+        if not isinstance(refresh, Unset):
             field_dict["refresh"] = refresh
 
         return field_dict

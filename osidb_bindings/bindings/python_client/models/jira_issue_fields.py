@@ -45,19 +45,19 @@ class JiraIssueFields(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(issuetype, Unset):
+        if not isinstance(issuetype, Unset):
             field_dict["issuetype"] = issuetype
-        if isinstance(summary, Unset):
+        if not isinstance(summary, Unset):
             field_dict["summary"] = summary
-        if isinstance(description, Unset):
+        if not isinstance(description, Unset):
             field_dict["description"] = description
-        if isinstance(assignee, Unset):
+        if not isinstance(assignee, Unset):
             field_dict["assignee"] = assignee
-        if isinstance(reporter, Unset):
+        if not isinstance(reporter, Unset):
             field_dict["reporter"] = reporter
-        if isinstance(creator, Unset):
+        if not isinstance(creator, Unset):
             field_dict["creator"] = creator
-        if isinstance(customfield_12311140, Unset):
+        if not isinstance(customfield_12311140, Unset):
             field_dict["customfield_12311140"] = customfield_12311140
 
         return field_dict

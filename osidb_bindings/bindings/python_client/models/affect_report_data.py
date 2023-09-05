@@ -67,15 +67,15 @@ class AffectReportData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(ps_module, Unset):
+        if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
-        if isinstance(ps_component, Unset):
+        if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
-        if isinstance(affectedness, Unset):
+        if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if isinstance(trackers, Unset):
+        if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
 
         return field_dict

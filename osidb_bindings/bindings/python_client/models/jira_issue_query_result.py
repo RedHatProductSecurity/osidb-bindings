@@ -30,9 +30,9 @@ class JiraIssueQueryResult(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(total, Unset):
+        if not isinstance(total, Unset):
             field_dict["total"] = total
-        if isinstance(issues, Unset):
+        if not isinstance(issues, Unset):
             field_dict["issues"] = issues
 
         return field_dict

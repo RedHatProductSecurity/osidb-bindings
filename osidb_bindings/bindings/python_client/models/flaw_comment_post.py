@@ -43,17 +43,17 @@ class FlawCommentPost(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(text, Unset):
+        if not isinstance(text, Unset):
             field_dict["text"] = text
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
-        if isinstance(meta_attr, Unset):
+        if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
 
         return field_dict
@@ -86,17 +86,17 @@ class FlawCommentPost(OSIDBModel):
                 for key, value in self.additional_properties.items()
             }
         )
-        if isinstance(text, Unset):
+        if not isinstance(text, Unset):
             field_dict["text"] = text
-        if isinstance(uuid, Unset):
+        if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if isinstance(created_dt, Unset):
+        if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if isinstance(embargoed, Unset):
+        if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if isinstance(type, Unset):
+        if not isinstance(type, Unset):
             field_dict["type"] = type
-        if isinstance(meta_attr, Unset):
+        if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
 
         return field_dict

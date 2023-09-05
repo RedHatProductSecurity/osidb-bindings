@@ -77,65 +77,65 @@ class FlawPostMetaAttr(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if isinstance(acknowledgments, Unset):
+        if not isinstance(acknowledgments, Unset):
             field_dict["acknowledgments"] = acknowledgments
-        if isinstance(acks_not_needed, Unset):
+        if not isinstance(acks_not_needed, Unset):
             field_dict["acks_not_needed"] = acks_not_needed
-        if isinstance(affects, Unset):
+        if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if isinstance(alias, Unset):
+        if not isinstance(alias, Unset):
             field_dict["alias"] = alias
-        if isinstance(bz_datascore, Unset):
+        if not isinstance(bz_datascore, Unset):
             field_dict["bz_datascore"] = bz_datascore
-        if isinstance(bz_id, Unset):
+        if not isinstance(bz_id, Unset):
             field_dict["bz_id"] = bz_id
-        if isinstance(checklists, Unset):
+        if not isinstance(checklists, Unset):
             field_dict["checklists"] = checklists
-        if isinstance(classification, Unset):
+        if not isinstance(classification, Unset):
             field_dict["classification"] = classification
-        if isinstance(cvss2, Unset):
+        if not isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if isinstance(cvss2_score, Unset):
+        if not isinstance(cvss2_score, Unset):
             field_dict["cvss2_score"] = cvss2_score
-        if isinstance(cvss2_vector, Unset):
+        if not isinstance(cvss2_vector, Unset):
             field_dict["cvss2_vector"] = cvss2_vector
-        if isinstance(cvss3, Unset):
+        if not isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if isinstance(cvss3_comment, Unset):
+        if not isinstance(cvss3_comment, Unset):
             field_dict["cvss3_comment"] = cvss3_comment
-        if isinstance(cvss3_score, Unset):
+        if not isinstance(cvss3_score, Unset):
             field_dict["cvss3_score"] = cvss3_score
-        if isinstance(cvss3_vector, Unset):
+        if not isinstance(cvss3_vector, Unset):
             field_dict["cvss3_vector"] = cvss3_vector
-        if isinstance(cwe, Unset):
+        if not isinstance(cwe, Unset):
             field_dict["cwe"] = cwe
-        if isinstance(depends_on, Unset):
+        if not isinstance(depends_on, Unset):
             field_dict["depends_on"] = depends_on
-        if isinstance(impact, Unset):
+        if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if isinstance(jira_trackers, Unset):
+        if not isinstance(jira_trackers, Unset):
             field_dict["jira_trackers"] = jira_trackers
-        if isinstance(mitigate, Unset):
+        if not isinstance(mitigate, Unset):
             field_dict["mitigate"] = mitigate
-        if isinstance(mitigation, Unset):
+        if not isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if isinstance(public, Unset):
+        if not isinstance(public, Unset):
             field_dict["public"] = public
-        if isinstance(references, Unset):
+        if not isinstance(references, Unset):
             field_dict["references"] = references
-        if isinstance(related_cves, Unset):
+        if not isinstance(related_cves, Unset):
             field_dict["related_cves"] = related_cves
-        if isinstance(reported, Unset):
+        if not isinstance(reported, Unset):
             field_dict["reported"] = reported
-        if isinstance(resolution, Unset):
+        if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if isinstance(source, Unset):
+        if not isinstance(source, Unset):
             field_dict["source"] = source
-        if isinstance(state, Unset):
+        if not isinstance(state, Unset):
             field_dict["state"] = state
-        if isinstance(statement, Unset):
+        if not isinstance(statement, Unset):
             field_dict["statement"] = statement
-        if isinstance(task_owner, Unset):
+        if not isinstance(task_owner, Unset):
             field_dict["task_owner"] = task_owner
 
         return field_dict
