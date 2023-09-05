@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET, OSIDBModel
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="JiraUser")
 
@@ -25,13 +25,13 @@ class JiraUser(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if name is not UNSET:
+        if isinstance(name, Unset):
             field_dict["name"] = name
-        if key is not UNSET:
+        if isinstance(key, Unset):
             field_dict["key"] = key
-        if email_address is not UNSET:
+        if isinstance(email_address, Unset):
             field_dict["emailAddress"] = email_address
-        if display_name is not UNSET:
+        if isinstance(display_name, Unset):
             field_dict["displayName"] = display_name
 
         return field_dict

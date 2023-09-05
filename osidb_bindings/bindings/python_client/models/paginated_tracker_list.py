@@ -34,13 +34,13 @@ class PaginatedTrackerList(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if count is not UNSET:
+        if isinstance(count, Unset):
             field_dict["count"] = count
-        if next_ is not UNSET:
+        if isinstance(next_, Unset):
             field_dict["next"] = next_
-        if previous is not UNSET:
+        if isinstance(previous, Unset):
             field_dict["previous"] = previous
-        if results is not UNSET:
+        if isinstance(results, Unset):
             field_dict["results"] = results
 
         return field_dict

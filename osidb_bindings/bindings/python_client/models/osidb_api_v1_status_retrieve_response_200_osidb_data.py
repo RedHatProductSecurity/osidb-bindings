@@ -19,7 +19,7 @@ class OsidbApiV1StatusRetrieveResponse200OsidbData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if flaw_count is not UNSET:
+        if isinstance(flaw_count, Unset):
             field_dict["flaw_count"] = flaw_count
 
         return field_dict

@@ -77,65 +77,65 @@ class FlawMetaAttr(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if acknowledgments is not UNSET:
+        if isinstance(acknowledgments, Unset):
             field_dict["acknowledgments"] = acknowledgments
-        if acks_not_needed is not UNSET:
+        if isinstance(acks_not_needed, Unset):
             field_dict["acks_not_needed"] = acks_not_needed
-        if affects is not UNSET:
+        if isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if alias is not UNSET:
+        if isinstance(alias, Unset):
             field_dict["alias"] = alias
-        if bz_datascore is not UNSET:
+        if isinstance(bz_datascore, Unset):
             field_dict["bz_datascore"] = bz_datascore
-        if bz_id is not UNSET:
+        if isinstance(bz_id, Unset):
             field_dict["bz_id"] = bz_id
-        if checklists is not UNSET:
+        if isinstance(checklists, Unset):
             field_dict["checklists"] = checklists
-        if classification is not UNSET:
+        if isinstance(classification, Unset):
             field_dict["classification"] = classification
-        if cvss2 is not UNSET:
+        if isinstance(cvss2, Unset):
             field_dict["cvss2"] = cvss2
-        if cvss2_score is not UNSET:
+        if isinstance(cvss2_score, Unset):
             field_dict["cvss2_score"] = cvss2_score
-        if cvss2_vector is not UNSET:
+        if isinstance(cvss2_vector, Unset):
             field_dict["cvss2_vector"] = cvss2_vector
-        if cvss3 is not UNSET:
+        if isinstance(cvss3, Unset):
             field_dict["cvss3"] = cvss3
-        if cvss3_comment is not UNSET:
+        if isinstance(cvss3_comment, Unset):
             field_dict["cvss3_comment"] = cvss3_comment
-        if cvss3_score is not UNSET:
+        if isinstance(cvss3_score, Unset):
             field_dict["cvss3_score"] = cvss3_score
-        if cvss3_vector is not UNSET:
+        if isinstance(cvss3_vector, Unset):
             field_dict["cvss3_vector"] = cvss3_vector
-        if cwe is not UNSET:
+        if isinstance(cwe, Unset):
             field_dict["cwe"] = cwe
-        if depends_on is not UNSET:
+        if isinstance(depends_on, Unset):
             field_dict["depends_on"] = depends_on
-        if impact is not UNSET:
+        if isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if jira_trackers is not UNSET:
+        if isinstance(jira_trackers, Unset):
             field_dict["jira_trackers"] = jira_trackers
-        if mitigate is not UNSET:
+        if isinstance(mitigate, Unset):
             field_dict["mitigate"] = mitigate
-        if mitigation is not UNSET:
+        if isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if public is not UNSET:
+        if isinstance(public, Unset):
             field_dict["public"] = public
-        if references is not UNSET:
+        if isinstance(references, Unset):
             field_dict["references"] = references
-        if related_cves is not UNSET:
+        if isinstance(related_cves, Unset):
             field_dict["related_cves"] = related_cves
-        if reported is not UNSET:
+        if isinstance(reported, Unset):
             field_dict["reported"] = reported
-        if resolution is not UNSET:
+        if isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if source is not UNSET:
+        if isinstance(source, Unset):
             field_dict["source"] = source
-        if state is not UNSET:
+        if isinstance(state, Unset):
             field_dict["state"] = state
-        if statement is not UNSET:
+        if isinstance(statement, Unset):
             field_dict["statement"] = statement
-        if task_owner is not UNSET:
+        if isinstance(task_owner, Unset):
             field_dict["task_owner"] = task_owner
 
         return field_dict

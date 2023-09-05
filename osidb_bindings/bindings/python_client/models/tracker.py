@@ -69,27 +69,27 @@ class Tracker(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if external_system_id is not UNSET:
+        if isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if status is not UNSET:
+        if isinstance(status, Unset):
             field_dict["status"] = status
-        if errata is not UNSET:
+        if isinstance(errata, Unset):
             field_dict["errata"] = errata
-        if meta_attr is not UNSET:
+        if isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if affects is not UNSET:
+        if isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if resolution is not UNSET:
+        if isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if ps_update_stream is not UNSET:
+        if isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
 
         return field_dict

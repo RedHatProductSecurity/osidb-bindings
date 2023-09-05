@@ -48,23 +48,23 @@ class FlawComment(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if flaw is not UNSET:
+        if isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if text is not UNSET:
+        if isinstance(text, Unset):
             field_dict["text"] = text
-        if uuid is not UNSET:
+        if isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if external_system_id is not UNSET:
+        if isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if embargoed is not UNSET:
+        if isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if type is not UNSET:
+        if isinstance(type, Unset):
             field_dict["type"] = type
-        if order is not UNSET:
+        if isinstance(order, Unset):
             field_dict["order"] = order
 
         return field_dict

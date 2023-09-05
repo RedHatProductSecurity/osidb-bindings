@@ -32,13 +32,13 @@ class Erratum(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if et_id is not UNSET:
+        if isinstance(et_id, Unset):
             field_dict["et_id"] = et_id
-        if advisory_name is not UNSET:
+        if isinstance(advisory_name, Unset):
             field_dict["advisory_name"] = advisory_name
-        if created_dt is not UNSET:
+        if isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
-        if updated_dt is not UNSET:
+        if isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
 
         return field_dict

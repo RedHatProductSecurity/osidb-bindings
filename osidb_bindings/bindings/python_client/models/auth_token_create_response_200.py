@@ -38,21 +38,21 @@ class AuthTokenCreateResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if username is not UNSET:
+        if isinstance(username, Unset):
             field_dict["username"] = username
-        if password is not UNSET:
+        if isinstance(password, Unset):
             field_dict["password"] = password
-        if access is not UNSET:
+        if isinstance(access, Unset):
             field_dict["access"] = access
-        if refresh is not UNSET:
+        if isinstance(refresh, Unset):
             field_dict["refresh"] = refresh
-        if dt is not UNSET:
+        if isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if env is not UNSET:
+        if isinstance(env, Unset):
             field_dict["env"] = env
-        if revision is not UNSET:
+        if isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

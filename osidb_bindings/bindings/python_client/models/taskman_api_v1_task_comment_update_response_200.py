@@ -50,23 +50,23 @@ class TaskmanApiV1TaskCommentUpdateResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if id is not UNSET:
+        if isinstance(id, Unset):
             field_dict["id"] = id
-        if author is not UNSET:
+        if isinstance(author, Unset):
             field_dict["author"] = author
-        if body is not UNSET:
+        if isinstance(body, Unset):
             field_dict["body"] = body
-        if created is not UNSET:
+        if isinstance(created, Unset):
             field_dict["created"] = created
-        if updated is not UNSET:
+        if isinstance(updated, Unset):
             field_dict["updated"] = updated
-        if dt is not UNSET:
+        if isinstance(dt, Unset):
             field_dict["dt"] = dt
-        if env is not UNSET:
+        if isinstance(env, Unset):
             field_dict["env"] = env
-        if revision is not UNSET:
+        if isinstance(revision, Unset):
             field_dict["revision"] = revision
-        if version is not UNSET:
+        if isinstance(version, Unset):
             field_dict["version"] = version
 
         return field_dict

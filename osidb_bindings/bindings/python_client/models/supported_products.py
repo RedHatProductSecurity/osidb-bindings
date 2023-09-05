@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..types import UNSET, OSIDBModel
+from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="SupportedProducts")
 
@@ -19,7 +19,7 @@ class SupportedProducts(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if name is not UNSET:
+        if isinstance(name, Unset):
             field_dict["name"] = name
 
         return field_dict

@@ -28,13 +28,13 @@ class JiraIssue(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if id is not UNSET:
+        if isinstance(id, Unset):
             field_dict["id"] = id
-        if key is not UNSET:
+        if isinstance(key, Unset):
             field_dict["key"] = key
-        if name is not UNSET:
+        if isinstance(name, Unset):
             field_dict["name"] = name
-        if fields is not UNSET:
+        if isinstance(fields, Unset):
             field_dict["fields"] = fields
 
         return field_dict
