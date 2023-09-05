@@ -75,7 +75,7 @@ field_dict.update(self.additional_properties)
 {% endif %}
 {% endif %}
 {% for property in  model.required_properties + model.optional_properties %}
-if isinstance({{ property.python_name }}, Unset):
+if not isinstance({{ property.python_name }}, Unset):
     field_dict["{{ property.name }}"] = {{ property.python_name }}
 {% endfor %}
 
