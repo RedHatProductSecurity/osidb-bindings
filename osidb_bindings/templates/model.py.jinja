@@ -2,7 +2,7 @@
     This is a custom template derived from:
     https://github.com/openapi-generators/openapi-python-client/blob/v.0.10.7/openapi_python_client/templates/model.py.jinja
 #}
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO
+from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO, Union
 
 {% if model.additional_properties %}
 from typing import List
@@ -75,7 +75,7 @@ field_dict.update(self.additional_properties)
 {% endif %}
 {% endif %}
 {% for property in  model.required_properties + model.optional_properties %}
-if {{ property.python_name }} is not UNSET:
+if isinstance({{ property.python_name }}, Unset):
     field_dict["{{ property.name }}"] = {{ property.python_name }}
 {% endfor %}
 
