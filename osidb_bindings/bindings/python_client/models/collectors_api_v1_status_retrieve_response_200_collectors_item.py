@@ -30,6 +30,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError
     ] = UNSET
     is_complete: Union[Unset, bool] = UNSET
+    is_up2date: Union[Unset, bool] = UNSET
     data_models: Union[Unset, List[str]] = UNSET
     state: Union[
         Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState
@@ -54,6 +55,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             error = self.error.to_dict() if self.error else None
 
         is_complete = self.is_complete
+        is_up2date = self.is_up2date
         data_models: Union[Unset, List[str]] = UNSET
         if not isinstance(self.data_models, Unset):
             data_models = self.data_models
@@ -79,6 +81,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             field_dict["error"] = error
         if not isinstance(is_complete, Unset):
             field_dict["is_complete"] = is_complete
+        if not isinstance(is_up2date, Unset):
+            field_dict["is_up2date"] = is_up2date
         if not isinstance(data_models, Unset):
             field_dict["data_models"] = data_models
         if not isinstance(state, Unset):
@@ -117,6 +121,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
 
         is_complete = d.pop("is_complete", UNSET)
 
+        is_up2date = d.pop("is_up2date", UNSET)
+
         data_models = cast(List[str], d.pop("data_models", UNSET))
 
         _state = d.pop("state", UNSET)
@@ -138,6 +144,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             depends_on=depends_on,
             error=error,
             is_complete=is_complete,
+            is_up2date=is_up2date,
             data_models=data_models,
             state=state,
             updated_until=updated_until,
@@ -155,6 +162,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             "depends_on": List[str],
             "error": CollectorsApiV1StatusRetrieveResponse200CollectorsItemError,
             "is_complete": bool,
+            "is_up2date": bool,
             "data_models": List[str],
             "state": CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
             "updated_until": datetime.datetime,

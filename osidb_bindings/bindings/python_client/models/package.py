@@ -2,18 +2,18 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..models.cv_ev_5_versions import CVEv5Versions
+from ..models.package_ver import PackageVer
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="CVEv5PackageVersions")
+T = TypeVar("T", bound="Package")
 
 
 @attr.s(auto_attribs=True)
-class CVEv5PackageVersions(OSIDBModel):
-    """CVEv5 package versions serializer"""
+class Package(OSIDBModel):
+    """package_versions (Package model) serializer for read-only use in FlawSerializer."""
 
     package: str
-    versions: List[CVEv5Versions]
+    versions: List[PackageVer]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -49,27 +49,27 @@ class CVEv5PackageVersions(OSIDBModel):
         else:
             for versions_item_data in _versions or []:
                 _versions_item = versions_item_data
-                versions_item: CVEv5Versions
+                versions_item: PackageVer
                 if isinstance(_versions_item, Unset):
                     versions_item = UNSET
                 else:
-                    versions_item = CVEv5Versions.from_dict(_versions_item)
+                    versions_item = PackageVer.from_dict(_versions_item)
 
                 versions.append(versions_item)
 
-        cv_ev_5_package_versions = cls(
+        package = cls(
             package=package,
             versions=versions,
         )
 
-        cv_ev_5_package_versions.additional_properties = d
-        return cv_ev_5_package_versions
+        package.additional_properties = d
+        return package
 
     @staticmethod
     def get_fields():
         return {
             "package": str,
-            "versions": List[CVEv5Versions],
+            "versions": List[PackageVer],
         }
 
     @property

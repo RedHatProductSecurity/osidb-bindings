@@ -19,7 +19,7 @@ def _get_kwargs(
     client: AuthenticatedClient,
     description: Union[Unset, None, str] = UNSET,
     name: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/group".format(
         client.base_url,
@@ -27,7 +27,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     params: Dict[str, Any] = {
         "description": description,
@@ -73,13 +73,13 @@ def sync_detailed(
     client: AuthenticatedClient,
     description: Union[Unset, None, str] = UNSET,
     name: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1GroupCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         description=description,
         name=name,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.post(
@@ -98,7 +98,7 @@ def sync(
     client: AuthenticatedClient,
     description: Union[Unset, None, str] = UNSET,
     name: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1GroupCreateResponse200]:
     """Create a new group of tasks"""
 
@@ -106,7 +106,7 @@ def sync(
         client=client,
         description=description,
         name=name,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -115,13 +115,13 @@ async def async_detailed(
     client: AuthenticatedClient,
     description: Union[Unset, None, str] = UNSET,
     name: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1GroupCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         description=description,
         name=name,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().post(
@@ -140,7 +140,7 @@ async def async_(
     client: AuthenticatedClient,
     description: Union[Unset, None, str] = UNSET,
     name: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1GroupCreateResponse200]:
     """Create a new group of tasks"""
 
@@ -149,6 +149,6 @@ async def async_(
             client=client,
             description=description,
             name=name,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

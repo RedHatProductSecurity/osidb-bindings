@@ -3,8 +3,8 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.osidb_api_v1_flaws_references_destroy_response_204 import (
-    OsidbApiV1FlawsReferencesDestroyResponse204,
+from ...models.osidb_api_v1_flaws_references_destroy_response_200 import (
+    OsidbApiV1FlawsReferencesDestroyResponse200,
 )
 from ...types import UNSET, Response, Unset
 
@@ -33,24 +33,24 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse204]:
-    if response.status_code == 204:
-        _response_204 = response.json()
-        response_204: OsidbApiV1FlawsReferencesDestroyResponse204
-        if isinstance(_response_204, Unset):
-            response_204 = UNSET
+) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse200]:
+    if response.status_code == 200:
+        _response_200 = response.json()
+        response_200: OsidbApiV1FlawsReferencesDestroyResponse200
+        if isinstance(_response_200, Unset):
+            response_200 = UNSET
         else:
-            response_204 = OsidbApiV1FlawsReferencesDestroyResponse204.from_dict(
-                _response_204
+            response_200 = OsidbApiV1FlawsReferencesDestroyResponse200.from_dict(
+                _response_200
             )
 
-        return response_204
+        return response_200
     return None
 
 
 def _build_response(
     *, response: requests.Response
-) -> Response[OsidbApiV1FlawsReferencesDestroyResponse204]:
+) -> Response[OsidbApiV1FlawsReferencesDestroyResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -64,7 +64,7 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsReferencesDestroyResponse204]:
+) -> Response[OsidbApiV1FlawsReferencesDestroyResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         id=id,
@@ -87,8 +87,8 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse204]:
-    """ """
+) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse200]:
+    """Destroy the instance and proxy the delete to Bugzilla"""
 
     return sync_detailed(
         flaw_id=flaw_id,
@@ -102,7 +102,7 @@ async def async_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsReferencesDestroyResponse204]:
+) -> Response[OsidbApiV1FlawsReferencesDestroyResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         id=id,
@@ -125,8 +125,8 @@ async def async_(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse204]:
-    """ """
+) -> Optional[OsidbApiV1FlawsReferencesDestroyResponse200]:
+    """Destroy the instance and proxy the delete to Bugzilla"""
 
     return (
         await async_detailed(

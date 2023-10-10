@@ -6,11 +6,11 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="OsidbApiV1FlawsReferencesDestroyResponse204")
+T = TypeVar("T", bound="OsidbApiV1AffectsDestroyResponse200")
 
 
 @attr.s(auto_attribs=True)
-class OsidbApiV1FlawsReferencesDestroyResponse204(OSIDBModel):
+class OsidbApiV1AffectsDestroyResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -57,15 +57,15 @@ class OsidbApiV1FlawsReferencesDestroyResponse204(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        osidb_api_v1_flaws_references_destroy_response_204 = cls(
+        osidb_api_v1_affects_destroy_response_200 = cls(
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        osidb_api_v1_flaws_references_destroy_response_204.additional_properties = d
-        return osidb_api_v1_flaws_references_destroy_response_204
+        osidb_api_v1_affects_destroy_response_200.additional_properties = d
+        return osidb_api_v1_affects_destroy_response_200
 
     @staticmethod
     def get_fields():

@@ -19,12 +19,15 @@ def _get_kwargs(
     form_data: AffectPost,
     multipart_data: AffectPost,
     json_body: AffectPost,
+    bugzilla_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/affects".format(
         client.base_url,
     )
 
     headers: Dict[str, Any] = client.get_headers()
+
+    headers["bugzilla-api-key"] = bugzilla_api_key
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -73,12 +76,14 @@ def sync_detailed(
     form_data: AffectPost,
     multipart_data: AffectPost,
     json_body: AffectPost,
+    bugzilla_api_key: str,
 ) -> Response[OsidbApiV1AffectsCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        bugzilla_api_key=bugzilla_api_key,
     )
 
     response = requests.post(
@@ -98,6 +103,7 @@ def sync(
     form_data: AffectPost,
     multipart_data: AffectPost,
     json_body: AffectPost,
+    bugzilla_api_key: str,
 ) -> Optional[OsidbApiV1AffectsCreateResponse201]:
     """ """
 
@@ -106,6 +112,7 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        bugzilla_api_key=bugzilla_api_key,
     ).parsed
 
 
@@ -115,12 +122,14 @@ async def async_detailed(
     form_data: AffectPost,
     multipart_data: AffectPost,
     json_body: AffectPost,
+    bugzilla_api_key: str,
 ) -> Response[OsidbApiV1AffectsCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        bugzilla_api_key=bugzilla_api_key,
     )
 
     async with client.get_async_session().post(
@@ -140,6 +149,7 @@ async def async_(
     form_data: AffectPost,
     multipart_data: AffectPost,
     json_body: AffectPost,
+    bugzilla_api_key: str,
 ) -> Optional[OsidbApiV1AffectsCreateResponse201]:
     """ """
 
@@ -149,5 +159,6 @@ async def async_(
             form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
+            bugzilla_api_key=bugzilla_api_key,
         )
     ).parsed
