@@ -150,6 +150,24 @@ class Session:
                         "destroy",
                     ]
                 },
+                "cvss_scores": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
+                "package_versions": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
             },
         )
         self.affects = SessionOperationsGroup(
@@ -162,6 +180,17 @@ class Session:
                 "create",
                 "destroy",
             ),
+            subresources={
+                "cvss_scores": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
+            },
         )
         self.trackers = SessionOperationsGroup(
             self.__get_client_with_new_access_token,

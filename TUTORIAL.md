@@ -93,7 +93,10 @@ Operations can be performed on the following entities:
     * comments
     * references
     * acknowledgments
+    * cvss_scores
+    * packages_versions
 * affects
+    * cvss_scores
 * trackers
 
 * #### ```status```
