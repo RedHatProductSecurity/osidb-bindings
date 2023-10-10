@@ -166,9 +166,9 @@ commit_bindings_changes() {
 }
 
 # Get OpenAPI schema from github API
-# $1: version
+# $1: version (defaults to "master")
 get_schema() {
-    local version=$1
+    local version=${1:-master}
 
     echo "Downloading OSIDB schema version "
     local response=$(curl -s "https://raw.githubusercontent.com/RedHatProductSecurity/osidb/${version}/openapi.yml" \
