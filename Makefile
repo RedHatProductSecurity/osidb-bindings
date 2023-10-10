@@ -6,6 +6,7 @@ pc=`which pip-compile`
 ps=`which pip-sync`
 package_dir=osidb_bindings/
 bindings_dir=$(package_dir)bindings/
+ref=master
 
 
 ############################################################################
@@ -37,9 +38,14 @@ compile-deps:
 	$(pc) --generate-hashes --allow-unsafe devel-requirements.in
 	[ -f local-requirements.in ] && $(pc) --generate-hashes --allow-unsafe local-requirements.in || true
 
+
 sync-deps:
 	@echo ">synchronizing python dependencies"
 	$(ps) requirements.txt devel-requirements.txt $$([ -f local-requirements.txt ] && echo 'local-requirements.txt')
+
+download-schema:
+	@echo ">downloading OSIDB OpenAPI schema for ref \"$(ref)\""
+	scripts/download_schema.sh $(ref)
 
 patch-release:
 	@echo ">preparing patch release"
