@@ -7,6 +7,9 @@ from ...client import AuthenticatedClient
 from ...models.osidb_api_v1_affects_list_affectedness import (
     OsidbApiV1AffectsListAffectedness,
 )
+from ...models.osidb_api_v1_affects_list_cvss_scores_issuer import (
+    OsidbApiV1AffectsListCvssScoresIssuer,
+)
 from ...models.osidb_api_v1_affects_list_flaw_impact import (
     OsidbApiV1AffectsListFlawImpact,
 )
@@ -52,6 +55,28 @@ QUERY_PARAMS = {
     "cvss3_score__gte": float,
     "cvss3_score__lt": float,
     "cvss3_score__lte": float,
+    "cvss_scores__comment": str,
+    "cvss_scores__created_dt": datetime.datetime,
+    "cvss_scores__created_dt__date": datetime.date,
+    "cvss_scores__created_dt__date__gte": datetime.date,
+    "cvss_scores__created_dt__date__lte": datetime.date,
+    "cvss_scores__created_dt__gt": datetime.datetime,
+    "cvss_scores__created_dt__gte": datetime.datetime,
+    "cvss_scores__created_dt__lt": datetime.datetime,
+    "cvss_scores__created_dt__lte": datetime.datetime,
+    "cvss_scores__cvss_version": str,
+    "cvss_scores__issuer": OsidbApiV1AffectsListCvssScoresIssuer,
+    "cvss_scores__score": float,
+    "cvss_scores__updated_dt": datetime.datetime,
+    "cvss_scores__updated_dt__date": datetime.date,
+    "cvss_scores__updated_dt__date__gte": datetime.date,
+    "cvss_scores__updated_dt__date__lte": datetime.date,
+    "cvss_scores__updated_dt__gt": datetime.datetime,
+    "cvss_scores__updated_dt__gte": datetime.datetime,
+    "cvss_scores__updated_dt__lt": datetime.datetime,
+    "cvss_scores__updated_dt__lte": datetime.datetime,
+    "cvss_scores__uuid": str,
+    "cvss_scores__vector": str,
     "embargoed": bool,
     "exclude_fields": List[str],
     "flaw__component": str,
@@ -171,6 +196,30 @@ def _get_kwargs(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[
+        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
+    ] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw_component: Union[Unset, None, str] = UNSET,
@@ -314,6 +363,131 @@ def _get_kwargs(
     json_created_dt_lte: Union[Unset, None, str] = UNSET
     if not isinstance(created_dt_lte, Unset):
         json_created_dt_lte = created_dt_lte.isoformat() if created_dt_lte else None
+
+    json_cvss_scores_created_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt, Unset):
+        json_cvss_scores_created_dt = (
+            cvss_scores_created_dt.isoformat() if cvss_scores_created_dt else None
+        )
+
+    json_cvss_scores_created_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date, Unset):
+        json_cvss_scores_created_dt_date = (
+            cvss_scores_created_dt_date.isoformat()
+            if cvss_scores_created_dt_date
+            else None
+        )
+
+    json_cvss_scores_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date_gte, Unset):
+        json_cvss_scores_created_dt_date_gte = (
+            cvss_scores_created_dt_date_gte.isoformat()
+            if cvss_scores_created_dt_date_gte
+            else None
+        )
+
+    json_cvss_scores_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date_lte, Unset):
+        json_cvss_scores_created_dt_date_lte = (
+            cvss_scores_created_dt_date_lte.isoformat()
+            if cvss_scores_created_dt_date_lte
+            else None
+        )
+
+    json_cvss_scores_created_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_gt, Unset):
+        json_cvss_scores_created_dt_gt = (
+            cvss_scores_created_dt_gt.isoformat() if cvss_scores_created_dt_gt else None
+        )
+
+    json_cvss_scores_created_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_gte, Unset):
+        json_cvss_scores_created_dt_gte = (
+            cvss_scores_created_dt_gte.isoformat()
+            if cvss_scores_created_dt_gte
+            else None
+        )
+
+    json_cvss_scores_created_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_lt, Unset):
+        json_cvss_scores_created_dt_lt = (
+            cvss_scores_created_dt_lt.isoformat() if cvss_scores_created_dt_lt else None
+        )
+
+    json_cvss_scores_created_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_lte, Unset):
+        json_cvss_scores_created_dt_lte = (
+            cvss_scores_created_dt_lte.isoformat()
+            if cvss_scores_created_dt_lte
+            else None
+        )
+
+    json_cvss_scores_issuer: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_issuer, Unset):
+
+        json_cvss_scores_issuer = (
+            OsidbApiV1AffectsListCvssScoresIssuer(cvss_scores_issuer).value
+            if cvss_scores_issuer
+            else None
+        )
+
+    json_cvss_scores_updated_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt, Unset):
+        json_cvss_scores_updated_dt = (
+            cvss_scores_updated_dt.isoformat() if cvss_scores_updated_dt else None
+        )
+
+    json_cvss_scores_updated_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date, Unset):
+        json_cvss_scores_updated_dt_date = (
+            cvss_scores_updated_dt_date.isoformat()
+            if cvss_scores_updated_dt_date
+            else None
+        )
+
+    json_cvss_scores_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date_gte, Unset):
+        json_cvss_scores_updated_dt_date_gte = (
+            cvss_scores_updated_dt_date_gte.isoformat()
+            if cvss_scores_updated_dt_date_gte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date_lte, Unset):
+        json_cvss_scores_updated_dt_date_lte = (
+            cvss_scores_updated_dt_date_lte.isoformat()
+            if cvss_scores_updated_dt_date_lte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_gt, Unset):
+        json_cvss_scores_updated_dt_gt = (
+            cvss_scores_updated_dt_gt.isoformat() if cvss_scores_updated_dt_gt else None
+        )
+
+    json_cvss_scores_updated_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_gte, Unset):
+        json_cvss_scores_updated_dt_gte = (
+            cvss_scores_updated_dt_gte.isoformat()
+            if cvss_scores_updated_dt_gte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_lt, Unset):
+        json_cvss_scores_updated_dt_lt = (
+            cvss_scores_updated_dt_lt.isoformat() if cvss_scores_updated_dt_lt else None
+        )
+
+    json_cvss_scores_updated_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_lte, Unset):
+        json_cvss_scores_updated_dt_lte = (
+            cvss_scores_updated_dt_lte.isoformat()
+            if cvss_scores_updated_dt_lte
+            else None
+        )
 
     json_exclude_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
@@ -705,6 +879,28 @@ def _get_kwargs(
         "cvss3_score__gte": cvss3_score_gte,
         "cvss3_score__lt": cvss3_score_lt,
         "cvss3_score__lte": cvss3_score_lte,
+        "cvss_scores__comment": cvss_scores_comment,
+        "cvss_scores__created_dt": json_cvss_scores_created_dt,
+        "cvss_scores__created_dt__date": json_cvss_scores_created_dt_date,
+        "cvss_scores__created_dt__date__gte": json_cvss_scores_created_dt_date_gte,
+        "cvss_scores__created_dt__date__lte": json_cvss_scores_created_dt_date_lte,
+        "cvss_scores__created_dt__gt": json_cvss_scores_created_dt_gt,
+        "cvss_scores__created_dt__gte": json_cvss_scores_created_dt_gte,
+        "cvss_scores__created_dt__lt": json_cvss_scores_created_dt_lt,
+        "cvss_scores__created_dt__lte": json_cvss_scores_created_dt_lte,
+        "cvss_scores__cvss_version": cvss_scores_cvss_version,
+        "cvss_scores__issuer": json_cvss_scores_issuer,
+        "cvss_scores__score": cvss_scores_score,
+        "cvss_scores__updated_dt": json_cvss_scores_updated_dt,
+        "cvss_scores__updated_dt__date": json_cvss_scores_updated_dt_date,
+        "cvss_scores__updated_dt__date__gte": json_cvss_scores_updated_dt_date_gte,
+        "cvss_scores__updated_dt__date__lte": json_cvss_scores_updated_dt_date_lte,
+        "cvss_scores__updated_dt__gt": json_cvss_scores_updated_dt_gt,
+        "cvss_scores__updated_dt__gte": json_cvss_scores_updated_dt_gte,
+        "cvss_scores__updated_dt__lt": json_cvss_scores_updated_dt_lt,
+        "cvss_scores__updated_dt__lte": json_cvss_scores_updated_dt_lte,
+        "cvss_scores__uuid": cvss_scores_uuid,
+        "cvss_scores__vector": cvss_scores_vector,
         "embargoed": embargoed,
         "exclude_fields": json_exclude_fields,
         "flaw__component": flaw_component,
@@ -857,6 +1053,30 @@ def sync_detailed(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[
+        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
+    ] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw_component: Union[Unset, None, str] = UNSET,
@@ -973,6 +1193,28 @@ def sync_detailed(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
@@ -1102,6 +1344,30 @@ def sync(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[
+        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
+    ] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw_component: Union[Unset, None, str] = UNSET,
@@ -1220,6 +1486,28 @@ def sync(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
@@ -1339,6 +1627,30 @@ async def async_detailed(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[
+        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
+    ] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw_component: Union[Unset, None, str] = UNSET,
@@ -1455,6 +1767,28 @@ async def async_detailed(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
@@ -1584,6 +1918,30 @@ async def async_(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[
+        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
+    ] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     flaw_component: Union[Unset, None, str] = UNSET,
@@ -1703,6 +2061,28 @@ async def async_(
             cvss3_score_gte=cvss3_score_gte,
             cvss3_score_lt=cvss3_score_lt,
             cvss3_score_lte=cvss3_score_lte,
+            cvss_scores_comment=cvss_scores_comment,
+            cvss_scores_created_dt=cvss_scores_created_dt,
+            cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+            cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+            cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+            cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+            cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+            cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+            cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+            cvss_scores_cvss_version=cvss_scores_cvss_version,
+            cvss_scores_issuer=cvss_scores_issuer,
+            cvss_scores_score=cvss_scores_score,
+            cvss_scores_updated_dt=cvss_scores_updated_dt,
+            cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+            cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+            cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+            cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+            cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+            cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+            cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+            cvss_scores_uuid=cvss_scores_uuid,
+            cvss_scores_vector=cvss_scores_vector,
             embargoed=embargoed,
             exclude_fields=exclude_fields,
             flaw_component=flaw_component,

@@ -18,7 +18,7 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     task_key: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/task/assignee/{user}".format(
         client.base_url,
@@ -27,7 +27,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     params: Dict[str, Any] = {
         "task_key": task_key,
@@ -74,13 +74,13 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     task_key: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskAssigneeUpdateResponse200]:
     kwargs = _get_kwargs(
         user=user,
         client=client,
         task_key=task_key,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.put(
@@ -99,7 +99,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     task_key: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskAssigneeUpdateResponse200]:
     """Assign a task to a user"""
 
@@ -107,7 +107,7 @@ def sync(
         user=user,
         client=client,
         task_key=task_key,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -116,13 +116,13 @@ async def async_detailed(
     *,
     client: AuthenticatedClient,
     task_key: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskAssigneeUpdateResponse200]:
     kwargs = _get_kwargs(
         user=user,
         client=client,
         task_key=task_key,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().put(
@@ -141,7 +141,7 @@ async def async_(
     *,
     client: AuthenticatedClient,
     task_key: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskAssigneeUpdateResponse200]:
     """Assign a task to a user"""
 
@@ -150,6 +150,6 @@ async def async_(
             user=user,
             client=client,
             task_key=task_key,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

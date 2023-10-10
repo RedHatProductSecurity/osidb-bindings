@@ -2,26 +2,23 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..models.status_enum import StatusEnum
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="CVEv5Versions")
+T = TypeVar("T", bound="PackageVer")
 
 
 @attr.s(auto_attribs=True)
-class CVEv5Versions(OSIDBModel):
-    """CVEv5 Package Version Serializer"""
+class PackageVer(OSIDBModel):
+    """PackageVer model serializer for read-only use in FlawSerializer via
+    PackageVerSerializer."""
 
     version: str
-    status: StatusEnum
+    status: str = "UNAFFECTED"
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         version = self.version
-        status: str = UNSET
-        if not isinstance(self.status, Unset):
-
-            status = StatusEnum(self.status).value
+        status = self.status
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -37,26 +34,21 @@ class CVEv5Versions(OSIDBModel):
         d = src_dict.copy()
         version = d.pop("version", UNSET)
 
-        _status = d.pop("status", UNSET)
-        status: StatusEnum
-        if isinstance(_status, Unset):
-            status = UNSET
-        else:
-            status = StatusEnum(_status)
+        status = d.pop("status", UNSET)
 
-        cv_ev_5_versions = cls(
+        package_ver = cls(
             version=version,
             status=status,
         )
 
-        cv_ev_5_versions.additional_properties = d
-        return cv_ev_5_versions
+        package_ver.additional_properties = d
+        return package_ver
 
     @staticmethod
     def get_fields():
         return {
             "version": str,
-            "status": StatusEnum,
+            "status": str,
         }
 
     @property

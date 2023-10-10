@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
@@ -45,59 +45,6 @@ class FlawReference(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
-        if not isinstance(url, Unset):
-            field_dict["url"] = url
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
-        if not isinstance(embargoed, Unset):
-            field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
-        if not isinstance(description, Unset):
-            field_dict["description"] = description
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
-
-        return field_dict
-
-    def to_multipart(self) -> Dict[str, Any]:
-        flaw = self.flaw if self.flaw is UNSET else (None, str(self.flaw), "text/plain")
-        url = self.url if self.url is UNSET else (None, str(self.url), "text/plain")
-        uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        embargoed = (
-            self.embargoed
-            if self.embargoed is UNSET
-            else (None, str(self.embargoed), "text/plain")
-        )
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
-        description = (
-            self.description
-            if self.description is UNSET
-            else (None, str(self.description), "text/plain")
-        )
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawReferenceType(self.type).value
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
-        )
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
         if not isinstance(url, Unset):

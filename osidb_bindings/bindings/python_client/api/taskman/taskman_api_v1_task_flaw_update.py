@@ -15,7 +15,7 @@ def _get_kwargs(
     flaw_uuid: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/task/flaw/{flaw_uuid}".format(
         client.base_url,
@@ -24,7 +24,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     return {
         "url": url,
@@ -64,12 +64,12 @@ def sync_detailed(
     flaw_uuid: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskFlawUpdateResponse200]:
     kwargs = _get_kwargs(
         flaw_uuid=flaw_uuid,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.put(
@@ -87,14 +87,14 @@ def sync(
     flaw_uuid: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskFlawUpdateResponse200]:
     """Update a task in Jira from a Flaw"""
 
     return sync_detailed(
         flaw_uuid=flaw_uuid,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -102,12 +102,12 @@ async def async_detailed(
     flaw_uuid: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskFlawUpdateResponse200]:
     kwargs = _get_kwargs(
         flaw_uuid=flaw_uuid,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().put(
@@ -125,7 +125,7 @@ async def async_(
     flaw_uuid: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskFlawUpdateResponse200]:
     """Update a task in Jira from a Flaw"""
 
@@ -133,6 +133,6 @@ async def async_(
         await async_detailed(
             flaw_uuid=flaw_uuid,
             client=client,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

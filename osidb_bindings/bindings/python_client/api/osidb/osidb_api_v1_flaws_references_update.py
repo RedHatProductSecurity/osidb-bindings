@@ -3,14 +3,14 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.flaw_reference import FlawReference
+from ...models.flaw_reference_put import FlawReferencePut
 from ...models.osidb_api_v1_flaws_references_update_response_200 import (
     OsidbApiV1FlawsReferencesUpdateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-REQUEST_BODY_TYPE = FlawReference
+REQUEST_BODY_TYPE = FlawReferencePut
 
 
 def _get_kwargs(
@@ -18,9 +18,9 @@ def _get_kwargs(
     id: str,
     *,
     client: AuthenticatedClient,
-    form_data: FlawReference,
-    multipart_data: FlawReference,
-    json_body: FlawReference,
+    form_data: FlawReferencePut,
+    multipart_data: FlawReferencePut,
+    json_body: FlawReferencePut,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{id}".format(
         client.base_url,
@@ -78,9 +78,9 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    form_data: FlawReference,
-    multipart_data: FlawReference,
-    json_body: FlawReference,
+    form_data: FlawReferencePut,
+    multipart_data: FlawReferencePut,
+    json_body: FlawReferencePut,
 ) -> Response[OsidbApiV1FlawsReferencesUpdateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -107,9 +107,9 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
-    form_data: FlawReference,
-    multipart_data: FlawReference,
-    json_body: FlawReference,
+    form_data: FlawReferencePut,
+    multipart_data: FlawReferencePut,
+    json_body: FlawReferencePut,
 ) -> Optional[OsidbApiV1FlawsReferencesUpdateResponse200]:
     """ """
 
@@ -128,9 +128,9 @@ async def async_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    form_data: FlawReference,
-    multipart_data: FlawReference,
-    json_body: FlawReference,
+    form_data: FlawReferencePut,
+    multipart_data: FlawReferencePut,
+    json_body: FlawReferencePut,
 ) -> Response[OsidbApiV1FlawsReferencesUpdateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -157,9 +157,9 @@ async def async_(
     id: str,
     *,
     client: AuthenticatedClient,
-    form_data: FlawReference,
-    multipart_data: FlawReference,
-    json_body: FlawReference,
+    form_data: FlawReferencePut,
+    multipart_data: FlawReferencePut,
+    json_body: FlawReferencePut,
 ) -> Optional[OsidbApiV1FlawsReferencesUpdateResponse200]:
     """ """
 

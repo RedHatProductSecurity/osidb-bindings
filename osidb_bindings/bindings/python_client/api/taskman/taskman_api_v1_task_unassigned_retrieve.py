@@ -14,7 +14,7 @@ QUERY_PARAMS = {}
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/task/unassigned/".format(
         client.base_url,
@@ -22,7 +22,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     return {
         "url": url,
@@ -61,11 +61,11 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskUnassignedRetrieveResponse200]:
     kwargs = _get_kwargs(
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.get(
@@ -82,24 +82,24 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskUnassignedRetrieveResponse200]:
     """Get a list of tasks without an user assigned"""
 
     return sync_detailed(
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
 async def async_detailed(
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskUnassignedRetrieveResponse200]:
     kwargs = _get_kwargs(
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().get(
@@ -116,13 +116,13 @@ async def async_detailed(
 async def async_(
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskUnassignedRetrieveResponse200]:
     """Get a list of tasks without an user assigned"""
 
     return (
         await async_detailed(
             client=client,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

@@ -15,6 +15,7 @@ class Erratum(OSIDBModel):
 
     et_id: int
     advisory_name: str
+    shipped_dt: datetime.datetime
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -22,6 +23,10 @@ class Erratum(OSIDBModel):
     def to_dict(self) -> Dict[str, Any]:
         et_id = self.et_id
         advisory_name = self.advisory_name
+        shipped_dt: str = UNSET
+        if not isinstance(self.shipped_dt, Unset):
+            shipped_dt = self.shipped_dt.isoformat()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -36,6 +41,8 @@ class Erratum(OSIDBModel):
             field_dict["et_id"] = et_id
         if not isinstance(advisory_name, Unset):
             field_dict["advisory_name"] = advisory_name
+        if not isinstance(shipped_dt, Unset):
+            field_dict["shipped_dt"] = shipped_dt
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -49,6 +56,13 @@ class Erratum(OSIDBModel):
         et_id = d.pop("et_id", UNSET)
 
         advisory_name = d.pop("advisory_name", UNSET)
+
+        _shipped_dt = d.pop("shipped_dt", UNSET)
+        shipped_dt: datetime.datetime
+        if isinstance(_shipped_dt, Unset):
+            shipped_dt = UNSET
+        else:
+            shipped_dt = isoparse(_shipped_dt)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -67,6 +81,7 @@ class Erratum(OSIDBModel):
         erratum = cls(
             et_id=et_id,
             advisory_name=advisory_name,
+            shipped_dt=shipped_dt,
             created_dt=created_dt,
             updated_dt=updated_dt,
         )
@@ -79,6 +94,7 @@ class Erratum(OSIDBModel):
         return {
             "et_id": int,
             "advisory_name": str,
+            "shipped_dt": datetime.datetime,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
         }

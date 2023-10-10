@@ -19,6 +19,9 @@ from ...models.osidb_api_v1_flaws_list_affects_trackers_type import (
 from ...models.osidb_api_v1_flaws_list_affects_type import (
     OsidbApiV1FlawsListAffectsType,
 )
+from ...models.osidb_api_v1_flaws_list_cvss_scores_issuer import (
+    OsidbApiV1FlawsListCvssScoresIssuer,
+)
 from ...models.osidb_api_v1_flaws_list_impact import OsidbApiV1FlawsListImpact
 from ...models.osidb_api_v1_flaws_list_major_incident_state import (
     OsidbApiV1FlawsListMajorIncidentState,
@@ -27,6 +30,9 @@ from ...models.osidb_api_v1_flaws_list_nist_cvss_validation import (
     OsidbApiV1FlawsListNistCvssValidation,
 )
 from ...models.osidb_api_v1_flaws_list_order_item import OsidbApiV1FlawsListOrderItem
+from ...models.osidb_api_v1_flaws_list_references_type import (
+    OsidbApiV1FlawsListReferencesType,
+)
 from ...models.osidb_api_v1_flaws_list_requires_summary import (
     OsidbApiV1FlawsListRequiresSummary,
 )
@@ -94,6 +100,15 @@ QUERY_PARAMS = {
     "affects__trackers__created_dt__lte": datetime.datetime,
     "affects__trackers__embargoed": bool,
     "affects__trackers__errata__advisory_name": str,
+    "affects__trackers__errata__et_id": int,
+    "affects__trackers__errata__shipped_dt": datetime.datetime,
+    "affects__trackers__errata__shipped_dt__date": datetime.date,
+    "affects__trackers__errata__shipped_dt__date__gte": datetime.date,
+    "affects__trackers__errata__shipped_dt__date__lte": datetime.date,
+    "affects__trackers__errata__shipped_dt__gt": datetime.datetime,
+    "affects__trackers__errata__shipped_dt__gte": datetime.datetime,
+    "affects__trackers__errata__shipped_dt__lt": datetime.datetime,
+    "affects__trackers__errata__shipped_dt__lte": datetime.datetime,
     "affects__trackers__external_system_id": str,
     "affects__trackers__ps_update_stream": str,
     "affects__trackers__resolution": str,
@@ -143,6 +158,28 @@ QUERY_PARAMS = {
     "cvss3_score__gte": float,
     "cvss3_score__lt": float,
     "cvss3_score__lte": float,
+    "cvss_scores__comment": str,
+    "cvss_scores__created_dt": datetime.datetime,
+    "cvss_scores__created_dt__date": datetime.date,
+    "cvss_scores__created_dt__date__gte": datetime.date,
+    "cvss_scores__created_dt__date__lte": datetime.date,
+    "cvss_scores__created_dt__gt": datetime.datetime,
+    "cvss_scores__created_dt__gte": datetime.datetime,
+    "cvss_scores__created_dt__lt": datetime.datetime,
+    "cvss_scores__created_dt__lte": datetime.datetime,
+    "cvss_scores__cvss_version": str,
+    "cvss_scores__issuer": OsidbApiV1FlawsListCvssScoresIssuer,
+    "cvss_scores__score": float,
+    "cvss_scores__updated_dt": datetime.datetime,
+    "cvss_scores__updated_dt__date": datetime.date,
+    "cvss_scores__updated_dt__date__gte": datetime.date,
+    "cvss_scores__updated_dt__date__lte": datetime.date,
+    "cvss_scores__updated_dt__gt": datetime.datetime,
+    "cvss_scores__updated_dt__gte": datetime.datetime,
+    "cvss_scores__updated_dt__lt": datetime.datetime,
+    "cvss_scores__updated_dt__lte": datetime.datetime,
+    "cvss_scores__uuid": str,
+    "cvss_scores__vector": str,
     "cwe_id": str,
     "description": str,
     "embargoed": bool,
@@ -159,6 +196,26 @@ QUERY_PARAMS = {
     "nvd_cvss3": str,
     "offset": int,
     "order": List[OsidbApiV1FlawsListOrderItem],
+    "references__created_dt": datetime.datetime,
+    "references__created_dt__date": datetime.date,
+    "references__created_dt__date__gte": datetime.date,
+    "references__created_dt__date__lte": datetime.date,
+    "references__created_dt__gt": datetime.datetime,
+    "references__created_dt__gte": datetime.datetime,
+    "references__created_dt__lt": datetime.datetime,
+    "references__created_dt__lte": datetime.datetime,
+    "references__description": str,
+    "references__type": OsidbApiV1FlawsListReferencesType,
+    "references__updated_dt": datetime.datetime,
+    "references__updated_dt__date": datetime.date,
+    "references__updated_dt__date__gte": datetime.date,
+    "references__updated_dt__date__lte": datetime.date,
+    "references__updated_dt__gt": datetime.datetime,
+    "references__updated_dt__gte": datetime.datetime,
+    "references__updated_dt__lt": datetime.datetime,
+    "references__updated_dt__lte": datetime.datetime,
+    "references__url": str,
+    "references__uuid": str,
     "reported_dt": datetime.datetime,
     "reported_dt__date": datetime.date,
     "reported_dt__date__gte": datetime.date,
@@ -251,6 +308,27 @@ def _get_kwargs(
     affects_trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, None, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, None, str] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, None, int] = UNSET,
+    affects_trackers_errata_shipped_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    affects_trackers_errata_shipped_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    affects_trackers_errata_shipped_dt_date_gte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_date_lte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
     affects_trackers_external_system_id: Union[Unset, None, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
     affects_trackers_resolution: Union[Unset, None, str] = UNSET,
@@ -302,6 +380,28 @@ def _get_kwargs(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, None, OsidbApiV1FlawsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     cwe_id: Union[Unset, None, str] = UNSET,
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
@@ -322,6 +422,26 @@ def _get_kwargs(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_description: Union[Unset, None, str] = UNSET,
+    references_type: Union[Unset, None, OsidbApiV1FlawsListReferencesType] = UNSET,
+    references_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_url: Union[Unset, None, str] = UNSET,
+    references_uuid: Union[Unset, None, str] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -626,6 +746,70 @@ def _get_kwargs(
             else None
         )
 
+    json_affects_trackers_errata_shipped_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt, Unset):
+        json_affects_trackers_errata_shipped_dt = (
+            affects_trackers_errata_shipped_dt.isoformat()
+            if affects_trackers_errata_shipped_dt
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_date, Unset):
+        json_affects_trackers_errata_shipped_dt_date = (
+            affects_trackers_errata_shipped_dt_date.isoformat()
+            if affects_trackers_errata_shipped_dt_date
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_date_gte, Unset):
+        json_affects_trackers_errata_shipped_dt_date_gte = (
+            affects_trackers_errata_shipped_dt_date_gte.isoformat()
+            if affects_trackers_errata_shipped_dt_date_gte
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_date_lte, Unset):
+        json_affects_trackers_errata_shipped_dt_date_lte = (
+            affects_trackers_errata_shipped_dt_date_lte.isoformat()
+            if affects_trackers_errata_shipped_dt_date_lte
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_gt, Unset):
+        json_affects_trackers_errata_shipped_dt_gt = (
+            affects_trackers_errata_shipped_dt_gt.isoformat()
+            if affects_trackers_errata_shipped_dt_gt
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_gte, Unset):
+        json_affects_trackers_errata_shipped_dt_gte = (
+            affects_trackers_errata_shipped_dt_gte.isoformat()
+            if affects_trackers_errata_shipped_dt_gte
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_lt, Unset):
+        json_affects_trackers_errata_shipped_dt_lt = (
+            affects_trackers_errata_shipped_dt_lt.isoformat()
+            if affects_trackers_errata_shipped_dt_lt
+            else None
+        )
+
+    json_affects_trackers_errata_shipped_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(affects_trackers_errata_shipped_dt_lte, Unset):
+        json_affects_trackers_errata_shipped_dt_lte = (
+            affects_trackers_errata_shipped_dt_lte.isoformat()
+            if affects_trackers_errata_shipped_dt_lte
+            else None
+        )
+
     json_affects_trackers_type: Union[Unset, None, str] = UNSET
     if not isinstance(affects_trackers_type, Unset):
 
@@ -809,6 +993,131 @@ def _get_kwargs(
         else:
             json_cve_id = cve_id
 
+    json_cvss_scores_created_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt, Unset):
+        json_cvss_scores_created_dt = (
+            cvss_scores_created_dt.isoformat() if cvss_scores_created_dt else None
+        )
+
+    json_cvss_scores_created_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date, Unset):
+        json_cvss_scores_created_dt_date = (
+            cvss_scores_created_dt_date.isoformat()
+            if cvss_scores_created_dt_date
+            else None
+        )
+
+    json_cvss_scores_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date_gte, Unset):
+        json_cvss_scores_created_dt_date_gte = (
+            cvss_scores_created_dt_date_gte.isoformat()
+            if cvss_scores_created_dt_date_gte
+            else None
+        )
+
+    json_cvss_scores_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_date_lte, Unset):
+        json_cvss_scores_created_dt_date_lte = (
+            cvss_scores_created_dt_date_lte.isoformat()
+            if cvss_scores_created_dt_date_lte
+            else None
+        )
+
+    json_cvss_scores_created_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_gt, Unset):
+        json_cvss_scores_created_dt_gt = (
+            cvss_scores_created_dt_gt.isoformat() if cvss_scores_created_dt_gt else None
+        )
+
+    json_cvss_scores_created_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_gte, Unset):
+        json_cvss_scores_created_dt_gte = (
+            cvss_scores_created_dt_gte.isoformat()
+            if cvss_scores_created_dt_gte
+            else None
+        )
+
+    json_cvss_scores_created_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_lt, Unset):
+        json_cvss_scores_created_dt_lt = (
+            cvss_scores_created_dt_lt.isoformat() if cvss_scores_created_dt_lt else None
+        )
+
+    json_cvss_scores_created_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_created_dt_lte, Unset):
+        json_cvss_scores_created_dt_lte = (
+            cvss_scores_created_dt_lte.isoformat()
+            if cvss_scores_created_dt_lte
+            else None
+        )
+
+    json_cvss_scores_issuer: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_issuer, Unset):
+
+        json_cvss_scores_issuer = (
+            OsidbApiV1FlawsListCvssScoresIssuer(cvss_scores_issuer).value
+            if cvss_scores_issuer
+            else None
+        )
+
+    json_cvss_scores_updated_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt, Unset):
+        json_cvss_scores_updated_dt = (
+            cvss_scores_updated_dt.isoformat() if cvss_scores_updated_dt else None
+        )
+
+    json_cvss_scores_updated_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date, Unset):
+        json_cvss_scores_updated_dt_date = (
+            cvss_scores_updated_dt_date.isoformat()
+            if cvss_scores_updated_dt_date
+            else None
+        )
+
+    json_cvss_scores_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date_gte, Unset):
+        json_cvss_scores_updated_dt_date_gte = (
+            cvss_scores_updated_dt_date_gte.isoformat()
+            if cvss_scores_updated_dt_date_gte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_date_lte, Unset):
+        json_cvss_scores_updated_dt_date_lte = (
+            cvss_scores_updated_dt_date_lte.isoformat()
+            if cvss_scores_updated_dt_date_lte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_gt, Unset):
+        json_cvss_scores_updated_dt_gt = (
+            cvss_scores_updated_dt_gt.isoformat() if cvss_scores_updated_dt_gt else None
+        )
+
+    json_cvss_scores_updated_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_gte, Unset):
+        json_cvss_scores_updated_dt_gte = (
+            cvss_scores_updated_dt_gte.isoformat()
+            if cvss_scores_updated_dt_gte
+            else None
+        )
+
+    json_cvss_scores_updated_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_lt, Unset):
+        json_cvss_scores_updated_dt_lt = (
+            cvss_scores_updated_dt_lt.isoformat() if cvss_scores_updated_dt_lt else None
+        )
+
+    json_cvss_scores_updated_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(cvss_scores_updated_dt_lte, Unset):
+        json_cvss_scores_updated_dt_lte = (
+            cvss_scores_updated_dt_lte.isoformat()
+            if cvss_scores_updated_dt_lte
+            else None
+        )
+
     json_exclude_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
         if exclude_fields is None:
@@ -873,6 +1182,123 @@ def _get_kwargs(
                     order_item = OsidbApiV1FlawsListOrderItem(order_item_data).value
 
                 json_order.append(order_item)
+
+    json_references_created_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt, Unset):
+        json_references_created_dt = (
+            references_created_dt.isoformat() if references_created_dt else None
+        )
+
+    json_references_created_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_date, Unset):
+        json_references_created_dt_date = (
+            references_created_dt_date.isoformat()
+            if references_created_dt_date
+            else None
+        )
+
+    json_references_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_date_gte, Unset):
+        json_references_created_dt_date_gte = (
+            references_created_dt_date_gte.isoformat()
+            if references_created_dt_date_gte
+            else None
+        )
+
+    json_references_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_date_lte, Unset):
+        json_references_created_dt_date_lte = (
+            references_created_dt_date_lte.isoformat()
+            if references_created_dt_date_lte
+            else None
+        )
+
+    json_references_created_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_gt, Unset):
+        json_references_created_dt_gt = (
+            references_created_dt_gt.isoformat() if references_created_dt_gt else None
+        )
+
+    json_references_created_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_gte, Unset):
+        json_references_created_dt_gte = (
+            references_created_dt_gte.isoformat() if references_created_dt_gte else None
+        )
+
+    json_references_created_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_lt, Unset):
+        json_references_created_dt_lt = (
+            references_created_dt_lt.isoformat() if references_created_dt_lt else None
+        )
+
+    json_references_created_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_created_dt_lte, Unset):
+        json_references_created_dt_lte = (
+            references_created_dt_lte.isoformat() if references_created_dt_lte else None
+        )
+
+    json_references_type: Union[Unset, None, str] = UNSET
+    if not isinstance(references_type, Unset):
+
+        json_references_type = (
+            OsidbApiV1FlawsListReferencesType(references_type).value
+            if references_type
+            else None
+        )
+
+    json_references_updated_dt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt, Unset):
+        json_references_updated_dt = (
+            references_updated_dt.isoformat() if references_updated_dt else None
+        )
+
+    json_references_updated_dt_date: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_date, Unset):
+        json_references_updated_dt_date = (
+            references_updated_dt_date.isoformat()
+            if references_updated_dt_date
+            else None
+        )
+
+    json_references_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_date_gte, Unset):
+        json_references_updated_dt_date_gte = (
+            references_updated_dt_date_gte.isoformat()
+            if references_updated_dt_date_gte
+            else None
+        )
+
+    json_references_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_date_lte, Unset):
+        json_references_updated_dt_date_lte = (
+            references_updated_dt_date_lte.isoformat()
+            if references_updated_dt_date_lte
+            else None
+        )
+
+    json_references_updated_dt_gt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_gt, Unset):
+        json_references_updated_dt_gt = (
+            references_updated_dt_gt.isoformat() if references_updated_dt_gt else None
+        )
+
+    json_references_updated_dt_gte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_gte, Unset):
+        json_references_updated_dt_gte = (
+            references_updated_dt_gte.isoformat() if references_updated_dt_gte else None
+        )
+
+    json_references_updated_dt_lt: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_lt, Unset):
+        json_references_updated_dt_lt = (
+            references_updated_dt_lt.isoformat() if references_updated_dt_lt else None
+        )
+
+    json_references_updated_dt_lte: Union[Unset, None, str] = UNSET
+    if not isinstance(references_updated_dt_lte, Unset):
+        json_references_updated_dt_lte = (
+            references_updated_dt_lte.isoformat() if references_updated_dt_lte else None
+        )
 
     json_reported_dt: Union[Unset, None, str] = UNSET
     if not isinstance(reported_dt, Unset):
@@ -1035,6 +1461,15 @@ def _get_kwargs(
         "affects__trackers__created_dt__lte": json_affects_trackers_created_dt_lte,
         "affects__trackers__embargoed": affects_trackers_embargoed,
         "affects__trackers__errata__advisory_name": affects_trackers_errata_advisory_name,
+        "affects__trackers__errata__et_id": affects_trackers_errata_et_id,
+        "affects__trackers__errata__shipped_dt": json_affects_trackers_errata_shipped_dt,
+        "affects__trackers__errata__shipped_dt__date": json_affects_trackers_errata_shipped_dt_date,
+        "affects__trackers__errata__shipped_dt__date__gte": json_affects_trackers_errata_shipped_dt_date_gte,
+        "affects__trackers__errata__shipped_dt__date__lte": json_affects_trackers_errata_shipped_dt_date_lte,
+        "affects__trackers__errata__shipped_dt__gt": json_affects_trackers_errata_shipped_dt_gt,
+        "affects__trackers__errata__shipped_dt__gte": json_affects_trackers_errata_shipped_dt_gte,
+        "affects__trackers__errata__shipped_dt__lt": json_affects_trackers_errata_shipped_dt_lt,
+        "affects__trackers__errata__shipped_dt__lte": json_affects_trackers_errata_shipped_dt_lte,
         "affects__trackers__external_system_id": affects_trackers_external_system_id,
         "affects__trackers__ps_update_stream": affects_trackers_ps_update_stream,
         "affects__trackers__resolution": affects_trackers_resolution,
@@ -1084,6 +1519,28 @@ def _get_kwargs(
         "cvss3_score__gte": cvss3_score_gte,
         "cvss3_score__lt": cvss3_score_lt,
         "cvss3_score__lte": cvss3_score_lte,
+        "cvss_scores__comment": cvss_scores_comment,
+        "cvss_scores__created_dt": json_cvss_scores_created_dt,
+        "cvss_scores__created_dt__date": json_cvss_scores_created_dt_date,
+        "cvss_scores__created_dt__date__gte": json_cvss_scores_created_dt_date_gte,
+        "cvss_scores__created_dt__date__lte": json_cvss_scores_created_dt_date_lte,
+        "cvss_scores__created_dt__gt": json_cvss_scores_created_dt_gt,
+        "cvss_scores__created_dt__gte": json_cvss_scores_created_dt_gte,
+        "cvss_scores__created_dt__lt": json_cvss_scores_created_dt_lt,
+        "cvss_scores__created_dt__lte": json_cvss_scores_created_dt_lte,
+        "cvss_scores__cvss_version": cvss_scores_cvss_version,
+        "cvss_scores__issuer": json_cvss_scores_issuer,
+        "cvss_scores__score": cvss_scores_score,
+        "cvss_scores__updated_dt": json_cvss_scores_updated_dt,
+        "cvss_scores__updated_dt__date": json_cvss_scores_updated_dt_date,
+        "cvss_scores__updated_dt__date__gte": json_cvss_scores_updated_dt_date_gte,
+        "cvss_scores__updated_dt__date__lte": json_cvss_scores_updated_dt_date_lte,
+        "cvss_scores__updated_dt__gt": json_cvss_scores_updated_dt_gt,
+        "cvss_scores__updated_dt__gte": json_cvss_scores_updated_dt_gte,
+        "cvss_scores__updated_dt__lt": json_cvss_scores_updated_dt_lt,
+        "cvss_scores__updated_dt__lte": json_cvss_scores_updated_dt_lte,
+        "cvss_scores__uuid": cvss_scores_uuid,
+        "cvss_scores__vector": cvss_scores_vector,
         "cwe_id": cwe_id,
         "description": description,
         "embargoed": embargoed,
@@ -1100,6 +1557,26 @@ def _get_kwargs(
         "nvd_cvss3": nvd_cvss3,
         "offset": offset,
         "order": json_order,
+        "references__created_dt": json_references_created_dt,
+        "references__created_dt__date": json_references_created_dt_date,
+        "references__created_dt__date__gte": json_references_created_dt_date_gte,
+        "references__created_dt__date__lte": json_references_created_dt_date_lte,
+        "references__created_dt__gt": json_references_created_dt_gt,
+        "references__created_dt__gte": json_references_created_dt_gte,
+        "references__created_dt__lt": json_references_created_dt_lt,
+        "references__created_dt__lte": json_references_created_dt_lte,
+        "references__description": references_description,
+        "references__type": json_references_type,
+        "references__updated_dt": json_references_updated_dt,
+        "references__updated_dt__date": json_references_updated_dt_date,
+        "references__updated_dt__date__gte": json_references_updated_dt_date_gte,
+        "references__updated_dt__date__lte": json_references_updated_dt_date_lte,
+        "references__updated_dt__gt": json_references_updated_dt_gt,
+        "references__updated_dt__gte": json_references_updated_dt_gte,
+        "references__updated_dt__lt": json_references_updated_dt_lt,
+        "references__updated_dt__lte": json_references_updated_dt_lte,
+        "references__url": references_url,
+        "references__uuid": references_uuid,
         "reported_dt": json_reported_dt,
         "reported_dt__date": json_reported_dt_date,
         "reported_dt__date__gte": json_reported_dt_date_gte,
@@ -1225,6 +1702,27 @@ def sync_detailed(
     affects_trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, None, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, None, str] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, None, int] = UNSET,
+    affects_trackers_errata_shipped_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    affects_trackers_errata_shipped_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    affects_trackers_errata_shipped_dt_date_gte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_date_lte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
     affects_trackers_external_system_id: Union[Unset, None, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
     affects_trackers_resolution: Union[Unset, None, str] = UNSET,
@@ -1276,6 +1774,28 @@ def sync_detailed(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, None, OsidbApiV1FlawsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     cwe_id: Union[Unset, None, str] = UNSET,
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
@@ -1296,6 +1816,26 @@ def sync_detailed(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_description: Union[Unset, None, str] = UNSET,
+    references_type: Union[Unset, None, OsidbApiV1FlawsListReferencesType] = UNSET,
+    references_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_url: Union[Unset, None, str] = UNSET,
+    references_uuid: Union[Unset, None, str] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1381,6 +1921,15 @@ def sync_detailed(
         affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
+        affects_trackers_errata_et_id=affects_trackers_errata_et_id,
+        affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
+        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
+        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
+        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
+        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
+        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
+        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
+        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
@@ -1430,6 +1979,28 @@ def sync_detailed(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         cwe_id=cwe_id,
         description=description,
         embargoed=embargoed,
@@ -1446,6 +2017,26 @@ def sync_detailed(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        references_created_dt=references_created_dt,
+        references_created_dt_date=references_created_dt_date,
+        references_created_dt_date_gte=references_created_dt_date_gte,
+        references_created_dt_date_lte=references_created_dt_date_lte,
+        references_created_dt_gt=references_created_dt_gt,
+        references_created_dt_gte=references_created_dt_gte,
+        references_created_dt_lt=references_created_dt_lt,
+        references_created_dt_lte=references_created_dt_lte,
+        references_description=references_description,
+        references_type=references_type,
+        references_updated_dt=references_updated_dt,
+        references_updated_dt_date=references_updated_dt_date,
+        references_updated_dt_date_gte=references_updated_dt_date_gte,
+        references_updated_dt_date_lte=references_updated_dt_date_lte,
+        references_updated_dt_gt=references_updated_dt_gt,
+        references_updated_dt_gte=references_updated_dt_gte,
+        references_updated_dt_lt=references_updated_dt_lt,
+        references_updated_dt_lte=references_updated_dt_lte,
+        references_url=references_url,
+        references_uuid=references_uuid,
         reported_dt=reported_dt,
         reported_dt_date=reported_dt_date,
         reported_dt_date_gte=reported_dt_date_gte,
@@ -1548,6 +2139,27 @@ def sync(
     affects_trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, None, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, None, str] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, None, int] = UNSET,
+    affects_trackers_errata_shipped_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    affects_trackers_errata_shipped_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    affects_trackers_errata_shipped_dt_date_gte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_date_lte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
     affects_trackers_external_system_id: Union[Unset, None, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
     affects_trackers_resolution: Union[Unset, None, str] = UNSET,
@@ -1599,6 +2211,28 @@ def sync(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, None, OsidbApiV1FlawsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     cwe_id: Union[Unset, None, str] = UNSET,
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
@@ -1619,6 +2253,26 @@ def sync(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_description: Union[Unset, None, str] = UNSET,
+    references_type: Union[Unset, None, OsidbApiV1FlawsListReferencesType] = UNSET,
+    references_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_url: Union[Unset, None, str] = UNSET,
+    references_uuid: Union[Unset, None, str] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1706,6 +2360,15 @@ def sync(
         affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
+        affects_trackers_errata_et_id=affects_trackers_errata_et_id,
+        affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
+        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
+        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
+        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
+        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
+        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
+        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
+        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
@@ -1755,6 +2418,28 @@ def sync(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         cwe_id=cwe_id,
         description=description,
         embargoed=embargoed,
@@ -1771,6 +2456,26 @@ def sync(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        references_created_dt=references_created_dt,
+        references_created_dt_date=references_created_dt_date,
+        references_created_dt_date_gte=references_created_dt_date_gte,
+        references_created_dt_date_lte=references_created_dt_date_lte,
+        references_created_dt_gt=references_created_dt_gt,
+        references_created_dt_gte=references_created_dt_gte,
+        references_created_dt_lt=references_created_dt_lt,
+        references_created_dt_lte=references_created_dt_lte,
+        references_description=references_description,
+        references_type=references_type,
+        references_updated_dt=references_updated_dt,
+        references_updated_dt_date=references_updated_dt_date,
+        references_updated_dt_date_gte=references_updated_dt_date_gte,
+        references_updated_dt_date_lte=references_updated_dt_date_lte,
+        references_updated_dt_gt=references_updated_dt_gt,
+        references_updated_dt_gte=references_updated_dt_gte,
+        references_updated_dt_lt=references_updated_dt_lt,
+        references_updated_dt_lte=references_updated_dt_lte,
+        references_url=references_url,
+        references_uuid=references_uuid,
         reported_dt=reported_dt,
         reported_dt_date=reported_dt_date,
         reported_dt_date_gte=reported_dt_date_gte,
@@ -1863,6 +2568,27 @@ async def async_detailed(
     affects_trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, None, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, None, str] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, None, int] = UNSET,
+    affects_trackers_errata_shipped_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    affects_trackers_errata_shipped_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    affects_trackers_errata_shipped_dt_date_gte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_date_lte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
     affects_trackers_external_system_id: Union[Unset, None, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
     affects_trackers_resolution: Union[Unset, None, str] = UNSET,
@@ -1914,6 +2640,28 @@ async def async_detailed(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, None, OsidbApiV1FlawsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     cwe_id: Union[Unset, None, str] = UNSET,
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
@@ -1934,6 +2682,26 @@ async def async_detailed(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_description: Union[Unset, None, str] = UNSET,
+    references_type: Union[Unset, None, OsidbApiV1FlawsListReferencesType] = UNSET,
+    references_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_url: Union[Unset, None, str] = UNSET,
+    references_uuid: Union[Unset, None, str] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2019,6 +2787,15 @@ async def async_detailed(
         affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
+        affects_trackers_errata_et_id=affects_trackers_errata_et_id,
+        affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
+        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
+        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
+        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
+        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
+        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
+        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
+        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
@@ -2068,6 +2845,28 @@ async def async_detailed(
         cvss3_score_gte=cvss3_score_gte,
         cvss3_score_lt=cvss3_score_lt,
         cvss3_score_lte=cvss3_score_lte,
+        cvss_scores_comment=cvss_scores_comment,
+        cvss_scores_created_dt=cvss_scores_created_dt,
+        cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+        cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+        cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+        cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+        cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+        cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+        cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+        cvss_scores_cvss_version=cvss_scores_cvss_version,
+        cvss_scores_issuer=cvss_scores_issuer,
+        cvss_scores_score=cvss_scores_score,
+        cvss_scores_updated_dt=cvss_scores_updated_dt,
+        cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+        cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+        cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+        cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+        cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+        cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+        cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+        cvss_scores_uuid=cvss_scores_uuid,
+        cvss_scores_vector=cvss_scores_vector,
         cwe_id=cwe_id,
         description=description,
         embargoed=embargoed,
@@ -2084,6 +2883,26 @@ async def async_detailed(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        references_created_dt=references_created_dt,
+        references_created_dt_date=references_created_dt_date,
+        references_created_dt_date_gte=references_created_dt_date_gte,
+        references_created_dt_date_lte=references_created_dt_date_lte,
+        references_created_dt_gt=references_created_dt_gt,
+        references_created_dt_gte=references_created_dt_gte,
+        references_created_dt_lt=references_created_dt_lt,
+        references_created_dt_lte=references_created_dt_lte,
+        references_description=references_description,
+        references_type=references_type,
+        references_updated_dt=references_updated_dt,
+        references_updated_dt_date=references_updated_dt_date,
+        references_updated_dt_date_gte=references_updated_dt_date_gte,
+        references_updated_dt_date_lte=references_updated_dt_date_lte,
+        references_updated_dt_gt=references_updated_dt_gt,
+        references_updated_dt_gte=references_updated_dt_gte,
+        references_updated_dt_lt=references_updated_dt_lt,
+        references_updated_dt_lte=references_updated_dt_lte,
+        references_url=references_url,
+        references_uuid=references_uuid,
         reported_dt=reported_dt,
         reported_dt_date=reported_dt_date,
         reported_dt_date_gte=reported_dt_date_gte,
@@ -2186,6 +3005,27 @@ async def async_(
     affects_trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, None, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, None, str] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, None, int] = UNSET,
+    affects_trackers_errata_shipped_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    affects_trackers_errata_shipped_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    affects_trackers_errata_shipped_dt_date_gte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_date_lte: Union[
+        Unset, None, datetime.date
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_gte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lt: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
+    affects_trackers_errata_shipped_dt_lte: Union[
+        Unset, None, datetime.datetime
+    ] = UNSET,
     affects_trackers_external_system_id: Union[Unset, None, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
     affects_trackers_resolution: Union[Unset, None, str] = UNSET,
@@ -2237,6 +3077,28 @@ async def async_(
     cvss3_score_gte: Union[Unset, None, float] = UNSET,
     cvss3_score_lt: Union[Unset, None, float] = UNSET,
     cvss3_score_lte: Union[Unset, None, float] = UNSET,
+    cvss_scores_comment: Union[Unset, None, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, None, OsidbApiV1FlawsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, None, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
+    cvss_scores_vector: Union[Unset, None, str] = UNSET,
     cwe_id: Union[Unset, None, str] = UNSET,
     description: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
@@ -2257,6 +3119,26 @@ async def async_(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_description: Union[Unset, None, str] = UNSET,
+    references_type: Union[Unset, None, OsidbApiV1FlawsListReferencesType] = UNSET,
+    references_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
+    references_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
+    references_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
+    references_url: Union[Unset, None, str] = UNSET,
+    references_uuid: Union[Unset, None, str] = UNSET,
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2345,6 +3227,15 @@ async def async_(
             affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
             affects_trackers_embargoed=affects_trackers_embargoed,
             affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
+            affects_trackers_errata_et_id=affects_trackers_errata_et_id,
+            affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
+            affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
+            affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
+            affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
+            affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
+            affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
+            affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
+            affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
             affects_trackers_external_system_id=affects_trackers_external_system_id,
             affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
             affects_trackers_resolution=affects_trackers_resolution,
@@ -2394,6 +3285,28 @@ async def async_(
             cvss3_score_gte=cvss3_score_gte,
             cvss3_score_lt=cvss3_score_lt,
             cvss3_score_lte=cvss3_score_lte,
+            cvss_scores_comment=cvss_scores_comment,
+            cvss_scores_created_dt=cvss_scores_created_dt,
+            cvss_scores_created_dt_date=cvss_scores_created_dt_date,
+            cvss_scores_created_dt_date_gte=cvss_scores_created_dt_date_gte,
+            cvss_scores_created_dt_date_lte=cvss_scores_created_dt_date_lte,
+            cvss_scores_created_dt_gt=cvss_scores_created_dt_gt,
+            cvss_scores_created_dt_gte=cvss_scores_created_dt_gte,
+            cvss_scores_created_dt_lt=cvss_scores_created_dt_lt,
+            cvss_scores_created_dt_lte=cvss_scores_created_dt_lte,
+            cvss_scores_cvss_version=cvss_scores_cvss_version,
+            cvss_scores_issuer=cvss_scores_issuer,
+            cvss_scores_score=cvss_scores_score,
+            cvss_scores_updated_dt=cvss_scores_updated_dt,
+            cvss_scores_updated_dt_date=cvss_scores_updated_dt_date,
+            cvss_scores_updated_dt_date_gte=cvss_scores_updated_dt_date_gte,
+            cvss_scores_updated_dt_date_lte=cvss_scores_updated_dt_date_lte,
+            cvss_scores_updated_dt_gt=cvss_scores_updated_dt_gt,
+            cvss_scores_updated_dt_gte=cvss_scores_updated_dt_gte,
+            cvss_scores_updated_dt_lt=cvss_scores_updated_dt_lt,
+            cvss_scores_updated_dt_lte=cvss_scores_updated_dt_lte,
+            cvss_scores_uuid=cvss_scores_uuid,
+            cvss_scores_vector=cvss_scores_vector,
             cwe_id=cwe_id,
             description=description,
             embargoed=embargoed,
@@ -2410,6 +3323,26 @@ async def async_(
             nvd_cvss3=nvd_cvss3,
             offset=offset,
             order=order,
+            references_created_dt=references_created_dt,
+            references_created_dt_date=references_created_dt_date,
+            references_created_dt_date_gte=references_created_dt_date_gte,
+            references_created_dt_date_lte=references_created_dt_date_lte,
+            references_created_dt_gt=references_created_dt_gt,
+            references_created_dt_gte=references_created_dt_gte,
+            references_created_dt_lt=references_created_dt_lt,
+            references_created_dt_lte=references_created_dt_lte,
+            references_description=references_description,
+            references_type=references_type,
+            references_updated_dt=references_updated_dt,
+            references_updated_dt_date=references_updated_dt_date,
+            references_updated_dt_date_gte=references_updated_dt_date_gte,
+            references_updated_dt_date_lte=references_updated_dt_date_lte,
+            references_updated_dt_gt=references_updated_dt_gt,
+            references_updated_dt_gte=references_updated_dt_gte,
+            references_updated_dt_lt=references_updated_dt_lt,
+            references_updated_dt_lte=references_updated_dt_lte,
+            references_url=references_url,
+            references_uuid=references_uuid,
             reported_dt=reported_dt,
             reported_dt_date=reported_dt_date,
             reported_dt_date_gte=reported_dt_date_gte,

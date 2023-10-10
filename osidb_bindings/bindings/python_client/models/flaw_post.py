@@ -8,8 +8,8 @@ from dateutil.parser import isoparse
 from ..models.affect import Affect
 from ..models.blank_enum import BlankEnum
 from ..models.comment import Comment
-from ..models.cv_ev_5_package_versions import CVEv5PackageVersions
 from ..models.flaw_acknowledgment import FlawAcknowledgment
+from ..models.flaw_cvss import FlawCVSS
 from ..models.flaw_post_classification import FlawPostClassification
 from ..models.flaw_post_meta_attr import FlawPostMetaAttr
 from ..models.flaw_reference import FlawReference
@@ -18,6 +18,7 @@ from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.meta import Meta
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
+from ..models.package import Package
 from ..models.requires_summary_enum import RequiresSummaryEnum
 from ..models.source_666_enum import Source666Enum
 from ..types import UNSET, OSIDBModel, Unset
@@ -39,9 +40,10 @@ class FlawPost(OSIDBModel):
     meta: List[Meta]
     comments: List[Comment]
     meta_attr: FlawPostMetaAttr
-    package_versions: List[CVEv5PackageVersions]
+    package_versions: List[Package]
     acknowledgments: List[FlawAcknowledgment]
     references: List[FlawReference]
+    cvss_scores: List[FlawCVSS]
     embargoed: bool
     created_dt: datetime.datetime
     classification: FlawPostClassification
@@ -141,6 +143,16 @@ class FlawPost(OSIDBModel):
                     references_item = references_item_data.to_dict()
 
                 references.append(references_item)
+
+        cvss_scores: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.cvss_scores, Unset):
+            cvss_scores = []
+            for cvss_scores_item_data in self.cvss_scores:
+                cvss_scores_item: Dict[str, Any] = UNSET
+                if not isinstance(cvss_scores_item_data, Unset):
+                    cvss_scores_item = cvss_scores_item_data.to_dict()
+
+                cvss_scores.append(cvss_scores_item)
 
         embargoed = self.embargoed
         created_dt: str = UNSET
@@ -284,6 +296,8 @@ class FlawPost(OSIDBModel):
             field_dict["acknowledgments"] = acknowledgments
         if not isinstance(references, Unset):
             field_dict["references"] = references
+        if not isinstance(cvss_scores, Unset):
+            field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(created_dt, Unset):
@@ -435,6 +449,17 @@ class FlawPost(OSIDBModel):
 
                 _temp_references.append(references_item)
             references = (None, json.dumps(_temp_references), "application/json")
+
+        cvss_scores: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.cvss_scores, Unset):
+            _temp_cvss_scores = []
+            for cvss_scores_item_data in self.cvss_scores:
+                cvss_scores_item: Dict[str, Any] = UNSET
+                if not isinstance(cvss_scores_item_data, Unset):
+                    cvss_scores_item = cvss_scores_item_data.to_dict()
+
+                _temp_cvss_scores.append(cvss_scores_item)
+            cvss_scores = (None, json.dumps(_temp_cvss_scores), "application/json")
 
         embargoed = (
             self.embargoed
@@ -639,6 +664,8 @@ class FlawPost(OSIDBModel):
             field_dict["acknowledgments"] = acknowledgments
         if not isinstance(references, Unset):
             field_dict["references"] = references
+        if not isinstance(cvss_scores, Unset):
+            field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(created_dt, Unset):
@@ -764,13 +791,11 @@ class FlawPost(OSIDBModel):
         else:
             for package_versions_item_data in _package_versions or []:
                 _package_versions_item = package_versions_item_data
-                package_versions_item: CVEv5PackageVersions
+                package_versions_item: Package
                 if isinstance(_package_versions_item, Unset):
                     package_versions_item = UNSET
                 else:
-                    package_versions_item = CVEv5PackageVersions.from_dict(
-                        _package_versions_item
-                    )
+                    package_versions_item = Package.from_dict(_package_versions_item)
 
                 package_versions.append(package_versions_item)
 
@@ -805,6 +830,21 @@ class FlawPost(OSIDBModel):
                     references_item = FlawReference.from_dict(_references_item)
 
                 references.append(references_item)
+
+        cvss_scores = []
+        _cvss_scores = d.pop("cvss_scores", UNSET)
+        if _cvss_scores is UNSET:
+            cvss_scores = UNSET
+        else:
+            for cvss_scores_item_data in _cvss_scores or []:
+                _cvss_scores_item = cvss_scores_item_data
+                cvss_scores_item: FlawCVSS
+                if isinstance(_cvss_scores_item, Unset):
+                    cvss_scores_item = UNSET
+                else:
+                    cvss_scores_item = FlawCVSS.from_dict(_cvss_scores_item)
+
+                cvss_scores.append(cvss_scores_item)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -1048,6 +1088,7 @@ class FlawPost(OSIDBModel):
             package_versions=package_versions,
             acknowledgments=acknowledgments,
             references=references,
+            cvss_scores=cvss_scores,
             embargoed=embargoed,
             created_dt=created_dt,
             classification=classification,
@@ -1090,9 +1131,10 @@ class FlawPost(OSIDBModel):
             "meta": List[Meta],
             "comments": List[Comment],
             "meta_attr": FlawPostMetaAttr,
-            "package_versions": List[CVEv5PackageVersions],
+            "package_versions": List[Package],
             "acknowledgments": List[FlawAcknowledgment],
             "references": List[FlawReference],
+            "cvss_scores": List[FlawCVSS],
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "classification": FlawPostClassification,

@@ -19,7 +19,7 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     content: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/task/{task_key}/comment/{comment_id}".format(
         client.base_url,
@@ -29,7 +29,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     params: Dict[str, Any] = {
         "content": content,
@@ -77,14 +77,14 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     content: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskCommentUpdateResponse200]:
     kwargs = _get_kwargs(
         task_key=task_key,
         comment_id=comment_id,
         client=client,
         content=content,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.put(
@@ -104,7 +104,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     content: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskCommentUpdateResponse200]:
     """Edit a comment in a task"""
 
@@ -113,7 +113,7 @@ def sync(
         comment_id=comment_id,
         client=client,
         content=content,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -123,14 +123,14 @@ async def async_detailed(
     *,
     client: AuthenticatedClient,
     content: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskCommentUpdateResponse200]:
     kwargs = _get_kwargs(
         task_key=task_key,
         comment_id=comment_id,
         client=client,
         content=content,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().put(
@@ -150,7 +150,7 @@ async def async_(
     *,
     client: AuthenticatedClient,
     content: str,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskCommentUpdateResponse200]:
     """Edit a comment in a task"""
 
@@ -160,6 +160,6 @@ async def async_(
             comment_id=comment_id,
             client=client,
             content=content,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

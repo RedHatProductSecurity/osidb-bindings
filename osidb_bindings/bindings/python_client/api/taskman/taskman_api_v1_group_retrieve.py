@@ -15,7 +15,7 @@ def _get_kwargs(
     group_key: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/group/{group_key}".format(
         client.base_url,
@@ -24,7 +24,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     return {
         "url": url,
@@ -62,12 +62,12 @@ def sync_detailed(
     group_key: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1GroupRetrieveResponse200]:
     kwargs = _get_kwargs(
         group_key=group_key,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.get(
@@ -85,14 +85,14 @@ def sync(
     group_key: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1GroupRetrieveResponse200]:
     """Get a list of tasks from a group"""
 
     return sync_detailed(
         group_key=group_key,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -100,12 +100,12 @@ async def async_detailed(
     group_key: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1GroupRetrieveResponse200]:
     kwargs = _get_kwargs(
         group_key=group_key,
         client=client,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().get(
@@ -123,7 +123,7 @@ async def async_(
     group_key: str,
     *,
     client: AuthenticatedClient,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1GroupRetrieveResponse200]:
     """Get a list of tasks from a group"""
 
@@ -131,6 +131,6 @@ async def async_(
         await async_detailed(
             group_key=group_key,
             client=client,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed

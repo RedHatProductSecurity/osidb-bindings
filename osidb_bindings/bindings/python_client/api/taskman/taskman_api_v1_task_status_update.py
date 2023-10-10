@@ -31,7 +31,7 @@ def _get_kwargs(
     reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
     resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
     status: TaskmanApiV1TaskStatusUpdateStatus,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/taskman/api/v1/task/{task_key}/status".format(
         client.base_url,
@@ -40,7 +40,7 @@ def _get_kwargs(
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-authentication"] = jira_authentication
+    headers["jira-api-key"] = jira_api_key
 
     json_reason: Union[Unset, None, str] = UNSET
     if not isinstance(reason, Unset):
@@ -112,7 +112,7 @@ def sync_detailed(
     reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
     resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
     status: TaskmanApiV1TaskStatusUpdateStatus,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskStatusUpdateResponse200]:
     kwargs = _get_kwargs(
         task_key=task_key,
@@ -120,7 +120,7 @@ def sync_detailed(
         reason=reason,
         resolution=resolution,
         status=status,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     response = requests.put(
@@ -141,7 +141,7 @@ def sync(
     reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
     resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
     status: TaskmanApiV1TaskStatusUpdateStatus,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskStatusUpdateResponse200]:
     """Change a task workflow status"""
 
@@ -151,7 +151,7 @@ def sync(
         reason=reason,
         resolution=resolution,
         status=status,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -162,7 +162,7 @@ async def async_detailed(
     reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
     resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
     status: TaskmanApiV1TaskStatusUpdateStatus,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Response[TaskmanApiV1TaskStatusUpdateResponse200]:
     kwargs = _get_kwargs(
         task_key=task_key,
@@ -170,7 +170,7 @@ async def async_detailed(
         reason=reason,
         resolution=resolution,
         status=status,
-        jira_authentication=jira_authentication,
+        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().put(
@@ -191,7 +191,7 @@ async def async_(
     reason: Union[Unset, None, TaskmanApiV1TaskStatusUpdateReason] = UNSET,
     resolution: Union[Unset, None, TaskmanApiV1TaskStatusUpdateResolution] = UNSET,
     status: TaskmanApiV1TaskStatusUpdateStatus,
-    jira_authentication: str,
+    jira_api_key: str,
 ) -> Optional[TaskmanApiV1TaskStatusUpdateResponse200]:
     """Change a task workflow status"""
 
@@ -202,6 +202,6 @@ async def async_(
             reason=reason,
             resolution=resolution,
             status=status,
-            jira_authentication=jira_authentication,
+            jira_api_key=jira_api_key,
         )
     ).parsed
