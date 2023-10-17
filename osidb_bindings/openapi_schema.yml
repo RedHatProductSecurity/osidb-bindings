@@ -7637,6 +7637,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_dt:
           type: string
           format: date-time
