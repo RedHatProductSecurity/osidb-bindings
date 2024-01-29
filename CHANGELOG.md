@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.6.0] - 2024-01-29
+
 ## [3.5.1] - 2023-10-17
 ### Fixed
 - add workaround for Erratum shipped_dt which is marked as non-nullable
