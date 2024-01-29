@@ -1,6 +1,5 @@
 import datetime
-import json
-from typing import Any, Dict, List, Tuple, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 from dateutil.parser import isoparse
@@ -10,12 +9,12 @@ from ..models.tracker_meta_attr import TrackerMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="Tracker")
+T = TypeVar("T", bound="OsidbApiV1TrackersUpdateResponse200")
 
 
 @attr.s(auto_attribs=True)
-class Tracker(OSIDBModel):
-    """Tracker serializer"""
+class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
+    """ """
 
     errata: List[Erratum]
     external_system_id: str
@@ -29,6 +28,10 @@ class Tracker(OSIDBModel):
     affects: Union[Unset, List[str]] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
     resolution: Union[Unset, str] = UNSET
+    dt: Union[Unset, datetime.datetime] = UNSET
+    env: Union[Unset, str] = UNSET
+    revision: Union[Unset, str] = UNSET
+    version: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -69,6 +72,13 @@ class Tracker(OSIDBModel):
 
         ps_update_stream = self.ps_update_stream
         resolution = self.resolution
+        dt: Union[Unset, str] = UNSET
+        if not isinstance(self.dt, Unset):
+            dt = self.dt.isoformat()
+
+        env = self.env
+        revision = self.revision
+        version = self.version
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -96,101 +106,14 @@ class Tracker(OSIDBModel):
             field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-
-        return field_dict
-
-    def to_multipart(self) -> Dict[str, Any]:
-        errata: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.errata, Unset):
-            _temp_errata = []
-            for errata_item_data in self.errata:
-                errata_item: Dict[str, Any] = UNSET
-                if not isinstance(errata_item_data, Unset):
-                    errata_item = errata_item_data.to_dict()
-
-                _temp_errata.append(errata_item)
-            errata = (None, json.dumps(_temp_errata), "application/json")
-
-        external_system_id = (
-            self.external_system_id
-            if self.external_system_id is UNSET
-            else (None, str(self.external_system_id), "text/plain")
-        )
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
-
-        status = (
-            self.status
-            if self.status is UNSET
-            else (None, str(self.status), "text/plain")
-        )
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = TrackerType(self.type).value
-
-        uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        embargoed = (
-            self.embargoed
-            if self.embargoed is UNSET
-            else (None, str(self.embargoed), "text/plain")
-        )
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
-        affects: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.affects, Unset):
-            _temp_affects = self.affects
-            affects = (None, json.dumps(_temp_affects), "application/json")
-
-        ps_update_stream = (
-            self.ps_update_stream
-            if self.ps_update_stream is UNSET
-            else (None, str(self.ps_update_stream), "text/plain")
-        )
-        resolution = (
-            self.resolution
-            if self.resolution is UNSET
-            else (None, str(self.resolution), "text/plain")
-        )
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
-        )
-        if not isinstance(errata, Unset):
-            field_dict["errata"] = errata
-        if not isinstance(external_system_id, Unset):
-            field_dict["external_system_id"] = external_system_id
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
-        if not isinstance(status, Unset):
-            field_dict["status"] = status
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
-        if not isinstance(embargoed, Unset):
-            field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
-        if not isinstance(affects, Unset):
-            field_dict["affects"] = affects
-        if not isinstance(ps_update_stream, Unset):
-            field_dict["ps_update_stream"] = ps_update_stream
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
+        if not isinstance(dt, Unset):
+            field_dict["dt"] = dt
+        if not isinstance(env, Unset):
+            field_dict["env"] = env
+        if not isinstance(revision, Unset):
+            field_dict["revision"] = revision
+        if not isinstance(version, Unset):
+            field_dict["version"] = version
 
         return field_dict
 
@@ -254,7 +177,20 @@ class Tracker(OSIDBModel):
 
         resolution = d.pop("resolution", UNSET)
 
-        tracker = cls(
+        _dt = d.pop("dt", UNSET)
+        dt: Union[Unset, datetime.datetime]
+        if isinstance(_dt, Unset):
+            dt = UNSET
+        else:
+            dt = isoparse(_dt)
+
+        env = d.pop("env", UNSET)
+
+        revision = d.pop("revision", UNSET)
+
+        version = d.pop("version", UNSET)
+
+        osidb_api_v1_trackers_update_response_200 = cls(
             errata=errata,
             external_system_id=external_system_id,
             meta_attr=meta_attr,
@@ -267,10 +203,14 @@ class Tracker(OSIDBModel):
             affects=affects,
             ps_update_stream=ps_update_stream,
             resolution=resolution,
+            dt=dt,
+            env=env,
+            revision=revision,
+            version=version,
         )
 
-        tracker.additional_properties = d
-        return tracker
+        osidb_api_v1_trackers_update_response_200.additional_properties = d
+        return osidb_api_v1_trackers_update_response_200
 
     @staticmethod
     def get_fields():
@@ -287,6 +227,10 @@ class Tracker(OSIDBModel):
             "affects": List[str],
             "ps_update_stream": str,
             "resolution": str,
+            "dt": datetime.datetime,
+            "env": str,
+            "revision": str,
+            "version": str,
         }
 
     @property

@@ -20,7 +20,7 @@ from ..models.meta import Meta
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.package import Package
 from ..models.requires_summary_enum import RequiresSummaryEnum
-from ..models.source_666_enum import Source666Enum
+from ..models.source_8d8_enum import Source8D8Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Flaw")
@@ -57,7 +57,7 @@ class Flaw(OSIDBModel):
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, Source666Enum, Unset] = UNSET
+    source: Union[BlankEnum, Source8D8Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
     cvss2: Union[Unset, str] = UNSET
@@ -69,6 +69,10 @@ class Flaw(OSIDBModel):
     is_major_incident: Union[Unset, bool] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
+    group_key: Union[Unset, str] = UNSET
+    owner: Union[Unset, str] = UNSET
+    task_key: Union[Unset, str] = UNSET
+    team_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -215,11 +219,11 @@ class Flaw(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source666Enum):
+        elif isinstance(self.source, Source8D8Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source666Enum(self.source).value
+                source = Source8D8Enum(self.source).value
 
         else:
             source = UNSET
@@ -272,6 +276,11 @@ class Flaw(OSIDBModel):
             if not isinstance(self.nist_cvss_validation, Unset):
 
                 nist_cvss_validation = BlankEnum(self.nist_cvss_validation).value
+
+        group_key = self.group_key
+        owner = self.owner
+        task_key = self.task_key
+        team_id = self.team_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -353,6 +362,14 @@ class Flaw(OSIDBModel):
             field_dict["major_incident_state"] = major_incident_state
         if not isinstance(nist_cvss_validation, Unset):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
+        if not isinstance(group_key, Unset):
+            field_dict["group_key"] = group_key
+        if not isinstance(owner, Unset):
+            field_dict["owner"] = owner
+        if not isinstance(task_key, Unset):
+            field_dict["task_key"] = task_key
+        if not isinstance(team_id, Unset):
+            field_dict["team_id"] = team_id
 
         return field_dict
 
@@ -556,11 +573,11 @@ class Flaw(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source666Enum):
+        elif isinstance(self.source, Source8D8Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source666Enum(self.source).value
+                source = Source8D8Enum(self.source).value
 
         else:
             source = UNSET
@@ -641,6 +658,25 @@ class Flaw(OSIDBModel):
             if not isinstance(self.nist_cvss_validation, Unset):
 
                 nist_cvss_validation = BlankEnum(self.nist_cvss_validation).value
+
+        group_key = (
+            self.group_key
+            if self.group_key is UNSET
+            else (None, str(self.group_key), "text/plain")
+        )
+        owner = (
+            self.owner if self.owner is UNSET else (None, str(self.owner), "text/plain")
+        )
+        task_key = (
+            self.task_key
+            if self.task_key is UNSET
+            else (None, str(self.task_key), "text/plain")
+        )
+        team_id = (
+            self.team_id
+            if self.team_id is UNSET
+            else (None, str(self.team_id), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -727,6 +763,14 @@ class Flaw(OSIDBModel):
             field_dict["major_incident_state"] = major_incident_state
         if not isinstance(nist_cvss_validation, Unset):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
+        if not isinstance(group_key, Unset):
+            field_dict["group_key"] = group_key
+        if not isinstance(owner, Unset):
+            field_dict["owner"] = owner
+        if not isinstance(task_key, Unset):
+            field_dict["task_key"] = task_key
+        if not isinstance(team_id, Unset):
+            field_dict["team_id"] = team_id
 
         return field_dict
 
@@ -970,18 +1014,18 @@ class Flaw(OSIDBModel):
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, Source666Enum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, Source8D8Enum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, Source666Enum]
+                source_type_0: Union[Unset, Source8D8Enum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = Source666Enum(_source_type_0)
+                    source_type_0 = Source8D8Enum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -1094,6 +1138,14 @@ class Flaw(OSIDBModel):
             d.pop("nist_cvss_validation", UNSET)
         )
 
+        group_key = d.pop("group_key", UNSET)
+
+        owner = d.pop("owner", UNSET)
+
+        task_key = d.pop("task_key", UNSET)
+
+        team_id = d.pop("team_id", UNSET)
+
         flaw = cls(
             uuid=uuid,
             state=state,
@@ -1134,6 +1186,10 @@ class Flaw(OSIDBModel):
             is_major_incident=is_major_incident,
             major_incident_state=major_incident_state,
             nist_cvss_validation=nist_cvss_validation,
+            group_key=group_key,
+            owner=owner,
+            task_key=task_key,
+            team_id=team_id,
         )
 
         flaw.additional_properties = d
@@ -1169,7 +1225,7 @@ class Flaw(OSIDBModel):
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, Source666Enum],
+            "source": Union[BlankEnum, Source8D8Enum],
             "reported_dt": datetime.datetime,
             "mitigation": str,
             "cvss2": str,
@@ -1181,6 +1237,10 @@ class Flaw(OSIDBModel):
             "is_major_incident": bool,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
+            "group_key": str,
+            "owner": str,
+            "task_key": str,
+            "team_id": str,
         }
 
     @property

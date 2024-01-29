@@ -55,6 +55,7 @@ class OsidbApiV1FlawsListSource(str, Enum):
     MUTTDEV = "MUTTDEV"
     NETDEV = "NETDEV"
     NISCC = "NISCC"
+    NVD = "NVD"
     OCERT = "OCERT"
     OPENOFFICE = "OPENOFFICE"
     OPENSSL = "OPENSSL"

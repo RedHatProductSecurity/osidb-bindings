@@ -3,45 +3,59 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.taskman_api_v1_task_assignee_retrieve_response_200 import (
-    TaskmanApiV1TaskAssigneeRetrieveResponse200,
+from ...models.osidb_api_v1_flaws_reject_create_response_200 import (
+    OsidbApiV1FlawsRejectCreateResponse200,
 )
+from ...models.reject import Reject
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = Reject
 
 
 def _get_kwargs(
-    user: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
+    form_data: Reject,
+    multipart_data: Reject,
+    json_body: Reject,
     jira_api_key: str,
 ) -> Dict[str, Any]:
-    url = "{}/taskman/api/v1/task/assignee/{user}".format(
+    url = "{}/osidb/api/v1/flaws/{flaw_id}/reject".format(
         client.base_url,
-        user=user,
+        flaw_id=flaw_id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
 
     headers["jira-api-key"] = jira_api_key
 
+    json_json_body: Dict[str, Any] = UNSET
+    if not isinstance(json_body, Unset):
+        json_body.to_dict()
+
+    multipart_multipart_data: Dict[str, Any] = UNSET
+    if not isinstance(multipart_data, Unset):
+        multipart_data.to_multipart()
+
     return {
         "url": url,
         "headers": headers,
+        "data": form_data.to_dict(),
     }
 
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
+) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TaskmanApiV1TaskAssigneeRetrieveResponse200
+        response_200: OsidbApiV1FlawsRejectCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TaskmanApiV1TaskAssigneeRetrieveResponse200.from_dict(
+            response_200 = OsidbApiV1FlawsRejectCreateResponse200.from_dict(
                 _response_200
             )
 
@@ -51,7 +65,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
+) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -61,18 +75,24 @@ def _build_response(
 
 
 def sync_detailed(
-    user: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
+    form_data: Reject,
+    multipart_data: Reject,
+    json_body: Reject,
     jira_api_key: str,
-) -> Response[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
+) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     kwargs = _get_kwargs(
-        user=user,
+        flaw_id=flaw_id,
         client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
         jira_api_key=jira_api_key,
     )
 
-    response = requests.get(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -84,33 +104,47 @@ def sync_detailed(
 
 
 def sync(
-    user: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
+    form_data: Reject,
+    multipart_data: Reject,
+    json_body: Reject,
     jira_api_key: str,
-) -> Optional[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
-    """Get a list of tasks from a user"""
+) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
+    """workflow promotion API endpoint
+
+    try to reject a flaw / task"""
 
     return sync_detailed(
-        user=user,
+        flaw_id=flaw_id,
         client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
         jira_api_key=jira_api_key,
     ).parsed
 
 
 async def async_detailed(
-    user: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
+    form_data: Reject,
+    multipart_data: Reject,
+    json_body: Reject,
     jira_api_key: str,
-) -> Response[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
+) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     kwargs = _get_kwargs(
-        user=user,
+        flaw_id=flaw_id,
         client=client,
+        form_data=form_data,
+        multipart_data=multipart_data,
+        json_body=json_body,
         jira_api_key=jira_api_key,
     )
 
-    async with client.get_async_session().get(
+    async with client.get_async_session().post(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -122,17 +156,25 @@ async def async_detailed(
 
 
 async def async_(
-    user: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
+    form_data: Reject,
+    multipart_data: Reject,
+    json_body: Reject,
     jira_api_key: str,
-) -> Optional[TaskmanApiV1TaskAssigneeRetrieveResponse200]:
-    """Get a list of tasks from a user"""
+) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
+    """workflow promotion API endpoint
+
+    try to reject a flaw / task"""
 
     return (
         await async_detailed(
-            user=user,
+            flaw_id=flaw_id,
             client=client,
+            form_data=form_data,
+            multipart_data=multipart_data,
+            json_body=json_body,
             jira_api_key=jira_api_key,
         )
     ).parsed

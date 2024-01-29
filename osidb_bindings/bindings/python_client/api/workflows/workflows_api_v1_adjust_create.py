@@ -1,57 +1,46 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.taskman_api_v1_group_create_response_200 import (
-    TaskmanApiV1GroupCreateResponse200,
+from ...models.workflows_api_v1_adjust_create_response_200 import (
+    WorkflowsApiV1AdjustCreateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
-QUERY_PARAMS = {
-    "description": str,
-    "name": str,
-}
+QUERY_PARAMS = {}
 
 
 def _get_kwargs(
+    id: str,
     *,
     client: AuthenticatedClient,
-    description: Union[Unset, None, str] = UNSET,
-    name: str,
-    jira_api_key: str,
 ) -> Dict[str, Any]:
-    url = "{}/taskman/api/v1/group".format(
+    url = "{}/workflows/api/v1/{id}/adjust".format(
         client.base_url,
+        id=id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
 
-    headers["jira-api-key"] = jira_api_key
-
-    params: Dict[str, Any] = {
-        "description": description,
-        "name": name,
-    }
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     return {
         "url": url,
         "headers": headers,
-        "params": params,
     }
 
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[TaskmanApiV1GroupCreateResponse200]:
+) -> Optional[WorkflowsApiV1AdjustCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TaskmanApiV1GroupCreateResponse200
+        response_200: WorkflowsApiV1AdjustCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TaskmanApiV1GroupCreateResponse200.from_dict(_response_200)
+            response_200 = WorkflowsApiV1AdjustCreateResponse200.from_dict(
+                _response_200
+            )
 
         return response_200
     return None
@@ -59,7 +48,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[TaskmanApiV1GroupCreateResponse200]:
+) -> Response[WorkflowsApiV1AdjustCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,17 +58,13 @@ def _build_response(
 
 
 def sync_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    description: Union[Unset, None, str] = UNSET,
-    name: str,
-    jira_api_key: str,
-) -> Response[TaskmanApiV1GroupCreateResponse200]:
+) -> Response[WorkflowsApiV1AdjustCreateResponse200]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
-        description=description,
-        name=name,
-        jira_api_key=jira_api_key,
     )
 
     response = requests.post(
@@ -94,34 +79,32 @@ def sync_detailed(
 
 
 def sync(
+    id: str,
     *,
     client: AuthenticatedClient,
-    description: Union[Unset, None, str] = UNSET,
-    name: str,
-    jira_api_key: str,
-) -> Optional[TaskmanApiV1GroupCreateResponse200]:
-    """Create a new group of tasks"""
+) -> Optional[WorkflowsApiV1AdjustCreateResponse200]:
+    """workflow adjustion API endpoint
+
+    adjust workflow classification of flaw identified by UUID or CVE
+    and return its workflow:state classification (new if changed and old otherwise)
+
+    adjust operation is idempotent so when the classification
+    is already adjusted running it results in no operation"""
 
     return sync_detailed(
+        id=id,
         client=client,
-        description=description,
-        name=name,
-        jira_api_key=jira_api_key,
     ).parsed
 
 
 async def async_detailed(
+    id: str,
     *,
     client: AuthenticatedClient,
-    description: Union[Unset, None, str] = UNSET,
-    name: str,
-    jira_api_key: str,
-) -> Response[TaskmanApiV1GroupCreateResponse200]:
+) -> Response[WorkflowsApiV1AdjustCreateResponse200]:
     kwargs = _get_kwargs(
+        id=id,
         client=client,
-        description=description,
-        name=name,
-        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().post(
@@ -136,19 +119,21 @@ async def async_detailed(
 
 
 async def async_(
+    id: str,
     *,
     client: AuthenticatedClient,
-    description: Union[Unset, None, str] = UNSET,
-    name: str,
-    jira_api_key: str,
-) -> Optional[TaskmanApiV1GroupCreateResponse200]:
-    """Create a new group of tasks"""
+) -> Optional[WorkflowsApiV1AdjustCreateResponse200]:
+    """workflow adjustion API endpoint
+
+    adjust workflow classification of flaw identified by UUID or CVE
+    and return its workflow:state classification (new if changed and old otherwise)
+
+    adjust operation is idempotent so when the classification
+    is already adjusted running it results in no operation"""
 
     return (
         await async_detailed(
+            id=id,
             client=client,
-            description=description,
-            name=name,
-            jira_api_key=jira_api_key,
         )
     ).parsed
