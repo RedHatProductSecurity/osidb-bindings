@@ -6,11 +6,11 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="TaskmanHealthyRetrieveResponse200")
+T = TypeVar("T", bound="WorkflowsHealthyRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class TaskmanHealthyRetrieveResponse200(OSIDBModel):
+class WorkflowsHealthyRetrieveResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -57,15 +57,15 @@ class TaskmanHealthyRetrieveResponse200(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        taskman_healthy_retrieve_response_200 = cls(
+        workflows_healthy_retrieve_response_200 = cls(
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        taskman_healthy_retrieve_response_200.additional_properties = d
-        return taskman_healthy_retrieve_response_200
+        workflows_healthy_retrieve_response_200.additional_properties = d
+        return workflows_healthy_retrieve_response_200
 
     @staticmethod
     def get_fields():

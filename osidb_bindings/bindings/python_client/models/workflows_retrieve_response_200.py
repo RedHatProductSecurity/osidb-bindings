@@ -6,11 +6,11 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="TaskmanApiV1TaskFlawUpdateResponse200")
+T = TypeVar("T", bound="WorkflowsRetrieveResponse200")
 
 
 @attr.s(auto_attribs=True)
-class TaskmanApiV1TaskFlawUpdateResponse200(OSIDBModel):
+class WorkflowsRetrieveResponse200(OSIDBModel):
     """ """
 
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -57,15 +57,15 @@ class TaskmanApiV1TaskFlawUpdateResponse200(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        taskman_api_v1_task_flaw_update_response_200 = cls(
+        workflows_retrieve_response_200 = cls(
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        taskman_api_v1_task_flaw_update_response_200.additional_properties = d
-        return taskman_api_v1_task_flaw_update_response_200
+        workflows_retrieve_response_200.additional_properties = d
+        return workflows_retrieve_response_200
 
     @staticmethod
     def get_fields():

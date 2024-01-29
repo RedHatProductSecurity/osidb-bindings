@@ -16,17 +16,18 @@ T = TypeVar("T", bound="OsidbApiV1TrackersRetrieveResponse200")
 class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     """ """
 
-    uuid: str
-    type: TrackerType
-    external_system_id: str
-    status: str
     errata: List[Erratum]
+    external_system_id: str
     meta_attr: TrackerMetaAttr
+    status: str
+    type: TrackerType
+    uuid: str
+    embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
-    resolution: Union[Unset, str] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
+    resolution: Union[Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -34,14 +35,6 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        uuid = self.uuid
-        type: str = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = TrackerType(self.type).value
-
-        external_system_id = self.external_system_id
-        status = self.status
         errata: List[Dict[str, Any]] = UNSET
         if not isinstance(self.errata, Unset):
             errata = []
@@ -52,10 +45,19 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
                 errata.append(errata_item)
 
+        external_system_id = self.external_system_id
         meta_attr: Dict[str, Any] = UNSET
         if not isinstance(self.meta_attr, Unset):
             meta_attr = self.meta_attr.to_dict()
 
+        status = self.status
+        type: str = UNSET
+        if not isinstance(self.type, Unset):
+
+            type = TrackerType(self.type).value
+
+        uuid = self.uuid
+        embargoed = self.embargoed
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -68,8 +70,8 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         if not isinstance(self.affects, Unset):
             affects = self.affects
 
-        resolution = self.resolution
         ps_update_stream = self.ps_update_stream
+        resolution = self.resolution
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -80,28 +82,30 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
-        if not isinstance(external_system_id, Unset):
-            field_dict["external_system_id"] = external_system_id
-        if not isinstance(status, Unset):
-            field_dict["status"] = status
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
+        if not isinstance(external_system_id, Unset):
+            field_dict["external_system_id"] = external_system_id
         if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
+        if not isinstance(status, Unset):
+            field_dict["status"] = status
+        if not isinstance(type, Unset):
+            field_dict["type"] = type
+        if not isinstance(uuid, Unset):
+            field_dict["uuid"] = uuid
+        if not isinstance(embargoed, Unset):
+            field_dict["embargoed"] = embargoed
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(resolution, Unset):
+            field_dict["resolution"] = resolution
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -116,19 +120,6 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid", UNSET)
-
-        _type = d.pop("type", UNSET)
-        type: TrackerType
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = TrackerType(_type)
-
-        external_system_id = d.pop("external_system_id", UNSET)
-
-        status = d.pop("status", UNSET)
-
         errata = []
         _errata = d.pop("errata", UNSET)
         if _errata is UNSET:
@@ -144,12 +135,27 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
                 errata.append(errata_item)
 
+        external_system_id = d.pop("external_system_id", UNSET)
+
         _meta_attr = d.pop("meta_attr", UNSET)
         meta_attr: TrackerMetaAttr
         if isinstance(_meta_attr, Unset):
             meta_attr = UNSET
         else:
             meta_attr = TrackerMetaAttr.from_dict(_meta_attr)
+
+        status = d.pop("status", UNSET)
+
+        _type = d.pop("type", UNSET)
+        type: TrackerType
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = TrackerType(_type)
+
+        uuid = d.pop("uuid", UNSET)
+
+        embargoed = d.pop("embargoed", UNSET)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -167,9 +173,9 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         affects = cast(List[str], d.pop("affects", UNSET))
 
-        resolution = d.pop("resolution", UNSET)
-
         ps_update_stream = d.pop("ps_update_stream", UNSET)
+
+        resolution = d.pop("resolution", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -185,17 +191,18 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         version = d.pop("version", UNSET)
 
         osidb_api_v1_trackers_retrieve_response_200 = cls(
-            uuid=uuid,
-            type=type,
-            external_system_id=external_system_id,
-            status=status,
             errata=errata,
+            external_system_id=external_system_id,
             meta_attr=meta_attr,
+            status=status,
+            type=type,
+            uuid=uuid,
+            embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
             affects=affects,
-            resolution=resolution,
             ps_update_stream=ps_update_stream,
+            resolution=resolution,
             dt=dt,
             env=env,
             revision=revision,
@@ -208,17 +215,18 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "uuid": str,
-            "type": TrackerType,
-            "external_system_id": str,
-            "status": str,
             "errata": List[Erratum],
+            "external_system_id": str,
             "meta_attr": TrackerMetaAttr,
+            "status": str,
+            "type": TrackerType,
+            "uuid": str,
+            "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affects": List[str],
-            "resolution": str,
             "ps_update_stream": str,
+            "resolution": str,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

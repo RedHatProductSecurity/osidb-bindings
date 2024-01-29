@@ -3,54 +3,47 @@ from typing import Any, Dict, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.taskman_api_v1_group_update_response_200 import (
-    TaskmanApiV1GroupUpdateResponse200,
+from ...models.osidb_api_v1_flaws_promote_create_response_200 import (
+    OsidbApiV1FlawsPromoteCreateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
-QUERY_PARAMS = {
-    "task_key": str,
-}
+QUERY_PARAMS = {}
 
 
 def _get_kwargs(
-    group_key: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
-    task_key: str,
     jira_api_key: str,
 ) -> Dict[str, Any]:
-    url = "{}/taskman/api/v1/group/{group_key}".format(
+    url = "{}/osidb/api/v1/flaws/{flaw_id}/promote".format(
         client.base_url,
-        group_key=group_key,
+        flaw_id=flaw_id,
     )
 
     headers: Dict[str, Any] = client.get_headers()
 
     headers["jira-api-key"] = jira_api_key
 
-    params: Dict[str, Any] = {
-        "task_key": task_key,
-    }
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     return {
         "url": url,
         "headers": headers,
-        "params": params,
     }
 
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[TaskmanApiV1GroupUpdateResponse200]:
+) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: TaskmanApiV1GroupUpdateResponse200
+        response_200: OsidbApiV1FlawsPromoteCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = TaskmanApiV1GroupUpdateResponse200.from_dict(_response_200)
+            response_200 = OsidbApiV1FlawsPromoteCreateResponse200.from_dict(
+                _response_200
+            )
 
         return response_200
     return None
@@ -58,7 +51,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[TaskmanApiV1GroupUpdateResponse200]:
+) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,20 +61,18 @@ def _build_response(
 
 
 def sync_detailed(
-    group_key: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
-    task_key: str,
     jira_api_key: str,
-) -> Response[TaskmanApiV1GroupUpdateResponse200]:
+) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     kwargs = _get_kwargs(
-        group_key=group_key,
+        flaw_id=flaw_id,
         client=client,
-        task_key=task_key,
         jira_api_key=jira_api_key,
     )
 
-    response = requests.put(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -93,37 +84,36 @@ def sync_detailed(
 
 
 def sync(
-    group_key: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
-    task_key: str,
     jira_api_key: str,
-) -> Optional[TaskmanApiV1GroupUpdateResponse200]:
-    """Add a task into a group"""
+) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
+    """workflow promotion API endpoint
+
+    try to adjust workflow classification of flaw to the next state available
+    return its workflow:state classification or errors if not possible to promote"""
 
     return sync_detailed(
-        group_key=group_key,
+        flaw_id=flaw_id,
         client=client,
-        task_key=task_key,
         jira_api_key=jira_api_key,
     ).parsed
 
 
 async def async_detailed(
-    group_key: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
-    task_key: str,
     jira_api_key: str,
-) -> Response[TaskmanApiV1GroupUpdateResponse200]:
+) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     kwargs = _get_kwargs(
-        group_key=group_key,
+        flaw_id=flaw_id,
         client=client,
-        task_key=task_key,
         jira_api_key=jira_api_key,
     )
 
-    async with client.get_async_session().put(
+    async with client.get_async_session().post(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -135,19 +125,20 @@ async def async_detailed(
 
 
 async def async_(
-    group_key: str,
+    flaw_id: str,
     *,
     client: AuthenticatedClient,
-    task_key: str,
     jira_api_key: str,
-) -> Optional[TaskmanApiV1GroupUpdateResponse200]:
-    """Add a task into a group"""
+) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
+    """workflow promotion API endpoint
+
+    try to adjust workflow classification of flaw to the next state available
+    return its workflow:state classification or errors if not possible to promote"""
 
     return (
         await async_detailed(
-            group_key=group_key,
+            flaw_id=flaw_id,
             client=client,
-            task_key=task_key,
             jira_api_key=jira_api_key,
         )
     ).parsed

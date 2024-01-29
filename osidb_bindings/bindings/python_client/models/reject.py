@@ -4,50 +4,61 @@ import attr
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="JiraIssueType")
+T = TypeVar("T", bound="Reject")
 
 
 @attr.s(auto_attribs=True)
-class JiraIssueType(OSIDBModel):
-    """Jira issue type, can be a Task, Story or Epic."""
+class Reject(OSIDBModel):
+    """Task rejection serializer"""
 
-    id: int
-    name: str
+    reason: str
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
-        name = self.name
+        reason = self.reason
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(id, Unset):
-            field_dict["id"] = id
-        if not isinstance(name, Unset):
-            field_dict["name"] = name
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
+
+        return field_dict
+
+    def to_multipart(self) -> Dict[str, Any]:
+        reason = (
+            self.reason
+            if self.reason is UNSET
+            else (None, str(self.reason), "text/plain")
+        )
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(
+            {
+                key: (None, str(value), "text/plain")
+                for key, value in self.additional_properties.items()
+            }
+        )
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        reason = d.pop("reason", UNSET)
 
-        name = d.pop("name", UNSET)
-
-        jira_issue_type = cls(
-            id=id,
-            name=name,
+        reject = cls(
+            reason=reason,
         )
 
-        jira_issue_type.additional_properties = d
-        return jira_issue_type
+        reject.additional_properties = d
+        return reject
 
     @staticmethod
     def get_fields():
         return {
-            "id": int,
-            "name": str,
+            "reason": str,
         }
 
     @property

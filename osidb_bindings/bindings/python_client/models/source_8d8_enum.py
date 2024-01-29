@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Source666Enum(str, Enum):
+class Source8D8Enum(str, Enum):
     ADOBE = "ADOBE"
     APPLE = "APPLE"
     ASF = "ASF"
@@ -54,6 +54,7 @@ class Source666Enum(str, Enum):
     MUTTDEV = "MUTTDEV"
     NETDEV = "NETDEV"
     NISCC = "NISCC"
+    NVD = "NVD"
     OCERT = "OCERT"
     OPENOFFICE = "OPENOFFICE"
     OPENSSL = "OPENSSL"
