@@ -280,3 +280,7 @@ When new major/minor OSIDB version is being released, we can do a pre-release of
     * Tag and release needs be in format x.x.x to comply with [semantic versioning](#version-policy)
     * Tag needs to point to the latest commit
     * Release description should include the newest section of the [CHANGELOG.md](CHANGELOG.md)
+
+### Fedora COPR RPM build
+
+There is an RPM repository setup in [Fedora COPR](https://copr.fedorainfracloud.org/coprs/jazinner/osidb-bindings/). RPMs are build automatically based on git tag events. When a git tag is added to the repository Fedora COPR runs the .copr/Makefile which builds an RPM for the target distributions (currently Fedora 39 and 40).

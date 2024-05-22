@@ -56,6 +56,9 @@ update_version() {
     echo "Updating the CHANGELOG.md to ${version}"
     sed -i 's/^## Unreleased.*/## Unreleased\n\n## ['"${version}"'] - '$(date '+%Y-%m-%d')'/' CHANGELOG.md
 
+    echo "Updating the osidb_bindings.spec to ${version}"
+    sed -i 's/^%define version [0-9]*\.[0-9]*\.[0-9]*/%define version '${version}'/g' osidb_bindings.spec
+
     echo
 }
 
