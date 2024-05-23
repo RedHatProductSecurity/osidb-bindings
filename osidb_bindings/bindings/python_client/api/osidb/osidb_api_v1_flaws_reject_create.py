@@ -20,7 +20,6 @@ def _get_kwargs(
     form_data: Reject,
     multipart_data: Reject,
     json_body: Reject,
-    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{flaw_id}/reject".format(
         client.base_url,
@@ -28,8 +27,6 @@ def _get_kwargs(
     )
 
     headers: Dict[str, Any] = client.get_headers()
-
-    headers["jira-api-key"] = jira_api_key
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -81,7 +78,6 @@ def sync_detailed(
     form_data: Reject,
     multipart_data: Reject,
     json_body: Reject,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -89,7 +85,6 @@ def sync_detailed(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        jira_api_key=jira_api_key,
     )
 
     response = requests.post(
@@ -110,7 +105,6 @@ def sync(
     form_data: Reject,
     multipart_data: Reject,
     json_body: Reject,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
 
@@ -122,7 +116,6 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -133,7 +126,6 @@ async def async_detailed(
     form_data: Reject,
     multipart_data: Reject,
     json_body: Reject,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -141,7 +133,6 @@ async def async_detailed(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().post(
@@ -162,7 +153,6 @@ async def async_(
     form_data: Reject,
     multipart_data: Reject,
     json_body: Reject,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
 
@@ -175,6 +165,5 @@ async def async_(
             form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
-            jira_api_key=jira_api_key,
         )
     ).parsed
