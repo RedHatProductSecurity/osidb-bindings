@@ -1,9 +1,11 @@
 import datetime
+import json
 from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
+from ..models.flaw_reference_put_alerts import FlawReferencePutAlerts
 from ..models.flaw_reference_type import FlawReferenceType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -17,6 +19,7 @@ class FlawReferencePut(OSIDBModel):
     url: str
     uuid: str
     embargoed: bool
+    alerts: FlawReferencePutAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     description: Union[Unset, str] = UNSET
@@ -27,6 +30,10 @@ class FlawReferencePut(OSIDBModel):
         url = self.url
         uuid = self.uuid
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -49,6 +56,8 @@ class FlawReferencePut(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -68,6 +77,10 @@ class FlawReferencePut(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -99,6 +112,8 @@ class FlawReferencePut(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -118,6 +133,13 @@ class FlawReferencePut(OSIDBModel):
         uuid = d.pop("uuid", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: FlawReferencePutAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = FlawReferencePutAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -146,6 +168,7 @@ class FlawReferencePut(OSIDBModel):
             url=url,
             uuid=uuid,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             description=description,
@@ -161,6 +184,7 @@ class FlawReferencePut(OSIDBModel):
             "url": str,
             "uuid": str,
             "embargoed": bool,
+            "alerts": FlawReferencePutAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "description": str,

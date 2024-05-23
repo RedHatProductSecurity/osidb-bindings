@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
+from ..models.package_alerts import PackageAlerts
 from ..models.package_ver import PackageVer
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -14,6 +15,7 @@ class Package(OSIDBModel):
 
     package: str
     versions: List[PackageVer]
+    alerts: PackageAlerts
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -28,12 +30,18 @@ class Package(OSIDBModel):
 
                 versions.append(versions_item)
 
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(package, Unset):
             field_dict["package"] = package
         if not isinstance(versions, Unset):
             field_dict["versions"] = versions
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
 
         return field_dict
 
@@ -57,9 +65,17 @@ class Package(OSIDBModel):
 
                 versions.append(versions_item)
 
+        _alerts = d.pop("alerts", UNSET)
+        alerts: PackageAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = PackageAlerts.from_dict(_alerts)
+
         package = cls(
             package=package,
             versions=versions,
+            alerts=alerts,
         )
 
         package.additional_properties = d
@@ -70,6 +86,7 @@ class Package(OSIDBModel):
         return {
             "package": str,
             "versions": List[PackageVer],
+            "alerts": PackageAlerts,
         }
 
     @property

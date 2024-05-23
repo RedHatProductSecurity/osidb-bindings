@@ -57,7 +57,8 @@ QUERY_PARAMS = {
     "affects__cvss3_score__lt": float,
     "affects__cvss3_score__lte": float,
     "affects__embargoed": bool,
-    "affects__flaw__component": str,
+    "affects__flaw__component": List[str],
+    "affects__flaw__components": List[str],
     "affects__flaw__created_dt": datetime.datetime,
     "affects__flaw__created_dt__date": datetime.date,
     "affects__flaw__created_dt__date__gte": datetime.date,
@@ -178,7 +179,8 @@ def _get_kwargs(
     affects_cvss3_score_lt: Union[Unset, None, float] = UNSET,
     affects_cvss3_score_lte: Union[Unset, None, float] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, str] = UNSET,
+    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
+    affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -344,6 +346,20 @@ def _get_kwargs(
         json_affects_created_dt_lte = (
             affects_created_dt_lte.isoformat() if affects_created_dt_lte else None
         )
+
+    json_affects_flaw_component: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(affects_flaw_component, Unset):
+        if affects_flaw_component is None:
+            json_affects_flaw_component = None
+        else:
+            json_affects_flaw_component = affects_flaw_component
+
+    json_affects_flaw_components: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(affects_flaw_components, Unset):
+        if affects_flaw_components is None:
+            json_affects_flaw_components = None
+        else:
+            json_affects_flaw_components = affects_flaw_components
 
     json_affects_flaw_created_dt: Union[Unset, None, str] = UNSET
     if not isinstance(affects_flaw_created_dt, Unset):
@@ -778,7 +794,8 @@ def _get_kwargs(
         "affects__cvss3_score__lt": affects_cvss3_score_lt,
         "affects__cvss3_score__lte": affects_cvss3_score_lte,
         "affects__embargoed": affects_embargoed,
-        "affects__flaw__component": affects_flaw_component,
+        "affects__flaw__component": json_affects_flaw_component,
+        "affects__flaw__components": json_affects_flaw_components,
         "affects__flaw__created_dt": json_affects_flaw_created_dt,
         "affects__flaw__created_dt__date": json_affects_flaw_created_dt_date,
         "affects__flaw__created_dt__date__gte": json_affects_flaw_created_dt_date_gte,
@@ -932,7 +949,8 @@ def sync_detailed(
     affects_cvss3_score_lt: Union[Unset, None, float] = UNSET,
     affects_cvss3_score_lte: Union[Unset, None, float] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, str] = UNSET,
+    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
+    affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1057,6 +1075,7 @@ def sync_detailed(
         affects_cvss3_score_lte=affects_cvss3_score_lte,
         affects_embargoed=affects_embargoed,
         affects_flaw_component=affects_flaw_component,
+        affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
         affects_flaw_created_dt_date_gte=affects_flaw_created_dt_date_gte,
@@ -1187,7 +1206,8 @@ def sync(
     affects_cvss3_score_lt: Union[Unset, None, float] = UNSET,
     affects_cvss3_score_lte: Union[Unset, None, float] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, str] = UNSET,
+    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
+    affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1314,6 +1334,7 @@ def sync(
         affects_cvss3_score_lte=affects_cvss3_score_lte,
         affects_embargoed=affects_embargoed,
         affects_flaw_component=affects_flaw_component,
+        affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
         affects_flaw_created_dt_date_gte=affects_flaw_created_dt_date_gte,
@@ -1434,7 +1455,8 @@ async def async_detailed(
     affects_cvss3_score_lt: Union[Unset, None, float] = UNSET,
     affects_cvss3_score_lte: Union[Unset, None, float] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, str] = UNSET,
+    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
+    affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1559,6 +1581,7 @@ async def async_detailed(
         affects_cvss3_score_lte=affects_cvss3_score_lte,
         affects_embargoed=affects_embargoed,
         affects_flaw_component=affects_flaw_component,
+        affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
         affects_flaw_created_dt_date_gte=affects_flaw_created_dt_date_gte,
@@ -1689,7 +1712,8 @@ async def async_(
     affects_cvss3_score_lt: Union[Unset, None, float] = UNSET,
     affects_cvss3_score_lte: Union[Unset, None, float] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, str] = UNSET,
+    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
+    affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1817,6 +1841,7 @@ async def async_(
             affects_cvss3_score_lte=affects_cvss3_score_lte,
             affects_embargoed=affects_embargoed,
             affects_flaw_component=affects_flaw_component,
+            affects_flaw_components=affects_flaw_components,
             affects_flaw_created_dt=affects_flaw_created_dt,
             affects_flaw_created_dt_date=affects_flaw_created_dt_date,
             affects_flaw_created_dt_date_gte=affects_flaw_created_dt_date_gte,

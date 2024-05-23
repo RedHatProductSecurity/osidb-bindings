@@ -1,9 +1,12 @@
 import datetime
+import json
 from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
+from ..models.affect_cvss_post_alerts import AffectCVSSPostAlerts
+from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -14,32 +17,41 @@ T = TypeVar("T", bound="AffectCVSSPost")
 class AffectCVSSPost(OSIDBModel):
     """AffectCVSS serializer"""
 
-    cvss_version: str
+    cvss_version: CvssVersionEnum
     issuer: IssuerEnum
+    score: float
     uuid: str
     vector: str
     embargoed: bool
+    alerts: AffectCVSSPostAlerts
     created_dt: datetime.datetime
     comment: Union[Unset, str] = UNSET
-    score: Union[Unset, float] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cvss_version = self.cvss_version
+        cvss_version: str = UNSET
+        if not isinstance(self.cvss_version, Unset):
+
+            cvss_version = CvssVersionEnum(self.cvss_version).value
+
         issuer: str = UNSET
         if not isinstance(self.issuer, Unset):
 
             issuer = IssuerEnum(self.issuer).value
 
+        score = self.score
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
 
         comment = self.comment
-        score = self.score
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -47,32 +59,37 @@ class AffectCVSSPost(OSIDBModel):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(issuer, Unset):
             field_dict["issuer"] = issuer
+        if not isinstance(score, Unset):
+            field_dict["score"] = score
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(vector, Unset):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
-        if not isinstance(score, Unset):
-            field_dict["score"] = score
 
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        cvss_version = (
-            self.cvss_version
-            if self.cvss_version is UNSET
-            else (None, str(self.cvss_version), "text/plain")
-        )
+        cvss_version: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.cvss_version, Unset):
+
+            cvss_version = CvssVersionEnum(self.cvss_version).value
+
         issuer: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.issuer, Unset):
 
             issuer = IssuerEnum(self.issuer).value
 
+        score = (
+            self.score if self.score is UNSET else (None, str(self.score), "text/plain")
+        )
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
         vector = (
             self.vector
@@ -84,6 +101,10 @@ class AffectCVSSPost(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -92,9 +113,6 @@ class AffectCVSSPost(OSIDBModel):
             self.comment
             if self.comment is UNSET
             else (None, str(self.comment), "text/plain")
-        )
-        score = (
-            self.score if self.score is UNSET else (None, str(self.score), "text/plain")
         )
 
         field_dict: Dict[str, Any] = {}
@@ -108,25 +126,32 @@ class AffectCVSSPost(OSIDBModel):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(issuer, Unset):
             field_dict["issuer"] = issuer
+        if not isinstance(score, Unset):
+            field_dict["score"] = score
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(vector, Unset):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
-        if not isinstance(score, Unset):
-            field_dict["score"] = score
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        cvss_version = d.pop("cvss_version", UNSET)
+        _cvss_version = d.pop("cvss_version", UNSET)
+        cvss_version: CvssVersionEnum
+        if isinstance(_cvss_version, Unset):
+            cvss_version = UNSET
+        else:
+            cvss_version = CvssVersionEnum(_cvss_version)
 
         _issuer = d.pop("issuer", UNSET)
         issuer: IssuerEnum
@@ -135,11 +160,20 @@ class AffectCVSSPost(OSIDBModel):
         else:
             issuer = IssuerEnum(_issuer)
 
+        score = d.pop("score", UNSET)
+
         uuid = d.pop("uuid", UNSET)
 
         vector = d.pop("vector", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: AffectCVSSPostAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = AffectCVSSPostAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -150,17 +184,16 @@ class AffectCVSSPost(OSIDBModel):
 
         comment = d.pop("comment", UNSET)
 
-        score = d.pop("score", UNSET)
-
         affect_cvss_post = cls(
             cvss_version=cvss_version,
             issuer=issuer,
+            score=score,
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             comment=comment,
-            score=score,
         )
 
         affect_cvss_post.additional_properties = d
@@ -169,14 +202,15 @@ class AffectCVSSPost(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "cvss_version": str,
+            "cvss_version": CvssVersionEnum,
             "issuer": IssuerEnum,
+            "score": float,
             "uuid": str,
             "vector": str,
             "embargoed": bool,
+            "alerts": AffectCVSSPostAlerts,
             "created_dt": datetime.datetime,
             "comment": str,
-            "score": float,
         }
 
     @property

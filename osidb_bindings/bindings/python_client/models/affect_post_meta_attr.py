@@ -20,6 +20,7 @@ class AffectPostMetaAttr(OSIDBModel):
     module_stream: Union[Unset, str] = UNSET
     ps_component: Union[Unset, str] = UNSET
     ps_module: Union[Unset, str] = UNSET
+    ps_product: Union[Unset, str] = UNSET
     resolution: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -33,6 +34,7 @@ class AffectPostMetaAttr(OSIDBModel):
         module_stream = self.module_stream
         ps_component = self.ps_component
         ps_module = self.ps_module
+        ps_product = self.ps_product
         resolution = self.resolution
 
         field_dict: Dict[str, Any] = {}
@@ -55,6 +57,8 @@ class AffectPostMetaAttr(OSIDBModel):
             field_dict["ps_component"] = ps_component
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
 
@@ -81,6 +85,8 @@ class AffectPostMetaAttr(OSIDBModel):
 
         ps_module = d.pop("ps_module", UNSET)
 
+        ps_product = d.pop("ps_product", UNSET)
+
         resolution = d.pop("resolution", UNSET)
 
         affect_post_meta_attr = cls(
@@ -93,6 +99,7 @@ class AffectPostMetaAttr(OSIDBModel):
             module_stream=module_stream,
             ps_component=ps_component,
             ps_module=ps_module,
+            ps_product=ps_product,
             resolution=resolution,
         )
 
@@ -111,6 +118,7 @@ class AffectPostMetaAttr(OSIDBModel):
             "module_stream": str,
             "ps_component": str,
             "ps_module": str,
+            "ps_product": str,
             "resolution": str,
         }
 

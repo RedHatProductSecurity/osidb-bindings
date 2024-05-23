@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.affect_alerts import AffectAlerts
 from ..models.affect_cvss import AffectCVSS
 from ..models.affect_meta_attr import AffectMetaAttr
 from ..models.affect_type import AffectType
@@ -24,12 +25,14 @@ class Affect(OSIDBModel):
 
     uuid: str
     ps_module: str
+    ps_product: str
     ps_component: str
     trackers: List[Tracker]
     meta_attr: AffectMetaAttr
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
     embargoed: bool
+    alerts: AffectAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     flaw: Optional[str]
@@ -46,6 +49,7 @@ class Affect(OSIDBModel):
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
         ps_module = self.ps_module
+        ps_product = self.ps_product
         ps_component = self.ps_component
         trackers: List[Dict[str, Any]] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -73,6 +77,10 @@ class Affect(OSIDBModel):
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -143,6 +151,8 @@ class Affect(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
@@ -155,6 +165,8 @@ class Affect(OSIDBModel):
             field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -186,6 +198,11 @@ class Affect(OSIDBModel):
             self.ps_module
             if self.ps_module is UNSET
             else (None, str(self.ps_module), "text/plain")
+        )
+        ps_product = (
+            self.ps_product
+            if self.ps_product is UNSET
+            else (None, str(self.ps_product), "text/plain")
         )
         ps_component = (
             self.ps_component
@@ -228,6 +245,10 @@ class Affect(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -315,6 +336,8 @@ class Affect(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
@@ -327,6 +350,8 @@ class Affect(OSIDBModel):
             field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -358,6 +383,8 @@ class Affect(OSIDBModel):
         uuid = d.pop("uuid", UNSET)
 
         ps_module = d.pop("ps_module", UNSET)
+
+        ps_product = d.pop("ps_product", UNSET)
 
         ps_component = d.pop("ps_component", UNSET)
 
@@ -401,6 +428,13 @@ class Affect(OSIDBModel):
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: AffectAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = AffectAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -525,12 +559,14 @@ class Affect(OSIDBModel):
         affect = cls(
             uuid=uuid,
             ps_module=ps_module,
+            ps_product=ps_product,
             ps_component=ps_component,
             trackers=trackers,
             meta_attr=meta_attr,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             flaw=flaw,
@@ -552,12 +588,14 @@ class Affect(OSIDBModel):
         return {
             "uuid": str,
             "ps_module": str,
+            "ps_product": str,
             "ps_component": str,
             "trackers": List[Tracker],
             "meta_attr": AffectMetaAttr,
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
             "embargoed": bool,
+            "alerts": AffectAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "flaw": str,

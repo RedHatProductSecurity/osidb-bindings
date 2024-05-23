@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.cvss_version_enum import CvssVersionEnum
+from ..models.flaw_cvss_alerts import FlawCVSSAlerts
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -14,25 +16,31 @@ T = TypeVar("T", bound="FlawCVSS")
 class FlawCVSS(OSIDBModel):
     """FlawCVSS serializer"""
 
-    cvss_version: str
+    cvss_version: CvssVersionEnum
     issuer: IssuerEnum
+    score: float
     uuid: str
     vector: str
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
+    alerts: FlawCVSSAlerts
     comment: Union[Unset, str] = UNSET
     flaw: Union[Unset, str] = UNSET
-    score: Union[Unset, float] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cvss_version = self.cvss_version
+        cvss_version: str = UNSET
+        if not isinstance(self.cvss_version, Unset):
+
+            cvss_version = CvssVersionEnum(self.cvss_version).value
+
         issuer: str = UNSET
         if not isinstance(self.issuer, Unset):
 
             issuer = IssuerEnum(self.issuer).value
 
+        score = self.score
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
@@ -44,9 +52,12 @@ class FlawCVSS(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         comment = self.comment
         flaw = self.flaw
-        score = self.score
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -54,6 +65,8 @@ class FlawCVSS(OSIDBModel):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(issuer, Unset):
             field_dict["issuer"] = issuer
+        if not isinstance(score, Unset):
+            field_dict["score"] = score
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(vector, Unset):
@@ -64,19 +77,24 @@ class FlawCVSS(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if not isinstance(score, Unset):
-            field_dict["score"] = score
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        cvss_version = d.pop("cvss_version", UNSET)
+        _cvss_version = d.pop("cvss_version", UNSET)
+        cvss_version: CvssVersionEnum
+        if isinstance(_cvss_version, Unset):
+            cvss_version = UNSET
+        else:
+            cvss_version = CvssVersionEnum(_cvss_version)
 
         _issuer = d.pop("issuer", UNSET)
         issuer: IssuerEnum
@@ -84,6 +102,8 @@ class FlawCVSS(OSIDBModel):
             issuer = UNSET
         else:
             issuer = IssuerEnum(_issuer)
+
+        score = d.pop("score", UNSET)
 
         uuid = d.pop("uuid", UNSET)
 
@@ -105,23 +125,29 @@ class FlawCVSS(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
+        _alerts = d.pop("alerts", UNSET)
+        alerts: FlawCVSSAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = FlawCVSSAlerts.from_dict(_alerts)
+
         comment = d.pop("comment", UNSET)
 
         flaw = d.pop("flaw", UNSET)
 
-        score = d.pop("score", UNSET)
-
         flaw_cvss = cls(
             cvss_version=cvss_version,
             issuer=issuer,
+            score=score,
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
+            alerts=alerts,
             comment=comment,
             flaw=flaw,
-            score=score,
         )
 
         flaw_cvss.additional_properties = d
@@ -130,16 +156,17 @@ class FlawCVSS(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "cvss_version": str,
+            "cvss_version": CvssVersionEnum,
             "issuer": IssuerEnum,
+            "score": float,
             "uuid": str,
             "vector": str,
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
+            "alerts": FlawCVSSAlerts,
             "comment": str,
             "flaw": str,
-            "score": float,
         }
 
     @property
