@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [3.7.0] - 2024-05-23
+### Added
+- Update and Create for Tracker entity
+- JIRA_ACCESS_TOKEN environment variable
+
+### Fixed
+- Both Bugzilla API Key and Jira Access Token are now automatically fetched
+  from environment variables and passed as a header
+
 ## [3.6.0] - 2024-01-29
 
 ## [3.5.1] - 2023-10-17
