@@ -198,6 +198,8 @@ class Session:
             allowed_operations=(
                 "retrieve",
                 "list",
+                "update",
+                "create",
             ),
         )
 
