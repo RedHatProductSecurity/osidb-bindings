@@ -6,6 +6,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect_cvss import AffectCVSS
+from ..models.affect_post_alerts import AffectPostAlerts
 from ..models.affect_post_meta_attr import AffectPostMetaAttr
 from ..models.affect_type import AffectType
 from ..models.affectedness_enum import AffectednessEnum
@@ -24,12 +25,14 @@ class AffectPost(OSIDBModel):
 
     uuid: str
     ps_module: str
+    ps_product: str
     ps_component: str
     trackers: List[Tracker]
     meta_attr: AffectPostMetaAttr
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
     embargoed: bool
+    alerts: AffectPostAlerts
     created_dt: datetime.datetime
     flaw: Optional[str]
     type: Union[Unset, AffectType] = UNSET
@@ -45,6 +48,7 @@ class AffectPost(OSIDBModel):
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
         ps_module = self.ps_module
+        ps_product = self.ps_product
         ps_component = self.ps_component
         trackers: List[Dict[str, Any]] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -72,6 +76,10 @@ class AffectPost(OSIDBModel):
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -138,6 +146,8 @@ class AffectPost(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
@@ -150,6 +160,8 @@ class AffectPost(OSIDBModel):
             field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(flaw, Unset):
@@ -179,6 +191,11 @@ class AffectPost(OSIDBModel):
             self.ps_module
             if self.ps_module is UNSET
             else (None, str(self.ps_module), "text/plain")
+        )
+        ps_product = (
+            self.ps_product
+            if self.ps_product is UNSET
+            else (None, str(self.ps_product), "text/plain")
         )
         ps_component = (
             self.ps_component
@@ -221,6 +238,10 @@ class AffectPost(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -304,6 +325,8 @@ class AffectPost(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
@@ -316,6 +339,8 @@ class AffectPost(OSIDBModel):
             field_dict["cvss_scores"] = cvss_scores
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(flaw, Unset):
@@ -345,6 +370,8 @@ class AffectPost(OSIDBModel):
         uuid = d.pop("uuid", UNSET)
 
         ps_module = d.pop("ps_module", UNSET)
+
+        ps_product = d.pop("ps_product", UNSET)
 
         ps_component = d.pop("ps_component", UNSET)
 
@@ -388,6 +415,13 @@ class AffectPost(OSIDBModel):
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: AffectPostAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = AffectPostAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -505,12 +539,14 @@ class AffectPost(OSIDBModel):
         affect_post = cls(
             uuid=uuid,
             ps_module=ps_module,
+            ps_product=ps_product,
             ps_component=ps_component,
             trackers=trackers,
             meta_attr=meta_attr,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             flaw=flaw,
             type=type,
@@ -531,12 +567,14 @@ class AffectPost(OSIDBModel):
         return {
             "uuid": str,
             "ps_module": str,
+            "ps_product": str,
             "ps_component": str,
             "trackers": List[Tracker],
             "meta_attr": AffectPostMetaAttr,
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
             "embargoed": bool,
+            "alerts": AffectPostAlerts,
             "created_dt": datetime.datetime,
             "flaw": str,
             "type": AffectType,

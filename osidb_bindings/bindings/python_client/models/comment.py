@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.comment_alerts import CommentAlerts
 from ..models.comment_meta_attr import CommentMetaAttr
 from ..models.flaw_comment_type import FlawCommentType
 from ..types import UNSET, OSIDBModel, Unset
@@ -16,6 +17,7 @@ class Comment(OSIDBModel):
     """FlawComment serializer for use by FlawSerializer"""
 
     uuid: str
+    alerts: CommentAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     type: Union[Unset, FlawCommentType] = UNSET
@@ -26,6 +28,10 @@ class Comment(OSIDBModel):
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -49,6 +55,8 @@ class Comment(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -68,6 +76,13 @@ class Comment(OSIDBModel):
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: CommentAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = CommentAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -103,6 +118,7 @@ class Comment(OSIDBModel):
 
         comment = cls(
             uuid=uuid,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             type=type,
@@ -118,6 +134,7 @@ class Comment(OSIDBModel):
     def get_fields():
         return {
             "uuid": str,
+            "alerts": CommentAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "type": FlawCommentType,

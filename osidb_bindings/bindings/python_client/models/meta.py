@@ -5,6 +5,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.flaw_meta_type import FlawMetaType
+from ..models.meta_alerts import MetaAlerts
 from ..models.meta_meta_attr import MetaMetaAttr
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,6 +19,7 @@ class Meta(OSIDBModel):
     uuid: str
     type: FlawMetaType
     embargoed: bool
+    alerts: MetaAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     meta_attr: Union[Unset, MetaMetaAttr] = UNSET
@@ -31,6 +33,10 @@ class Meta(OSIDBModel):
             type = FlawMetaType(self.type).value
 
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -51,6 +57,8 @@ class Meta(OSIDBModel):
             field_dict["type"] = type
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -73,6 +81,13 @@ class Meta(OSIDBModel):
             type = FlawMetaType(_type)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: MetaAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = MetaAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -99,6 +114,7 @@ class Meta(OSIDBModel):
             uuid=uuid,
             type=type,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             meta_attr=meta_attr,
@@ -113,6 +129,7 @@ class Meta(OSIDBModel):
             "uuid": str,
             "type": FlawMetaType,
             "embargoed": bool,
+            "alerts": MetaAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "meta_attr": MetaMetaAttr,

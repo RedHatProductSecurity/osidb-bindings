@@ -6,6 +6,7 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.erratum import Erratum
+from ..models.tracker_alerts import TrackerAlerts
 from ..models.tracker_meta_attr import TrackerMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
@@ -24,6 +25,7 @@ class Tracker(OSIDBModel):
     type: TrackerType
     uuid: str
     embargoed: bool
+    alerts: TrackerAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
@@ -55,6 +57,10 @@ class Tracker(OSIDBModel):
 
         uuid = self.uuid
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -86,6 +92,8 @@ class Tracker(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -136,6 +144,10 @@ class Tracker(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -181,6 +193,8 @@ class Tracker(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -234,6 +248,13 @@ class Tracker(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        _alerts = d.pop("alerts", UNSET)
+        alerts: TrackerAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = TrackerAlerts.from_dict(_alerts)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -262,6 +283,7 @@ class Tracker(OSIDBModel):
             type=type,
             uuid=uuid,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             affects=affects,
@@ -282,6 +304,7 @@ class Tracker(OSIDBModel):
             "type": TrackerType,
             "uuid": str,
             "embargoed": bool,
+            "alerts": TrackerAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affects": List[str],

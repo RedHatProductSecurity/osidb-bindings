@@ -9,6 +9,7 @@ from ..models.affect import Affect
 from ..models.blank_enum import BlankEnum
 from ..models.comment import Comment
 from ..models.flaw_acknowledgment import FlawAcknowledgment
+from ..models.flaw_alerts import FlawAlerts
 from ..models.flaw_classification import FlawClassification
 from ..models.flaw_cvss import FlawCVSS
 from ..models.flaw_meta_attr import FlawMetaAttr
@@ -48,10 +49,12 @@ class Flaw(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: FlawClassification
+    alerts: FlawAlerts
     type: Union[Unset, FlawType] = UNSET
     cve_id: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     component: Union[Unset, str] = UNSET
+    components: Union[Unset, List[str]] = UNSET
     summary: Union[Unset, str] = UNSET
     requires_summary: Union[BlankEnum, RequiresSummaryEnum, Unset] = UNSET
     statement: Union[Unset, str] = UNSET
@@ -172,6 +175,10 @@ class Flaw(OSIDBModel):
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
 
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         type: Union[Unset, str] = UNSET
         if not isinstance(self.type, Unset):
 
@@ -194,6 +201,10 @@ class Flaw(OSIDBModel):
                 impact = BlankEnum(self.impact).value
 
         component = self.component
+        components: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.components, Unset):
+            components = self.components
+
         summary = self.summary
         requires_summary: Union[Unset, str]
         if isinstance(self.requires_summary, Unset):
@@ -320,6 +331,8 @@ class Flaw(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(classification, Unset):
             field_dict["classification"] = classification
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(type, Unset):
             field_dict["type"] = type
         if not isinstance(cve_id, Unset):
@@ -328,6 +341,8 @@ class Flaw(OSIDBModel):
             field_dict["impact"] = impact
         if not isinstance(component, Unset):
             field_dict["component"] = component
+        if not isinstance(components, Unset):
+            field_dict["components"] = components
         if not isinstance(summary, Unset):
             field_dict["summary"] = summary
         if not isinstance(requires_summary, Unset):
@@ -506,6 +521,10 @@ class Flaw(OSIDBModel):
                 "application/json",
             )
 
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         type: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.type, Unset):
 
@@ -536,6 +555,11 @@ class Flaw(OSIDBModel):
             if self.component is UNSET
             else (None, str(self.component), "text/plain")
         )
+        components: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.components, Unset):
+            _temp_components = self.components
+            components = (None, json.dumps(_temp_components), "application/json")
+
         summary = (
             self.summary
             if self.summary is UNSET
@@ -721,6 +745,8 @@ class Flaw(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(classification, Unset):
             field_dict["classification"] = classification
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(type, Unset):
             field_dict["type"] = type
         if not isinstance(cve_id, Unset):
@@ -729,6 +755,8 @@ class Flaw(OSIDBModel):
             field_dict["impact"] = impact
         if not isinstance(component, Unset):
             field_dict["component"] = component
+        if not isinstance(components, Unset):
+            field_dict["components"] = components
         if not isinstance(summary, Unset):
             field_dict["summary"] = summary
         if not isinstance(requires_summary, Unset):
@@ -926,6 +954,13 @@ class Flaw(OSIDBModel):
         else:
             classification = FlawClassification.from_dict(_classification)
 
+        _alerts = d.pop("alerts", UNSET)
+        alerts: FlawAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = FlawAlerts.from_dict(_alerts)
+
         _type = d.pop("type", UNSET)
         type: Union[Unset, FlawType]
         if isinstance(_type, Unset):
@@ -965,6 +1000,8 @@ class Flaw(OSIDBModel):
         impact = _parse_impact(d.pop("impact", UNSET))
 
         component = d.pop("component", UNSET)
+
+        components = cast(List[str], d.pop("components", UNSET))
 
         summary = d.pop("summary", UNSET)
 
@@ -1165,10 +1202,12 @@ class Flaw(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             classification=classification,
+            alerts=alerts,
             type=type,
             cve_id=cve_id,
             impact=impact,
             component=component,
+            components=components,
             summary=summary,
             requires_summary=requires_summary,
             statement=statement,
@@ -1216,10 +1255,12 @@ class Flaw(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
+            "alerts": FlawAlerts,
             "type": FlawType,
             "cve_id": str,
             "impact": Union[BlankEnum, ImpactEnum],
             "component": str,
+            "components": List[str],
             "summary": str,
             "requires_summary": Union[BlankEnum, RequiresSummaryEnum],
             "statement": str,

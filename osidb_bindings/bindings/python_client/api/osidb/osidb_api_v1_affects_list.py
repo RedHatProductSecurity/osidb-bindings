@@ -79,7 +79,8 @@ QUERY_PARAMS = {
     "cvss_scores__vector": str,
     "embargoed": bool,
     "exclude_fields": List[str],
-    "flaw__component": str,
+    "flaw__component": List[str],
+    "flaw__components": List[str],
     "flaw__created_dt": datetime.datetime,
     "flaw__created_dt__date": datetime.date,
     "flaw__created_dt__date__gte": datetime.date,
@@ -222,7 +223,8 @@ def _get_kwargs(
     cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_component: Union[Unset, None, str] = UNSET,
+    flaw_component: Union[Unset, None, List[str]] = UNSET,
+    flaw_components: Union[Unset, None, List[str]] = UNSET,
     flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -495,6 +497,20 @@ def _get_kwargs(
             json_exclude_fields = None
         else:
             json_exclude_fields = exclude_fields
+
+    json_flaw_component: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(flaw_component, Unset):
+        if flaw_component is None:
+            json_flaw_component = None
+        else:
+            json_flaw_component = flaw_component
+
+    json_flaw_components: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(flaw_components, Unset):
+        if flaw_components is None:
+            json_flaw_components = None
+        else:
+            json_flaw_components = flaw_components
 
     json_flaw_created_dt: Union[Unset, None, str] = UNSET
     if not isinstance(flaw_created_dt, Unset):
@@ -903,7 +919,8 @@ def _get_kwargs(
         "cvss_scores__vector": cvss_scores_vector,
         "embargoed": embargoed,
         "exclude_fields": json_exclude_fields,
-        "flaw__component": flaw_component,
+        "flaw__component": json_flaw_component,
+        "flaw__components": json_flaw_components,
         "flaw__created_dt": json_flaw_created_dt,
         "flaw__created_dt__date": json_flaw_created_dt_date,
         "flaw__created_dt__date__gte": json_flaw_created_dt_date_gte,
@@ -1079,7 +1096,8 @@ def sync_detailed(
     cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_component: Union[Unset, None, str] = UNSET,
+    flaw_component: Union[Unset, None, List[str]] = UNSET,
+    flaw_components: Union[Unset, None, List[str]] = UNSET,
     flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1218,6 +1236,7 @@ def sync_detailed(
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
+        flaw_components=flaw_components,
         flaw_created_dt=flaw_created_dt,
         flaw_created_dt_date=flaw_created_dt_date,
         flaw_created_dt_date_gte=flaw_created_dt_date_gte,
@@ -1370,7 +1389,8 @@ def sync(
     cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_component: Union[Unset, None, str] = UNSET,
+    flaw_component: Union[Unset, None, List[str]] = UNSET,
+    flaw_components: Union[Unset, None, List[str]] = UNSET,
     flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1511,6 +1531,7 @@ def sync(
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
+        flaw_components=flaw_components,
         flaw_created_dt=flaw_created_dt,
         flaw_created_dt_date=flaw_created_dt_date,
         flaw_created_dt_date_gte=flaw_created_dt_date_gte,
@@ -1653,7 +1674,8 @@ async def async_detailed(
     cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_component: Union[Unset, None, str] = UNSET,
+    flaw_component: Union[Unset, None, List[str]] = UNSET,
+    flaw_components: Union[Unset, None, List[str]] = UNSET,
     flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1792,6 +1814,7 @@ async def async_detailed(
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         flaw_component=flaw_component,
+        flaw_components=flaw_components,
         flaw_created_dt=flaw_created_dt,
         flaw_created_dt_date=flaw_created_dt_date,
         flaw_created_dt_date_gte=flaw_created_dt_date_gte,
@@ -1944,7 +1967,8 @@ async def async_(
     cvss_scores_vector: Union[Unset, None, str] = UNSET,
     embargoed: Union[Unset, None, bool] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_component: Union[Unset, None, str] = UNSET,
+    flaw_component: Union[Unset, None, List[str]] = UNSET,
+    flaw_components: Union[Unset, None, List[str]] = UNSET,
     flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2086,6 +2110,7 @@ async def async_(
             embargoed=embargoed,
             exclude_fields=exclude_fields,
             flaw_component=flaw_component,
+            flaw_components=flaw_components,
             flaw_created_dt=flaw_created_dt,
             flaw_created_dt_date=flaw_created_dt_date,
             flaw_created_dt_date_gte=flaw_created_dt_date_gte,

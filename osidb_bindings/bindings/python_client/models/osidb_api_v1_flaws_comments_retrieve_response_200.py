@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.flaw_comment_alerts import FlawCommentAlerts
 from ..models.flaw_comment_type import FlawCommentType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,6 +19,7 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
     text: str
     uuid: str
     external_system_id: str
+    alerts: FlawCommentAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
@@ -34,6 +36,10 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
         text = self.text
         uuid = self.uuid
         external_system_id = self.external_system_id
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -67,6 +73,8 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -98,6 +106,13 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
         uuid = d.pop("uuid", UNSET)
 
         external_system_id = d.pop("external_system_id", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: FlawCommentAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = FlawCommentAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -142,6 +157,7 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             text=text,
             uuid=uuid,
             external_system_id=external_system_id,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             embargoed=embargoed,
@@ -163,6 +179,7 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             "text": str,
             "uuid": str,
             "external_system_id": str,
+            "alerts": FlawCommentAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "embargoed": bool,

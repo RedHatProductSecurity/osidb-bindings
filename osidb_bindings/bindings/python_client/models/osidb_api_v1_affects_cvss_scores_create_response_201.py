@@ -4,6 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.affect_cvss_alerts import AffectCVSSAlerts
+from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -14,16 +16,17 @@ T = TypeVar("T", bound="OsidbApiV1AffectsCvssScoresCreateResponse201")
 class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
     """ """
 
-    cvss_version: str
+    cvss_version: CvssVersionEnum
     issuer: IssuerEnum
+    score: float
     uuid: str
     vector: str
     embargoed: bool
+    alerts: AffectCVSSAlerts
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affect: Union[Unset, str] = UNSET
     comment: Union[Unset, str] = UNSET
-    score: Union[Unset, float] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -31,15 +34,24 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        cvss_version = self.cvss_version
+        cvss_version: str = UNSET
+        if not isinstance(self.cvss_version, Unset):
+
+            cvss_version = CvssVersionEnum(self.cvss_version).value
+
         issuer: str = UNSET
         if not isinstance(self.issuer, Unset):
 
             issuer = IssuerEnum(self.issuer).value
 
+        score = self.score
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -50,7 +62,6 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
 
         affect = self.affect
         comment = self.comment
-        score = self.score
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -65,12 +76,16 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(issuer, Unset):
             field_dict["issuer"] = issuer
+        if not isinstance(score, Unset):
+            field_dict["score"] = score
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(vector, Unset):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
@@ -79,8 +94,6 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
             field_dict["affect"] = affect
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
-        if not isinstance(score, Unset):
-            field_dict["score"] = score
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -95,7 +108,12 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        cvss_version = d.pop("cvss_version", UNSET)
+        _cvss_version = d.pop("cvss_version", UNSET)
+        cvss_version: CvssVersionEnum
+        if isinstance(_cvss_version, Unset):
+            cvss_version = UNSET
+        else:
+            cvss_version = CvssVersionEnum(_cvss_version)
 
         _issuer = d.pop("issuer", UNSET)
         issuer: IssuerEnum
@@ -104,11 +122,20 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
         else:
             issuer = IssuerEnum(_issuer)
 
+        score = d.pop("score", UNSET)
+
         uuid = d.pop("uuid", UNSET)
 
         vector = d.pop("vector", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: AffectCVSSAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = AffectCVSSAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -128,8 +155,6 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
 
         comment = d.pop("comment", UNSET)
 
-        score = d.pop("score", UNSET)
-
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -146,14 +171,15 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
         osidb_api_v1_affects_cvss_scores_create_response_201 = cls(
             cvss_version=cvss_version,
             issuer=issuer,
+            score=score,
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             affect=affect,
             comment=comment,
-            score=score,
             dt=dt,
             env=env,
             revision=revision,
@@ -166,16 +192,17 @@ class OsidbApiV1AffectsCvssScoresCreateResponse201(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "cvss_version": str,
+            "cvss_version": CvssVersionEnum,
             "issuer": IssuerEnum,
+            "score": float,
             "uuid": str,
             "vector": str,
             "embargoed": bool,
+            "alerts": AffectCVSSAlerts,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affect": str,
             "comment": str,
-            "score": float,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

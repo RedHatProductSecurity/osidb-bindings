@@ -14,7 +14,7 @@ class TrackerReportData(OSIDBModel):
 
     type: TrackerType
     external_system_id: str
-    status: str
+    status: Union[Unset, str] = UNSET
     resolution: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

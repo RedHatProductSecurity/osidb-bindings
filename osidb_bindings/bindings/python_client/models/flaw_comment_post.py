@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.flaw_comment_post_alerts import FlawCommentPostAlerts
 from ..models.flaw_comment_post_meta_attr import FlawCommentPostMetaAttr
 from ..models.flaw_comment_type import FlawCommentType
 from ..types import UNSET, OSIDBModel, Unset
@@ -18,6 +19,7 @@ class FlawCommentPost(OSIDBModel):
 
     text: str
     uuid: str
+    alerts: FlawCommentPostAlerts
     created_dt: datetime.datetime
     embargoed: bool
     type: Union[Unset, FlawCommentType] = UNSET
@@ -27,6 +29,10 @@ class FlawCommentPost(OSIDBModel):
     def to_dict(self) -> Dict[str, Any]:
         text = self.text
         uuid = self.uuid
+        alerts: Dict[str, Any] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = self.alerts.to_dict()
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -47,6 +53,8 @@ class FlawCommentPost(OSIDBModel):
             field_dict["text"] = text
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(embargoed, Unset):
@@ -61,6 +69,10 @@ class FlawCommentPost(OSIDBModel):
     def to_multipart(self) -> Dict[str, Any]:
         text = self.text if self.text is UNSET else (None, str(self.text), "text/plain")
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -90,6 +102,8 @@ class FlawCommentPost(OSIDBModel):
             field_dict["text"] = text
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(embargoed, Unset):
@@ -107,6 +121,13 @@ class FlawCommentPost(OSIDBModel):
         text = d.pop("text", UNSET)
 
         uuid = d.pop("uuid", UNSET)
+
+        _alerts = d.pop("alerts", UNSET)
+        alerts: FlawCommentPostAlerts
+        if isinstance(_alerts, Unset):
+            alerts = UNSET
+        else:
+            alerts = FlawCommentPostAlerts.from_dict(_alerts)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -134,6 +155,7 @@ class FlawCommentPost(OSIDBModel):
         flaw_comment_post = cls(
             text=text,
             uuid=uuid,
+            alerts=alerts,
             created_dt=created_dt,
             embargoed=embargoed,
             type=type,
@@ -148,6 +170,7 @@ class FlawCommentPost(OSIDBModel):
         return {
             "text": str,
             "uuid": str,
+            "alerts": FlawCommentPostAlerts,
             "created_dt": datetime.datetime,
             "embargoed": bool,
             "type": FlawCommentType,

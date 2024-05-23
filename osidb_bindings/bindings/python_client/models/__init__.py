@@ -1,11 +1,16 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .affect import Affect
+from .affect_alerts import AffectAlerts
 from .affect_cvss import AffectCVSS
+from .affect_cvss_alerts import AffectCVSSAlerts
 from .affect_cvss_post import AffectCVSSPost
+from .affect_cvss_post_alerts import AffectCVSSPostAlerts
 from .affect_cvss_put import AffectCVSSPut
+from .affect_cvss_put_alerts import AffectCVSSPutAlerts
 from .affect_meta_attr import AffectMetaAttr
 from .affect_post import AffectPost
+from .affect_post_alerts import AffectPostAlerts
 from .affect_post_meta_attr import AffectPostMetaAttr
 from .affect_report_data import AffectReportData
 from .affect_type import AffectType
@@ -35,7 +40,9 @@ from .collectors_healthy_retrieve_response_200 import (
 )
 from .collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from .comment import Comment
+from .comment_alerts import CommentAlerts
 from .comment_meta_attr import CommentMetaAttr
+from .cvss_version_enum import CvssVersionEnum
 from .epss import EPSS
 from .erratum import Erratum
 from .exploit_only_report_data import ExploitOnlyReportData
@@ -88,29 +95,42 @@ from .exploits_api_v1_supported_products_list_response_200 import (
 )
 from .flaw import Flaw
 from .flaw_acknowledgment import FlawAcknowledgment
+from .flaw_acknowledgment_alerts import FlawAcknowledgmentAlerts
 from .flaw_acknowledgment_post import FlawAcknowledgmentPost
+from .flaw_acknowledgment_post_alerts import FlawAcknowledgmentPostAlerts
 from .flaw_acknowledgment_put import FlawAcknowledgmentPut
+from .flaw_acknowledgment_put_alerts import FlawAcknowledgmentPutAlerts
+from .flaw_alerts import FlawAlerts
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
 from .flaw_comment import FlawComment
+from .flaw_comment_alerts import FlawCommentAlerts
 from .flaw_comment_post import FlawCommentPost
+from .flaw_comment_post_alerts import FlawCommentPostAlerts
 from .flaw_comment_post_meta_attr import FlawCommentPostMetaAttr
 from .flaw_comment_type import FlawCommentType
 from .flaw_cvss import FlawCVSS
+from .flaw_cvss_alerts import FlawCVSSAlerts
 from .flaw_cvss_post import FlawCVSSPost
+from .flaw_cvss_post_alerts import FlawCVSSPostAlerts
 from .flaw_cvss_put import FlawCVSSPut
+from .flaw_cvss_put_alerts import FlawCVSSPutAlerts
 from .flaw_meta_attr import FlawMetaAttr
 from .flaw_meta_type import FlawMetaType
 from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post import FlawPackageVersionPost
 from .flaw_package_version_put import FlawPackageVersionPut
 from .flaw_post import FlawPost
+from .flaw_post_alerts import FlawPostAlerts
 from .flaw_post_classification import FlawPostClassification
 from .flaw_post_classification_state import FlawPostClassificationState
 from .flaw_post_meta_attr import FlawPostMetaAttr
 from .flaw_reference import FlawReference
+from .flaw_reference_alerts import FlawReferenceAlerts
 from .flaw_reference_post import FlawReferencePost
+from .flaw_reference_post_alerts import FlawReferencePostAlerts
 from .flaw_reference_put import FlawReferencePut
+from .flaw_reference_put_alerts import FlawReferencePutAlerts
 from .flaw_reference_type import FlawReferenceType
 from .flaw_report_data import FlawReportData
 from .flaw_type import FlawType
@@ -121,6 +141,7 @@ from .issuer_enum import IssuerEnum
 from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .meta import Meta
+from .meta_alerts import MetaAlerts
 from .meta_meta_attr import MetaMetaAttr
 from .module_component import ModuleComponent
 from .nist_cvss_validation_enum import NistCvssValidationEnum
@@ -128,8 +149,8 @@ from .osidb_api_v1_affects_create_response_201 import OsidbApiV1AffectsCreateRes
 from .osidb_api_v1_affects_cvss_scores_create_response_201 import (
     OsidbApiV1AffectsCvssScoresCreateResponse201,
 )
-from .osidb_api_v1_affects_cvss_scores_destroy_response_204 import (
-    OsidbApiV1AffectsCvssScoresDestroyResponse204,
+from .osidb_api_v1_affects_cvss_scores_destroy_response_200 import (
+    OsidbApiV1AffectsCvssScoresDestroyResponse200,
 )
 from .osidb_api_v1_affects_cvss_scores_list_issuer import (
     OsidbApiV1AffectsCvssScoresListIssuer,
@@ -233,6 +254,9 @@ from .osidb_api_v1_flaws_list_requires_summary import OsidbApiV1FlawsListRequire
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from .osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
+from .osidb_api_v1_flaws_list_workflow_state_item import (
+    OsidbApiV1FlawsListWorkflowStateItem,
+)
 from .osidb_api_v1_flaws_package_versions_create_response_201 import (
     OsidbApiV1FlawsPackageVersionsCreateResponse201,
 )
@@ -337,6 +361,7 @@ from .osim_api_v1_workflows_retrieve_response_200 import (
 from .osim_healthy_retrieve_response_200 import OsimHealthyRetrieveResponse200
 from .osim_retrieve_response_200 import OsimRetrieveResponse200
 from .package import Package
+from .package_alerts import PackageAlerts
 from .package_ver import PackageVer
 from .paginated_affect_cvss_list import PaginatedAffectCVSSList
 from .paginated_affect_list import PaginatedAffectList
@@ -361,8 +386,10 @@ from .token_obtain_pair import TokenObtainPair
 from .token_refresh import TokenRefresh
 from .token_verify import TokenVerify
 from .tracker import Tracker
+from .tracker_alerts import TrackerAlerts
 from .tracker_meta_attr import TrackerMetaAttr
 from .tracker_post import TrackerPost
+from .tracker_post_alerts import TrackerPostAlerts
 from .tracker_post_meta_attr import TrackerPostMetaAttr
 from .tracker_report_data import TrackerReportData
 from .tracker_suggestion import TrackerSuggestion

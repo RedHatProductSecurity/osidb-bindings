@@ -41,6 +41,9 @@ from ...models.osidb_api_v1_flaws_list_response_200 import (
 )
 from ...models.osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from ...models.osidb_api_v1_flaws_list_type import OsidbApiV1FlawsListType
+from ...models.osidb_api_v1_flaws_list_workflow_state_item import (
+    OsidbApiV1FlawsListWorkflowStateItem,
+)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
@@ -136,7 +139,8 @@ QUERY_PARAMS = {
     "bz_id": float,
     "changed_after": datetime.datetime,
     "changed_before": datetime.datetime,
-    "component": str,
+    "component": List[str],
+    "components": List[str],
     "created_dt": datetime.datetime,
     "created_dt__date": datetime.date,
     "created_dt__date__gte": datetime.date,
@@ -196,6 +200,7 @@ QUERY_PARAMS = {
     "nvd_cvss3": str,
     "offset": int,
     "order": List[OsidbApiV1FlawsListOrderItem],
+    "owner": str,
     "references__created_dt": datetime.datetime,
     "references__created_dt__date": datetime.date,
     "references__created_dt__date__gte": datetime.date,
@@ -229,6 +234,7 @@ QUERY_PARAMS = {
     "source": OsidbApiV1FlawsListSource,
     "statement": str,
     "summary": str,
+    "team_id": str,
     "title": str,
     "tracker_ids": List[str],
     "type": OsidbApiV1FlawsListType,
@@ -242,6 +248,7 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "uuid": str,
+    "workflow_state": List[OsidbApiV1FlawsListWorkflowStateItem],
 }
 
 
@@ -358,7 +365,8 @@ def _get_kwargs(
     bz_id: Union[Unset, None, float] = UNSET,
     changed_after: Union[Unset, None, datetime.datetime] = UNSET,
     changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    component: Union[Unset, None, str] = UNSET,
+    component: Union[Unset, None, List[str]] = UNSET,
+    components: Union[Unset, None, List[str]] = UNSET,
     created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -422,6 +430,7 @@ def _get_kwargs(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    owner: Union[Unset, None, str] = UNSET,
     references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -455,6 +464,7 @@ def _get_kwargs(
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
     summary: Union[Unset, None, str] = UNSET,
+    team_id: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
@@ -468,6 +478,9 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
+    workflow_state: Union[
+        Unset, None, List[OsidbApiV1FlawsListWorkflowStateItem]
+    ] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws".format(
         client.base_url,
@@ -950,6 +963,20 @@ def _get_kwargs(
     if not isinstance(changed_before, Unset):
         json_changed_before = changed_before.isoformat() if changed_before else None
 
+    json_component: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(component, Unset):
+        if component is None:
+            json_component = None
+        else:
+            json_component = component
+
+    json_components: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(components, Unset):
+        if components is None:
+            json_components = None
+        else:
+            json_components = components
+
     json_created_dt: Union[Unset, None, str] = UNSET
     if not isinstance(created_dt, Unset):
         json_created_dt = created_dt.isoformat() if created_dt else None
@@ -1404,6 +1431,22 @@ def _get_kwargs(
     if not isinstance(updated_dt_lte, Unset):
         json_updated_dt_lte = updated_dt_lte.isoformat() if updated_dt_lte else None
 
+    json_workflow_state: Union[Unset, None, List[str]] = UNSET
+    if not isinstance(workflow_state, Unset):
+        if workflow_state is None:
+            json_workflow_state = None
+        else:
+            json_workflow_state = []
+            for workflow_state_item_data in workflow_state:
+                workflow_state_item: str = UNSET
+                if not isinstance(workflow_state_item_data, Unset):
+
+                    workflow_state_item = OsidbApiV1FlawsListWorkflowStateItem(
+                        workflow_state_item_data
+                    ).value
+
+                json_workflow_state.append(workflow_state_item)
+
     params: Dict[str, Any] = {
         "acknowledgments__affiliation": acknowledgments_affiliation,
         "acknowledgments__created_dt": json_acknowledgments_created_dt,
@@ -1497,7 +1540,8 @@ def _get_kwargs(
         "bz_id": bz_id,
         "changed_after": json_changed_after,
         "changed_before": json_changed_before,
-        "component": component,
+        "component": json_component,
+        "components": json_components,
         "created_dt": json_created_dt,
         "created_dt__date": json_created_dt_date,
         "created_dt__date__gte": json_created_dt_date_gte,
@@ -1557,6 +1601,7 @@ def _get_kwargs(
         "nvd_cvss3": nvd_cvss3,
         "offset": offset,
         "order": json_order,
+        "owner": owner,
         "references__created_dt": json_references_created_dt,
         "references__created_dt__date": json_references_created_dt_date,
         "references__created_dt__date__gte": json_references_created_dt_date_gte,
@@ -1590,6 +1635,7 @@ def _get_kwargs(
         "source": json_source,
         "statement": statement,
         "summary": summary,
+        "team_id": team_id,
         "title": title,
         "tracker_ids": json_tracker_ids,
         "type": json_type,
@@ -1603,6 +1649,7 @@ def _get_kwargs(
         "updated_dt__lt": json_updated_dt_lt,
         "updated_dt__lte": json_updated_dt_lte,
         "uuid": uuid,
+        "workflow_state": json_workflow_state,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -1752,7 +1799,8 @@ def sync_detailed(
     bz_id: Union[Unset, None, float] = UNSET,
     changed_after: Union[Unset, None, datetime.datetime] = UNSET,
     changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    component: Union[Unset, None, str] = UNSET,
+    component: Union[Unset, None, List[str]] = UNSET,
+    components: Union[Unset, None, List[str]] = UNSET,
     created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1816,6 +1864,7 @@ def sync_detailed(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    owner: Union[Unset, None, str] = UNSET,
     references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1849,6 +1898,7 @@ def sync_detailed(
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
     summary: Union[Unset, None, str] = UNSET,
+    team_id: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
@@ -1862,6 +1912,9 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
+    workflow_state: Union[
+        Unset, None, List[OsidbApiV1FlawsListWorkflowStateItem]
+    ] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
     kwargs = _get_kwargs(
         client=client,
@@ -1958,6 +2011,7 @@ def sync_detailed(
         changed_after=changed_after,
         changed_before=changed_before,
         component=component,
+        components=components,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -2017,6 +2071,7 @@ def sync_detailed(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        owner=owner,
         references_created_dt=references_created_dt,
         references_created_dt_date=references_created_dt_date,
         references_created_dt_date_gte=references_created_dt_date_gte,
@@ -2050,6 +2105,7 @@ def sync_detailed(
         source=source,
         statement=statement,
         summary=summary,
+        team_id=team_id,
         title=title,
         tracker_ids=tracker_ids,
         type=type,
@@ -2063,6 +2119,7 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        workflow_state=workflow_state,
     )
 
     response = requests.get(
@@ -2189,7 +2246,8 @@ def sync(
     bz_id: Union[Unset, None, float] = UNSET,
     changed_after: Union[Unset, None, datetime.datetime] = UNSET,
     changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    component: Union[Unset, None, str] = UNSET,
+    component: Union[Unset, None, List[str]] = UNSET,
+    components: Union[Unset, None, List[str]] = UNSET,
     created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2253,6 +2311,7 @@ def sync(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    owner: Union[Unset, None, str] = UNSET,
     references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2286,6 +2345,7 @@ def sync(
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
     summary: Union[Unset, None, str] = UNSET,
+    team_id: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
@@ -2299,6 +2359,9 @@ def sync(
     updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
+    workflow_state: Union[
+        Unset, None, List[OsidbApiV1FlawsListWorkflowStateItem]
+    ] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
     """ """
 
@@ -2397,6 +2460,7 @@ def sync(
         changed_after=changed_after,
         changed_before=changed_before,
         component=component,
+        components=components,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -2456,6 +2520,7 @@ def sync(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        owner=owner,
         references_created_dt=references_created_dt,
         references_created_dt_date=references_created_dt_date,
         references_created_dt_date_gte=references_created_dt_date_gte,
@@ -2489,6 +2554,7 @@ def sync(
         source=source,
         statement=statement,
         summary=summary,
+        team_id=team_id,
         title=title,
         tracker_ids=tracker_ids,
         type=type,
@@ -2502,6 +2568,7 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        workflow_state=workflow_state,
     ).parsed
 
 
@@ -2618,7 +2685,8 @@ async def async_detailed(
     bz_id: Union[Unset, None, float] = UNSET,
     changed_after: Union[Unset, None, datetime.datetime] = UNSET,
     changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    component: Union[Unset, None, str] = UNSET,
+    component: Union[Unset, None, List[str]] = UNSET,
+    components: Union[Unset, None, List[str]] = UNSET,
     created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2682,6 +2750,7 @@ async def async_detailed(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    owner: Union[Unset, None, str] = UNSET,
     references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -2715,6 +2784,7 @@ async def async_detailed(
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
     summary: Union[Unset, None, str] = UNSET,
+    team_id: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
@@ -2728,6 +2798,9 @@ async def async_detailed(
     updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
+    workflow_state: Union[
+        Unset, None, List[OsidbApiV1FlawsListWorkflowStateItem]
+    ] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
     kwargs = _get_kwargs(
         client=client,
@@ -2824,6 +2897,7 @@ async def async_detailed(
         changed_after=changed_after,
         changed_before=changed_before,
         component=component,
+        components=components,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -2883,6 +2957,7 @@ async def async_detailed(
         nvd_cvss3=nvd_cvss3,
         offset=offset,
         order=order,
+        owner=owner,
         references_created_dt=references_created_dt,
         references_created_dt_date=references_created_dt_date,
         references_created_dt_date_gte=references_created_dt_date_gte,
@@ -2916,6 +2991,7 @@ async def async_detailed(
         source=source,
         statement=statement,
         summary=summary,
+        team_id=team_id,
         title=title,
         tracker_ids=tracker_ids,
         type=type,
@@ -2929,6 +3005,7 @@ async def async_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        workflow_state=workflow_state,
     )
 
     async with client.get_async_session().get(
@@ -3055,7 +3132,8 @@ async def async_(
     bz_id: Union[Unset, None, float] = UNSET,
     changed_after: Union[Unset, None, datetime.datetime] = UNSET,
     changed_before: Union[Unset, None, datetime.datetime] = UNSET,
-    component: Union[Unset, None, str] = UNSET,
+    component: Union[Unset, None, List[str]] = UNSET,
+    components: Union[Unset, None, List[str]] = UNSET,
     created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -3119,6 +3197,7 @@ async def async_(
     nvd_cvss3: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, List[OsidbApiV1FlawsListOrderItem]] = UNSET,
+    owner: Union[Unset, None, str] = UNSET,
     references_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     references_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
     references_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -3152,6 +3231,7 @@ async def async_(
     source: Union[Unset, None, OsidbApiV1FlawsListSource] = UNSET,
     statement: Union[Unset, None, str] = UNSET,
     summary: Union[Unset, None, str] = UNSET,
+    team_id: Union[Unset, None, str] = UNSET,
     title: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsListType] = UNSET,
@@ -3165,6 +3245,9 @@ async def async_(
     updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     uuid: Union[Unset, None, str] = UNSET,
+    workflow_state: Union[
+        Unset, None, List[OsidbApiV1FlawsListWorkflowStateItem]
+    ] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
     """ """
 
@@ -3264,6 +3347,7 @@ async def async_(
             changed_after=changed_after,
             changed_before=changed_before,
             component=component,
+            components=components,
             created_dt=created_dt,
             created_dt_date=created_dt_date,
             created_dt_date_gte=created_dt_date_gte,
@@ -3323,6 +3407,7 @@ async def async_(
             nvd_cvss3=nvd_cvss3,
             offset=offset,
             order=order,
+            owner=owner,
             references_created_dt=references_created_dt,
             references_created_dt_date=references_created_dt_date,
             references_created_dt_date_gte=references_created_dt_date_gte,
@@ -3356,6 +3441,7 @@ async def async_(
             source=source,
             statement=statement,
             summary=summary,
+            team_id=team_id,
             title=title,
             tracker_ids=tracker_ids,
             type=type,
@@ -3369,5 +3455,6 @@ async def async_(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             uuid=uuid,
+            workflow_state=workflow_state,
         )
     ).parsed
