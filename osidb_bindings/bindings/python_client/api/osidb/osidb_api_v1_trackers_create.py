@@ -19,17 +19,12 @@ def _get_kwargs(
     form_data: TrackerPost,
     multipart_data: TrackerPost,
     json_body: TrackerPost,
-    bugzilla_api_key: str,
-    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/trackers".format(
         client.base_url,
     )
 
     headers: Dict[str, Any] = client.get_headers()
-
-    headers["bugzilla-api-key"] = bugzilla_api_key
-    headers["jira-api-key"] = jira_api_key
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -78,16 +73,12 @@ def sync_detailed(
     form_data: TrackerPost,
     multipart_data: TrackerPost,
     json_body: TrackerPost,
-    bugzilla_api_key: str,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        bugzilla_api_key=bugzilla_api_key,
-        jira_api_key=jira_api_key,
     )
 
     response = requests.post(
@@ -107,8 +98,6 @@ def sync(
     form_data: TrackerPost,
     multipart_data: TrackerPost,
     json_body: TrackerPost,
-    bugzilla_api_key: str,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     """ """
 
@@ -117,8 +106,6 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        bugzilla_api_key=bugzilla_api_key,
-        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -128,16 +115,12 @@ async def async_detailed(
     form_data: TrackerPost,
     multipart_data: TrackerPost,
     json_body: TrackerPost,
-    bugzilla_api_key: str,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
-        bugzilla_api_key=bugzilla_api_key,
-        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().post(
@@ -157,8 +140,6 @@ async def async_(
     form_data: TrackerPost,
     multipart_data: TrackerPost,
     json_body: TrackerPost,
-    bugzilla_api_key: str,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     """ """
 
@@ -168,7 +149,5 @@ async def async_(
             form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
-            bugzilla_api_key=bugzilla_api_key,
-            jira_api_key=jira_api_key,
         )
     ).parsed

@@ -15,7 +15,6 @@ def _get_kwargs(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    jira_api_key: str,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{flaw_id}/promote".format(
         client.base_url,
@@ -23,8 +22,6 @@ def _get_kwargs(
     )
 
     headers: Dict[str, Any] = client.get_headers()
-
-    headers["jira-api-key"] = jira_api_key
 
     return {
         "url": url,
@@ -64,12 +61,10 @@ def sync_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
-        jira_api_key=jira_api_key,
     )
 
     response = requests.post(
@@ -87,7 +82,6 @@ def sync(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
@@ -97,7 +91,6 @@ def sync(
     return sync_detailed(
         flaw_id=flaw_id,
         client=client,
-        jira_api_key=jira_api_key,
     ).parsed
 
 
@@ -105,12 +98,10 @@ async def async_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    jira_api_key: str,
 ) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
-        jira_api_key=jira_api_key,
     )
 
     async with client.get_async_session().post(
@@ -128,7 +119,6 @@ async def async_(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    jira_api_key: str,
 ) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
@@ -139,6 +129,5 @@ async def async_(
         await async_detailed(
             flaw_id=flaw_id,
             client=client,
-            jira_api_key=jira_api_key,
         )
     ).parsed

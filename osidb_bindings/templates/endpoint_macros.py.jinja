@@ -115,9 +115,6 @@ json_body: {{ endpoint.json_body.get_type_string() }},
 {% for parameter in endpoint.query_parameters.values() %}
 {{ parameter.to_string() }},
 {% endfor %}
-{% for parameter in endpoint.header_parameters.values() %}
-{{ parameter.to_string() }},
-{% endfor %}
 {# cookie parameters #}
 {% for parameter in endpoint.cookie_parameters.values() %}
 {{ parameter.to_string() }},
@@ -140,9 +137,6 @@ multipart_data=multipart_data,
 json_body=json_body,
 {% endif %}
 {% for parameter in endpoint.query_parameters.values() %}
-{{ parameter.python_name }}={{ parameter.python_name }},
-{% endfor %}
-{% for parameter in endpoint.header_parameters.values() %}
 {{ parameter.python_name }}={{ parameter.python_name }},
 {% endfor %}
 {% for parameter in endpoint.cookie_parameters.values() %}
