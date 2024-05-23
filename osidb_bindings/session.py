@@ -116,6 +116,7 @@ class Session:
             headers={
                 "User-Agent": OSIDB_BINDINGS_USERAGENT,
                 "Bugzilla-Api-Key": get_env("BUGZILLA_API_KEY", ""),
+                "Jira-Api-Key": get_env("JIRA_ACCESS_TOKEN", ""),
             },
             verify_ssl=verify_ssl,
         )
