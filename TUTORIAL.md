@@ -15,6 +15,12 @@ You can install the bindings via Python 3 pip:
     ```
     pip install osidb-bindings
     ```
+* RPM from [Fedora Copr](https://copr.fedorainfracloud.org/coprs/jazinner/osidb-bindings/)
+    ```
+    dnf copr enable jazinner/osidb-bindings
+    dnf install osidb_bindings
+    ```
+
 * directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository (will install the version
     from master branch)
     ```
