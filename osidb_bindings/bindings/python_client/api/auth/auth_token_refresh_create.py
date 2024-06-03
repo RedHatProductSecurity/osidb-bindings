@@ -37,7 +37,7 @@ def _get_kwargs(
     return {
         "url": url,
         "headers": headers,
-        "data": form_data.to_dict(),
+        "json": form_data.to_dict(),
     }
 
 
