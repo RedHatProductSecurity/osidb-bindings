@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar
 import attr
 from dateutil.parser import isoparse
 
-from ..models.flaw_acknowledgment_alerts import FlawAcknowledgmentAlerts
+from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawAcknowledgment")
@@ -20,7 +20,7 @@ class FlawAcknowledgment(OSIDBModel):
     flaw: str
     uuid: str
     embargoed: bool
-    alerts: FlawAcknowledgmentAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -32,9 +32,15 @@ class FlawAcknowledgment(OSIDBModel):
         flaw = self.flaw
         uuid = self.uuid
         embargoed = self.embargoed
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -82,12 +88,20 @@ class FlawAcknowledgment(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: FlawAcknowledgmentAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = FlawAcknowledgmentAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -127,7 +141,7 @@ class FlawAcknowledgment(OSIDBModel):
             "flaw": str,
             "uuid": str,
             "embargoed": bool,
-            "alerts": FlawAcknowledgmentAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
         }

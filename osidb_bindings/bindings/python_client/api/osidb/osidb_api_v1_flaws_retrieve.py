@@ -10,7 +10,6 @@ from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
     "exclude_fields": List[str],
-    "flaw_meta_type": List[str],
     "include_fields": List[str],
     "include_meta_attr": List[str],
     "tracker_ids": List[str],
@@ -22,7 +21,6 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
@@ -40,13 +38,6 @@ def _get_kwargs(
             json_exclude_fields = None
         else:
             json_exclude_fields = exclude_fields
-
-    json_flaw_meta_type: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(flaw_meta_type, Unset):
-        if flaw_meta_type is None:
-            json_flaw_meta_type = None
-        else:
-            json_flaw_meta_type = flaw_meta_type
 
     json_include_fields: Union[Unset, None, List[str]] = UNSET
     if not isinstance(include_fields, Unset):
@@ -71,7 +62,6 @@ def _get_kwargs(
 
     params: Dict[str, Any] = {
         "exclude_fields": json_exclude_fields,
-        "flaw_meta_type": json_flaw_meta_type,
         "include_fields": json_include_fields,
         "include_meta_attr": json_include_meta_attr,
         "tracker_ids": json_tracker_ids,
@@ -116,7 +106,6 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
@@ -125,7 +114,6 @@ def sync_detailed(
         id=id,
         client=client,
         exclude_fields=exclude_fields,
-        flaw_meta_type=flaw_meta_type,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
@@ -147,7 +135,6 @@ def sync(
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
@@ -158,7 +145,6 @@ def sync(
         id=id,
         client=client,
         exclude_fields=exclude_fields,
-        flaw_meta_type=flaw_meta_type,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
@@ -170,7 +156,6 @@ async def async_detailed(
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
@@ -179,7 +164,6 @@ async def async_detailed(
         id=id,
         client=client,
         exclude_fields=exclude_fields,
-        flaw_meta_type=flaw_meta_type,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         tracker_ids=tracker_ids,
@@ -201,7 +185,6 @@ async def async_(
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_meta_type: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
@@ -213,7 +196,6 @@ async def async_(
             id=id,
             client=client,
             exclude_fields=exclude_fields,
-            flaw_meta_type=flaw_meta_type,
             include_fields=include_fields,
             include_meta_attr=include_meta_attr,
             tracker_ids=tracker_ids,

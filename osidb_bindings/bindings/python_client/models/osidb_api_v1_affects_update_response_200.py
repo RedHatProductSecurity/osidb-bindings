@@ -4,11 +4,10 @@ from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.affect_alerts import AffectAlerts
 from ..models.affect_cvss import AffectCVSS
 from ..models.affect_meta_attr import AffectMetaAttr
-from ..models.affect_type import AffectType
 from ..models.affectedness_enum import AffectednessEnum
+from ..models.alert import Alert
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.resolution_enum import ResolutionEnum
@@ -31,18 +30,13 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
     embargoed: bool
-    alerts: AffectAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     flaw: Optional[str]
-    type: Union[Unset, AffectType] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
-    cvss2: Union[Unset, str] = UNSET
-    cvss2_score: Union[Unset, None, float] = UNSET
-    cvss3: Union[Unset, str] = UNSET
-    cvss3_score: Union[Unset, None, float] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -80,9 +74,15 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = self.embargoed
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -93,11 +93,6 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             updated_dt = self.updated_dt.isoformat()
 
         flaw = self.flaw
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = AffectType(self.type).value
-
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
             affectedness = UNSET
@@ -143,10 +138,6 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
-        cvss2 = self.cvss2
-        cvss2_score = self.cvss2_score
-        cvss3 = self.cvss3
-        cvss3_score = self.cvss3_score
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -183,22 +174,12 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
         if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if not isinstance(cvss2, Unset):
-            field_dict["cvss2"] = cvss2
-        if not isinstance(cvss2_score, Unset):
-            field_dict["cvss2_score"] = cvss2_score
-        if not isinstance(cvss3, Unset):
-            field_dict["cvss3"] = cvss3
-        if not isinstance(cvss3_score, Unset):
-            field_dict["cvss3_score"] = cvss3_score
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -262,12 +243,20 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: AffectAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = AffectAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -284,13 +273,6 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             updated_dt = isoparse(_updated_dt)
 
         flaw = d.pop("flaw", UNSET)
-
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, AffectType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = AffectType(_type)
 
         def _parse_affectedness(
             data: object,
@@ -381,14 +363,6 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
-        cvss2 = d.pop("cvss2", UNSET)
-
-        cvss2_score = d.pop("cvss2_score", UNSET)
-
-        cvss3 = d.pop("cvss3", UNSET)
-
-        cvss3_score = d.pop("cvss3_score", UNSET)
-
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -416,14 +390,9 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             flaw=flaw,
-            type=type,
             affectedness=affectedness,
             resolution=resolution,
             impact=impact,
-            cvss2=cvss2,
-            cvss2_score=cvss2_score,
-            cvss3=cvss3,
-            cvss3_score=cvss3_score,
             dt=dt,
             env=env,
             revision=revision,
@@ -445,18 +414,13 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
             "embargoed": bool,
-            "alerts": AffectAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "flaw": str,
-            "type": AffectType,
             "affectedness": Union[AffectednessEnum, BlankEnum],
             "resolution": Union[BlankEnum, ResolutionEnum],
             "impact": Union[BlankEnum, ImpactEnum],
-            "cvss2": str,
-            "cvss2_score": float,
-            "cvss3": str,
-            "cvss3_score": float,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

@@ -1,3 +1,4 @@
+from .osidb_api_v1_affects_bulk_update import *
 from .osidb_api_v1_affects_create import *
 from .osidb_api_v1_affects_cvss_scores_create import *
 from .osidb_api_v1_affects_cvss_scores_destroy import *
@@ -8,6 +9,8 @@ from .osidb_api_v1_affects_destroy import *
 from .osidb_api_v1_affects_list import *
 from .osidb_api_v1_affects_retrieve import *
 from .osidb_api_v1_affects_update import *
+from .osidb_api_v1_alerts_list import *
+from .osidb_api_v1_alerts_retrieve import *
 from .osidb_api_v1_flaws_acknowledgments_create import *
 from .osidb_api_v1_flaws_acknowledgments_destroy import *
 from .osidb_api_v1_flaws_acknowledgments_list import *

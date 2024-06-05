@@ -6,22 +6,20 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect import Affect
+from ..models.alert import Alert
 from ..models.blank_enum import BlankEnum
 from ..models.comment import Comment
 from ..models.flaw_acknowledgment import FlawAcknowledgment
 from ..models.flaw_cvss import FlawCVSS
-from ..models.flaw_post_alerts import FlawPostAlerts
 from ..models.flaw_post_classification import FlawPostClassification
 from ..models.flaw_post_meta_attr import FlawPostMetaAttr
 from ..models.flaw_reference import FlawReference
-from ..models.flaw_type import FlawType
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
-from ..models.meta import Meta
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.package import Package
 from ..models.requires_summary_enum import RequiresSummaryEnum
-from ..models.source_8d8_enum import Source8D8Enum
+from ..models.source_642_enum import Source642Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawPost")
@@ -32,13 +30,10 @@ class FlawPost(OSIDBModel):
     """serialize flaw model"""
 
     uuid: str
-    state: str
-    resolution: str
     title: str
     trackers: List[str]
     description: str
     affects: List[Affect]
-    meta: List[Meta]
     comments: List[Comment]
     meta_attr: FlawPostMetaAttr
     package_versions: List[Package]
@@ -48,8 +43,7 @@ class FlawPost(OSIDBModel):
     embargoed: bool
     created_dt: datetime.datetime
     classification: FlawPostClassification
-    alerts: FlawPostAlerts
-    type: Union[Unset, FlawType] = UNSET
+    alerts: List[Alert]
     cve_id: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     component: Union[Unset, str] = UNSET
@@ -59,15 +53,9 @@ class FlawPost(OSIDBModel):
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, Source8D8Enum, Unset] = UNSET
+    source: Union[BlankEnum, Source642Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
-    cvss2: Union[Unset, str] = UNSET
-    cvss2_score: Union[Unset, None, float] = UNSET
-    nvd_cvss2: Union[Unset, str] = UNSET
-    cvss3: Union[Unset, str] = UNSET
-    cvss3_score: Union[Unset, None, float] = UNSET
-    nvd_cvss3: Union[Unset, str] = UNSET
     is_major_incident: Union[Unset, bool] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
@@ -79,8 +67,6 @@ class FlawPost(OSIDBModel):
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        state = self.state
-        resolution = self.resolution
         title = self.title
         trackers: List[str] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -96,16 +82,6 @@ class FlawPost(OSIDBModel):
                     affects_item = affects_item_data.to_dict()
 
                 affects.append(affects_item)
-
-        meta: List[Dict[str, Any]] = UNSET
-        if not isinstance(self.meta, Unset):
-            meta = []
-            for meta_item_data in self.meta:
-                meta_item: Dict[str, Any] = UNSET
-                if not isinstance(meta_item_data, Unset):
-                    meta_item = meta_item_data.to_dict()
-
-                meta.append(meta_item)
 
         comments: List[Dict[str, Any]] = UNSET
         if not isinstance(self.comments, Unset):
@@ -170,14 +146,15 @@ class FlawPost(OSIDBModel):
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
 
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
 
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawType(self.type).value
+                alerts.append(alerts_item)
 
         cve_id = self.cve_id
         impact: Union[Unset, str]
@@ -225,11 +202,11 @@ class FlawPost(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source8D8Enum):
+        elif isinstance(self.source, Source642Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source8D8Enum(self.source).value
+                source = Source642Enum(self.source).value
 
         else:
             source = UNSET
@@ -242,12 +219,6 @@ class FlawPost(OSIDBModel):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
         mitigation = self.mitigation
-        cvss2 = self.cvss2
-        cvss2_score = self.cvss2_score
-        nvd_cvss2 = self.nvd_cvss2
-        cvss3 = self.cvss3
-        cvss3_score = self.cvss3_score
-        nvd_cvss3 = self.nvd_cvss3
         is_major_incident = self.is_major_incident
         major_incident_state: Union[Unset, str]
         if isinstance(self.major_incident_state, Unset):
@@ -292,10 +263,6 @@ class FlawPost(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
         if not isinstance(title, Unset):
             field_dict["title"] = title
         if not isinstance(trackers, Unset):
@@ -304,8 +271,6 @@ class FlawPost(OSIDBModel):
             field_dict["description"] = description
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(meta, Unset):
-            field_dict["meta"] = meta
         if not isinstance(comments, Unset):
             field_dict["comments"] = comments
         if not isinstance(meta_attr, Unset):
@@ -326,8 +291,6 @@ class FlawPost(OSIDBModel):
             field_dict["classification"] = classification
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(impact, Unset):
@@ -352,18 +315,6 @@ class FlawPost(OSIDBModel):
             field_dict["reported_dt"] = reported_dt
         if not isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if not isinstance(cvss2, Unset):
-            field_dict["cvss2"] = cvss2
-        if not isinstance(cvss2_score, Unset):
-            field_dict["cvss2_score"] = cvss2_score
-        if not isinstance(nvd_cvss2, Unset):
-            field_dict["nvd_cvss2"] = nvd_cvss2
-        if not isinstance(cvss3, Unset):
-            field_dict["cvss3"] = cvss3
-        if not isinstance(cvss3_score, Unset):
-            field_dict["cvss3_score"] = cvss3_score
-        if not isinstance(nvd_cvss3, Unset):
-            field_dict["nvd_cvss3"] = nvd_cvss3
         if not isinstance(is_major_incident, Unset):
             field_dict["is_major_incident"] = is_major_incident
         if not isinstance(major_incident_state, Unset):
@@ -383,14 +334,6 @@ class FlawPost(OSIDBModel):
 
     def to_multipart(self) -> Dict[str, Any]:
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        state = (
-            self.state if self.state is UNSET else (None, str(self.state), "text/plain")
-        )
-        resolution = (
-            self.resolution
-            if self.resolution is UNSET
-            else (None, str(self.resolution), "text/plain")
-        )
         title = (
             self.title if self.title is UNSET else (None, str(self.title), "text/plain")
         )
@@ -414,17 +357,6 @@ class FlawPost(OSIDBModel):
 
                 _temp_affects.append(affects_item)
             affects = (None, json.dumps(_temp_affects), "application/json")
-
-        meta: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta, Unset):
-            _temp_meta = []
-            for meta_item_data in self.meta:
-                meta_item: Dict[str, Any] = UNSET
-                if not isinstance(meta_item_data, Unset):
-                    meta_item = meta_item_data.to_dict()
-
-                _temp_meta.append(meta_item)
-            meta = (None, json.dumps(_temp_meta), "application/json")
 
         comments: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.comments, Unset):
@@ -512,12 +444,14 @@ class FlawPost(OSIDBModel):
 
         alerts: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+            _temp_alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
 
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawType(self.type).value
+                _temp_alerts.append(alerts_item)
+            alerts = (None, json.dumps(_temp_alerts), "application/json")
 
         cve_id = (
             self.cve_id
@@ -586,11 +520,11 @@ class FlawPost(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source8D8Enum):
+        elif isinstance(self.source, Source642Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source8D8Enum(self.source).value
+                source = Source642Enum(self.source).value
 
         else:
             source = UNSET
@@ -606,32 +540,6 @@ class FlawPost(OSIDBModel):
             self.mitigation
             if self.mitigation is UNSET
             else (None, str(self.mitigation), "text/plain")
-        )
-        cvss2 = (
-            self.cvss2 if self.cvss2 is UNSET else (None, str(self.cvss2), "text/plain")
-        )
-        cvss2_score = (
-            self.cvss2_score
-            if self.cvss2_score is UNSET
-            else (None, str(self.cvss2_score), "text/plain")
-        )
-        nvd_cvss2 = (
-            self.nvd_cvss2
-            if self.nvd_cvss2 is UNSET
-            else (None, str(self.nvd_cvss2), "text/plain")
-        )
-        cvss3 = (
-            self.cvss3 if self.cvss3 is UNSET else (None, str(self.cvss3), "text/plain")
-        )
-        cvss3_score = (
-            self.cvss3_score
-            if self.cvss3_score is UNSET
-            else (None, str(self.cvss3_score), "text/plain")
-        )
-        nvd_cvss3 = (
-            self.nvd_cvss3
-            if self.nvd_cvss3 is UNSET
-            else (None, str(self.nvd_cvss3), "text/plain")
         )
         is_major_incident = (
             self.is_major_incident
@@ -700,10 +608,6 @@ class FlawPost(OSIDBModel):
         )
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
         if not isinstance(title, Unset):
             field_dict["title"] = title
         if not isinstance(trackers, Unset):
@@ -712,8 +616,6 @@ class FlawPost(OSIDBModel):
             field_dict["description"] = description
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(meta, Unset):
-            field_dict["meta"] = meta
         if not isinstance(comments, Unset):
             field_dict["comments"] = comments
         if not isinstance(meta_attr, Unset):
@@ -734,8 +636,6 @@ class FlawPost(OSIDBModel):
             field_dict["classification"] = classification
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(impact, Unset):
@@ -760,18 +660,6 @@ class FlawPost(OSIDBModel):
             field_dict["reported_dt"] = reported_dt
         if not isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if not isinstance(cvss2, Unset):
-            field_dict["cvss2"] = cvss2
-        if not isinstance(cvss2_score, Unset):
-            field_dict["cvss2_score"] = cvss2_score
-        if not isinstance(nvd_cvss2, Unset):
-            field_dict["nvd_cvss2"] = nvd_cvss2
-        if not isinstance(cvss3, Unset):
-            field_dict["cvss3"] = cvss3
-        if not isinstance(cvss3_score, Unset):
-            field_dict["cvss3_score"] = cvss3_score
-        if not isinstance(nvd_cvss3, Unset):
-            field_dict["nvd_cvss3"] = nvd_cvss3
         if not isinstance(is_major_incident, Unset):
             field_dict["is_major_incident"] = is_major_incident
         if not isinstance(major_incident_state, Unset):
@@ -794,10 +682,6 @@ class FlawPost(OSIDBModel):
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
 
-        state = d.pop("state", UNSET)
-
-        resolution = d.pop("resolution", UNSET)
-
         title = d.pop("title", UNSET)
 
         trackers = cast(List[str], d.pop("trackers", UNSET))
@@ -818,21 +702,6 @@ class FlawPost(OSIDBModel):
                     affects_item = Affect.from_dict(_affects_item)
 
                 affects.append(affects_item)
-
-        meta = []
-        _meta = d.pop("meta", UNSET)
-        if _meta is UNSET:
-            meta = UNSET
-        else:
-            for meta_item_data in _meta or []:
-                _meta_item = meta_item_data
-                meta_item: Meta
-                if isinstance(_meta_item, Unset):
-                    meta_item = UNSET
-                else:
-                    meta_item = Meta.from_dict(_meta_item)
-
-                meta.append(meta_item)
 
         comments = []
         _comments = d.pop("comments", UNSET)
@@ -934,19 +803,20 @@ class FlawPost(OSIDBModel):
         else:
             classification = FlawPostClassification.from_dict(_classification)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: FlawPostAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = FlawPostAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, FlawType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawType(_type)
+                alerts.append(alerts_item)
 
         cve_id = d.pop("cve_id", UNSET)
 
@@ -1031,18 +901,18 @@ class FlawPost(OSIDBModel):
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, Source8D8Enum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, Source642Enum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, Source8D8Enum]
+                source_type_0: Union[Unset, Source642Enum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = Source8D8Enum(_source_type_0)
+                    source_type_0 = Source642Enum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -1070,18 +940,6 @@ class FlawPost(OSIDBModel):
             reported_dt = isoparse(_reported_dt)
 
         mitigation = d.pop("mitigation", UNSET)
-
-        cvss2 = d.pop("cvss2", UNSET)
-
-        cvss2_score = d.pop("cvss2_score", UNSET)
-
-        nvd_cvss2 = d.pop("nvd_cvss2", UNSET)
-
-        cvss3 = d.pop("cvss3", UNSET)
-
-        cvss3_score = d.pop("cvss3_score", UNSET)
-
-        nvd_cvss3 = d.pop("nvd_cvss3", UNSET)
 
         is_major_incident = d.pop("is_major_incident", UNSET)
 
@@ -1165,13 +1023,10 @@ class FlawPost(OSIDBModel):
 
         flaw_post = cls(
             uuid=uuid,
-            state=state,
-            resolution=resolution,
             title=title,
             trackers=trackers,
             description=description,
             affects=affects,
-            meta=meta,
             comments=comments,
             meta_attr=meta_attr,
             package_versions=package_versions,
@@ -1182,7 +1037,6 @@ class FlawPost(OSIDBModel):
             created_dt=created_dt,
             classification=classification,
             alerts=alerts,
-            type=type,
             cve_id=cve_id,
             impact=impact,
             component=component,
@@ -1195,12 +1049,6 @@ class FlawPost(OSIDBModel):
             source=source,
             reported_dt=reported_dt,
             mitigation=mitigation,
-            cvss2=cvss2,
-            cvss2_score=cvss2_score,
-            nvd_cvss2=nvd_cvss2,
-            cvss3=cvss3,
-            cvss3_score=cvss3_score,
-            nvd_cvss3=nvd_cvss3,
             is_major_incident=is_major_incident,
             major_incident_state=major_incident_state,
             nist_cvss_validation=nist_cvss_validation,
@@ -1217,13 +1065,10 @@ class FlawPost(OSIDBModel):
     def get_fields():
         return {
             "uuid": str,
-            "state": str,
-            "resolution": str,
             "title": str,
             "trackers": List[str],
             "description": str,
             "affects": List[Affect],
-            "meta": List[Meta],
             "comments": List[Comment],
             "meta_attr": FlawPostMetaAttr,
             "package_versions": List[Package],
@@ -1233,8 +1078,7 @@ class FlawPost(OSIDBModel):
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "classification": FlawPostClassification,
-            "alerts": FlawPostAlerts,
-            "type": FlawType,
+            "alerts": List[Alert],
             "cve_id": str,
             "impact": Union[BlankEnum, ImpactEnum],
             "component": str,
@@ -1244,15 +1088,9 @@ class FlawPost(OSIDBModel):
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, Source8D8Enum],
+            "source": Union[BlankEnum, Source642Enum],
             "reported_dt": datetime.datetime,
             "mitigation": str,
-            "cvss2": str,
-            "cvss2_score": float,
-            "nvd_cvss2": str,
-            "cvss3": str,
-            "cvss3_score": float,
-            "nvd_cvss3": str,
             "is_major_incident": bool,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],

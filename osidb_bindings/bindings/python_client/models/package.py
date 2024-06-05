@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..models.package_alerts import PackageAlerts
+from ..models.alert import Alert
 from ..models.package_ver import PackageVer
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -15,7 +15,7 @@ class Package(OSIDBModel):
 
     package: str
     versions: List[PackageVer]
-    alerts: PackageAlerts
+    alerts: List[Alert]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -30,9 +30,15 @@ class Package(OSIDBModel):
 
                 versions.append(versions_item)
 
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,12 +71,20 @@ class Package(OSIDBModel):
 
                 versions.append(versions_item)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: PackageAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = PackageAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         package = cls(
             package=package,
@@ -86,7 +100,7 @@ class Package(OSIDBModel):
         return {
             "package": str,
             "versions": List[PackageVer],
-            "alerts": PackageAlerts,
+            "alerts": List[Alert],
         }
 
     @property

@@ -9,6 +9,7 @@ from ...models.osidb_api_v1_flaws_comments_list_response_200 import (
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
+    "creator": str,
     "exclude_fields": List[str],
     "external_system_id": str,
     "include_fields": List[str],
@@ -24,6 +25,7 @@ def _get_kwargs(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
+    creator: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -62,6 +64,7 @@ def _get_kwargs(
             json_include_meta_attr = include_meta_attr
 
     params: Dict[str, Any] = {
+        "creator": creator,
         "exclude_fields": json_exclude_fields,
         "external_system_id": external_system_id,
         "include_fields": json_include_fields,
@@ -112,6 +115,7 @@ def sync_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
+    creator: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -124,6 +128,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
+        creator=creator,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
@@ -149,6 +154,7 @@ def sync(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
+    creator: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -163,6 +169,7 @@ def sync(
     return sync_detailed(
         flaw_id=flaw_id,
         client=client,
+        creator=creator,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
@@ -178,6 +185,7 @@ async def async_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
+    creator: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -190,6 +198,7 @@ async def async_detailed(
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
+        creator=creator,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
@@ -215,6 +224,7 @@ async def async_(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
+    creator: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
@@ -230,6 +240,7 @@ async def async_(
         await async_detailed(
             flaw_id=flaw_id,
             client=client,
+            creator=creator,
             exclude_fields=exclude_fields,
             external_system_id=external_system_id,
             include_fields=include_fields,

@@ -12,15 +12,11 @@ T = TypeVar("T", bound="FlawReportData")
 class FlawReportData(OSIDBModel):
     """ """
 
-    state: str
-    resolution: str
     cve_id: Union[Unset, None, str] = UNSET
     affects: Union[Unset, List[AffectReportData]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        state = self.state
-        resolution = self.resolution
         cve_id = self.cve_id
         affects: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.affects, Unset):
@@ -34,10 +30,6 @@ class FlawReportData(OSIDBModel):
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(affects, Unset):
@@ -48,10 +40,6 @@ class FlawReportData(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        state = d.pop("state", UNSET)
-
-        resolution = d.pop("resolution", UNSET)
-
         cve_id = d.pop("cve_id", UNSET)
 
         affects = []
@@ -70,8 +58,6 @@ class FlawReportData(OSIDBModel):
                 affects.append(affects_item)
 
         flaw_report_data = cls(
-            state=state,
-            resolution=resolution,
             cve_id=cve_id,
             affects=affects,
         )
@@ -82,8 +68,6 @@ class FlawReportData(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "state": str,
-            "resolution": str,
             "cve_id": str,
             "affects": List[AffectReportData],
         }

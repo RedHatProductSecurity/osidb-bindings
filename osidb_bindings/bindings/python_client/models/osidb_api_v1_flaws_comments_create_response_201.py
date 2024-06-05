@@ -4,8 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.flaw_comment_alerts import FlawCommentAlerts
-from ..models.flaw_comment_type import FlawCommentType
+from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1FlawsCommentsCreateResponse201")
@@ -19,12 +18,13 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
     text: str
     uuid: str
     external_system_id: str
-    alerts: FlawCommentAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
-    type: Union[Unset, FlawCommentType] = UNSET
     order: Union[Unset, None, int] = UNSET
+    creator: Union[Unset, str] = UNSET
+    is_private: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -36,9 +36,15 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
         text = self.text
         uuid = self.uuid
         external_system_id = self.external_system_id
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -49,12 +55,9 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             updated_dt = self.updated_dt.isoformat()
 
         embargoed = self.embargoed
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawCommentType(self.type).value
-
         order = self.order
+        creator = self.creator
+        is_private = self.is_private
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -81,10 +84,12 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
         if not isinstance(order, Unset):
             field_dict["order"] = order
+        if not isinstance(creator, Unset):
+            field_dict["creator"] = creator
+        if not isinstance(is_private, Unset):
+            field_dict["is_private"] = is_private
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -107,12 +112,20 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
 
         external_system_id = d.pop("external_system_id", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: FlawCommentAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = FlawCommentAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -130,14 +143,11 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, FlawCommentType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawCommentType(_type)
-
         order = d.pop("order", UNSET)
+
+        creator = d.pop("creator", UNSET)
+
+        is_private = d.pop("is_private", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -161,8 +171,9 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             embargoed=embargoed,
-            type=type,
             order=order,
+            creator=creator,
+            is_private=is_private,
             dt=dt,
             env=env,
             revision=revision,
@@ -179,12 +190,13 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             "text": str,
             "uuid": str,
             "external_system_id": str,
-            "alerts": FlawCommentAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "embargoed": bool,
-            "type": FlawCommentType,
             "order": int,
+            "creator": str,
+            "is_private": bool,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

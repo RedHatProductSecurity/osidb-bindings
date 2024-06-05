@@ -19,13 +19,6 @@ class FlawMetaAttr(OSIDBModel):
     bz_id: Union[Unset, str] = UNSET
     checklists: Union[Unset, str] = UNSET
     classification: Union[Unset, str] = UNSET
-    cvss2: Union[Unset, str] = UNSET
-    cvss2_score: Union[Unset, str] = UNSET
-    cvss2_vector: Union[Unset, str] = UNSET
-    cvss3: Union[Unset, str] = UNSET
-    cvss3_comment: Union[Unset, str] = UNSET
-    cvss3_score: Union[Unset, str] = UNSET
-    cvss3_vector: Union[Unset, str] = UNSET
     cwe: Union[Unset, str] = UNSET
     depends_on: Union[Unset, str] = UNSET
     impact: Union[Unset, str] = UNSET
@@ -36,9 +29,7 @@ class FlawMetaAttr(OSIDBModel):
     references: Union[Unset, str] = UNSET
     related_cves: Union[Unset, str] = UNSET
     reported: Union[Unset, str] = UNSET
-    resolution: Union[Unset, str] = UNSET
     source: Union[Unset, str] = UNSET
-    state: Union[Unset, str] = UNSET
     statement: Union[Unset, str] = UNSET
     task_owner: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -52,13 +43,6 @@ class FlawMetaAttr(OSIDBModel):
         bz_id = self.bz_id
         checklists = self.checklists
         classification = self.classification
-        cvss2 = self.cvss2
-        cvss2_score = self.cvss2_score
-        cvss2_vector = self.cvss2_vector
-        cvss3 = self.cvss3
-        cvss3_comment = self.cvss3_comment
-        cvss3_score = self.cvss3_score
-        cvss3_vector = self.cvss3_vector
         cwe = self.cwe
         depends_on = self.depends_on
         impact = self.impact
@@ -69,9 +53,7 @@ class FlawMetaAttr(OSIDBModel):
         references = self.references
         related_cves = self.related_cves
         reported = self.reported
-        resolution = self.resolution
         source = self.source
-        state = self.state
         statement = self.statement
         task_owner = self.task_owner
 
@@ -93,20 +75,6 @@ class FlawMetaAttr(OSIDBModel):
             field_dict["checklists"] = checklists
         if not isinstance(classification, Unset):
             field_dict["classification"] = classification
-        if not isinstance(cvss2, Unset):
-            field_dict["cvss2"] = cvss2
-        if not isinstance(cvss2_score, Unset):
-            field_dict["cvss2_score"] = cvss2_score
-        if not isinstance(cvss2_vector, Unset):
-            field_dict["cvss2_vector"] = cvss2_vector
-        if not isinstance(cvss3, Unset):
-            field_dict["cvss3"] = cvss3
-        if not isinstance(cvss3_comment, Unset):
-            field_dict["cvss3_comment"] = cvss3_comment
-        if not isinstance(cvss3_score, Unset):
-            field_dict["cvss3_score"] = cvss3_score
-        if not isinstance(cvss3_vector, Unset):
-            field_dict["cvss3_vector"] = cvss3_vector
         if not isinstance(cwe, Unset):
             field_dict["cwe"] = cwe
         if not isinstance(depends_on, Unset):
@@ -127,12 +95,8 @@ class FlawMetaAttr(OSIDBModel):
             field_dict["related_cves"] = related_cves
         if not isinstance(reported, Unset):
             field_dict["reported"] = reported
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
         if not isinstance(source, Unset):
             field_dict["source"] = source
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
         if not isinstance(statement, Unset):
             field_dict["statement"] = statement
         if not isinstance(task_owner, Unset):
@@ -159,20 +123,6 @@ class FlawMetaAttr(OSIDBModel):
 
         classification = d.pop("classification", UNSET)
 
-        cvss2 = d.pop("cvss2", UNSET)
-
-        cvss2_score = d.pop("cvss2_score", UNSET)
-
-        cvss2_vector = d.pop("cvss2_vector", UNSET)
-
-        cvss3 = d.pop("cvss3", UNSET)
-
-        cvss3_comment = d.pop("cvss3_comment", UNSET)
-
-        cvss3_score = d.pop("cvss3_score", UNSET)
-
-        cvss3_vector = d.pop("cvss3_vector", UNSET)
-
         cwe = d.pop("cwe", UNSET)
 
         depends_on = d.pop("depends_on", UNSET)
@@ -193,11 +143,7 @@ class FlawMetaAttr(OSIDBModel):
 
         reported = d.pop("reported", UNSET)
 
-        resolution = d.pop("resolution", UNSET)
-
         source = d.pop("source", UNSET)
-
-        state = d.pop("state", UNSET)
 
         statement = d.pop("statement", UNSET)
 
@@ -212,13 +158,6 @@ class FlawMetaAttr(OSIDBModel):
             bz_id=bz_id,
             checklists=checklists,
             classification=classification,
-            cvss2=cvss2,
-            cvss2_score=cvss2_score,
-            cvss2_vector=cvss2_vector,
-            cvss3=cvss3,
-            cvss3_comment=cvss3_comment,
-            cvss3_score=cvss3_score,
-            cvss3_vector=cvss3_vector,
             cwe=cwe,
             depends_on=depends_on,
             impact=impact,
@@ -229,9 +168,7 @@ class FlawMetaAttr(OSIDBModel):
             references=references,
             related_cves=related_cves,
             reported=reported,
-            resolution=resolution,
             source=source,
-            state=state,
             statement=statement,
             task_owner=task_owner,
         )
@@ -250,13 +187,6 @@ class FlawMetaAttr(OSIDBModel):
             "bz_id": str,
             "checklists": str,
             "classification": str,
-            "cvss2": str,
-            "cvss2_score": str,
-            "cvss2_vector": str,
-            "cvss3": str,
-            "cvss3_comment": str,
-            "cvss3_score": str,
-            "cvss3_vector": str,
             "cwe": str,
             "depends_on": str,
             "impact": str,
@@ -267,9 +197,7 @@ class FlawMetaAttr(OSIDBModel):
             "references": str,
             "related_cves": str,
             "reported": str,
-            "resolution": str,
             "source": str,
-            "state": str,
             "statement": str,
             "task_owner": str,
         }
