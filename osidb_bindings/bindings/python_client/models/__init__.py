@@ -1,7 +1,9 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .affect import Affect
-from .affect_bulk_put_response import AffectBulkPutResponse
+from .affect_bulk_post_put_response import AffectBulkPostPutResponse
+from .affect_bulk_put import AffectBulkPut
+from .affect_bulk_put_meta_attr import AffectBulkPutMetaAttr
 from .affect_cvss import AffectCVSS
 from .affect_cvss_post import AffectCVSSPost
 from .affect_cvss_put import AffectCVSSPut
@@ -12,6 +14,9 @@ from .affect_report_data import AffectReportData
 from .affectedness_enum import AffectednessEnum
 from .alert import Alert
 from .alert_type_enum import AlertTypeEnum
+from .audit import Audit
+from .audit_pgh_context import AuditPghContext
+from .audit_pgh_diff import AuditPghDiff
 from .auth_token_create_response_200 import AuthTokenCreateResponse200
 from .auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
 from .auth_token_retrieve_response_200 import AuthTokenRetrieveResponse200
@@ -37,7 +42,6 @@ from .collectors_healthy_retrieve_response_200 import (
 )
 from .collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from .comment import Comment
-from .comment_meta_attr import CommentMetaAttr
 from .cvss_version_enum import CvssVersionEnum
 from .epss import EPSS
 from .erratum import Erratum
@@ -97,7 +101,6 @@ from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
 from .flaw_comment import FlawComment
 from .flaw_comment_post import FlawCommentPost
-from .flaw_comment_post_meta_attr import FlawCommentPostMetaAttr
 from .flaw_cvss import FlawCVSS
 from .flaw_cvss_post import FlawCVSSPost
 from .flaw_cvss_put import FlawCVSSPut
@@ -122,6 +125,12 @@ from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .module_component import ModuleComponent
 from .nist_cvss_validation_enum import NistCvssValidationEnum
+from .osidb_api_v1_affects_bulk_create_response_200 import (
+    OsidbApiV1AffectsBulkCreateResponse200,
+)
+from .osidb_api_v1_affects_bulk_destroy_response_200 import (
+    OsidbApiV1AffectsBulkDestroyResponse200,
+)
 from .osidb_api_v1_affects_bulk_update_response_200 import (
     OsidbApiV1AffectsBulkUpdateResponse200,
 )
@@ -168,6 +177,9 @@ from .osidb_api_v1_alerts_list_response_200 import OsidbApiV1AlertsListResponse2
 from .osidb_api_v1_alerts_retrieve_response_200 import (
     OsidbApiV1AlertsRetrieveResponse200,
 )
+from .osidb_api_v1_audit_list_response_200 import OsidbApiV1AuditListResponse200
+from .osidb_api_v1_audit_retrieve_response_200 import OsidbApiV1AuditRetrieveResponse200
+from .osidb_api_v1_audit_update_response_200 import OsidbApiV1AuditUpdateResponse200
 from .osidb_api_v1_flaws_acknowledgments_create_response_201 import (
     OsidbApiV1FlawsAcknowledgmentsCreateResponse201,
 )
@@ -233,7 +245,9 @@ from .osidb_api_v1_flaws_list_nist_cvss_validation import (
 )
 from .osidb_api_v1_flaws_list_order_item import OsidbApiV1FlawsListOrderItem
 from .osidb_api_v1_flaws_list_references_type import OsidbApiV1FlawsListReferencesType
-from .osidb_api_v1_flaws_list_requires_summary import OsidbApiV1FlawsListRequiresSummary
+from .osidb_api_v1_flaws_list_requires_cve_description import (
+    OsidbApiV1FlawsListRequiresCveDescription,
+)
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from .osidb_api_v1_flaws_list_workflow_state_item import (
@@ -332,6 +346,7 @@ from .package_ver import PackageVer
 from .paginated_affect_cvss_list import PaginatedAffectCVSSList
 from .paginated_affect_list import PaginatedAffectList
 from .paginated_alert_list import PaginatedAlertList
+from .paginated_audit_list import PaginatedAuditList
 from .paginated_epss_list import PaginatedEPSSList
 from .paginated_exploit_only_report_data_list import PaginatedExploitOnlyReportDataList
 from .paginated_flaw_acknowledgment_list import PaginatedFlawAcknowledgmentList
@@ -345,7 +360,7 @@ from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_tracker_list import PaginatedTrackerList
 from .ps_stream_selection import PsStreamSelection
 from .reject import Reject
-from .requires_summary_enum import RequiresSummaryEnum
+from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
 from .source_642_enum import Source642Enum
 from .supported_products import SupportedProducts

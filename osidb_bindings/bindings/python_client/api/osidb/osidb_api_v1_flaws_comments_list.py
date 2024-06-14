@@ -13,7 +13,6 @@ QUERY_PARAMS = {
     "exclude_fields": List[str],
     "external_system_id": str,
     "include_fields": List[str],
-    "include_meta_attr": List[str],
     "limit": int,
     "offset": int,
     "order": int,
@@ -29,7 +28,6 @@ def _get_kwargs(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, int] = UNSET,
@@ -56,19 +54,11 @@ def _get_kwargs(
         else:
             json_include_fields = include_fields
 
-    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(include_meta_attr, Unset):
-        if include_meta_attr is None:
-            json_include_meta_attr = None
-        else:
-            json_include_meta_attr = include_meta_attr
-
     params: Dict[str, Any] = {
         "creator": creator,
         "exclude_fields": json_exclude_fields,
         "external_system_id": external_system_id,
         "include_fields": json_include_fields,
-        "include_meta_attr": json_include_meta_attr,
         "limit": limit,
         "offset": offset,
         "order": order,
@@ -119,7 +109,6 @@ def sync_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, int] = UNSET,
@@ -132,7 +121,6 @@ def sync_detailed(
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
@@ -158,7 +146,6 @@ def sync(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, int] = UNSET,
@@ -173,7 +160,6 @@ def sync(
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
@@ -189,7 +175,6 @@ async def async_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, int] = UNSET,
@@ -202,7 +187,6 @@ async def async_detailed(
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
@@ -228,7 +212,6 @@ async def async_(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     external_system_id: Union[Unset, None, str] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     order: Union[Unset, None, int] = UNSET,
@@ -244,7 +227,6 @@ async def async_(
             exclude_fields=exclude_fields,
             external_system_id=external_system_id,
             include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
             limit=limit,
             offset=offset,
             order=order,

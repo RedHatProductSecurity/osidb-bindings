@@ -11,7 +11,6 @@ from ...types import UNSET, Response, Unset
 QUERY_PARAMS = {
     "exclude_fields": List[str],
     "include_fields": List[str],
-    "include_meta_attr": List[str],
 }
 
 
@@ -22,7 +21,6 @@ def _get_kwargs(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{flaw_id}/references/{id}".format(
         client.base_url,
@@ -46,17 +44,9 @@ def _get_kwargs(
         else:
             json_include_fields = include_fields
 
-    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(include_meta_attr, Unset):
-        if include_meta_attr is None:
-            json_include_meta_attr = None
-        else:
-            json_include_meta_attr = include_meta_attr
-
     params: Dict[str, Any] = {
         "exclude_fields": json_exclude_fields,
         "include_fields": json_include_fields,
-        "include_meta_attr": json_include_meta_attr,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -102,7 +92,6 @@ def sync_detailed(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsReferencesRetrieveResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -110,7 +99,6 @@ def sync_detailed(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
     )
 
     response = requests.get(
@@ -131,7 +119,6 @@ def sync(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsReferencesRetrieveResponse200]:
     """ """
 
@@ -141,7 +128,6 @@ def sync(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
     ).parsed
 
 
@@ -152,7 +138,6 @@ async def async_detailed(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsReferencesRetrieveResponse200]:
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
@@ -160,7 +145,6 @@ async def async_detailed(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
     )
 
     async with client.get_async_session().get(
@@ -181,7 +165,6 @@ async def async_(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsReferencesRetrieveResponse200]:
     """ """
 
@@ -192,6 +175,5 @@ async def async_(
             client=client,
             exclude_fields=exclude_fields,
             include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
         )
     ).parsed

@@ -1,17 +1,17 @@
-from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
 from ..types import OSIDBModel
 
-T = TypeVar("T", bound="FlawCommentPostMetaAttr")
+T = TypeVar("T", bound="AuditPghContext")
 
 
 @attr.s(auto_attribs=True)
-class FlawCommentPostMetaAttr(OSIDBModel):
-    """ """
+class AuditPghContext(OSIDBModel):
+    """The context associated with the event."""
 
-    additional_properties: Dict[str, Optional[str]] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
 
@@ -23,10 +23,10 @@ class FlawCommentPostMetaAttr(OSIDBModel):
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        flaw_comment_post_meta_attr = cls()
+        audit_pgh_context = cls()
 
-        flaw_comment_post_meta_attr.additional_properties = d
-        return flaw_comment_post_meta_attr
+        audit_pgh_context.additional_properties = d
+        return audit_pgh_context
 
     @staticmethod
     def get_fields():
@@ -36,10 +36,10 @@ class FlawCommentPostMetaAttr(OSIDBModel):
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
-    def __getitem__(self, key: str) -> Optional[str]:
+    def __getitem__(self, key: str) -> Any:
         return self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: Optional[str]) -> None:
+    def __setitem__(self, key: str, value: Any) -> None:
         self.additional_properties[key] = value
 
     def __delitem__(self, key: str) -> None:

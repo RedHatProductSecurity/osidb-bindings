@@ -30,6 +30,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
+    sync_to_bz: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -84,6 +85,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
             affects = self.affects
 
         ps_update_stream = self.ps_update_stream
+        sync_to_bz = self.sync_to_bz
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -120,6 +122,8 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(sync_to_bz, Unset):
+            field_dict["sync_to_bz"] = sync_to_bz
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -206,6 +210,8 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
+        sync_to_bz = d.pop("sync_to_bz", UNSET)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -233,6 +239,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
             updated_dt=updated_dt,
             affects=affects,
             ps_update_stream=ps_update_stream,
+            sync_to_bz=sync_to_bz,
             dt=dt,
             env=env,
             revision=revision,
@@ -258,6 +265,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
             "updated_dt": datetime.datetime,
             "affects": List[str],
             "ps_update_stream": str,
+            "sync_to_bz": bool,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

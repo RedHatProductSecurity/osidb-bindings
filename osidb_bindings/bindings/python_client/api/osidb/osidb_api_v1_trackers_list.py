@@ -39,7 +39,6 @@ QUERY_PARAMS = {
     "affects__created_dt__lt": datetime.datetime,
     "affects__created_dt__lte": datetime.datetime,
     "affects__embargoed": bool,
-    "affects__flaw__component": List[str],
     "affects__flaw__components": List[str],
     "affects__flaw__created_dt": datetime.datetime,
     "affects__flaw__created_dt__date": datetime.date,
@@ -53,7 +52,6 @@ QUERY_PARAMS = {
     "affects__flaw__cwe_id": str,
     "affects__flaw__embargoed": bool,
     "affects__flaw__impact": OsidbApiV1TrackersListAffectsFlawImpact,
-    "affects__flaw__is_major_incident": bool,
     "affects__flaw__reported_dt": datetime.datetime,
     "affects__flaw__reported_dt__date": datetime.date,
     "affects__flaw__reported_dt__date__gte": datetime.date,
@@ -133,7 +131,6 @@ def _get_kwargs(
     affects_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
@@ -149,7 +146,6 @@ def _get_kwargs(
     affects_flaw_impact: Union[
         Unset, None, OsidbApiV1TrackersListAffectsFlawImpact
     ] = UNSET,
-    affects_flaw_is_major_incident: Union[Unset, None, bool] = UNSET,
     affects_flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -282,13 +278,6 @@ def _get_kwargs(
         json_affects_created_dt_lte = (
             affects_created_dt_lte.isoformat() if affects_created_dt_lte else None
         )
-
-    json_affects_flaw_component: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(affects_flaw_component, Unset):
-        if affects_flaw_component is None:
-            json_affects_flaw_component = None
-        else:
-            json_affects_flaw_component = affects_flaw_component
 
     json_affects_flaw_components: Union[Unset, None, List[str]] = UNSET
     if not isinstance(affects_flaw_components, Unset):
@@ -700,7 +689,6 @@ def _get_kwargs(
         "affects__created_dt__lt": json_affects_created_dt_lt,
         "affects__created_dt__lte": json_affects_created_dt_lte,
         "affects__embargoed": affects_embargoed,
-        "affects__flaw__component": json_affects_flaw_component,
         "affects__flaw__components": json_affects_flaw_components,
         "affects__flaw__created_dt": json_affects_flaw_created_dt,
         "affects__flaw__created_dt__date": json_affects_flaw_created_dt_date,
@@ -714,7 +702,6 @@ def _get_kwargs(
         "affects__flaw__cwe_id": affects_flaw_cwe_id,
         "affects__flaw__embargoed": affects_flaw_embargoed,
         "affects__flaw__impact": json_affects_flaw_impact,
-        "affects__flaw__is_major_incident": affects_flaw_is_major_incident,
         "affects__flaw__reported_dt": json_affects_flaw_reported_dt,
         "affects__flaw__reported_dt__date": json_affects_flaw_reported_dt_date,
         "affects__flaw__reported_dt__date__gte": json_affects_flaw_reported_dt_date_gte,
@@ -827,7 +814,6 @@ def sync_detailed(
     affects_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
@@ -843,7 +829,6 @@ def sync_detailed(
     affects_flaw_impact: Union[
         Unset, None, OsidbApiV1TrackersListAffectsFlawImpact
     ] = UNSET,
-    affects_flaw_is_major_incident: Union[Unset, None, bool] = UNSET,
     affects_flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -922,7 +907,6 @@ def sync_detailed(
         affects_created_dt_lt=affects_created_dt_lt,
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
-        affects_flaw_component=affects_flaw_component,
         affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
@@ -936,7 +920,6 @@ def sync_detailed(
         affects_flaw_cwe_id=affects_flaw_cwe_id,
         affects_flaw_embargoed=affects_flaw_embargoed,
         affects_flaw_impact=affects_flaw_impact,
-        affects_flaw_is_major_incident=affects_flaw_is_major_incident,
         affects_flaw_reported_dt=affects_flaw_reported_dt,
         affects_flaw_reported_dt_date=affects_flaw_reported_dt_date,
         affects_flaw_reported_dt_date_gte=affects_flaw_reported_dt_date_gte,
@@ -1026,7 +1009,6 @@ def sync(
     affects_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
@@ -1042,7 +1024,6 @@ def sync(
     affects_flaw_impact: Union[
         Unset, None, OsidbApiV1TrackersListAffectsFlawImpact
     ] = UNSET,
-    affects_flaw_is_major_incident: Union[Unset, None, bool] = UNSET,
     affects_flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1123,7 +1104,6 @@ def sync(
         affects_created_dt_lt=affects_created_dt_lt,
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
-        affects_flaw_component=affects_flaw_component,
         affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
@@ -1137,7 +1117,6 @@ def sync(
         affects_flaw_cwe_id=affects_flaw_cwe_id,
         affects_flaw_embargoed=affects_flaw_embargoed,
         affects_flaw_impact=affects_flaw_impact,
-        affects_flaw_is_major_incident=affects_flaw_is_major_incident,
         affects_flaw_reported_dt=affects_flaw_reported_dt,
         affects_flaw_reported_dt_date=affects_flaw_reported_dt_date,
         affects_flaw_reported_dt_date_gte=affects_flaw_reported_dt_date_gte,
@@ -1217,7 +1196,6 @@ async def async_detailed(
     affects_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
@@ -1233,7 +1211,6 @@ async def async_detailed(
     affects_flaw_impact: Union[
         Unset, None, OsidbApiV1TrackersListAffectsFlawImpact
     ] = UNSET,
-    affects_flaw_is_major_incident: Union[Unset, None, bool] = UNSET,
     affects_flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1312,7 +1289,6 @@ async def async_detailed(
         affects_created_dt_lt=affects_created_dt_lt,
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
-        affects_flaw_component=affects_flaw_component,
         affects_flaw_components=affects_flaw_components,
         affects_flaw_created_dt=affects_flaw_created_dt,
         affects_flaw_created_dt_date=affects_flaw_created_dt_date,
@@ -1326,7 +1302,6 @@ async def async_detailed(
         affects_flaw_cwe_id=affects_flaw_cwe_id,
         affects_flaw_embargoed=affects_flaw_embargoed,
         affects_flaw_impact=affects_flaw_impact,
-        affects_flaw_is_major_incident=affects_flaw_is_major_incident,
         affects_flaw_reported_dt=affects_flaw_reported_dt,
         affects_flaw_reported_dt_date=affects_flaw_reported_dt_date,
         affects_flaw_reported_dt_date_gte=affects_flaw_reported_dt_date_gte,
@@ -1416,7 +1391,6 @@ async def async_(
     affects_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, None, bool] = UNSET,
-    affects_flaw_component: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_components: Union[Unset, None, List[str]] = UNSET,
     affects_flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
@@ -1432,7 +1406,6 @@ async def async_(
     affects_flaw_impact: Union[
         Unset, None, OsidbApiV1TrackersListAffectsFlawImpact
     ] = UNSET,
-    affects_flaw_is_major_incident: Union[Unset, None, bool] = UNSET,
     affects_flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
     affects_flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
     affects_flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
@@ -1514,7 +1487,6 @@ async def async_(
             affects_created_dt_lt=affects_created_dt_lt,
             affects_created_dt_lte=affects_created_dt_lte,
             affects_embargoed=affects_embargoed,
-            affects_flaw_component=affects_flaw_component,
             affects_flaw_components=affects_flaw_components,
             affects_flaw_created_dt=affects_flaw_created_dt,
             affects_flaw_created_dt_date=affects_flaw_created_dt_date,
@@ -1528,7 +1500,6 @@ async def async_(
             affects_flaw_cwe_id=affects_flaw_cwe_id,
             affects_flaw_embargoed=affects_flaw_embargoed,
             affects_flaw_impact=affects_flaw_impact,
-            affects_flaw_is_major_incident=affects_flaw_is_major_incident,
             affects_flaw_reported_dt=affects_flaw_reported_dt,
             affects_flaw_reported_dt_date=affects_flaw_reported_dt_date,
             affects_flaw_reported_dt_date_gte=affects_flaw_reported_dt_date_gte,

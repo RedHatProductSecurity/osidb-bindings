@@ -1,10 +1,11 @@
 from enum import Enum
 
 
-class RequiresSummaryEnum(str, Enum):
-    REQUESTED = "REQUESTED"
+class OsidbApiV1FlawsListRequiresCveDescription(str, Enum):
+    VALUE_0 = ""
     APPROVED = "APPROVED"
     REJECTED = "REJECTED"
+    REQUESTED = "REQUESTED"
 
     def __str__(self) -> str:
         return str(self.value)

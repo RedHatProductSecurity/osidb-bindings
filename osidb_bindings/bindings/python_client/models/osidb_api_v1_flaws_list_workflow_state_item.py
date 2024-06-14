@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class OsidbApiV1FlawsListWorkflowStateItem(str, Enum):
+    VALUE_0 = ""
     DONE = "DONE"
     NEW = "NEW"
     PRE_SECONDARY_ASSESSMENT = "PRE_SECONDARY_ASSESSMENT"

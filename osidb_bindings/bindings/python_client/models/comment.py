@@ -5,7 +5,6 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.alert import Alert
-from ..models.comment_meta_attr import CommentMetaAttr
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Comment")
@@ -24,7 +23,6 @@ class Comment(OSIDBModel):
     order: Union[Unset, None, int] = UNSET
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
-    meta_attr: Union[Unset, CommentMetaAttr] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -52,9 +50,6 @@ class Comment(OSIDBModel):
         order = self.order
         creator = self.creator
         is_private = self.is_private
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -76,8 +71,6 @@ class Comment(OSIDBModel):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
             field_dict["is_private"] = is_private
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
 
         return field_dict
 
@@ -125,13 +118,6 @@ class Comment(OSIDBModel):
 
         is_private = d.pop("is_private", UNSET)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, CommentMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = CommentMetaAttr.from_dict(_meta_attr)
-
         comment = cls(
             uuid=uuid,
             text=text,
@@ -142,7 +128,6 @@ class Comment(OSIDBModel):
             order=order,
             creator=creator,
             is_private=is_private,
-            meta_attr=meta_attr,
         )
 
         comment.additional_properties = d
@@ -160,7 +145,6 @@ class Comment(OSIDBModel):
             "order": int,
             "creator": str,
             "is_private": bool,
-            "meta_attr": CommentMetaAttr,
         }
 
     @property

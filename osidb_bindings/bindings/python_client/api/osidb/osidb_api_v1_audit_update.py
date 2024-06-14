@@ -1,48 +1,40 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.affect_bulk_put import AffectBulkPut
-from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
-    OsidbApiV1AffectsBulkUpdateResponse200,
+from ...models.audit import Audit
+from ...models.osidb_api_v1_audit_update_response_200 import (
+    OsidbApiV1AuditUpdateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = Audit
 
 
 def _get_kwargs(
+    pgh_slug: str,
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    form_data: Audit,
+    multipart_data: Audit,
+    json_body: Audit,
 ) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/affects/bulk".format(
+    url = "{}/osidb/api/v1/audit/{pgh_slug}".format(
         client.base_url,
+        pgh_slug=pgh_slug,
     )
 
     headers: Dict[str, Any] = client.get_headers()
 
-    json_json_body: List[Dict[str, Any]] = UNSET
+    json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
-        json_json_body = []
-        for json_body_item_data in json_body:
-            json_body_item: Dict[str, Any] = UNSET
-            if not isinstance(json_body_item_data, Unset):
-                json_body_item = json_body_item_data.to_dict()
+        json_body.to_dict()
 
-            json_json_body.append(json_body_item)
-
-    multipart_multipart_data: List[Dict[str, Any]] = UNSET
+    multipart_multipart_data: Dict[str, Any] = UNSET
     if not isinstance(multipart_data, Unset):
-        multipart_multipart_data = []
-        for multipart_data_item_data in multipart_data:
-            multipart_data_item: Dict[str, Any] = UNSET
-            if not isinstance(multipart_data_item_data, Unset):
-                multipart_data_item = multipart_data_item_data.to_dict()
-
-            multipart_multipart_data.append(multipart_data_item)
+        multipart_data.to_multipart()
 
     return {
         "url": url,
@@ -53,16 +45,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
+) -> Optional[OsidbApiV1AuditUpdateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1AffectsBulkUpdateResponse200
+        response_200: OsidbApiV1AuditUpdateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1AffectsBulkUpdateResponse200.from_dict(
-                _response_200
-            )
+            response_200 = OsidbApiV1AuditUpdateResponse200.from_dict(_response_200)
 
         return response_200
     return None
@@ -70,7 +60,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+) -> Response[OsidbApiV1AuditUpdateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -80,13 +70,17 @@ def _build_response(
 
 
 def sync_detailed(
+    pgh_slug: str,
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    form_data: Audit,
+    multipart_data: Audit,
+    json_body: Audit,
+) -> Response[OsidbApiV1AuditUpdateResponse200]:
     kwargs = _get_kwargs(
+        pgh_slug=pgh_slug,
         client=client,
+        form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
     )
@@ -103,28 +97,36 @@ def sync_detailed(
 
 
 def sync(
+    pgh_slug: str,
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    form_data: Audit,
+    multipart_data: Audit,
+    json_body: Audit,
+) -> Optional[OsidbApiV1AuditUpdateResponse200]:
+    """basic view of audit history events"""
 
     return sync_detailed(
+        pgh_slug=pgh_slug,
         client=client,
+        form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
     ).parsed
 
 
 async def async_detailed(
+    pgh_slug: str,
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    form_data: Audit,
+    multipart_data: Audit,
+    json_body: Audit,
+) -> Response[OsidbApiV1AuditUpdateResponse200]:
     kwargs = _get_kwargs(
+        pgh_slug=pgh_slug,
         client=client,
+        form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
     )
@@ -141,16 +143,20 @@ async def async_detailed(
 
 
 async def async_(
+    pgh_slug: str,
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    form_data: Audit,
+    multipart_data: Audit,
+    json_body: Audit,
+) -> Optional[OsidbApiV1AuditUpdateResponse200]:
+    """basic view of audit history events"""
 
     return (
         await async_detailed(
+            pgh_slug=pgh_slug,
             client=client,
+            form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
         )

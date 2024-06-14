@@ -863,15 +863,6 @@ paths:
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `exclude_fields=field,related_model_field.field`'
       - in: query
-        name: flaw__component
-        schema:
-          type: array
-          items:
-            type: string
-        description: Multiple values may be separated by commas.
-        explode: false
-        style: form
-      - in: query
         name: flaw__components
         schema:
           type: array
@@ -942,11 +933,6 @@ paths:
           - IMPORTANT
           - LOW
           - MODERATE
-      - in: query
-        name: flaw__is_major_incident
-        schema:
-          type: boolean
-        deprecated: true
       - in: query
         name: flaw__reported_dt
         schema:
@@ -1192,14 +1178,12 @@ paths:
             - -cvss_scores__uuid
             - -cvss_scores__vector
             - -embargoed
-            - -flaw__component
             - -flaw__components
             - -flaw__created_dt
             - -flaw__cve_id
             - -flaw__cwe_id
             - -flaw__embargoed
             - -flaw__impact
-            - -flaw__is_major_incident
             - -flaw__reported_dt
             - -flaw__source
             - -flaw__unembargo_dt
@@ -1231,14 +1215,12 @@ paths:
             - cvss_scores__uuid
             - cvss_scores__vector
             - embargoed
-            - flaw__component
             - flaw__components
             - flaw__created_dt
             - flaw__cve_id
             - flaw__cwe_id
             - flaw__embargoed
             - flaw__impact
-            - flaw__is_major_incident
             - flaw__reported_dt
             - flaw__source
             - flaw__unembargo_dt
@@ -1690,6 +1672,12 @@ paths:
     post:
       operationId: osidb_api_v1_affects_cvss_scores_create
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: affect_id
         schema:
@@ -1791,6 +1779,12 @@ paths:
     put:
       operationId: osidb_api_v1_affects_cvss_scores_update
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: affect_id
         schema:
@@ -1841,6 +1835,12 @@ paths:
       operationId: osidb_api_v1_affects_cvss_scores_destroy
       description: Destroy the instance and proxy the delete to Bugzilla.
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: affect_id
         schema:
@@ -1999,6 +1999,12 @@ paths:
       operationId: osidb_api_v1_affects_destroy
       description: Destroy the instance and proxy the delete to Bugzilla
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: uuid
         schema:
@@ -2028,9 +2034,16 @@ paths:
                     type: string
           description: ''
   /osidb/api/v1/affects/bulk:
-    put:
-      operationId: osidb_api_v1_affects_bulk_update
-      description: Bulk update endpoint. Expects a list of dict Affect objects.
+    post:
+      operationId: osidb_api_v1_affects_bulk_create
+      description: Bulk create endpoint. Expects a list of dict Affect objects.
+      parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       tags:
       - osidb
       requestBody:
@@ -2039,17 +2052,17 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Affect'
+                $ref: '#/components/schemas/AffectPost'
           application/x-www-form-urlencoded:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Affect'
+                $ref: '#/components/schemas/AffectPost'
           multipart/form-data:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Affect'
+                $ref: '#/components/schemas/AffectPost'
         required: true
       security:
       - OsidbTokenAuthentication: []
@@ -2059,7 +2072,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/AffectBulkPutResponse'
+                - $ref: '#/components/schemas/AffectBulkPostPutResponse'
                 - type: object
                   properties:
                     dt:
@@ -2071,6 +2084,94 @@ paths:
                       type: string
                     version:
                       type: string
+          description: ''
+    put:
+      operationId: osidb_api_v1_affects_bulk_update
+      description: Bulk update endpoint. Expects a list of dict Affect objects.
+      parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
+      - in: header
+        name: Jira-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Jira authentication.
+        required: true
+      tags:
+      - osidb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AffectBulkPut'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AffectBulkPut'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AffectBulkPut'
+        required: true
+      security:
+      - OsidbTokenAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/AffectBulkPostPutResponse'
+                - type: object
+                  properties:
+                    dt:
+                      type: string
+                      format: date-time
+                    env:
+                      type: string
+                    revision:
+                      type: string
+                    version:
+                      type: string
+          description: ''
+    delete:
+      operationId: osidb_api_v1_affects_bulk_destroy
+      description: Bulk delete endpoint. Expects a list of Affect uuids.
+      parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
+      tags:
+      - osidb
+      security:
+      - OsidbTokenAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dt:
+                    type: string
+                    format: date-time
+                  env:
+                    type: string
+                  revision:
+                    type: string
+                  version:
+                    type: string
           description: ''
   /osidb/api/v1/alerts:
     get:
@@ -2213,6 +2314,144 @@ paths:
               schema:
                 allOf:
                 - $ref: '#/components/schemas/Alert'
+                - type: object
+                  properties:
+                    dt:
+                      type: string
+                      format: date-time
+                    env:
+                      type: string
+                    revision:
+                      type: string
+                    version:
+                      type: string
+          description: ''
+  /osidb/api/v1/audit:
+    get:
+      operationId: osidb_api_v1_audit_list
+      description: basic view of audit history events
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - in: query
+        name: pgh_created_at
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: pgh_label
+        schema:
+          type: string
+      - in: query
+        name: pgh_obj_model
+        schema:
+          type: string
+      - in: query
+        name: pgh_slug
+        schema:
+          type: string
+      tags:
+      - osidb
+      security:
+      - OsidbTokenAuthentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginatedAuditList'
+                - type: object
+                  properties:
+                    dt:
+                      type: string
+                      format: date-time
+                    env:
+                      type: string
+                    revision:
+                      type: string
+                    version:
+                      type: string
+          description: ''
+  /osidb/api/v1/audit/{pgh_slug}:
+    get:
+      operationId: osidb_api_v1_audit_retrieve
+      description: basic view of audit history events
+      parameters:
+      - in: path
+        name: pgh_slug
+        schema:
+          type: string
+          description: The unique identifier across all event tables.
+        required: true
+      tags:
+      - osidb
+      security:
+      - OsidbTokenAuthentication: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Audit'
+                - type: object
+                  properties:
+                    dt:
+                      type: string
+                      format: date-time
+                    env:
+                      type: string
+                    revision:
+                      type: string
+                    version:
+                      type: string
+          description: ''
+    put:
+      operationId: osidb_api_v1_audit_update
+      description: basic view of audit history events
+      parameters:
+      - in: path
+        name: pgh_slug
+        schema:
+          type: string
+          description: The unique identifier across all event tables.
+        required: true
+      tags:
+      - osidb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Audit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Audit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Audit'
+        required: true
+      security:
+      - OsidbTokenAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/Audit'
                 - type: object
                   properties:
                     dt:
@@ -2629,14 +2868,9 @@ paths:
           type: string
           format: date-time
       - in: query
-        name: component
+        name: comment_zero
         schema:
-          type: array
-          items:
-            type: string
-        description: Multiple values may be separated by commas.
-        explode: false
-        style: form
+          type: string
       - in: query
         name: components
         schema:
@@ -2687,6 +2921,14 @@ paths:
           type: string
           format: date-time
       - in: query
+        name: cve_description
+        schema:
+          type: string
+      - in: query
+        name: cve_description__isempty
+        schema:
+          type: boolean
+      - in: query
         name: cve_id
         schema:
           type: array
@@ -2697,6 +2939,30 @@ paths:
         style: form
       - in: query
         name: cve_id__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss2_nist__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss2_rh__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss3_nist__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss3_rh__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss4_nist__isempty
+        schema:
+          type: boolean
+      - in: query
+        name: cvss4_rh__isempty
         schema:
           type: boolean
       - in: query
@@ -2814,9 +3080,9 @@ paths:
         schema:
           type: string
       - in: query
-        name: description
+        name: cwe_id__isempty
         schema:
-          type: string
+          type: boolean
       - in: query
         name: embargoed
         schema:
@@ -2861,17 +3127,52 @@ paths:
           wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
           keys from meta_attr. Omit this parameter to not include meta_attr fields
           at all. '
-      - in: query
-        name: is_major_incident
-        schema:
-          type: boolean
-        deprecated: true
       - name: limit
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: major_incident_start_dt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: major_incident_start_dt__date
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: major_incident_start_dt__date__gte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: major_incident_start_dt__date__lte
+        schema:
+          type: string
+          format: date
+      - in: query
+        name: major_incident_start_dt__gt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: major_incident_start_dt__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: major_incident_start_dt__lt
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: major_incident_start_dt__lte
+        schema:
+          type: string
+          format: date-time
       - in: query
         name: major_incident_state
         schema:
@@ -2883,6 +3184,10 @@ paths:
           - INVALID
           - REJECTED
           - REQUESTED
+      - in: query
+        name: mitigation__isempty
+        schema:
+          type: boolean
       - in: query
         name: nist_cvss_validation
         schema:
@@ -2931,9 +3236,10 @@ paths:
             - -affects__updated_dt
             - -affects__uuid
             - -bz_id
-            - -component
+            - -comment_zero
             - -components
             - -created_dt
+            - -cve_description
             - -cve_id
             - -cvss_scores__comment
             - -cvss_scores__created_dt
@@ -2943,10 +3249,9 @@ paths:
             - -cvss_scores__uuid
             - -cvss_scores__vector
             - -cwe_id
-            - -description
             - -embargoed
             - -impact
-            - -is_major_incident
+            - -major_incident_start_dt
             - -major_incident_state
             - -nist_cvss_validation
             - -owner
@@ -2957,10 +3262,9 @@ paths:
             - -references__url
             - -references__uuid
             - -reported_dt
-            - -requires_summary
+            - -requires_cve_description
             - -source
             - -statement
-            - -summary
             - -team_id
             - -title
             - -unembargo_dt
@@ -2993,9 +3297,10 @@ paths:
             - affects__updated_dt
             - affects__uuid
             - bz_id
-            - component
+            - comment_zero
             - components
             - created_dt
+            - cve_description
             - cve_id
             - cvss_scores__comment
             - cvss_scores__created_dt
@@ -3005,10 +3310,9 @@ paths:
             - cvss_scores__uuid
             - cvss_scores__vector
             - cwe_id
-            - description
             - embargoed
             - impact
-            - is_major_incident
+            - major_incident_start_dt
             - major_incident_state
             - nist_cvss_validation
             - owner
@@ -3019,10 +3323,9 @@ paths:
             - references__url
             - references__uuid
             - reported_dt
-            - requires_summary
+            - requires_cve_description
             - source
             - statement
-            - summary
             - team_id
             - title
             - unembargo_dt
@@ -3036,6 +3339,10 @@ paths:
         name: owner
         schema:
           type: string
+      - in: query
+        name: owner__isempty
+        schema:
+          type: boolean
       - in: query
         name: references__created_dt
         schema:
@@ -3178,7 +3485,7 @@ paths:
           type: string
           format: date-time
       - in: query
-        name: requires_summary
+        name: requires_cve_description
         schema:
           type: string
           enum:
@@ -3289,9 +3596,9 @@ paths:
         schema:
           type: string
       - in: query
-        name: summary
+        name: statement__isempty
         schema:
-          type: string
+          type: boolean
       - in: query
         name: team_id
         schema:
@@ -3366,6 +3673,7 @@ paths:
           items:
             type: string
             enum:
+            - ''
             - DONE
             - NEW
             - PRE_SECONDARY_ASSESSMENT
@@ -3525,18 +3833,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       - name: limit
         required: false
         in: query
@@ -3625,6 +3921,12 @@ paths:
     post:
       operationId: osidb_api_v1_flaws_acknowledgments_create
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -3699,18 +4001,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       tags:
       - osidb
       security:
@@ -3738,6 +4028,12 @@ paths:
     put:
       operationId: osidb_api_v1_flaws_acknowledgments_update
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -3788,6 +4084,12 @@ paths:
       operationId: osidb_api_v1_flaws_acknowledgments_destroy
       description: Destroy the instance and proxy the delete to Bugzilla
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -3860,18 +4162,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       - name: limit
         required: false
         in: query
@@ -3925,6 +4215,12 @@ paths:
         comments are not guaranteed to keep their original UUIDs, especially if multiple
         comments are created simultaneously.
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4006,18 +4302,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       tags:
       - osidb
       security:
@@ -4219,6 +4503,12 @@ paths:
     post:
       operationId: osidb_api_v1_flaws_cvss_scores_create
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4320,6 +4610,12 @@ paths:
     put:
       operationId: osidb_api_v1_flaws_cvss_scores_update
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4370,6 +4666,12 @@ paths:
       operationId: osidb_api_v1_flaws_cvss_scores_destroy
       description: Destroy the instance and proxy the delete to Bugzilla
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4562,6 +4864,12 @@ paths:
     post:
       operationId: osidb_api_v1_flaws_package_versions_create
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4663,6 +4971,12 @@ paths:
     put:
       operationId: osidb_api_v1_flaws_package_versions_update
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4713,6 +5027,12 @@ paths:
       operationId: osidb_api_v1_flaws_package_versions_destroy
       description: Destroy the instance and proxy the delete to Bugzilla
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -4864,18 +5184,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       - name: limit
         required: false
         in: query
@@ -4972,6 +5280,12 @@ paths:
     post:
       operationId: osidb_api_v1_flaws_references_create
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -5046,18 +5360,6 @@ paths:
         description: 'Include only specified fields in the response. Multiple values
           may be separated by commas. Dot notation can be used to filter on related
           model fields. Example: `include_fields=field,related_model_field.field`'
-      - in: query
-        name: include_meta_attr
-        schema:
-          type: array
-          items:
-            type: string
-        description: 'Specify which keys from meta_attr field should be retrieved,
-          multiple values may be separated by commas. Dot notation can be used to
-          specify meta_attr keys on related models. Example: `include_meta_attr=key,related_model.key`Use
-          wildcards eg. `include_meta_attr=*,related_model.*` for retrieving all the
-          keys from meta_attr. Omit this parameter to not include meta_attr fields
-          at all. '
       tags:
       - osidb
       security:
@@ -5085,6 +5387,12 @@ paths:
     put:
       operationId: osidb_api_v1_flaws_references_update
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -5135,6 +5443,12 @@ paths:
       operationId: osidb_api_v1_flaws_references_destroy
       description: Destroy the instance and proxy the delete to Bugzilla
       parameters:
+      - in: header
+        name: Bugzilla-Api-Key
+        schema:
+          type: string
+        description: User generated api key for Bugzilla authentication.
+        required: true
       - in: path
         name: flaw_id
         schema:
@@ -5626,15 +5940,6 @@ paths:
         schema:
           type: boolean
       - in: query
-        name: affects__flaw__component
-        schema:
-          type: array
-          items:
-            type: string
-        description: Multiple values may be separated by commas.
-        explode: false
-        style: form
-      - in: query
         name: affects__flaw__components
         schema:
           type: array
@@ -5705,11 +6010,6 @@ paths:
           - IMPORTANT
           - LOW
           - MODERATE
-      - in: query
-        name: affects__flaw__is_major_incident
-        schema:
-          type: boolean
-        deprecated: true
       - in: query
         name: affects__flaw__reported_dt
         schema:
@@ -6069,14 +6369,12 @@ paths:
             - -affects__affectedness
             - -affects__created_dt
             - -affects__embargoed
-            - -affects__flaw__component
             - -affects__flaw__components
             - -affects__flaw__created_dt
             - -affects__flaw__cve_id
             - -affects__flaw__cwe_id
             - -affects__flaw__embargoed
             - -affects__flaw__impact
-            - -affects__flaw__is_major_incident
             - -affects__flaw__reported_dt
             - -affects__flaw__source
             - -affects__flaw__unembargo_dt
@@ -6100,14 +6398,12 @@ paths:
             - affects__affectedness
             - affects__created_dt
             - affects__embargoed
-            - affects__flaw__component
             - affects__flaw__components
             - affects__flaw__created_dt
             - affects__flaw__cve_id
             - affects__flaw__cwe_id
             - affects__flaw__embargoed
             - affects__flaw__impact
-            - affects__flaw__is_major_incident
             - affects__flaw__reported_dt
             - affects__flaw__source
             - affects__flaw__unembargo_dt
@@ -6760,7 +7056,7 @@ components:
       - trackers
       - updated_dt
       - uuid
-    AffectBulkPutResponse:
+    AffectBulkPostPutResponse:
       type: object
       properties:
         results:
@@ -6769,6 +7065,106 @@ components:
             $ref: '#/components/schemas/Affect'
       required:
       - results
+    AffectBulkPut:
+      type: object
+      description: Affect serializer
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        flaw:
+          type: string
+          format: uuid
+          nullable: true
+        affectedness:
+          oneOf:
+          - $ref: '#/components/schemas/AffectednessEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        resolution:
+          oneOf:
+          - $ref: '#/components/schemas/ResolutionEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        ps_module:
+          type: string
+          maxLength: 100
+        ps_product:
+          type: string
+          readOnly: true
+        ps_component:
+          type: string
+          maxLength: 255
+        impact:
+          oneOf:
+          - $ref: '#/components/schemas/ImpactEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        trackers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tracker'
+          readOnly: true
+        meta_attr:
+          type: object
+          properties:
+            affectedness:
+              type: string
+            component:
+              type: string
+            impact:
+              type: string
+            module_name:
+              type: string
+            module_stream:
+              type: string
+            ps_component:
+              type: string
+            ps_module:
+              type: string
+            ps_product:
+              type: string
+            resolution:
+              type: string
+          readOnly: true
+        delegated_resolution:
+          type: string
+          readOnly: true
+        cvss_scores:
+          type: array
+          items:
+            $ref: '#/components/schemas/AffectCVSS'
+          readOnly: true
+        embargoed:
+          type: boolean
+          description: The embargoed boolean attribute is technically read-only as
+            it just indirectly modifies the ACLs but is mandatory as it controls the
+            access to the resource.
+        alerts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alert'
+          readOnly: true
+        created_dt:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_dt:
+          type: string
+          format: date-time
+          description: The updated_dt timestamp attribute is mandatory on update as
+            it is used to detect mit-air collisions.
+      required:
+      - alerts
+      - created_dt
+      - cvss_scores
+      - delegated_resolution
+      - embargoed
+      - flaw
+      - meta_attr
+      - ps_component
+      - ps_module
+      - ps_product
+      - trackers
+      - updated_dt
+      - uuid
     AffectCVSS:
       type: object
       description: AffectCVSS serializer
@@ -7076,6 +7472,47 @@ components:
       - WARNING
       - ERROR
       type: string
+    Audit:
+      type: object
+      properties:
+        pgh_created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: When the event was created.
+        pgh_slug:
+          type: string
+          description: The unique identifier across all event tables.
+        pgh_obj_model:
+          type: string
+          description: The object model.
+          maxLength: 64
+        pgh_obj_id:
+          type: string
+          nullable: true
+          description: The primary key of the object.
+        pgh_label:
+          type: string
+          description: The event label.
+        pgh_context:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          description: The context associated with the event.
+        pgh_diff:
+          type: object
+          additionalProperties: {}
+          description: The diff between the previous event of the same label.
+        pgh_data:
+          type: string
+          readOnly: true
+      required:
+      - pgh_created_at
+      - pgh_data
+      - pgh_diff
+      - pgh_label
+      - pgh_obj_model
+      - pgh_slug
     BlankEnum:
       enum:
       - ''
@@ -7102,11 +7539,6 @@ components:
           maxLength: 100
         is_private:
           type: boolean
-        meta_attr:
-          type: object
-          additionalProperties:
-            type: string
-            nullable: true
         alerts:
           type: array
           items:
@@ -7223,9 +7655,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ImpactEnum'
           - $ref: '#/components/schemas/BlankEnum'
-        component:
-          type: string
-          deprecated: true
         components:
           type: array
           items:
@@ -7238,13 +7667,13 @@ components:
           items:
             type: string
           readOnly: true
-        description:
+        comment_zero:
           type: string
-        summary:
+        cve_description:
           type: string
-        requires_summary:
+        requires_cve_description:
           oneOf:
-          - $ref: '#/components/schemas/RequiresSummaryEnum'
+          - $ref: '#/components/schemas/RequiresCveDescriptionEnum'
           - $ref: '#/components/schemas/BlankEnum'
         statement:
           type: string
@@ -7265,13 +7694,14 @@ components:
           nullable: true
         mitigation:
           type: string
-        is_major_incident:
-          type: boolean
-          deprecated: true
         major_incident_state:
           oneOf:
           - $ref: '#/components/schemas/MajorIncidentStateEnum'
           - $ref: '#/components/schemas/BlankEnum'
+        major_incident_start_dt:
+          type: string
+          format: date-time
+          nullable: true
         nist_cvss_validation:
           oneOf:
           - $ref: '#/components/schemas/NistCvssValidationEnum'
@@ -7374,6 +7804,7 @@ components:
             state:
               type: string
               enum:
+              - ''
               - NEW
               - TRIAGE
               - PRE_SECONDARY_ASSESSMENT
@@ -7403,10 +7834,10 @@ components:
       - affects
       - alerts
       - classification
+      - comment_zero
       - comments
       - created_dt
       - cvss_scores
-      - description
       - embargoed
       - meta_attr
       - package_versions
@@ -7761,11 +8192,6 @@ components:
           maxLength: 100
         is_private:
           type: boolean
-        meta_attr:
-          type: object
-          additionalProperties:
-            type: string
-            nullable: true
         alerts:
           type: array
           items:
@@ -7907,9 +8333,6 @@ components:
           oneOf:
           - $ref: '#/components/schemas/ImpactEnum'
           - $ref: '#/components/schemas/BlankEnum'
-        component:
-          type: string
-          deprecated: true
         components:
           type: array
           items:
@@ -7922,13 +8345,13 @@ components:
           items:
             type: string
           readOnly: true
-        description:
+        comment_zero:
           type: string
-        summary:
+        cve_description:
           type: string
-        requires_summary:
+        requires_cve_description:
           oneOf:
-          - $ref: '#/components/schemas/RequiresSummaryEnum'
+          - $ref: '#/components/schemas/RequiresCveDescriptionEnum'
           - $ref: '#/components/schemas/BlankEnum'
         statement:
           type: string
@@ -7949,13 +8372,14 @@ components:
           nullable: true
         mitigation:
           type: string
-        is_major_incident:
-          type: boolean
-          deprecated: true
         major_incident_state:
           oneOf:
           - $ref: '#/components/schemas/MajorIncidentStateEnum'
           - $ref: '#/components/schemas/BlankEnum'
+        major_incident_start_dt:
+          type: string
+          format: date-time
+          nullable: true
         nist_cvss_validation:
           oneOf:
           - $ref: '#/components/schemas/NistCvssValidationEnum'
@@ -8053,6 +8477,7 @@ components:
             state:
               type: string
               enum:
+              - ''
               - NEW
               - TRIAGE
               - PRE_SECONDARY_ASSESSMENT
@@ -8082,10 +8507,10 @@ components:
       - affects
       - alerts
       - classification
+      - comment_zero
       - comments
       - created_dt
       - cvss_scores
-      - description
       - embargoed
       - meta_attr
       - package_versions
@@ -8406,6 +8831,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Alert'
+    PaginatedAuditList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Audit'
     PaginatedEPSSList:
       type: object
       properties:
@@ -8653,7 +9098,7 @@ components:
           type: string
       required:
       - reason
-    RequiresSummaryEnum:
+    RequiresCveDescriptionEnum:
       enum:
       - REQUESTED
       - APPROVED
@@ -8880,6 +9325,12 @@ components:
           format: date-time
           description: The updated_dt timestamp attribute is mandatory on update as
             it is used to detect mit-air collisions.
+        sync_to_bz:
+          type: boolean
+          writeOnly: true
+          description: Setting sync_to_bz to false disables flaw sync with Bugzilla
+            after this operation. Use only as part of bulk actions and trigger a flaw
+            bugzilla sync afterwards. Does nothing if BZ is disabled.
       required:
       - alerts
       - created_dt
@@ -8962,6 +9413,12 @@ components:
           format: date-time
           description: The updated_dt timestamp attribute is mandatory on update as
             it is used to detect mit-air collisions.
+        sync_to_bz:
+          type: boolean
+          writeOnly: true
+          description: Setting sync_to_bz to false disables flaw sync with Bugzilla
+            after this operation. Use only as part of bulk actions and trigger a flaw
+            bugzilla sync afterwards. Does nothing if BZ is disabled.
       required:
       - alerts
       - created_dt

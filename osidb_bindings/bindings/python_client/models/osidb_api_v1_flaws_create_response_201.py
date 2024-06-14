@@ -17,7 +17,7 @@ from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.package import Package
-from ..models.requires_summary_enum import RequiresSummaryEnum
+from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
 from ..models.source_642_enum import Source642Enum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -31,7 +31,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
     uuid: str
     title: str
     trackers: List[str]
-    description: str
+    comment_zero: str
     affects: List[Affect]
     comments: List[Comment]
     meta_attr: FlawMetaAttr
@@ -46,18 +46,19 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
     alerts: List[Alert]
     cve_id: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
-    component: Union[Unset, str] = UNSET
     components: Union[Unset, List[str]] = UNSET
-    summary: Union[Unset, str] = UNSET
-    requires_summary: Union[BlankEnum, RequiresSummaryEnum, Unset] = UNSET
+    cve_description: Union[Unset, str] = UNSET
+    requires_cve_description: Union[
+        BlankEnum, RequiresCveDescriptionEnum, Unset
+    ] = UNSET
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
     source: Union[BlankEnum, Source642Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
-    is_major_incident: Union[Unset, bool] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
+    major_incident_start_dt: Union[Unset, None, datetime.datetime] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
@@ -76,7 +77,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         if not isinstance(self.trackers, Unset):
             trackers = self.trackers
 
-        description = self.description
+        comment_zero = self.comment_zero
         affects: List[Dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
@@ -180,26 +181,29 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
-        component = self.component
         components: Union[Unset, List[str]] = UNSET
         if not isinstance(self.components, Unset):
             components = self.components
 
-        summary = self.summary
-        requires_summary: Union[Unset, str]
-        if isinstance(self.requires_summary, Unset):
-            requires_summary = UNSET
-        elif isinstance(self.requires_summary, RequiresSummaryEnum):
-            requires_summary = UNSET
-            if not isinstance(self.requires_summary, Unset):
+        cve_description = self.cve_description
+        requires_cve_description: Union[Unset, str]
+        if isinstance(self.requires_cve_description, Unset):
+            requires_cve_description = UNSET
+        elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
+            requires_cve_description = UNSET
+            if not isinstance(self.requires_cve_description, Unset):
 
-                requires_summary = RequiresSummaryEnum(self.requires_summary).value
+                requires_cve_description = RequiresCveDescriptionEnum(
+                    self.requires_cve_description
+                ).value
 
         else:
-            requires_summary = UNSET
-            if not isinstance(self.requires_summary, Unset):
+            requires_cve_description = UNSET
+            if not isinstance(self.requires_cve_description, Unset):
 
-                requires_summary = BlankEnum(self.requires_summary).value
+                requires_cve_description = BlankEnum(
+                    self.requires_cve_description
+                ).value
 
         statement = self.statement
         cwe_id = self.cwe_id
@@ -227,7 +231,6 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
 
         mitigation = self.mitigation
-        is_major_incident = self.is_major_incident
         major_incident_state: Union[Unset, str]
         if isinstance(self.major_incident_state, Unset):
             major_incident_state = UNSET
@@ -244,6 +247,14 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             if not isinstance(self.major_incident_state, Unset):
 
                 major_incident_state = BlankEnum(self.major_incident_state).value
+
+        major_incident_start_dt: Union[Unset, None, str] = UNSET
+        if not isinstance(self.major_incident_start_dt, Unset):
+            major_incident_start_dt = (
+                self.major_incident_start_dt.isoformat()
+                if self.major_incident_start_dt
+                else None
+            )
 
         nist_cvss_validation: Union[Unset, str]
         if isinstance(self.nist_cvss_validation, Unset):
@@ -282,8 +293,8 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             field_dict["title"] = title
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if not isinstance(description, Unset):
-            field_dict["description"] = description
+        if not isinstance(comment_zero, Unset):
+            field_dict["comment_zero"] = comment_zero
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
@@ -312,14 +323,12 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             field_dict["cve_id"] = cve_id
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
-        if not isinstance(component, Unset):
-            field_dict["component"] = component
         if not isinstance(components, Unset):
             field_dict["components"] = components
-        if not isinstance(summary, Unset):
-            field_dict["summary"] = summary
-        if not isinstance(requires_summary, Unset):
-            field_dict["requires_summary"] = requires_summary
+        if not isinstance(cve_description, Unset):
+            field_dict["cve_description"] = cve_description
+        if not isinstance(requires_cve_description, Unset):
+            field_dict["requires_cve_description"] = requires_cve_description
         if not isinstance(statement, Unset):
             field_dict["statement"] = statement
         if not isinstance(cwe_id, Unset):
@@ -332,10 +341,10 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             field_dict["reported_dt"] = reported_dt
         if not isinstance(mitigation, Unset):
             field_dict["mitigation"] = mitigation
-        if not isinstance(is_major_incident, Unset):
-            field_dict["is_major_incident"] = is_major_incident
         if not isinstance(major_incident_state, Unset):
             field_dict["major_incident_state"] = major_incident_state
+        if not isinstance(major_incident_start_dt, Unset):
+            field_dict["major_incident_start_dt"] = major_incident_start_dt
         if not isinstance(nist_cvss_validation, Unset):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
         if not isinstance(group_key, Unset):
@@ -366,7 +375,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
 
         trackers = cast(List[str], d.pop("trackers", UNSET))
 
-        description = d.pop("description", UNSET)
+        comment_zero = d.pop("comment_zero", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -536,44 +545,48 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
-        component = d.pop("component", UNSET)
-
         components = cast(List[str], d.pop("components", UNSET))
 
-        summary = d.pop("summary", UNSET)
+        cve_description = d.pop("cve_description", UNSET)
 
-        def _parse_requires_summary(
+        def _parse_requires_cve_description(
             data: object,
-        ) -> Union[BlankEnum, RequiresSummaryEnum, Unset]:
+        ) -> Union[BlankEnum, RequiresCveDescriptionEnum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                _requires_summary_type_0 = data
-                requires_summary_type_0: Union[Unset, RequiresSummaryEnum]
-                if isinstance(_requires_summary_type_0, Unset):
-                    requires_summary_type_0 = UNSET
+                _requires_cve_description_type_0 = data
+                requires_cve_description_type_0: Union[
+                    Unset, RequiresCveDescriptionEnum
+                ]
+                if isinstance(_requires_cve_description_type_0, Unset):
+                    requires_cve_description_type_0 = UNSET
                 else:
-                    requires_summary_type_0 = RequiresSummaryEnum(
-                        _requires_summary_type_0
+                    requires_cve_description_type_0 = RequiresCveDescriptionEnum(
+                        _requires_cve_description_type_0
                     )
 
-                return requires_summary_type_0
+                return requires_cve_description_type_0
             except:  # noqa: E722
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            _requires_summary_type_1 = data
-            requires_summary_type_1: Union[Unset, BlankEnum]
-            if isinstance(_requires_summary_type_1, Unset):
-                requires_summary_type_1 = UNSET
+            _requires_cve_description_type_1 = data
+            requires_cve_description_type_1: Union[Unset, BlankEnum]
+            if isinstance(_requires_cve_description_type_1, Unset):
+                requires_cve_description_type_1 = UNSET
             else:
-                requires_summary_type_1 = BlankEnum(_requires_summary_type_1)
+                requires_cve_description_type_1 = BlankEnum(
+                    _requires_cve_description_type_1
+                )
 
-            return requires_summary_type_1
+            return requires_cve_description_type_1
 
-        requires_summary = _parse_requires_summary(d.pop("requires_summary", UNSET))
+        requires_cve_description = _parse_requires_cve_description(
+            d.pop("requires_cve_description", UNSET)
+        )
 
         statement = d.pop("statement", UNSET)
 
@@ -628,8 +641,6 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
 
         mitigation = d.pop("mitigation", UNSET)
 
-        is_major_incident = d.pop("is_major_incident", UNSET)
-
         def _parse_major_incident_state(
             data: object,
         ) -> Union[BlankEnum, MajorIncidentStateEnum, Unset]:
@@ -664,6 +675,15 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         major_incident_state = _parse_major_incident_state(
             d.pop("major_incident_state", UNSET)
         )
+
+        _major_incident_start_dt = d.pop("major_incident_start_dt", UNSET)
+        major_incident_start_dt: Union[Unset, None, datetime.datetime]
+        if _major_incident_start_dt is None:
+            major_incident_start_dt = None
+        elif isinstance(_major_incident_start_dt, Unset):
+            major_incident_start_dt = UNSET
+        else:
+            major_incident_start_dt = isoparse(_major_incident_start_dt)
 
         def _parse_nist_cvss_validation(
             data: object,
@@ -725,7 +745,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             uuid=uuid,
             title=title,
             trackers=trackers,
-            description=description,
+            comment_zero=comment_zero,
             affects=affects,
             comments=comments,
             meta_attr=meta_attr,
@@ -740,18 +760,17 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             alerts=alerts,
             cve_id=cve_id,
             impact=impact,
-            component=component,
             components=components,
-            summary=summary,
-            requires_summary=requires_summary,
+            cve_description=cve_description,
+            requires_cve_description=requires_cve_description,
             statement=statement,
             cwe_id=cwe_id,
             unembargo_dt=unembargo_dt,
             source=source,
             reported_dt=reported_dt,
             mitigation=mitigation,
-            is_major_incident=is_major_incident,
             major_incident_state=major_incident_state,
+            major_incident_start_dt=major_incident_start_dt,
             nist_cvss_validation=nist_cvss_validation,
             group_key=group_key,
             owner=owner,
@@ -772,7 +791,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             "uuid": str,
             "title": str,
             "trackers": List[str],
-            "description": str,
+            "comment_zero": str,
             "affects": List[Affect],
             "comments": List[Comment],
             "meta_attr": FlawMetaAttr,
@@ -787,18 +806,17 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             "alerts": List[Alert],
             "cve_id": str,
             "impact": Union[BlankEnum, ImpactEnum],
-            "component": str,
             "components": List[str],
-            "summary": str,
-            "requires_summary": Union[BlankEnum, RequiresSummaryEnum],
+            "cve_description": str,
+            "requires_cve_description": Union[BlankEnum, RequiresCveDescriptionEnum],
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
             "source": Union[BlankEnum, Source642Enum],
             "reported_dt": datetime.datetime,
             "mitigation": str,
-            "is_major_incident": bool,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
+            "major_incident_start_dt": datetime.datetime,
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
             "group_key": str,
             "owner": str,

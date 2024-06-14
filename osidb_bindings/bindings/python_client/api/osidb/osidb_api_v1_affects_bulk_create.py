@@ -3,9 +3,9 @@ from typing import Any, Dict, List, Optional
 import requests
 
 from ...client import AuthenticatedClient
-from ...models.affect_bulk_put import AffectBulkPut
-from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
-    OsidbApiV1AffectsBulkUpdateResponse200,
+from ...models.affect_post import AffectPost
+from ...models.osidb_api_v1_affects_bulk_create_response_200 import (
+    OsidbApiV1AffectsBulkCreateResponse200,
 )
 from ...types import UNSET, Response, Unset
 
@@ -15,8 +15,8 @@ QUERY_PARAMS = {}
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    multipart_data: List[AffectPost],
+    json_body: List[AffectPost],
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/affects/bulk".format(
         client.base_url,
@@ -53,14 +53,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
+) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1AffectsBulkUpdateResponse200
+        response_200: OsidbApiV1AffectsBulkCreateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1AffectsBulkUpdateResponse200.from_dict(
+            response_200 = OsidbApiV1AffectsBulkCreateResponse200.from_dict(
                 _response_200
             )
 
@@ -70,7 +70,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+) -> Response[OsidbApiV1AffectsBulkCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -82,16 +82,16 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    multipart_data: List[AffectPost],
+    json_body: List[AffectPost],
+) -> Response[OsidbApiV1AffectsBulkCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         multipart_data=multipart_data,
         json_body=json_body,
     )
 
-    response = requests.put(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -105,10 +105,10 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    multipart_data: List[AffectPost],
+    json_body: List[AffectPost],
+) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
+    """Bulk create endpoint. Expects a list of dict Affect objects."""
 
     return sync_detailed(
         client=client,
@@ -120,16 +120,16 @@ def sync(
 async def async_detailed(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    multipart_data: List[AffectPost],
+    json_body: List[AffectPost],
+) -> Response[OsidbApiV1AffectsBulkCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         multipart_data=multipart_data,
         json_body=json_body,
     )
 
-    async with client.get_async_session().put(
+    async with client.get_async_session().post(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -143,10 +143,10 @@ async def async_detailed(
 async def async_(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    multipart_data: List[AffectPost],
+    json_body: List[AffectPost],
+) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
+    """Bulk create endpoint. Expects a list of dict Affect objects."""
 
     return (
         await async_detailed(

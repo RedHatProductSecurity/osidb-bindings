@@ -6,7 +6,6 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.alert import Alert
-from ..models.flaw_comment_post_meta_attr import FlawCommentPostMetaAttr
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawCommentPost")
@@ -23,7 +22,6 @@ class FlawCommentPost(OSIDBModel):
     embargoed: bool
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
-    meta_attr: Union[Unset, FlawCommentPostMetaAttr] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -46,9 +44,6 @@ class FlawCommentPost(OSIDBModel):
         embargoed = self.embargoed
         creator = self.creator
         is_private = self.is_private
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -66,8 +61,6 @@ class FlawCommentPost(OSIDBModel):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
             field_dict["is_private"] = is_private
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
 
         return field_dict
 
@@ -104,9 +97,6 @@ class FlawCommentPost(OSIDBModel):
             if self.is_private is UNSET
             else (None, str(self.is_private), "text/plain")
         )
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -129,8 +119,6 @@ class FlawCommentPost(OSIDBModel):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
             field_dict["is_private"] = is_private
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
 
         return field_dict
 
@@ -169,13 +157,6 @@ class FlawCommentPost(OSIDBModel):
 
         is_private = d.pop("is_private", UNSET)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, FlawCommentPostMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = FlawCommentPostMetaAttr.from_dict(_meta_attr)
-
         flaw_comment_post = cls(
             text=text,
             uuid=uuid,
@@ -184,7 +165,6 @@ class FlawCommentPost(OSIDBModel):
             embargoed=embargoed,
             creator=creator,
             is_private=is_private,
-            meta_attr=meta_attr,
         )
 
         flaw_comment_post.additional_properties = d
@@ -200,7 +180,6 @@ class FlawCommentPost(OSIDBModel):
             "embargoed": bool,
             "creator": str,
             "is_private": bool,
-            "meta_attr": FlawCommentPostMetaAttr,
         }
 
     @property

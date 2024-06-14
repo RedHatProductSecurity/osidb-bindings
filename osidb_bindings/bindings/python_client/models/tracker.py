@@ -31,6 +31,7 @@ class Tracker(OSIDBModel):
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
+    sync_to_bz: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,6 +82,7 @@ class Tracker(OSIDBModel):
             affects = self.affects
 
         ps_update_stream = self.ps_update_stream
+        sync_to_bz = self.sync_to_bz
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -110,6 +112,8 @@ class Tracker(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(sync_to_bz, Unset):
+            field_dict["sync_to_bz"] = sync_to_bz
 
         return field_dict
 
@@ -184,6 +188,11 @@ class Tracker(OSIDBModel):
             if self.ps_update_stream is UNSET
             else (None, str(self.ps_update_stream), "text/plain")
         )
+        sync_to_bz = (
+            self.sync_to_bz
+            if self.sync_to_bz is UNSET
+            else (None, str(self.sync_to_bz), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -218,6 +227,8 @@ class Tracker(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(sync_to_bz, Unset):
+            field_dict["sync_to_bz"] = sync_to_bz
 
         return field_dict
 
@@ -296,6 +307,8 @@ class Tracker(OSIDBModel):
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
+        sync_to_bz = d.pop("sync_to_bz", UNSET)
+
         tracker = cls(
             errata=errata,
             external_system_id=external_system_id,
@@ -310,6 +323,7 @@ class Tracker(OSIDBModel):
             updated_dt=updated_dt,
             affects=affects,
             ps_update_stream=ps_update_stream,
+            sync_to_bz=sync_to_bz,
         )
 
         tracker.additional_properties = d
@@ -331,6 +345,7 @@ class Tracker(OSIDBModel):
             "updated_dt": datetime.datetime,
             "affects": List[str],
             "ps_update_stream": str,
+            "sync_to_bz": bool,
         }
 
     @property
