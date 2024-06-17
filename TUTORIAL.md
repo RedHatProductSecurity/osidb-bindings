@@ -210,7 +210,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     ```
     For the rest of the examples refer to the [retrieve_list](#retrieve_list)
 
-#### components.count
+* #### ```count```
 
 Retrieve the the total count number of entities which would be returned by the same `retrieve_list` call. In terms of the input arguments this operation behaves the same as `retrieve_list`.
 
@@ -271,6 +271,10 @@ Retrieve the the total count number of entities which would be returned by the s
     ```python
     delete_flaw_response = session.flaws.delete(id="CVE-1111-2222")
     ```
+
+* #### ```file```
+    Special operation for Trackers for using **POST** `/trackers/api/v1/file` functionality
+
 
 ### Response
 
