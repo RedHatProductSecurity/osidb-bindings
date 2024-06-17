@@ -22,7 +22,6 @@ QUERY_PARAMS = {
     "exclude_fields": List[str],
     "from_upstream": bool,
     "include_fields": List[str],
-    "include_meta_attr": List[str],
     "limit": int,
     "name": str,
     "offset": int,
@@ -54,7 +53,6 @@ def _get_kwargs(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     from_upstream: Union[Unset, None, bool] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -125,13 +123,6 @@ def _get_kwargs(
         else:
             json_include_fields = include_fields
 
-    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(include_meta_attr, Unset):
-        if include_meta_attr is None:
-            json_include_meta_attr = None
-        else:
-            json_include_meta_attr = include_meta_attr
-
     json_updated_dt: Union[Unset, None, str] = UNSET
     if not isinstance(updated_dt, Unset):
         json_updated_dt = updated_dt.isoformat() if updated_dt else None
@@ -181,7 +172,6 @@ def _get_kwargs(
         "exclude_fields": json_exclude_fields,
         "from_upstream": from_upstream,
         "include_fields": json_include_fields,
-        "include_meta_attr": json_include_meta_attr,
         "limit": limit,
         "name": name,
         "offset": offset,
@@ -248,7 +238,6 @@ def sync_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     from_upstream: Union[Unset, None, bool] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -277,7 +266,6 @@ def sync_detailed(
         exclude_fields=exclude_fields,
         from_upstream=from_upstream,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         name=name,
         offset=offset,
@@ -319,7 +307,6 @@ def sync(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     from_upstream: Union[Unset, None, bool] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -350,7 +337,6 @@ def sync(
         exclude_fields=exclude_fields,
         from_upstream=from_upstream,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         name=name,
         offset=offset,
@@ -382,7 +368,6 @@ async def async_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     from_upstream: Union[Unset, None, bool] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -411,7 +396,6 @@ async def async_detailed(
         exclude_fields=exclude_fields,
         from_upstream=from_upstream,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         name=name,
         offset=offset,
@@ -453,7 +437,6 @@ async def async_(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     from_upstream: Union[Unset, None, bool] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     name: Union[Unset, None, str] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
@@ -485,7 +468,6 @@ async def async_(
             exclude_fields=exclude_fields,
             from_upstream=from_upstream,
             include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
             limit=limit,
             name=name,
             offset=offset,

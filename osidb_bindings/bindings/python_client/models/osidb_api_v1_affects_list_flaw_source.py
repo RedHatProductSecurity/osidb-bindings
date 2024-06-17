@@ -63,6 +63,7 @@ class OsidbApiV1AffectsListFlawSource(str, Enum):
     ORACLE = "ORACLE"
     OSS = "OSS"
     OSSSECURITY = "OSSSECURITY"
+    OSV = "OSV"
     PHP = "PHP"
     PIDGIN = "PIDGIN"
     POSTGRESQL = "POSTGRESQL"

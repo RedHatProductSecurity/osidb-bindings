@@ -4,8 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 from dateutil.parser import isoparse
 
+from ..models.alert import Alert
 from ..models.erratum import Erratum
-from ..models.tracker_alerts import TrackerAlerts
 from ..models.tracker_meta_attr import TrackerMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
@@ -21,15 +21,16 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     external_system_id: str
     meta_attr: TrackerMetaAttr
     status: str
+    resolution: str
     type: TrackerType
     uuid: str
     embargoed: bool
-    alerts: TrackerAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
     ps_update_stream: Union[Unset, str] = UNSET
-    resolution: Union[Unset, str] = UNSET
+    sync_to_bz: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -53,6 +54,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             meta_attr = self.meta_attr.to_dict()
 
         status = self.status
+        resolution = self.resolution
         type: str = UNSET
         if not isinstance(self.type, Unset):
 
@@ -60,9 +62,15 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         uuid = self.uuid
         embargoed = self.embargoed
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -77,7 +85,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             affects = self.affects
 
         ps_update_stream = self.ps_update_stream
-        resolution = self.resolution
+        sync_to_bz = self.sync_to_bz
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -96,6 +104,8 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             field_dict["meta_attr"] = meta_attr
         if not isinstance(status, Unset):
             field_dict["status"] = status
+        if not isinstance(resolution, Unset):
+            field_dict["resolution"] = resolution
         if not isinstance(type, Unset):
             field_dict["type"] = type
         if not isinstance(uuid, Unset):
@@ -112,8 +122,8 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
+        if not isinstance(sync_to_bz, Unset):
+            field_dict["sync_to_bz"] = sync_to_bz
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -154,6 +164,8 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         status = d.pop("status", UNSET)
 
+        resolution = d.pop("resolution", UNSET)
+
         _type = d.pop("type", UNSET)
         type: TrackerType
         if isinstance(_type, Unset):
@@ -165,12 +177,20 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: TrackerAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = TrackerAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -190,7 +210,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
-        resolution = d.pop("resolution", UNSET)
+        sync_to_bz = d.pop("sync_to_bz", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -210,6 +230,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             external_system_id=external_system_id,
             meta_attr=meta_attr,
             status=status,
+            resolution=resolution,
             type=type,
             uuid=uuid,
             embargoed=embargoed,
@@ -218,7 +239,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             updated_dt=updated_dt,
             affects=affects,
             ps_update_stream=ps_update_stream,
-            resolution=resolution,
+            sync_to_bz=sync_to_bz,
             dt=dt,
             env=env,
             revision=revision,
@@ -235,15 +256,16 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
             "external_system_id": str,
             "meta_attr": TrackerMetaAttr,
             "status": str,
+            "resolution": str,
             "type": TrackerType,
             "uuid": str,
             "embargoed": bool,
-            "alerts": TrackerAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affects": List[str],
             "ps_update_stream": str,
-            "resolution": str,
+            "sync_to_bz": bool,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

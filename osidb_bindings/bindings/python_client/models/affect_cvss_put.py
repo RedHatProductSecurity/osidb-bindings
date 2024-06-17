@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.affect_cvss_put_alerts import AffectCVSSPutAlerts
+from ..models.alert import Alert
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -23,10 +23,10 @@ class AffectCVSSPut(OSIDBModel):
     uuid: str
     vector: str
     embargoed: bool
-    alerts: AffectCVSSPutAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    comment: Union[Unset, str] = UNSET
+    comment: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -44,9 +44,15 @@ class AffectCVSSPut(OSIDBModel):
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -110,7 +116,14 @@ class AffectCVSSPut(OSIDBModel):
         )
         alerts: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+            _temp_alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                _temp_alerts.append(alerts_item)
+            alerts = (None, json.dumps(_temp_alerts), "application/json")
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -181,12 +194,20 @@ class AffectCVSSPut(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: AffectCVSSPutAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = AffectCVSSPutAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -229,7 +250,7 @@ class AffectCVSSPut(OSIDBModel):
             "uuid": str,
             "vector": str,
             "embargoed": bool,
-            "alerts": AffectCVSSPutAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "comment": str,

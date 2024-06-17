@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
+from ..models.affect import Affect
 from ..models.module_component import ModuleComponent
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -13,7 +14,7 @@ class TrackerSuggestion(OSIDBModel):
     """ """
 
     modules_components: List[ModuleComponent]
-    not_applicable: str
+    not_applicable: List[Affect]
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -27,7 +28,15 @@ class TrackerSuggestion(OSIDBModel):
 
                 modules_components.append(modules_components_item)
 
-        not_applicable = self.not_applicable
+        not_applicable: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.not_applicable, Unset):
+            not_applicable = []
+            for not_applicable_item_data in self.not_applicable:
+                not_applicable_item: Dict[str, Any] = UNSET
+                if not isinstance(not_applicable_item_data, Unset):
+                    not_applicable_item = not_applicable_item_data.to_dict()
+
+                not_applicable.append(not_applicable_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -58,7 +67,20 @@ class TrackerSuggestion(OSIDBModel):
 
                 modules_components.append(modules_components_item)
 
-        not_applicable = d.pop("not_applicable", UNSET)
+        not_applicable = []
+        _not_applicable = d.pop("not_applicable", UNSET)
+        if _not_applicable is UNSET:
+            not_applicable = UNSET
+        else:
+            for not_applicable_item_data in _not_applicable or []:
+                _not_applicable_item = not_applicable_item_data
+                not_applicable_item: Affect
+                if isinstance(_not_applicable_item, Unset):
+                    not_applicable_item = UNSET
+                else:
+                    not_applicable_item = Affect.from_dict(_not_applicable_item)
+
+                not_applicable.append(not_applicable_item)
 
         tracker_suggestion = cls(
             modules_components=modules_components,
@@ -72,7 +94,7 @@ class TrackerSuggestion(OSIDBModel):
     def get_fields():
         return {
             "modules_components": List[ModuleComponent],
-            "not_applicable": str,
+            "not_applicable": List[Affect],
         }
 
     @property

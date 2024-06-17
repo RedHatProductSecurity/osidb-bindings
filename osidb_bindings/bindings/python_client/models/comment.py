@@ -4,9 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.comment_alerts import CommentAlerts
-from ..models.comment_meta_attr import CommentMetaAttr
-from ..models.flaw_comment_type import FlawCommentType
+from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Comment")
@@ -17,20 +15,28 @@ class Comment(OSIDBModel):
     """FlawComment serializer for use by FlawSerializer"""
 
     uuid: str
-    alerts: CommentAlerts
+    text: str
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    type: Union[Unset, FlawCommentType] = UNSET
     external_system_id: Union[Unset, str] = UNSET
     order: Union[Unset, None, int] = UNSET
-    meta_attr: Union[Unset, CommentMetaAttr] = UNSET
+    creator: Union[Unset, str] = UNSET
+    is_private: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
-        alerts: Dict[str, Any] = UNSET
+        text = self.text
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -40,35 +46,31 @@ class Comment(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawCommentType(self.type).value
-
         external_system_id = self.external_system_id
         order = self.order
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
+        creator = self.creator
+        is_private = self.is_private
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
+        if not isinstance(text, Unset):
+            field_dict["text"] = text
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
         if not isinstance(order, Unset):
             field_dict["order"] = order
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
+        if not isinstance(creator, Unset):
+            field_dict["creator"] = creator
+        if not isinstance(is_private, Unset):
+            field_dict["is_private"] = is_private
 
         return field_dict
 
@@ -77,12 +79,22 @@ class Comment(OSIDBModel):
         d = src_dict.copy()
         uuid = d.pop("uuid", UNSET)
 
+        text = d.pop("text", UNSET)
+
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: CommentAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = CommentAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -98,33 +110,24 @@ class Comment(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, FlawCommentType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawCommentType(_type)
-
         external_system_id = d.pop("external_system_id", UNSET)
 
         order = d.pop("order", UNSET)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, CommentMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = CommentMetaAttr.from_dict(_meta_attr)
+        creator = d.pop("creator", UNSET)
+
+        is_private = d.pop("is_private", UNSET)
 
         comment = cls(
             uuid=uuid,
+            text=text,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            type=type,
             external_system_id=external_system_id,
             order=order,
-            meta_attr=meta_attr,
+            creator=creator,
+            is_private=is_private,
         )
 
         comment.additional_properties = d
@@ -134,13 +137,14 @@ class Comment(OSIDBModel):
     def get_fields():
         return {
             "uuid": str,
-            "alerts": CommentAlerts,
+            "text": str,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
-            "type": FlawCommentType,
             "external_system_id": str,
             "order": int,
-            "meta_attr": CommentMetaAttr,
+            "creator": str,
+            "is_private": bool,
         }
 
     @property

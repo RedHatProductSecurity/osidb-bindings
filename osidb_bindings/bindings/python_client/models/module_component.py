@@ -2,6 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
+from ..models.affect import Affect
 from ..models.ps_stream_selection import PsStreamSelection
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -16,7 +17,7 @@ class ModuleComponent(OSIDBModel):
     ps_component: str
     streams: List[PsStreamSelection]
     selected: bool
-    affect: str
+    affect: Affect
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -33,7 +34,9 @@ class ModuleComponent(OSIDBModel):
                 streams.append(streams_item)
 
         selected = self.selected
-        affect = self.affect
+        affect: Dict[str, Any] = UNSET
+        if not isinstance(self.affect, Unset):
+            affect = self.affect.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -74,7 +77,12 @@ class ModuleComponent(OSIDBModel):
 
         selected = d.pop("selected", UNSET)
 
-        affect = d.pop("affect", UNSET)
+        _affect = d.pop("affect", UNSET)
+        affect: Affect
+        if isinstance(_affect, Unset):
+            affect = UNSET
+        else:
+            affect = Affect.from_dict(_affect)
 
         module_component = cls(
             ps_module=ps_module,
@@ -94,7 +102,7 @@ class ModuleComponent(OSIDBModel):
             "ps_component": str,
             "streams": List[PsStreamSelection],
             "selected": bool,
-            "affect": str,
+            "affect": Affect,
         }
 
     @property

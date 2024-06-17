@@ -4,8 +4,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.alert import Alert
 from ..models.cvss_version_enum import CvssVersionEnum
-from ..models.flaw_cvss_alerts import FlawCVSSAlerts
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -22,11 +22,11 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
     uuid: str
     vector: str
     embargoed: bool
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    alerts: FlawCVSSAlerts
-    comment: Union[Unset, str] = UNSET
     flaw: Union[Unset, str] = UNSET
+    comment: Union[Unset, None, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -48,6 +48,16 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
+        alerts: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -56,12 +66,8 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        alerts: Dict[str, Any] = UNSET
-        if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
-
-        comment = self.comment
         flaw = self.flaw
+        comment = self.comment
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -84,16 +90,16 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(alerts, Unset):
-            field_dict["alerts"] = alerts
-        if not isinstance(comment, Unset):
-            field_dict["comment"] = comment
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
+        if not isinstance(comment, Unset):
+            field_dict["comment"] = comment
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -130,6 +136,21 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
+        _alerts = d.pop("alerts", UNSET)
+        if _alerts is UNSET:
+            alerts = UNSET
+        else:
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -144,16 +165,9 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        _alerts = d.pop("alerts", UNSET)
-        alerts: FlawCVSSAlerts
-        if isinstance(_alerts, Unset):
-            alerts = UNSET
-        else:
-            alerts = FlawCVSSAlerts.from_dict(_alerts)
+        flaw = d.pop("flaw", UNSET)
 
         comment = d.pop("comment", UNSET)
-
-        flaw = d.pop("flaw", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -175,11 +189,11 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
+            alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            alerts=alerts,
-            comment=comment,
             flaw=flaw,
+            comment=comment,
             dt=dt,
             env=env,
             revision=revision,
@@ -198,11 +212,11 @@ class OsidbApiV1FlawsCvssScoresCreateResponse201(OSIDBModel):
             "uuid": str,
             "vector": str,
             "embargoed": bool,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
-            "alerts": FlawCVSSAlerts,
-            "comment": str,
             "flaw": str,
+            "comment": str,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

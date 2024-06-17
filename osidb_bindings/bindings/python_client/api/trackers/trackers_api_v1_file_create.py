@@ -1,10 +1,12 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import requests
 
 from ...client import AuthenticatedClient
 from ...models.flaw_uuid_list import FlawUUIDList
-from ...models.tracker_suggestion import TrackerSuggestion
+from ...models.trackers_api_v1_file_create_response_200 import (
+    TrackersApiV1FileCreateResponse200,
+)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
@@ -41,22 +43,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: requests.Response
-) -> Optional[List[TrackerSuggestion]]:
+) -> Optional[TrackersApiV1FileCreateResponse200]:
     if response.status_code == 200:
-        response_200 = []
         _response_200 = response.json()
-        if _response_200 is UNSET:
+        response_200: TrackersApiV1FileCreateResponse200
+        if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            for response_200_item_data in _response_200 or []:
-                _response_200_item = response_200_item_data
-                response_200_item: TrackerSuggestion
-                if isinstance(_response_200_item, Unset):
-                    response_200_item = UNSET
-                else:
-                    response_200_item = TrackerSuggestion.from_dict(_response_200_item)
-
-                response_200.append(response_200_item)
+            response_200 = TrackersApiV1FileCreateResponse200.from_dict(_response_200)
 
         return response_200
     return None
@@ -64,7 +58,7 @@ def _parse_response(
 
 def _build_response(
     *, response: requests.Response
-) -> Response[List[TrackerSuggestion]]:
+) -> Response[TrackersApiV1FileCreateResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -79,7 +73,7 @@ def sync_detailed(
     form_data: FlawUUIDList,
     multipart_data: FlawUUIDList,
     json_body: FlawUUIDList,
-) -> Response[List[TrackerSuggestion]]:
+) -> Response[TrackersApiV1FileCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -104,7 +98,7 @@ def sync(
     form_data: FlawUUIDList,
     multipart_data: FlawUUIDList,
     json_body: FlawUUIDList,
-) -> Optional[List[TrackerSuggestion]]:
+) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file."""
 
     return sync_detailed(
@@ -121,7 +115,7 @@ async def async_detailed(
     form_data: FlawUUIDList,
     multipart_data: FlawUUIDList,
     json_body: FlawUUIDList,
-) -> Response[List[TrackerSuggestion]]:
+) -> Response[TrackersApiV1FileCreateResponse200]:
     kwargs = _get_kwargs(
         client=client,
         form_data=form_data,
@@ -146,7 +140,7 @@ async def async_(
     form_data: FlawUUIDList,
     multipart_data: FlawUUIDList,
     json_body: FlawUUIDList,
-) -> Optional[List[TrackerSuggestion]]:
+) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file."""
 
     return (
