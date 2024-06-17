@@ -24,7 +24,6 @@ QUERY_PARAMS = {
     "description": str,
     "exclude_fields": List[str],
     "include_fields": List[str],
-    "include_meta_attr": List[str],
     "limit": int,
     "offset": int,
     "type": OsidbApiV1FlawsReferencesListType,
@@ -56,7 +55,6 @@ def _get_kwargs(
     description: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsReferencesListType] = UNSET,
@@ -128,13 +126,6 @@ def _get_kwargs(
         else:
             json_include_fields = include_fields
 
-    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
-    if not isinstance(include_meta_attr, Unset):
-        if include_meta_attr is None:
-            json_include_meta_attr = None
-        else:
-            json_include_meta_attr = include_meta_attr
-
     json_type: Union[Unset, None, str] = UNSET
     if not isinstance(type, Unset):
 
@@ -188,7 +179,6 @@ def _get_kwargs(
         "description": description,
         "exclude_fields": json_exclude_fields,
         "include_fields": json_include_fields,
-        "include_meta_attr": json_include_meta_attr,
         "limit": limit,
         "offset": offset,
         "type": json_type,
@@ -255,7 +245,6 @@ def sync_detailed(
     description: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsReferencesListType] = UNSET,
@@ -284,7 +273,6 @@ def sync_detailed(
         description=description,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         type=type,
@@ -326,7 +314,6 @@ def sync(
     description: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsReferencesListType] = UNSET,
@@ -357,7 +344,6 @@ def sync(
         description=description,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         type=type,
@@ -389,7 +375,6 @@ async def async_detailed(
     description: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsReferencesListType] = UNSET,
@@ -418,7 +403,6 @@ async def async_detailed(
         description=description,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         type=type,
@@ -460,7 +444,6 @@ async def async_(
     description: Union[Unset, None, str] = UNSET,
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
     limit: Union[Unset, None, int] = UNSET,
     offset: Union[Unset, None, int] = UNSET,
     type: Union[Unset, None, OsidbApiV1FlawsReferencesListType] = UNSET,
@@ -492,7 +475,6 @@ async def async_(
             description=description,
             exclude_fields=exclude_fields,
             include_fields=include_fields,
-            include_meta_attr=include_meta_attr,
             limit=limit,
             offset=offset,
             type=type,

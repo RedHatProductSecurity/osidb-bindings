@@ -13,8 +13,6 @@ class AffectPostMetaAttr(OSIDBModel):
 
     affectedness: Union[Unset, str] = UNSET
     component: Union[Unset, str] = UNSET
-    cvss2: Union[Unset, str] = UNSET
-    cvss3: Union[Unset, str] = UNSET
     impact: Union[Unset, str] = UNSET
     module_name: Union[Unset, str] = UNSET
     module_stream: Union[Unset, str] = UNSET
@@ -27,8 +25,6 @@ class AffectPostMetaAttr(OSIDBModel):
     def to_dict(self) -> Dict[str, Any]:
         affectedness = self.affectedness
         component = self.component
-        cvss2 = self.cvss2
-        cvss3 = self.cvss3
         impact = self.impact
         module_name = self.module_name
         module_stream = self.module_stream
@@ -43,10 +39,6 @@ class AffectPostMetaAttr(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(component, Unset):
             field_dict["component"] = component
-        if not isinstance(cvss2, Unset):
-            field_dict["cvss2"] = cvss2
-        if not isinstance(cvss3, Unset):
-            field_dict["cvss3"] = cvss3
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
         if not isinstance(module_name, Unset):
@@ -71,10 +63,6 @@ class AffectPostMetaAttr(OSIDBModel):
 
         component = d.pop("component", UNSET)
 
-        cvss2 = d.pop("cvss2", UNSET)
-
-        cvss3 = d.pop("cvss3", UNSET)
-
         impact = d.pop("impact", UNSET)
 
         module_name = d.pop("module_name", UNSET)
@@ -92,8 +80,6 @@ class AffectPostMetaAttr(OSIDBModel):
         affect_post_meta_attr = cls(
             affectedness=affectedness,
             component=component,
-            cvss2=cvss2,
-            cvss3=cvss3,
             impact=impact,
             module_name=module_name,
             module_stream=module_stream,
@@ -111,8 +97,6 @@ class AffectPostMetaAttr(OSIDBModel):
         return {
             "affectedness": str,
             "component": str,
-            "cvss2": str,
-            "cvss3": str,
             "impact": str,
             "module_name": str,
             "module_stream": str,

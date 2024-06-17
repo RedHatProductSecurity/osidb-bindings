@@ -5,8 +5,8 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
+from ..models.alert import Alert
 from ..models.cvss_version_enum import CvssVersionEnum
-from ..models.flaw_cvss_post_alerts import FlawCVSSPostAlerts
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -23,9 +23,9 @@ class FlawCVSSPost(OSIDBModel):
     uuid: str
     vector: str
     embargoed: bool
+    alerts: List[Alert]
     created_dt: datetime.datetime
-    alerts: FlawCVSSPostAlerts
-    comment: Union[Unset, str] = UNSET
+    comment: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -43,13 +43,19 @@ class FlawCVSSPost(OSIDBModel):
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
+        alerts: List[Dict[str, Any]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
-
-        alerts: Dict[str, Any] = UNSET
-        if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
 
         comment = self.comment
 
@@ -67,10 +73,10 @@ class FlawCVSSPost(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
+        if not isinstance(created_dt, Unset):
+            field_dict["created_dt"] = created_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
 
@@ -101,13 +107,20 @@ class FlawCVSSPost(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
+        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            _temp_alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                _temp_alerts.append(alerts_item)
+            alerts = (None, json.dumps(_temp_alerts), "application/json")
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
-
-        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.alerts, Unset):
-            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
 
         comment = (
             self.comment
@@ -134,10 +147,10 @@ class FlawCVSSPost(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
+        if not isinstance(created_dt, Unset):
+            field_dict["created_dt"] = created_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
 
@@ -168,19 +181,27 @@ class FlawCVSSPost(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
+        _alerts = d.pop("alerts", UNSET)
+        if _alerts is UNSET:
+            alerts = UNSET
+        else:
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
             created_dt = UNSET
         else:
             created_dt = isoparse(_created_dt)
-
-        _alerts = d.pop("alerts", UNSET)
-        alerts: FlawCVSSPostAlerts
-        if isinstance(_alerts, Unset):
-            alerts = UNSET
-        else:
-            alerts = FlawCVSSPostAlerts.from_dict(_alerts)
 
         comment = d.pop("comment", UNSET)
 
@@ -191,8 +212,8 @@ class FlawCVSSPost(OSIDBModel):
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
-            created_dt=created_dt,
             alerts=alerts,
+            created_dt=created_dt,
             comment=comment,
         )
 
@@ -208,8 +229,8 @@ class FlawCVSSPost(OSIDBModel):
             "uuid": str,
             "vector": str,
             "embargoed": bool,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
-            "alerts": FlawCVSSPostAlerts,
             "comment": str,
         }
 

@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.affect_cvss_alerts import AffectCVSSAlerts
+from ..models.alert import Alert
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -22,11 +22,11 @@ class AffectCVSS(OSIDBModel):
     uuid: str
     vector: str
     embargoed: bool
-    alerts: AffectCVSSAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affect: Union[Unset, str] = UNSET
-    comment: Union[Unset, str] = UNSET
+    comment: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -44,9 +44,15 @@ class AffectCVSS(OSIDBModel):
         uuid = self.uuid
         vector = self.vector
         embargoed = self.embargoed
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -111,12 +117,20 @@ class AffectCVSS(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: AffectCVSSAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = AffectCVSSAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -162,7 +176,7 @@ class AffectCVSS(OSIDBModel):
             "uuid": str,
             "vector": str,
             "embargoed": bool,
-            "alerts": AffectCVSSAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affect": str,

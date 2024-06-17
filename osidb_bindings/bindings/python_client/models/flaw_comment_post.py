@@ -5,9 +5,7 @@ from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.flaw_comment_post_alerts import FlawCommentPostAlerts
-from ..models.flaw_comment_post_meta_attr import FlawCommentPostMetaAttr
-from ..models.flaw_comment_type import FlawCommentType
+from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawCommentPost")
@@ -19,33 +17,33 @@ class FlawCommentPost(OSIDBModel):
 
     text: str
     uuid: str
-    alerts: FlawCommentPostAlerts
+    alerts: List[Alert]
     created_dt: datetime.datetime
     embargoed: bool
-    type: Union[Unset, FlawCommentType] = UNSET
-    meta_attr: Union[Unset, FlawCommentPostMetaAttr] = UNSET
+    creator: Union[Unset, str] = UNSET
+    is_private: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         text = self.text
         uuid = self.uuid
-        alerts: Dict[str, Any] = UNSET
+        alerts: List[Dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = self.alerts.to_dict()
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
 
         embargoed = self.embargoed
-        type: Union[Unset, str] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawCommentType(self.type).value
-
-        meta_attr: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
+        creator = self.creator
+        is_private = self.is_private
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -59,10 +57,10 @@ class FlawCommentPost(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
+        if not isinstance(creator, Unset):
+            field_dict["creator"] = creator
+        if not isinstance(is_private, Unset):
+            field_dict["is_private"] = is_private
 
         return field_dict
 
@@ -71,7 +69,14 @@ class FlawCommentPost(OSIDBModel):
         uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
         alerts: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.alerts, Unset):
-            alerts = (None, json.dumps(self.alerts.to_dict()), "application/json")
+            _temp_alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: Dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                _temp_alerts.append(alerts_item)
+            alerts = (None, json.dumps(_temp_alerts), "application/json")
 
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
@@ -82,14 +87,16 @@ class FlawCommentPost(OSIDBModel):
             if self.embargoed is UNSET
             else (None, str(self.embargoed), "text/plain")
         )
-        type: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = FlawCommentType(self.type).value
-
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
+        creator = (
+            self.creator
+            if self.creator is UNSET
+            else (None, str(self.creator), "text/plain")
+        )
+        is_private = (
+            self.is_private
+            if self.is_private is UNSET
+            else (None, str(self.is_private), "text/plain")
+        )
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -108,10 +115,10 @@ class FlawCommentPost(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
+        if not isinstance(creator, Unset):
+            field_dict["creator"] = creator
+        if not isinstance(is_private, Unset):
+            field_dict["is_private"] = is_private
 
         return field_dict
 
@@ -122,12 +129,20 @@ class FlawCommentPost(OSIDBModel):
 
         uuid = d.pop("uuid", UNSET)
 
+        alerts = []
         _alerts = d.pop("alerts", UNSET)
-        alerts: FlawCommentPostAlerts
-        if isinstance(_alerts, Unset):
+        if _alerts is UNSET:
             alerts = UNSET
         else:
-            alerts = FlawCommentPostAlerts.from_dict(_alerts)
+            for alerts_item_data in _alerts or []:
+                _alerts_item = alerts_item_data
+                alerts_item: Alert
+                if isinstance(_alerts_item, Unset):
+                    alerts_item = UNSET
+                else:
+                    alerts_item = Alert.from_dict(_alerts_item)
+
+                alerts.append(alerts_item)
 
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
@@ -138,19 +153,9 @@ class FlawCommentPost(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        _type = d.pop("type", UNSET)
-        type: Union[Unset, FlawCommentType]
-        if isinstance(_type, Unset):
-            type = UNSET
-        else:
-            type = FlawCommentType(_type)
+        creator = d.pop("creator", UNSET)
 
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: Union[Unset, FlawCommentPostMetaAttr]
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = FlawCommentPostMetaAttr.from_dict(_meta_attr)
+        is_private = d.pop("is_private", UNSET)
 
         flaw_comment_post = cls(
             text=text,
@@ -158,8 +163,8 @@ class FlawCommentPost(OSIDBModel):
             alerts=alerts,
             created_dt=created_dt,
             embargoed=embargoed,
-            type=type,
-            meta_attr=meta_attr,
+            creator=creator,
+            is_private=is_private,
         )
 
         flaw_comment_post.additional_properties = d
@@ -170,11 +175,11 @@ class FlawCommentPost(OSIDBModel):
         return {
             "text": str,
             "uuid": str,
-            "alerts": FlawCommentPostAlerts,
+            "alerts": List[Alert],
             "created_dt": datetime.datetime,
             "embargoed": bool,
-            "type": FlawCommentType,
-            "meta_attr": FlawCommentPostMetaAttr,
+            "creator": str,
+            "is_private": bool,
         }
 
     @property
