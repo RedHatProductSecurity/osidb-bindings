@@ -4,8 +4,9 @@ osidb-bindings session
 
 import asyncio
 import importlib
+import types
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 import aiohttp
 import requests
@@ -38,6 +39,32 @@ osidb_status_retrieve = importlib.import_module(
 MAX_CONCURRENCY = get_env(
     "COMPONENT_REGISTRY_BINDINGS_MAX_CONCURRENCY", "10", is_int=True
 )
+
+
+def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
+    """Shortcut for POST /trackers/api/v1/file"""
+
+    method_module = importlib.import_module(
+        f".bindings.python_client.api.trackers.trackers_api_{OSIDB_API_VERSION}_file_create",
+        package="osidb_bindings",
+    )
+    model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+    if model is None:
+        raise UndefinedRequestBody(
+            f'The request body for the resource "trackers" '
+            f'and the operation "file" is not defined.'
+        )
+
+    transformed_data = model.from_dict(form_data)
+    sync_fn = get_sync_function(method_module)
+    return sync_fn(
+        *args,
+        client=self.client(),
+        form_data=transformed_data,
+        multipart_data=UNSET,
+        json_body=UNSET,
+        **kwargs,
+    )
 
 
 def double_underscores_to_single_underscores(fn):
@@ -202,6 +229,7 @@ class Session:
                 "update",
                 "create",
             ),
+            extra_operations=[("file", file_trackers)],
         )
 
         self.refresh_token = self.__get_refresh_token()
@@ -273,6 +301,7 @@ class SessionOperationsGroup:
         client: Callable,
         resource_name: str,
         allowed_operations: List[str] = ALL_SESSION_OPERATIONS,
+        extra_operations: List[Tuple[str, Callable]] = None,
         subresources: Dict[str, dict] = None,
     ):
         self.client = client
@@ -295,6 +324,12 @@ class SessionOperationsGroup:
                 ),
             )
 
+        if extra_operations is None:
+            extra_operations = []
+
+        for operation_name, operation_fn in extra_operations:
+            setattr(self, operation_name, types.MethodType(operation_fn, self))
+
     def __raise_operation_unsupported(self, operation_name: str):
         """Operation unsupported exception shortcut"""
 
@@ -311,10 +346,12 @@ class SessionOperationsGroup:
             f'and the operation "{operation_name}" is not defined.'
         )
 
-    def __get_method_module(self, resource_name: str, method: str) -> ModuleType:
+    def __get_method_module(
+        self, resource_name: str, method: str, api_section: str = "osidb"
+    ) -> ModuleType:
         # import endpoint module based on a method
         return importlib.import_module(
-            f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_{resource_name}_{method}",
+            f"{OSIDB_BINDINGS_API_PATH}.{api_section}_api_{OSIDB_API_VERSION}_{resource_name}_{method}",
             package="osidb_bindings",
         )
 
