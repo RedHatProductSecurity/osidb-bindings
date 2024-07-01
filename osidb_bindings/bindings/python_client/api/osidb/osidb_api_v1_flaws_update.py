@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import requests
 
@@ -9,7 +9,9 @@ from ...models.osidb_api_v1_flaws_update_response_200 import (
 )
 from ...types import UNSET, Response, Unset
 
-QUERY_PARAMS = {}
+QUERY_PARAMS = {
+    "create_jira_task": bool,
+}
 REQUEST_BODY_TYPE = Flaw
 
 
@@ -20,6 +22,7 @@ def _get_kwargs(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
+    create_jira_task: Union[Unset, None, bool] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{id}".format(
         client.base_url,
@@ -27,6 +30,11 @@ def _get_kwargs(
     )
 
     headers: Dict[str, Any] = client.get_headers()
+
+    params: Dict[str, Any] = {
+        "create_jira_task": create_jira_task,
+    }
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     json_json_body: Dict[str, Any] = UNSET
     if not isinstance(json_body, Unset):
@@ -40,6 +48,7 @@ def _get_kwargs(
         "url": url,
         "headers": headers,
         "json": form_data.to_dict(),
+        "params": params,
     }
 
 
@@ -76,6 +85,7 @@ def sync_detailed(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
+    create_jira_task: Union[Unset, None, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
     kwargs = _get_kwargs(
         id=id,
@@ -83,6 +93,7 @@ def sync_detailed(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        create_jira_task=create_jira_task,
     )
 
     response = requests.put(
@@ -103,6 +114,7 @@ def sync(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
+    create_jira_task: Union[Unset, None, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     """ """
 
@@ -112,6 +124,7 @@ def sync(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        create_jira_task=create_jira_task,
     ).parsed
 
 
@@ -122,6 +135,7 @@ async def async_detailed(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
+    create_jira_task: Union[Unset, None, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
     kwargs = _get_kwargs(
         id=id,
@@ -129,6 +143,7 @@ async def async_detailed(
         form_data=form_data,
         multipart_data=multipart_data,
         json_body=json_body,
+        create_jira_task=create_jira_task,
     )
 
     async with client.get_async_session().put(
@@ -149,6 +164,7 @@ async def async_(
     form_data: Flaw,
     multipart_data: Flaw,
     json_body: Flaw,
+    create_jira_task: Union[Unset, None, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     """ """
 
@@ -159,5 +175,6 @@ async def async_(
             form_data=form_data,
             multipart_data=multipart_data,
             json_body=json_body,
+            create_jira_task=create_jira_task,
         )
     ).parsed
