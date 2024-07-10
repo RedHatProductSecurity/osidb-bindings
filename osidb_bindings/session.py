@@ -6,7 +6,7 @@ import asyncio
 import importlib
 import types
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple, get_args, get_origin
 
 import aiohttp
 import requests
@@ -27,7 +27,11 @@ from .constants import (
     OSIDB_BINDINGS_PLACEHOLDER_FIELD,
     OSIDB_BINDINGS_USERAGENT,
 )
-from .exceptions import OperationUnsupported, UndefinedRequestBody
+from .exceptions import (
+    OperationUnsupported,
+    OSIDBBindingsException,
+    UndefinedRequestBody,
+)
 from .helpers import get_env
 from .iterators import Paginator
 
@@ -106,6 +110,19 @@ def get_async_function(api_module: ModuleType) -> Callable:
     return double_underscores_to_single_underscores(
         getattr(api_module, "async_", getattr(api_module, "async_detailed"))
     )
+
+
+def serialize_data(data, model):
+    """
+    Serialize data into bindings model or list of bindings models
+    """
+    if hasattr(model, "from_dict"):
+        return model.from_dict(data)
+    elif get_origin(model) is list:
+        inner_model = get_args(model)[0]
+        return [serialize_data(item, inner_model) for item in data]
+    else:
+        raise OSIDBBindingsException(f"Unserializable model '{model}'")
 
 
 def new_session(
@@ -389,12 +406,12 @@ class SessionOperationsGroup:
             if model is None:
                 self.__raise_undefined_request_body("create")
 
-            transformed_data = model.from_dict(form_data)
+            serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 *args,
                 client=self.client(),
-                form_data=transformed_data,
+                form_data=serialized_data,
                 multipart_data=UNSET,
                 json_body=UNSET,
                 **kwargs,
@@ -411,13 +428,13 @@ class SessionOperationsGroup:
             if model is None:
                 self.__raise_undefined_request_body("update")
 
-            transformed_data = model.from_dict(form_data)
+            serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 id,
                 *args,
                 client=self.client(),
-                form_data=transformed_data,
+                form_data=serialized_data,
                 multipart_data=UNSET,
                 json_body=UNSET,
                 **kwargs,
