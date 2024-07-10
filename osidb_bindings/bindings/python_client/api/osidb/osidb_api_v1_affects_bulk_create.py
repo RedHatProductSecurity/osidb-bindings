@@ -10,6 +10,7 @@ from ...models.osidb_api_v1_affects_bulk_create_response_200 import (
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
+REQUEST_BODY_TYPE = List[AffectPost]
 
 
 def _get_kwargs(
@@ -47,7 +48,7 @@ def _get_kwargs(
     return {
         "url": url,
         "headers": headers,
-        "json": form_data.to_dict(),
+        "json": json_json_body,
     }
 
 
