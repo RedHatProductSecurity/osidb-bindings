@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ## [4.1.0] - 2024-07-01
+### Added
+- support for bulk create and bulk update for Affects (OSIDB-3124)
 
 ## [4.0.0] - 2024-06-17
 ### Added
