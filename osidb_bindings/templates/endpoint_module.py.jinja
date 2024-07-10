@@ -26,6 +26,8 @@ QUERY_PARAMS = {
 }
 {% if endpoint.form_body_class %}
 REQUEST_BODY_TYPE = {{ endpoint.form_body_class.name }}
+{% elif endpoint.json_body %}
+REQUEST_BODY_TYPE = {{ endpoint.json_body.get_type_string() }}
 {% endif %}
 
 def _get_kwargs(
@@ -58,10 +60,10 @@ def _get_kwargs(
         {% elif endpoint.json_body %}
         "json": {{ "json_" + endpoint.json_body.python_name }},
         {% endif %} #}
-        {% if endpoint.json_body %}
+        {% if endpoint.form_body_class %}
         "json": form_data.to_dict(),
-        {% elif endpoint.form_body_class %}
-        "data": form_data.to_dict(),
+        {% elif endpoint.json_body %}
+        "json": {{ "json_" + endpoint.json_body.python_name }},
         {% elif endpoint.multipart_body %}
         "files": {{ "multipart_" + endpoint.multipart_body.python_name }},
         {% endif %}
