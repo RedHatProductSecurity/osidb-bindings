@@ -224,6 +224,10 @@ class Session:
                 "list",
                 "create",
                 "destroy",
+                "bulk_create",
+                "bulk_update",
+                # TODO: currently blocked by OSIDB-2996
+                # "bulk_delete",
             ),
             subresources={
                 "cvss_scores": {
@@ -419,6 +423,27 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("create")
 
+    def bulk_create(self, form_data: Dict[str, Any], *args, **kwargs):
+        if "bulk_create" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="bulk_create"
+            )
+            model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+            if model is None:
+                self.__raise_undefined_request_body("bulk_create")
+
+            serialized_data = serialize_data(form_data, model)
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                *args,
+                client=self.client(),
+                json_body=serialized_data,
+                multipart_data=UNSET,
+                **kwargs,
+            )
+        else:
+            self.__raise_operation_unsupported("bulk_create")
+
     def update(self, id, form_data: Dict[str, Any], *args, **kwargs):
         if "update" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -442,6 +467,27 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("update")
 
+    def bulk_update(self, form_data: Dict[str, Any], *args, **kwargs):
+        if "bulk_update" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="bulk_update"
+            )
+            model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+            if model is None:
+                self.__raise_undefined_request_body("bulk_update")
+
+            serialized_data = serialize_data(form_data, model)
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                *args,
+                client=self.client(),
+                json_body=serialized_data,
+                multipart_data=UNSET,
+                **kwargs,
+            )
+        else:
+            self.__raise_operation_unsupported("bulk_update")
+
     def delete(self, id, *args, **kwargs):
         if "destroy" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -456,6 +502,27 @@ class SessionOperationsGroup:
             )
         else:
             self.__raise_operation_unsupported("delete")
+
+    def bulk_delete(self, form_data: Dict[str, Any], *args, **kwargs):
+        if "bulk_delete" in self.allowed_operations:
+            method_module = self.__get_method_module(
+                resource_name=self.resource_name, method="bulk_destroy"
+            )
+            model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+            if model is None:
+                self.__raise_undefined_request_body("bulk_delete")
+
+            serialized_data = serialize_data(form_data, model)
+            sync_fn = get_sync_function(method_module)
+            return sync_fn(
+                *args,
+                client=self.client(),
+                json_body=serialized_data,
+                multipart_data=UNSET,
+                **kwargs,
+            )
+        else:
+            self.__raise_operation_unsupported("bulk_delete")
 
     # Extra operations
 
