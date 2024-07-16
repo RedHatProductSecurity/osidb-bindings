@@ -71,6 +71,44 @@ def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
     )
 
 
+def promote_flaw(self, id, *args, **kwargs):
+    method_module = importlib.import_module(
+        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_promote_create",
+        package="osidb_bindings",
+    )
+    sync_fn = get_sync_function(method_module)
+    return sync_fn(
+        id,
+        *args,
+        client=self.client(),
+        **kwargs,
+    )
+
+
+def reject_flaw(self, id: str, form_data: Dict[str, Any], *args, **kwargs):
+    method_module = importlib.import_module(
+        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_reject_create",
+        package="osidb_bindings",
+    )
+    sync_fn = get_sync_function(method_module)
+    model = getattr(method_module, "REQUEST_BODY_TYPE", None)
+    if model is None:
+        raise UndefinedRequestBody(
+            f'The request body for the resource "flaw" '
+            f'and the operation "reject" is not defined.'
+        )
+    transformed_data = model.from_dict(form_data)
+    return sync_fn(
+        id,
+        *args,
+        client=self.client(),
+        form_data=transformed_data,
+        multipart_data=UNSET,
+        json_body=UNSET,
+        **kwargs,
+    )
+
+
 def double_underscores_to_single_underscores(fn):
     """
     Function decorator which changes all the keyword arguments which include
@@ -214,6 +252,7 @@ class Session:
                     ]
                 },
             },
+            extra_operations=[("promote", promote_flaw), ("reject", reject_flaw)],
         )
         self.affects = SessionOperationsGroup(
             self.__get_client_with_new_access_token,
