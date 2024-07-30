@@ -59,7 +59,7 @@ def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
             f'and the operation "file" is not defined.'
         )
 
-    transformed_data = model.from_dict(form_data)
+    transformed_data = serialize_data(form_data, model)
     sync_fn = get_sync_function(method_module)
     return sync_fn(
         *args,
@@ -97,7 +97,7 @@ def reject_flaw(self, id: str, form_data: Dict[str, Any], *args, **kwargs):
             f'The request body for the resource "flaw" '
             f'and the operation "reject" is not defined.'
         )
-    transformed_data = model.from_dict(form_data)
+    transformed_data = serialize_data(form_data, model)
     return sync_fn(
         id,
         *args,
