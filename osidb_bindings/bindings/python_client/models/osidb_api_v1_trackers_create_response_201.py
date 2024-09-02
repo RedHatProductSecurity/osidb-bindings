@@ -6,7 +6,7 @@ from dateutil.parser import isoparse
 
 from ..models.alert import Alert
 from ..models.erratum import Erratum
-from ..models.tracker_meta_attr import TrackerMetaAttr
+from ..models.tracker_post_meta_attr import TrackerPostMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,8 +18,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     """ """
 
     errata: List[Erratum]
-    external_system_id: str
-    meta_attr: TrackerMetaAttr
+    meta_attr: TrackerPostMetaAttr
+    ps_update_stream: str
     status: str
     resolution: str
     type: TrackerType
@@ -29,7 +29,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
-    ps_update_stream: Union[Unset, str] = UNSET
     sync_to_bz: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
@@ -48,11 +47,11 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
                 errata.append(errata_item)
 
-        external_system_id = self.external_system_id
         meta_attr: Dict[str, Any] = UNSET
         if not isinstance(self.meta_attr, Unset):
             meta_attr = self.meta_attr.to_dict()
 
+        ps_update_stream = self.ps_update_stream
         status = self.status
         resolution = self.resolution
         type: str = UNSET
@@ -84,7 +83,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         if not isinstance(self.affects, Unset):
             affects = self.affects
 
-        ps_update_stream = self.ps_update_stream
         sync_to_bz = self.sync_to_bz
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -98,10 +96,10 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
-        if not isinstance(external_system_id, Unset):
-            field_dict["external_system_id"] = external_system_id
         if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(status, Unset):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
@@ -120,8 +118,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(ps_update_stream, Unset):
-            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(sync_to_bz, Unset):
             field_dict["sync_to_bz"] = sync_to_bz
         if not isinstance(dt, Unset):
@@ -153,14 +149,14 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
                 errata.append(errata_item)
 
-        external_system_id = d.pop("external_system_id", UNSET)
-
         _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: TrackerMetaAttr
+        meta_attr: TrackerPostMetaAttr
         if isinstance(_meta_attr, Unset):
             meta_attr = UNSET
         else:
-            meta_attr = TrackerMetaAttr.from_dict(_meta_attr)
+            meta_attr = TrackerPostMetaAttr.from_dict(_meta_attr)
+
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         status = d.pop("status", UNSET)
 
@@ -208,8 +204,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
         affects = cast(List[str], d.pop("affects", UNSET))
 
-        ps_update_stream = d.pop("ps_update_stream", UNSET)
-
         sync_to_bz = d.pop("sync_to_bz", UNSET)
 
         _dt = d.pop("dt", UNSET)
@@ -227,8 +221,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
         osidb_api_v1_trackers_create_response_201 = cls(
             errata=errata,
-            external_system_id=external_system_id,
             meta_attr=meta_attr,
+            ps_update_stream=ps_update_stream,
             status=status,
             resolution=resolution,
             type=type,
@@ -238,7 +232,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             affects=affects,
-            ps_update_stream=ps_update_stream,
             sync_to_bz=sync_to_bz,
             dt=dt,
             env=env,
@@ -253,8 +246,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     def get_fields():
         return {
             "errata": List[Erratum],
-            "external_system_id": str,
-            "meta_attr": TrackerMetaAttr,
+            "meta_attr": TrackerPostMetaAttr,
+            "ps_update_stream": str,
             "status": str,
             "resolution": str,
             "type": TrackerType,
@@ -264,7 +257,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affects": List[str],
-            "ps_update_stream": str,
             "sync_to_bz": bool,
             "dt": datetime.datetime,
             "env": str,
