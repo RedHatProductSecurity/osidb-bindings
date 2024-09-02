@@ -20,6 +20,7 @@ class TrackerPost(OSIDBModel):
 
     errata: List[Erratum]
     meta_attr: TrackerPostMetaAttr
+    ps_update_stream: str
     status: str
     resolution: str
     type: TrackerType
@@ -29,7 +30,6 @@ class TrackerPost(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affects: Union[Unset, List[str]] = UNSET
-    ps_update_stream: Union[Unset, str] = UNSET
     sync_to_bz: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -48,6 +48,7 @@ class TrackerPost(OSIDBModel):
         if not isinstance(self.meta_attr, Unset):
             meta_attr = self.meta_attr.to_dict()
 
+        ps_update_stream = self.ps_update_stream
         status = self.status
         resolution = self.resolution
         type: str = UNSET
@@ -79,7 +80,6 @@ class TrackerPost(OSIDBModel):
         if not isinstance(self.affects, Unset):
             affects = self.affects
 
-        ps_update_stream = self.ps_update_stream
         sync_to_bz = self.sync_to_bz
 
         field_dict: Dict[str, Any] = {}
@@ -88,6 +88,8 @@ class TrackerPost(OSIDBModel):
             field_dict["errata"] = errata
         if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(status, Unset):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
@@ -106,8 +108,6 @@ class TrackerPost(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(ps_update_stream, Unset):
-            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(sync_to_bz, Unset):
             field_dict["sync_to_bz"] = sync_to_bz
 
@@ -129,6 +129,11 @@ class TrackerPost(OSIDBModel):
         if not isinstance(self.meta_attr, Unset):
             meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
 
+        ps_update_stream = (
+            self.ps_update_stream
+            if self.ps_update_stream is UNSET
+            else (None, str(self.ps_update_stream), "text/plain")
+        )
         status = (
             self.status
             if self.status is UNSET
@@ -174,11 +179,6 @@ class TrackerPost(OSIDBModel):
             _temp_affects = self.affects
             affects = (None, json.dumps(_temp_affects), "application/json")
 
-        ps_update_stream = (
-            self.ps_update_stream
-            if self.ps_update_stream is UNSET
-            else (None, str(self.ps_update_stream), "text/plain")
-        )
         sync_to_bz = (
             self.sync_to_bz
             if self.sync_to_bz is UNSET
@@ -196,6 +196,8 @@ class TrackerPost(OSIDBModel):
             field_dict["errata"] = errata
         if not isinstance(meta_attr, Unset):
             field_dict["meta_attr"] = meta_attr
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(status, Unset):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
@@ -214,8 +216,6 @@ class TrackerPost(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
-        if not isinstance(ps_update_stream, Unset):
-            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(sync_to_bz, Unset):
             field_dict["sync_to_bz"] = sync_to_bz
 
@@ -245,6 +245,8 @@ class TrackerPost(OSIDBModel):
             meta_attr = UNSET
         else:
             meta_attr = TrackerPostMetaAttr.from_dict(_meta_attr)
+
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         status = d.pop("status", UNSET)
 
@@ -292,13 +294,12 @@ class TrackerPost(OSIDBModel):
 
         affects = cast(List[str], d.pop("affects", UNSET))
 
-        ps_update_stream = d.pop("ps_update_stream", UNSET)
-
         sync_to_bz = d.pop("sync_to_bz", UNSET)
 
         tracker_post = cls(
             errata=errata,
             meta_attr=meta_attr,
+            ps_update_stream=ps_update_stream,
             status=status,
             resolution=resolution,
             type=type,
@@ -308,7 +309,6 @@ class TrackerPost(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             affects=affects,
-            ps_update_stream=ps_update_stream,
             sync_to_bz=sync_to_bz,
         )
 
@@ -320,6 +320,7 @@ class TrackerPost(OSIDBModel):
         return {
             "errata": List[Erratum],
             "meta_attr": TrackerPostMetaAttr,
+            "ps_update_stream": str,
             "status": str,
             "resolution": str,
             "type": TrackerType,
@@ -329,7 +330,6 @@ class TrackerPost(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "affects": List[str],
-            "ps_update_stream": str,
             "sync_to_bz": bool,
         }
 

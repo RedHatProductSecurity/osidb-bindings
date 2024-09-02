@@ -12,6 +12,7 @@ QUERY_PARAMS = {
     "exclude_fields": List[str],
     "include_fields": List[str],
     "include_meta_attr": List[str],
+    "query": str,
     "tracker_ids": List[str],
 }
 
@@ -23,6 +24,7 @@ def _get_kwargs(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    query: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/osidb/api/v1/flaws/{id}".format(
@@ -64,6 +66,7 @@ def _get_kwargs(
         "exclude_fields": json_exclude_fields,
         "include_fields": json_include_fields,
         "include_meta_attr": json_include_meta_attr,
+        "query": query,
         "tracker_ids": json_tracker_ids,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
@@ -108,6 +111,7 @@ def sync_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    query: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
     kwargs = _get_kwargs(
@@ -116,6 +120,7 @@ def sync_detailed(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
+        query=query,
         tracker_ids=tracker_ids,
     )
 
@@ -137,6 +142,7 @@ def sync(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    query: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
     """ """
@@ -147,6 +153,7 @@ def sync(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
+        query=query,
         tracker_ids=tracker_ids,
     ).parsed
 
@@ -158,6 +165,7 @@ async def async_detailed(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    query: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
     kwargs = _get_kwargs(
@@ -166,6 +174,7 @@ async def async_detailed(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
+        query=query,
         tracker_ids=tracker_ids,
     )
 
@@ -187,6 +196,7 @@ async def async_(
     exclude_fields: Union[Unset, None, List[str]] = UNSET,
     include_fields: Union[Unset, None, List[str]] = UNSET,
     include_meta_attr: Union[Unset, None, List[str]] = UNSET,
+    query: Union[Unset, None, str] = UNSET,
     tracker_ids: Union[Unset, None, List[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
     """ """
@@ -198,6 +208,7 @@ async def async_(
             exclude_fields=exclude_fields,
             include_fields=include_fields,
             include_meta_attr=include_meta_attr,
+            query=query,
             tracker_ids=tracker_ids,
         )
     ).parsed
