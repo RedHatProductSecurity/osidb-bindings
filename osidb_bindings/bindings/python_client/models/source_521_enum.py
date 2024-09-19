@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Source642Enum(str, Enum):
+class Source521Enum(str, Enum):
     ADOBE = "ADOBE"
     APPLE = "APPLE"
     ASF = "ASF"
@@ -14,6 +14,7 @@ class Source642Enum(str, Enum):
     CORELABS = "CORELABS"
     CUSTOMER = "CUSTOMER"
     CVE = "CVE"
+    CVEORG = "CVEORG"
     DAILYDAVE = "DAILYDAVE"
     DEBIAN = "DEBIAN"
     DISTROS = "DISTROS"

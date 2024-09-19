@@ -362,7 +362,7 @@ from .ps_stream_selection import PsStreamSelection
 from .reject import Reject
 from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
-from .source_642_enum import Source642Enum
+from .source_521_enum import Source521Enum
 from .supported_products import SupportedProducts
 from .token_obtain_pair import TokenObtainPair
 from .token_refresh import TokenRefresh

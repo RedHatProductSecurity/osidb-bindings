@@ -15,6 +15,7 @@ class OsidbApiV1FlawsListSource(str, Enum):
     CORELABS = "CORELABS"
     CUSTOMER = "CUSTOMER"
     CVE = "CVE"
+    CVEORG = "CVEORG"
     DAILYDAVE = "DAILYDAVE"
     DEBIAN = "DEBIAN"
     DISTROS = "DISTROS"

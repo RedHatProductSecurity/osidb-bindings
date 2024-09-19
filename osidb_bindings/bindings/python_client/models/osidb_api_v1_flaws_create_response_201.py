@@ -18,7 +18,7 @@ from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.package import Package
 from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
-from ..models.source_642_enum import Source642Enum
+from ..models.source_521_enum import Source521Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1FlawsCreateResponse201")
@@ -54,7 +54,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, Source642Enum, Unset] = UNSET
+    source: Union[BlankEnum, Source521Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
@@ -214,11 +214,11 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source642Enum):
+        elif isinstance(self.source, Source521Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source642Enum(self.source).value
+                source = Source521Enum(self.source).value
 
         else:
             source = UNSET
@@ -601,18 +601,18 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, Source642Enum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, Source521Enum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, Source642Enum]
+                source_type_0: Union[Unset, Source521Enum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = Source642Enum(_source_type_0)
+                    source_type_0 = Source521Enum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -812,7 +812,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, Source642Enum],
+            "source": Union[BlankEnum, Source521Enum],
             "reported_dt": datetime.datetime,
             "mitigation": str,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
