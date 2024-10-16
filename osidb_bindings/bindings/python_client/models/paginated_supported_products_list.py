@@ -12,17 +12,15 @@ T = TypeVar("T", bound="PaginatedSupportedProductsList")
 class PaginatedSupportedProductsList(OSIDBModel):
     """ """
 
-    count: Union[Unset, int] = UNSET
+    count: int
+    results: List[SupportedProducts]
     next_: Union[Unset, None, str] = UNSET
     previous: Union[Unset, None, str] = UNSET
-    results: Union[Unset, List[SupportedProducts]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         count = self.count
-        next_ = self.next_
-        previous = self.previous
-        results: Union[Unset, List[Dict[str, Any]]] = UNSET
+        results: List[Dict[str, Any]] = UNSET
         if not isinstance(self.results, Unset):
             results = []
             for results_item_data in self.results:
@@ -32,16 +30,19 @@ class PaginatedSupportedProductsList(OSIDBModel):
 
                 results.append(results_item)
 
+        next_ = self.next_
+        previous = self.previous
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(count, Unset):
             field_dict["count"] = count
+        if not isinstance(results, Unset):
+            field_dict["results"] = results
         if not isinstance(next_, Unset):
             field_dict["next"] = next_
         if not isinstance(previous, Unset):
             field_dict["previous"] = previous
-        if not isinstance(results, Unset):
-            field_dict["results"] = results
 
         return field_dict
 
@@ -49,10 +50,6 @@ class PaginatedSupportedProductsList(OSIDBModel):
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         count = d.pop("count", UNSET)
-
-        next_ = d.pop("next", UNSET)
-
-        previous = d.pop("previous", UNSET)
 
         results = []
         _results = d.pop("results", UNSET)
@@ -69,11 +66,15 @@ class PaginatedSupportedProductsList(OSIDBModel):
 
                 results.append(results_item)
 
+        next_ = d.pop("next", UNSET)
+
+        previous = d.pop("previous", UNSET)
+
         paginated_supported_products_list = cls(
             count=count,
+            results=results,
             next_=next_,
             previous=previous,
-            results=results,
         )
 
         paginated_supported_products_list.additional_properties = d
@@ -83,9 +84,9 @@ class PaginatedSupportedProductsList(OSIDBModel):
     def get_fields():
         return {
             "count": int,
+            "results": List[SupportedProducts],
             "next": str,
             "previous": str,
-            "results": List[SupportedProducts],
         }
 
     @property

@@ -1,12 +1,9 @@
 import datetime
-import json
-from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 from dateutil.parser import isoparse
 
-from ..models.audit_pgh_context import AuditPghContext
-from ..models.audit_pgh_diff import AuditPghDiff
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="Audit")
@@ -20,10 +17,10 @@ class Audit(OSIDBModel):
     pgh_slug: str
     pgh_obj_model: str
     pgh_label: str
-    pgh_diff: AuditPghDiff
+    pgh_diff: Any
     pgh_data: str
     pgh_obj_id: Union[Unset, None, str] = UNSET
-    pgh_context: Union[Unset, None, AuditPghContext] = UNSET
+    pgh_context: Union[Unset, Any] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -34,15 +31,11 @@ class Audit(OSIDBModel):
         pgh_slug = self.pgh_slug
         pgh_obj_model = self.pgh_obj_model
         pgh_label = self.pgh_label
-        pgh_diff: Dict[str, Any] = UNSET
-        if not isinstance(self.pgh_diff, Unset):
-            pgh_diff = self.pgh_diff.to_dict()
+        pgh_diff = self.pgh_diff
 
         pgh_data = self.pgh_data
         pgh_obj_id = self.pgh_obj_id
-        pgh_context: Union[Unset, None, Dict[str, Any]] = UNSET
-        if not isinstance(self.pgh_context, Unset):
-            pgh_context = self.pgh_context.to_dict() if self.pgh_context else None
+        pgh_context = self.pgh_context
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -85,9 +78,7 @@ class Audit(OSIDBModel):
             if self.pgh_label is UNSET
             else (None, str(self.pgh_label), "text/plain")
         )
-        pgh_diff: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.pgh_diff, Unset):
-            pgh_diff = (None, json.dumps(self.pgh_diff.to_dict()), "application/json")
+        pgh_diff = self.pgh_diff
 
         pgh_data = (
             self.pgh_data
@@ -99,13 +90,7 @@ class Audit(OSIDBModel):
             if self.pgh_obj_id is UNSET
             else (None, str(self.pgh_obj_id), "text/plain")
         )
-        pgh_context: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.pgh_context, Unset):
-            pgh_context = (
-                (None, json.dumps(self.pgh_context.to_dict()), "application/json")
-                if self.pgh_context
-                else None
-            )
+        pgh_context = self.pgh_context
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
@@ -149,25 +134,13 @@ class Audit(OSIDBModel):
 
         pgh_label = d.pop("pgh_label", UNSET)
 
-        _pgh_diff = d.pop("pgh_diff", UNSET)
-        pgh_diff: AuditPghDiff
-        if isinstance(_pgh_diff, Unset):
-            pgh_diff = UNSET
-        else:
-            pgh_diff = AuditPghDiff.from_dict(_pgh_diff)
+        pgh_diff = d.pop("pgh_diff", UNSET)
 
         pgh_data = d.pop("pgh_data", UNSET)
 
         pgh_obj_id = d.pop("pgh_obj_id", UNSET)
 
-        _pgh_context = d.pop("pgh_context", UNSET)
-        pgh_context: Union[Unset, None, AuditPghContext]
-        if _pgh_context is None:
-            pgh_context = None
-        elif isinstance(_pgh_context, Unset):
-            pgh_context = UNSET
-        else:
-            pgh_context = AuditPghContext.from_dict(_pgh_context)
+        pgh_context = d.pop("pgh_context", UNSET)
 
         audit = cls(
             pgh_created_at=pgh_created_at,
@@ -190,10 +163,10 @@ class Audit(OSIDBModel):
             "pgh_slug": str,
             "pgh_obj_model": str,
             "pgh_label": str,
-            "pgh_diff": AuditPghDiff,
+            "pgh_diff": Any,
             "pgh_data": str,
             "pgh_obj_id": str,
-            "pgh_context": AuditPghContext,
+            "pgh_context": Any,
         }
 
     @property
