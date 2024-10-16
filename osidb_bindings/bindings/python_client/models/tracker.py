@@ -7,7 +7,6 @@ from dateutil.parser import isoparse
 
 from ..models.alert import Alert
 from ..models.erratum import Erratum
-from ..models.tracker_meta_attr import TrackerMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -20,7 +19,6 @@ class Tracker(OSIDBModel):
 
     errata: List[Erratum]
     external_system_id: str
-    meta_attr: TrackerMetaAttr
     status: str
     resolution: str
     type: TrackerType
@@ -46,10 +44,6 @@ class Tracker(OSIDBModel):
                 errata.append(errata_item)
 
         external_system_id = self.external_system_id
-        meta_attr: Dict[str, Any] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
-
         status = self.status
         resolution = self.resolution
         type: str = UNSET
@@ -90,8 +84,6 @@ class Tracker(OSIDBModel):
             field_dict["errata"] = errata
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(status, Unset):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
@@ -134,10 +126,6 @@ class Tracker(OSIDBModel):
             if self.external_system_id is UNSET
             else (None, str(self.external_system_id), "text/plain")
         )
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
-
         status = (
             self.status
             if self.status is UNSET
@@ -205,8 +193,6 @@ class Tracker(OSIDBModel):
             field_dict["errata"] = errata
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(status, Unset):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
@@ -251,13 +237,6 @@ class Tracker(OSIDBModel):
                 errata.append(errata_item)
 
         external_system_id = d.pop("external_system_id", UNSET)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: TrackerMetaAttr
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = TrackerMetaAttr.from_dict(_meta_attr)
 
         status = d.pop("status", UNSET)
 
@@ -312,7 +291,6 @@ class Tracker(OSIDBModel):
         tracker = cls(
             errata=errata,
             external_system_id=external_system_id,
-            meta_attr=meta_attr,
             status=status,
             resolution=resolution,
             type=type,
@@ -334,7 +312,6 @@ class Tracker(OSIDBModel):
         return {
             "errata": List[Erratum],
             "external_system_id": str,
-            "meta_attr": TrackerMetaAttr,
             "status": str,
             "resolution": str,
             "type": TrackerType,

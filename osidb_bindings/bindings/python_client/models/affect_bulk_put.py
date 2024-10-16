@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Optional, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.affect_bulk_put_meta_attr import AffectBulkPutMetaAttr
 from ..models.affect_cvss import AffectCVSS
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.alert import Alert
@@ -26,7 +25,6 @@ class AffectBulkPut(OSIDBModel):
     ps_product: str
     ps_component: str
     trackers: List[Tracker]
-    meta_attr: AffectBulkPutMetaAttr
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
     embargoed: bool
@@ -53,10 +51,6 @@ class AffectBulkPut(OSIDBModel):
                     trackers_item = trackers_item_data.to_dict()
 
                 trackers.append(trackers_item)
-
-        meta_attr: Dict[str, Any] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         delegated_resolution = self.delegated_resolution
         cvss_scores: List[Dict[str, Any]] = UNSET
@@ -146,8 +140,6 @@ class AffectBulkPut(OSIDBModel):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
@@ -196,13 +188,6 @@ class AffectBulkPut(OSIDBModel):
                     trackers_item = Tracker.from_dict(_trackers_item)
 
                 trackers.append(trackers_item)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: AffectBulkPutMetaAttr
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = AffectBulkPutMetaAttr.from_dict(_meta_attr)
 
         delegated_resolution = d.pop("delegated_resolution", UNSET)
 
@@ -349,7 +334,6 @@ class AffectBulkPut(OSIDBModel):
             ps_product=ps_product,
             ps_component=ps_component,
             trackers=trackers,
-            meta_attr=meta_attr,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             embargoed=embargoed,
@@ -373,7 +357,6 @@ class AffectBulkPut(OSIDBModel):
             "ps_product": str,
             "ps_component": str,
             "trackers": List[Tracker],
-            "meta_attr": AffectBulkPutMetaAttr,
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
             "embargoed": bool,

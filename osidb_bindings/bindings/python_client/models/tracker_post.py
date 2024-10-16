@@ -7,7 +7,6 @@ from dateutil.parser import isoparse
 
 from ..models.alert import Alert
 from ..models.erratum import Erratum
-from ..models.tracker_post_meta_attr import TrackerPostMetaAttr
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -19,7 +18,6 @@ class TrackerPost(OSIDBModel):
     """Tracker serializer"""
 
     errata: List[Erratum]
-    meta_attr: TrackerPostMetaAttr
     ps_update_stream: str
     status: str
     resolution: str
@@ -43,10 +41,6 @@ class TrackerPost(OSIDBModel):
                     errata_item = errata_item_data.to_dict()
 
                 errata.append(errata_item)
-
-        meta_attr: Dict[str, Any] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         ps_update_stream = self.ps_update_stream
         status = self.status
@@ -86,8 +80,6 @@ class TrackerPost(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(status, Unset):
@@ -124,10 +116,6 @@ class TrackerPost(OSIDBModel):
 
                 _temp_errata.append(errata_item)
             errata = (None, json.dumps(_temp_errata), "application/json")
-
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
 
         ps_update_stream = (
             self.ps_update_stream
@@ -194,8 +182,6 @@ class TrackerPost(OSIDBModel):
         )
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(status, Unset):
@@ -238,13 +224,6 @@ class TrackerPost(OSIDBModel):
                     errata_item = Erratum.from_dict(_errata_item)
 
                 errata.append(errata_item)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: TrackerPostMetaAttr
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = TrackerPostMetaAttr.from_dict(_meta_attr)
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
@@ -298,7 +277,6 @@ class TrackerPost(OSIDBModel):
 
         tracker_post = cls(
             errata=errata,
-            meta_attr=meta_attr,
             ps_update_stream=ps_update_stream,
             status=status,
             resolution=resolution,
@@ -319,7 +297,6 @@ class TrackerPost(OSIDBModel):
     def get_fields():
         return {
             "errata": List[Erratum],
-            "meta_attr": TrackerPostMetaAttr,
             "ps_update_stream": str,
             "status": str,
             "resolution": str,

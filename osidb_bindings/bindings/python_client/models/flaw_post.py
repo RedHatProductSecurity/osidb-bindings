@@ -12,14 +12,13 @@ from ..models.comment import Comment
 from ..models.flaw_acknowledgment import FlawAcknowledgment
 from ..models.flaw_cvss import FlawCVSS
 from ..models.flaw_post_classification import FlawPostClassification
-from ..models.flaw_post_meta_attr import FlawPostMetaAttr
 from ..models.flaw_reference import FlawReference
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.package import Package
 from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
-from ..models.source_521_enum import Source521Enum
+from ..models.source_be_0_enum import SourceBe0Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawPost")
@@ -35,7 +34,6 @@ class FlawPost(OSIDBModel):
     comment_zero: str
     affects: List[Affect]
     comments: List[Comment]
-    meta_attr: FlawPostMetaAttr
     package_versions: List[Package]
     acknowledgments: List[FlawAcknowledgment]
     references: List[FlawReference]
@@ -54,7 +52,7 @@ class FlawPost(OSIDBModel):
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
-    source: Union[BlankEnum, Source521Enum, Unset] = UNSET
+    source: Union[BlankEnum, SourceBe0Enum, Unset] = UNSET
     reported_dt: Union[Unset, None, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
@@ -93,10 +91,6 @@ class FlawPost(OSIDBModel):
                     comments_item = comments_item_data.to_dict()
 
                 comments.append(comments_item)
-
-        meta_attr: Dict[str, Any] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         package_versions: List[Dict[str, Any]] = UNSET
         if not isinstance(self.package_versions, Unset):
@@ -206,11 +200,11 @@ class FlawPost(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source521Enum):
+        elif isinstance(self.source, SourceBe0Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source521Enum(self.source).value
+                source = SourceBe0Enum(self.source).value
 
         else:
             source = UNSET
@@ -284,8 +278,6 @@ class FlawPost(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
             field_dict["comments"] = comments
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(package_versions, Unset):
             field_dict["package_versions"] = package_versions
         if not isinstance(acknowledgments, Unset):
@@ -377,10 +369,6 @@ class FlawPost(OSIDBModel):
 
                 _temp_comments.append(comments_item)
             comments = (None, json.dumps(_temp_comments), "application/json")
-
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
 
         package_versions: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.package_versions, Unset):
@@ -528,11 +516,11 @@ class FlawPost(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, Source521Enum):
+        elif isinstance(self.source, SourceBe0Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
 
-                source = Source521Enum(self.source).value
+                source = SourceBe0Enum(self.source).value
 
         else:
             source = UNSET
@@ -629,8 +617,6 @@ class FlawPost(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
             field_dict["comments"] = comments
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(package_versions, Unset):
             field_dict["package_versions"] = package_versions
         if not isinstance(acknowledgments, Unset):
@@ -726,13 +712,6 @@ class FlawPost(OSIDBModel):
                     comments_item = Comment.from_dict(_comments_item)
 
                 comments.append(comments_item)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: FlawPostMetaAttr
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = FlawPostMetaAttr.from_dict(_meta_attr)
 
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
@@ -914,18 +893,18 @@ class FlawPost(OSIDBModel):
         else:
             unembargo_dt = isoparse(_unembargo_dt)
 
-        def _parse_source(data: object) -> Union[BlankEnum, Source521Enum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, SourceBe0Enum, Unset]:
             if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: Union[Unset, Source521Enum]
+                source_type_0: Union[Unset, SourceBe0Enum]
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = Source521Enum(_source_type_0)
+                    source_type_0 = SourceBe0Enum(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
@@ -1048,7 +1027,6 @@ class FlawPost(OSIDBModel):
             comment_zero=comment_zero,
             affects=affects,
             comments=comments,
-            meta_attr=meta_attr,
             package_versions=package_versions,
             acknowledgments=acknowledgments,
             references=references,
@@ -1089,7 +1067,6 @@ class FlawPost(OSIDBModel):
             "comment_zero": str,
             "affects": List[Affect],
             "comments": List[Comment],
-            "meta_attr": FlawPostMetaAttr,
             "package_versions": List[Package],
             "acknowledgments": List[FlawAcknowledgment],
             "references": List[FlawReference],
@@ -1106,7 +1083,7 @@ class FlawPost(OSIDBModel):
             "statement": str,
             "cwe_id": str,
             "unembargo_dt": datetime.datetime,
-            "source": Union[BlankEnum, Source521Enum],
+            "source": Union[BlankEnum, SourceBe0Enum],
             "reported_dt": datetime.datetime,
             "mitigation": str,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],

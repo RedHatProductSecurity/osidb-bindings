@@ -4,8 +4,6 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 from dateutil.parser import isoparse
 
-from ..models.audit_pgh_context import AuditPghContext
-from ..models.audit_pgh_diff import AuditPghDiff
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="OsidbApiV1AuditRetrieveResponse200")
@@ -19,10 +17,10 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
     pgh_slug: str
     pgh_obj_model: str
     pgh_label: str
-    pgh_diff: AuditPghDiff
+    pgh_diff: Any
     pgh_data: str
     pgh_obj_id: Union[Unset, None, str] = UNSET
-    pgh_context: Union[Unset, None, AuditPghContext] = UNSET
+    pgh_context: Union[Unset, Any] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -37,15 +35,11 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
         pgh_slug = self.pgh_slug
         pgh_obj_model = self.pgh_obj_model
         pgh_label = self.pgh_label
-        pgh_diff: Dict[str, Any] = UNSET
-        if not isinstance(self.pgh_diff, Unset):
-            pgh_diff = self.pgh_diff.to_dict()
+        pgh_diff = self.pgh_diff
 
         pgh_data = self.pgh_data
         pgh_obj_id = self.pgh_obj_id
-        pgh_context: Union[Unset, None, Dict[str, Any]] = UNSET
-        if not isinstance(self.pgh_context, Unset):
-            pgh_context = self.pgh_context.to_dict() if self.pgh_context else None
+        pgh_context = self.pgh_context
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -100,25 +94,13 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
 
         pgh_label = d.pop("pgh_label", UNSET)
 
-        _pgh_diff = d.pop("pgh_diff", UNSET)
-        pgh_diff: AuditPghDiff
-        if isinstance(_pgh_diff, Unset):
-            pgh_diff = UNSET
-        else:
-            pgh_diff = AuditPghDiff.from_dict(_pgh_diff)
+        pgh_diff = d.pop("pgh_diff", UNSET)
 
         pgh_data = d.pop("pgh_data", UNSET)
 
         pgh_obj_id = d.pop("pgh_obj_id", UNSET)
 
-        _pgh_context = d.pop("pgh_context", UNSET)
-        pgh_context: Union[Unset, None, AuditPghContext]
-        if _pgh_context is None:
-            pgh_context = None
-        elif isinstance(_pgh_context, Unset):
-            pgh_context = UNSET
-        else:
-            pgh_context = AuditPghContext.from_dict(_pgh_context)
+        pgh_context = d.pop("pgh_context", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -158,10 +140,10 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
             "pgh_slug": str,
             "pgh_obj_model": str,
             "pgh_label": str,
-            "pgh_diff": AuditPghDiff,
+            "pgh_diff": Any,
             "pgh_data": str,
             "pgh_obj_id": str,
-            "pgh_context": AuditPghContext,
+            "pgh_context": Any,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

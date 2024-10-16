@@ -6,7 +6,6 @@ import attr
 from dateutil.parser import isoparse
 
 from ..models.affect_cvss import AffectCVSS
-from ..models.affect_post_meta_attr import AffectPostMetaAttr
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.alert import Alert
 from ..models.blank_enum import BlankEnum
@@ -27,7 +26,6 @@ class AffectPost(OSIDBModel):
     ps_product: str
     ps_component: str
     trackers: List[Tracker]
-    meta_attr: AffectPostMetaAttr
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
     embargoed: bool
@@ -53,10 +51,6 @@ class AffectPost(OSIDBModel):
                     trackers_item = trackers_item_data.to_dict()
 
                 trackers.append(trackers_item)
-
-        meta_attr: Dict[str, Any] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = self.meta_attr.to_dict()
 
         delegated_resolution = self.delegated_resolution
         cvss_scores: List[Dict[str, Any]] = UNSET
@@ -142,8 +136,6 @@ class AffectPost(OSIDBModel):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
@@ -192,10 +184,6 @@ class AffectPost(OSIDBModel):
 
                 _temp_trackers.append(trackers_item)
             trackers = (None, json.dumps(_temp_trackers), "application/json")
-
-        meta_attr: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.meta_attr, Unset):
-            meta_attr = (None, json.dumps(self.meta_attr.to_dict()), "application/json")
 
         delegated_resolution = (
             self.delegated_resolution
@@ -296,8 +284,6 @@ class AffectPost(OSIDBModel):
             field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
-        if not isinstance(meta_attr, Unset):
-            field_dict["meta_attr"] = meta_attr
         if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
@@ -344,13 +330,6 @@ class AffectPost(OSIDBModel):
                     trackers_item = Tracker.from_dict(_trackers_item)
 
                 trackers.append(trackers_item)
-
-        _meta_attr = d.pop("meta_attr", UNSET)
-        meta_attr: AffectPostMetaAttr
-        if isinstance(_meta_attr, Unset):
-            meta_attr = UNSET
-        else:
-            meta_attr = AffectPostMetaAttr.from_dict(_meta_attr)
 
         delegated_resolution = d.pop("delegated_resolution", UNSET)
 
@@ -490,7 +469,6 @@ class AffectPost(OSIDBModel):
             ps_product=ps_product,
             ps_component=ps_component,
             trackers=trackers,
-            meta_attr=meta_attr,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             embargoed=embargoed,
@@ -513,7 +491,6 @@ class AffectPost(OSIDBModel):
             "ps_product": str,
             "ps_component": str,
             "trackers": List[Tracker],
-            "meta_attr": AffectPostMetaAttr,
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
             "embargoed": bool,

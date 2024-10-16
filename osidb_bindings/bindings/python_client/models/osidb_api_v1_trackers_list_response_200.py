@@ -14,10 +14,10 @@ T = TypeVar("T", bound="OsidbApiV1TrackersListResponse200")
 class OsidbApiV1TrackersListResponse200(OSIDBModel):
     """ """
 
-    count: Union[Unset, int] = UNSET
+    count: int
+    results: List[Tracker]
     next_: Union[Unset, None, str] = UNSET
     previous: Union[Unset, None, str] = UNSET
-    results: Union[Unset, List[Tracker]] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -26,9 +26,7 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
 
     def to_dict(self) -> Dict[str, Any]:
         count = self.count
-        next_ = self.next_
-        previous = self.previous
-        results: Union[Unset, List[Dict[str, Any]]] = UNSET
+        results: List[Dict[str, Any]] = UNSET
         if not isinstance(self.results, Unset):
             results = []
             for results_item_data in self.results:
@@ -38,6 +36,8 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
 
                 results.append(results_item)
 
+        next_ = self.next_
+        previous = self.previous
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -50,12 +50,12 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(count, Unset):
             field_dict["count"] = count
+        if not isinstance(results, Unset):
+            field_dict["results"] = results
         if not isinstance(next_, Unset):
             field_dict["next"] = next_
         if not isinstance(previous, Unset):
             field_dict["previous"] = previous
-        if not isinstance(results, Unset):
-            field_dict["results"] = results
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -72,10 +72,6 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
         d = src_dict.copy()
         count = d.pop("count", UNSET)
 
-        next_ = d.pop("next", UNSET)
-
-        previous = d.pop("previous", UNSET)
-
         results = []
         _results = d.pop("results", UNSET)
         if _results is UNSET:
@@ -90,6 +86,10 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
                     results_item = Tracker.from_dict(_results_item)
 
                 results.append(results_item)
+
+        next_ = d.pop("next", UNSET)
+
+        previous = d.pop("previous", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -106,9 +106,9 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
 
         osidb_api_v1_trackers_list_response_200 = cls(
             count=count,
+            results=results,
             next_=next_,
             previous=previous,
-            results=results,
             dt=dt,
             env=env,
             revision=revision,
@@ -122,9 +122,9 @@ class OsidbApiV1TrackersListResponse200(OSIDBModel):
     def get_fields():
         return {
             "count": int,
+            "results": List[Tracker],
             "next": str,
             "previous": str,
-            "results": List[Tracker],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

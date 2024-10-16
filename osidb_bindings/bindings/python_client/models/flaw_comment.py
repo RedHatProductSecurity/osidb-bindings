@@ -22,7 +22,7 @@ class FlawComment(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
-    order: Union[Unset, None, int] = UNSET
+    order: Union[Unset, int] = UNSET
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
