@@ -24,7 +24,6 @@ class Affect(OSIDBModel):
     uuid: str
     ps_module: str
     ps_product: str
-    ps_component: str
     trackers: List[Tracker]
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
@@ -35,14 +34,15 @@ class Affect(OSIDBModel):
     flaw: Optional[str]
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
+    ps_component: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
+    purl: Union[Unset, None, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         uuid = self.uuid
         ps_module = self.ps_module
         ps_product = self.ps_product
-        ps_component = self.ps_component
         trackers: List[Dict[str, Any]] = UNSET
         if not isinstance(self.trackers, Unset):
             trackers = []
@@ -114,6 +114,7 @@ class Affect(OSIDBModel):
 
                 resolution = BlankEnum(self.resolution).value
 
+        ps_component = self.ps_component
         impact: Union[Unset, str]
         if isinstance(self.impact, Unset):
             impact = UNSET
@@ -129,6 +130,8 @@ class Affect(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
+        purl = self.purl
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
@@ -137,8 +140,6 @@ class Affect(OSIDBModel):
             field_dict["ps_module"] = ps_module
         if not isinstance(ps_product, Unset):
             field_dict["ps_product"] = ps_product
-        if not isinstance(ps_component, Unset):
-            field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
         if not isinstance(delegated_resolution, Unset):
@@ -159,8 +160,12 @@ class Affect(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(ps_component, Unset):
+            field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
+        if not isinstance(purl, Unset):
+            field_dict["purl"] = purl
 
         return field_dict
 
@@ -175,11 +180,6 @@ class Affect(OSIDBModel):
             self.ps_product
             if self.ps_product is UNSET
             else (None, str(self.ps_product), "text/plain")
-        )
-        ps_component = (
-            self.ps_component
-            if self.ps_component is UNSET
-            else (None, str(self.ps_component), "text/plain")
         )
         trackers: Union[Unset, Tuple[None, str, str]] = UNSET
         if not isinstance(self.trackers, Unset):
@@ -263,6 +263,11 @@ class Affect(OSIDBModel):
 
                 resolution = BlankEnum(self.resolution).value
 
+        ps_component = (
+            self.ps_component
+            if self.ps_component is UNSET
+            else (None, str(self.ps_component), "text/plain")
+        )
         impact: Union[Unset, str]
         if isinstance(self.impact, Unset):
             impact = UNSET
@@ -278,6 +283,8 @@ class Affect(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
+        purl = self.purl if self.purl is UNSET else (None, str(self.purl), "text/plain")
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(
             {
@@ -291,8 +298,6 @@ class Affect(OSIDBModel):
             field_dict["ps_module"] = ps_module
         if not isinstance(ps_product, Unset):
             field_dict["ps_product"] = ps_product
-        if not isinstance(ps_component, Unset):
-            field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
         if not isinstance(delegated_resolution, Unset):
@@ -313,8 +318,12 @@ class Affect(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(ps_component, Unset):
+            field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
+        if not isinstance(purl, Unset):
+            field_dict["purl"] = purl
 
         return field_dict
 
@@ -326,8 +335,6 @@ class Affect(OSIDBModel):
         ps_module = d.pop("ps_module", UNSET)
 
         ps_product = d.pop("ps_product", UNSET)
-
-        ps_component = d.pop("ps_component", UNSET)
 
         trackers = []
         _trackers = d.pop("trackers", UNSET)
@@ -454,6 +461,8 @@ class Affect(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
+        ps_component = d.pop("ps_component", UNSET)
+
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
             if isinstance(data, Unset):
                 return data
@@ -483,11 +492,12 @@ class Affect(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
+        purl = d.pop("purl", UNSET)
+
         affect = cls(
             uuid=uuid,
             ps_module=ps_module,
             ps_product=ps_product,
-            ps_component=ps_component,
             trackers=trackers,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
@@ -498,7 +508,9 @@ class Affect(OSIDBModel):
             flaw=flaw,
             affectedness=affectedness,
             resolution=resolution,
+            ps_component=ps_component,
             impact=impact,
+            purl=purl,
         )
 
         affect.additional_properties = d
@@ -510,7 +522,6 @@ class Affect(OSIDBModel):
             "uuid": str,
             "ps_module": str,
             "ps_product": str,
-            "ps_component": str,
             "trackers": List[Tracker],
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
@@ -521,7 +532,9 @@ class Affect(OSIDBModel):
             "flaw": str,
             "affectedness": Union[AffectednessEnum, BlankEnum],
             "resolution": Union[BlankEnum, ResolutionEnum],
+            "ps_component": str,
             "impact": Union[BlankEnum, ImpactEnum],
+            "purl": str,
         }
 
     @property
