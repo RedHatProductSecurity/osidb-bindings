@@ -23,7 +23,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
     uuid: str
     ps_module: str
     ps_product: str
-    ps_component: str
     trackers: List[Tracker]
     delegated_resolution: str
     cvss_scores: List[AffectCVSS]
@@ -34,7 +33,9 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
     flaw: Optional[str]
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
+    ps_component: Union[Unset, None, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
+    purl: Union[Unset, None, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -45,7 +46,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
         uuid = self.uuid
         ps_module = self.ps_module
         ps_product = self.ps_product
-        ps_component = self.ps_component
         trackers: List[Dict[str, Any]] = UNSET
         if not isinstance(self.trackers, Unset):
             trackers = []
@@ -117,6 +117,7 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
 
                 resolution = BlankEnum(self.resolution).value
 
+        ps_component = self.ps_component
         impact: Union[Unset, str]
         if isinstance(self.impact, Unset):
             impact = UNSET
@@ -132,6 +133,7 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
 
                 impact = BlankEnum(self.impact).value
 
+        purl = self.purl
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -148,8 +150,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             field_dict["ps_module"] = ps_module
         if not isinstance(ps_product, Unset):
             field_dict["ps_product"] = ps_product
-        if not isinstance(ps_component, Unset):
-            field_dict["ps_component"] = ps_component
         if not isinstance(trackers, Unset):
             field_dict["trackers"] = trackers
         if not isinstance(delegated_resolution, Unset):
@@ -170,8 +170,12 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(ps_component, Unset):
+            field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
+        if not isinstance(purl, Unset):
+            field_dict["purl"] = purl
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -191,8 +195,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
         ps_module = d.pop("ps_module", UNSET)
 
         ps_product = d.pop("ps_product", UNSET)
-
-        ps_component = d.pop("ps_component", UNSET)
 
         trackers = []
         _trackers = d.pop("trackers", UNSET)
@@ -319,6 +321,8 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
+        ps_component = d.pop("ps_component", UNSET)
+
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
             if isinstance(data, Unset):
                 return data
@@ -348,6 +352,8 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
+        purl = d.pop("purl", UNSET)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -365,7 +371,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             uuid=uuid,
             ps_module=ps_module,
             ps_product=ps_product,
-            ps_component=ps_component,
             trackers=trackers,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
@@ -376,7 +381,9 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             flaw=flaw,
             affectedness=affectedness,
             resolution=resolution,
+            ps_component=ps_component,
             impact=impact,
+            purl=purl,
             dt=dt,
             env=env,
             revision=revision,
@@ -392,7 +399,6 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             "uuid": str,
             "ps_module": str,
             "ps_product": str,
-            "ps_component": str,
             "trackers": List[Tracker],
             "delegated_resolution": str,
             "cvss_scores": List[AffectCVSS],
@@ -403,7 +409,9 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
             "flaw": str,
             "affectedness": Union[AffectednessEnum, BlankEnum],
             "resolution": Union[BlankEnum, ResolutionEnum],
+            "ps_component": str,
             "impact": Union[BlankEnum, ImpactEnum],
+            "purl": str,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,
