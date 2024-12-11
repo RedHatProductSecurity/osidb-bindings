@@ -3,6 +3,4 @@
 openapi-python-client
 pip-tools
 pytest
-pytest-recording
 tox
-vcrpy
