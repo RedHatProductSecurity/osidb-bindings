@@ -15,9 +15,9 @@ ref=master
 update:
 	@echo "Updating bindings python client"
 	cd $(package_dir) \
-	&& $(openapi-python-client) update --path openapi_schema.yml \
+	&& $(openapi-python-client) generate --overwrite --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
-	--custom-template-path templates
+	--custom-template-path templates_0.22.0
 	touch $(bindings_dir)__init__.py
 
 create:
@@ -25,7 +25,7 @@ create:
 	cd $(package_dir) \
 	&& $(openapi-python-client) generate --path openapi_schema.yml \
 	--config $(shell pwd)/$(package_dir)bindings_config.yml \
-	--custom-template-path templates
+	--custom-template-path templates_0.22.0
 	touch $(bindings_dir)__init__.py
 
 
