@@ -47,5 +47,10 @@ class Response(Generic[T]):
     headers: MutableMapping[str, str]
     parsed: Optional[T]
 
+{# CHANGE START (1) - add base class for OSIDB models #}
+class OSIDBModel:
+    """ Base class for all 'non-primitive' and 'non-enum' models  """
+    pass
 
-__all__ = ["UNSET", "File", "FileJsonType", "Response", "Unset"]
+__all__ = ["UNSET", "File", "FileJsonType", "OSIDBModel", "Response", "Unset"]
+{# CHANGE END (1) #}
