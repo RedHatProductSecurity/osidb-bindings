@@ -2,7 +2,7 @@
     This is a custom template derived from:
     https://github.com/openapi-generators/openapi-python-client/blob/v0.22.0/openapi_python_client/templates/model.py.jinja
 #}
-from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING
+from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,7 +10,9 @@ from attrs import field as _attrs_field
 import json
 {% endif %}
 
-from ..types import UNSET, Unset
+{# CHANGE START (4) - add base class for OSIDB models #}
+from ..types import UNSET, Unset, OSIDBModel
+{# CHANGE END (4) #}
 
 {% for relative in model.relative_imports | sort %}
 {{ relative }}
@@ -59,7 +61,9 @@ T = TypeVar("T", bound="{{ class_name }}")
 {% endmacro %}
 
 @_attrs_define
-class {{ class_name }}:
+{# CHANGE START (5) - add base class for OSIDB models #}
+class {{ class_name }}(OSIDBModel):
+{# CHANGE END (5) #}
     {{ safe_docstring(class_docstring_content(model)) | indent(4) }}
 
     {% for property in model.required_properties + model.optional_properties %}
@@ -102,7 +106,8 @@ for prop_name, prop in self.additional_properties.items():
 field_dict.update(self.additional_properties)
 {% endif %}
 {% endif %}
-{% if model.required_properties | length > 0 or model.optional_properties | length > 0 %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if model.required_properties | length > 0 or model.optional_properties | length > 0 %}
 field_dict.update({
     {% for property in model.required_properties + model.optional_properties %}
     {% if property.required %}
@@ -110,12 +115,15 @@ field_dict.update({
     {% endif %}
     {% endfor %}
 })
-{% endif %}
-{% for property in model.optional_properties %}
-{% if not property.required %}
-if {{ property.python_name }} is not UNSET:
+{% endif %} #}
+{# {% if not property.required %} #}
+{% for property in model.required_properties + model.optional_properties %}
+{# CHANGE START (7) - Check for Unset instance #}
+if not isinstance({{ property.python_name }}, Unset):
+{# CHANGE END (7) #}
     field_dict["{{ property.name }}"] = {{ property.python_name }}
-{% endif %}
+{# {% endif %} #}
+{# CHANGE END (1) #}
 {% endfor %}
 
 return field_dict
@@ -140,11 +148,13 @@ return field_dict
 {% if (model.required_properties or model.optional_properties or model.additional_properties) %}
         d = src_dict.copy()
 {% for property in model.required_properties + model.optional_properties %}
-    {% if property.required %}
+{# CHANGE START (2) - make all the properties treated as non-required #}
+    {# {% if property.required %}
         {% set property_source = 'd.pop("' + property.name + '")' %}
-    {% else %}
+    {% else %} #}
         {% set property_source = 'd.pop("' + property.name + '", UNSET)' %}
-    {% endif %}
+    {# {% endif %} #}
+{# CHANGE END (2) #}
     {% import "property_templates/" + property.template as prop_template %}
     {% if prop_template.construct %}
         {{ prop_template.construct(property, property_source) | indent(8) }}
@@ -184,6 +194,16 @@ return field_dict
     {% endif %}
 {% endif %}
         return {{ module_name }}
+
+    {# CHANGE START (3) - add new static method for fields obtain #}
+    @staticmethod
+    def get_fields():
+        return {
+            {% for property in model.required_properties + model.optional_properties %}
+            "{{ property.name }}": {{ property.get_type_string(no_optional=True) }},
+            {% endfor %}
+        }
+    {# CHANGE END (3) #}
 
     {% if model.additional_properties %}
     @property
