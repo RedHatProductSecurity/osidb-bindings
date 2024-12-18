@@ -16,9 +16,10 @@ isoparse({{ source }}).date()
 
 {% macro transform(property, source, destination, declare_type=True) %}
 {% set transformed = source + ".isoformat()" %}
-{% if property.required %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {% if declare_type %}
 {% set type_annotation = property.get_type_string(json=True) %}
 {{ destination }}: {{ type_annotation }} = UNSET
@@ -27,17 +28,20 @@ isoparse({{ source }}).date()
 {% endif %}
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (1) #}
 {% endmacro %}
 
 {% macro transform_multipart(property, source, destination) %}
 {% set transformed = source + ".isoformat().encode()" %}
-{% if property.required %}
+{# CHANGE START (2) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {% set type_annotation = property.get_type_string(json=True) | replace("str", "bytes") %}
 {{ destination }}: {{ type_annotation }} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (2) #}
 {% endmacro %}

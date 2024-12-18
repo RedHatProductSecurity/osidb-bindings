@@ -17,25 +17,33 @@
 {% macro transform(property, source, destination, declare_type=True, multipart=False) %}
 {% set transformed = source + ".value" %}
 {% set type_string = property.get_type_string(json=True) %}
-{% if property.required %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
+{# CHANGE START (2) - attempt to convert basic types to enums if provided #}
+{% set type_base = property.get_type_string(no_optional=True) %}
+{% set transformed_typed = type_base + "(" +  source  + ").value" %}
 {{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
 if not isinstance({{ source }}, Unset):
-    {{ destination }} = {{ transformed }}
-{% endif %}
+    {{ destination }} = {{ transformed_typed }}
+{# CHANGE END (2) #}
+{# {% endif %} #}
+{# CHANGE END (1) #}
 {% endmacro %}
 
 {% macro transform_multipart(property, source, destination) %}
 {% set transformed = "(None, str(" + source + ".value" + ").encode(), \"text/plain\")" %}
 {% set type_string = "Union[Unset, tuple[None, bytes, str]]" %}
-{% if property.required %}
+{# CHANGE START (3) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {{ destination }}: {{ type_string }} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{% endif %}
+{# {% endif %} #}
+# CHANGE END (3) #}
 {% endmacro %}
 
 {% macro transform_header(source) %}
