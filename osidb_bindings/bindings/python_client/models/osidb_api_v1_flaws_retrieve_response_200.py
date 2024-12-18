@@ -1,62 +1,108 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.affect import Affect
-from ..models.alert import Alert
 from ..models.blank_enum import BlankEnum
-from ..models.comment import Comment
-from ..models.flaw_acknowledgment import FlawAcknowledgment
-from ..models.flaw_classification import FlawClassification
-from ..models.flaw_cvss import FlawCVSS
-from ..models.flaw_reference import FlawReference
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
-from ..models.package import Package
 from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
 from ..models.source_be_0_enum import SourceBe0Enum
 from ..types import UNSET, OSIDBModel, Unset
 
+if TYPE_CHECKING:
+    from ..models.affect import Affect
+    from ..models.alert import Alert
+    from ..models.comment import Comment
+    from ..models.flaw_acknowledgment import FlawAcknowledgment
+    from ..models.flaw_classification import FlawClassification
+    from ..models.flaw_cvss import FlawCVSS
+    from ..models.flaw_reference import FlawReference
+    from ..models.package import Package
+
+
 T = TypeVar("T", bound="OsidbApiV1FlawsRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        uuid (UUID):
+        title (str):
+        trackers (list[str]):
+        comment_zero (str):
+        affects (list['Affect']):
+        comments (list['Comment']):
+        package_versions (list['Package']):
+        acknowledgments (list['FlawAcknowledgment']):
+        references (list['FlawReference']):
+        cvss_scores (list['FlawCVSS']):
+        embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
+            ACLs but is mandatory as it controls the access to the resource.
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
+        classification (FlawClassification):
+        alerts (list['Alert']):
+        cve_id (Union[None, Unset, str]):
+        impact (Union[BlankEnum, ImpactEnum, Unset]):
+        components (Union[Unset, list[str]]):
+        cve_description (Union[Unset, str]):
+        requires_cve_description (Union[BlankEnum, RequiresCveDescriptionEnum, Unset]):
+        statement (Union[Unset, str]):
+        cwe_id (Union[Unset, str]):
+        unembargo_dt (Union[None, Unset, datetime.datetime]):
+        source (Union[BlankEnum, SourceBe0Enum, Unset]):
+        reported_dt (Union[None, Unset, datetime.datetime]):
+        mitigation (Union[Unset, str]):
+        major_incident_state (Union[BlankEnum, MajorIncidentStateEnum, Unset]):
+        major_incident_start_dt (Union[None, Unset, datetime.datetime]):
+        nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
+        group_key (Union[Unset, str]):
+        owner (Union[Unset, str]):
+        task_key (Union[Unset, str]):
+        team_id (Union[Unset, str]):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
-    uuid: str
+    uuid: UUID
     title: str
-    trackers: List[str]
+    trackers: list[str]
     comment_zero: str
-    affects: List[Affect]
-    comments: List[Comment]
-    package_versions: List[Package]
-    acknowledgments: List[FlawAcknowledgment]
-    references: List[FlawReference]
-    cvss_scores: List[FlawCVSS]
+    affects: list["Affect"]
+    comments: list["Comment"]
+    package_versions: list["Package"]
+    acknowledgments: list["FlawAcknowledgment"]
+    references: list["FlawReference"]
+    cvss_scores: list["FlawCVSS"]
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    classification: FlawClassification
-    alerts: List[Alert]
-    cve_id: Union[Unset, None, str] = UNSET
+    classification: "FlawClassification"
+    alerts: list["Alert"]
+    cve_id: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
-    components: Union[Unset, List[str]] = UNSET
+    components: Union[Unset, list[str]] = UNSET
     cve_description: Union[Unset, str] = UNSET
-    requires_cve_description: Union[
-        BlankEnum, RequiresCveDescriptionEnum, Unset
-    ] = UNSET
+    requires_cve_description: Union[BlankEnum, RequiresCveDescriptionEnum, Unset] = (
+        UNSET
+    )
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
-    unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET
+    unembargo_dt: Union[None, Unset, datetime.datetime] = UNSET
     source: Union[BlankEnum, SourceBe0Enum, Unset] = UNSET
-    reported_dt: Union[Unset, None, datetime.datetime] = UNSET
+    reported_dt: Union[None, Unset, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
-    major_incident_start_dt: Union[Unset, None, datetime.datetime] = UNSET
+    major_incident_start_dt: Union[None, Unset, datetime.datetime] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
@@ -66,77 +112,83 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        uuid = self.uuid
+    def to_dict(self) -> dict[str, Any]:
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         title = self.title
-        trackers: List[str] = UNSET
+
+        trackers: list[str] = UNSET
         if not isinstance(self.trackers, Unset):
             trackers = self.trackers
 
         comment_zero = self.comment_zero
-        affects: List[Dict[str, Any]] = UNSET
+
+        affects: list[dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
             for affects_item_data in self.affects:
-                affects_item: Dict[str, Any] = UNSET
+                affects_item: dict[str, Any] = UNSET
                 if not isinstance(affects_item_data, Unset):
                     affects_item = affects_item_data.to_dict()
 
                 affects.append(affects_item)
 
-        comments: List[Dict[str, Any]] = UNSET
+        comments: list[dict[str, Any]] = UNSET
         if not isinstance(self.comments, Unset):
             comments = []
             for comments_item_data in self.comments:
-                comments_item: Dict[str, Any] = UNSET
+                comments_item: dict[str, Any] = UNSET
                 if not isinstance(comments_item_data, Unset):
                     comments_item = comments_item_data.to_dict()
 
                 comments.append(comments_item)
 
-        package_versions: List[Dict[str, Any]] = UNSET
+        package_versions: list[dict[str, Any]] = UNSET
         if not isinstance(self.package_versions, Unset):
             package_versions = []
             for package_versions_item_data in self.package_versions:
-                package_versions_item: Dict[str, Any] = UNSET
+                package_versions_item: dict[str, Any] = UNSET
                 if not isinstance(package_versions_item_data, Unset):
                     package_versions_item = package_versions_item_data.to_dict()
 
                 package_versions.append(package_versions_item)
 
-        acknowledgments: List[Dict[str, Any]] = UNSET
+        acknowledgments: list[dict[str, Any]] = UNSET
         if not isinstance(self.acknowledgments, Unset):
             acknowledgments = []
             for acknowledgments_item_data in self.acknowledgments:
-                acknowledgments_item: Dict[str, Any] = UNSET
+                acknowledgments_item: dict[str, Any] = UNSET
                 if not isinstance(acknowledgments_item_data, Unset):
                     acknowledgments_item = acknowledgments_item_data.to_dict()
 
                 acknowledgments.append(acknowledgments_item)
 
-        references: List[Dict[str, Any]] = UNSET
+        references: list[dict[str, Any]] = UNSET
         if not isinstance(self.references, Unset):
             references = []
             for references_item_data in self.references:
-                references_item: Dict[str, Any] = UNSET
+                references_item: dict[str, Any] = UNSET
                 if not isinstance(references_item_data, Unset):
                     references_item = references_item_data.to_dict()
 
                 references.append(references_item)
 
-        cvss_scores: List[Dict[str, Any]] = UNSET
+        cvss_scores: list[dict[str, Any]] = UNSET
         if not isinstance(self.cvss_scores, Unset):
             cvss_scores = []
             for cvss_scores_item_data in self.cvss_scores:
-                cvss_scores_item: Dict[str, Any] = UNSET
+                cvss_scores_item: dict[str, Any] = UNSET
                 if not isinstance(cvss_scores_item_data, Unset):
                     cvss_scores_item = cvss_scores_item_data.to_dict()
 
                 cvss_scores.append(cvss_scores_item)
 
         embargoed = self.embargoed
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -145,48 +197,51 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        classification: Dict[str, Any] = UNSET
+        classification: dict[str, Any] = UNSET
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
 
-        alerts: List[Dict[str, Any]] = UNSET
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
                 alerts.append(alerts_item)
 
-        cve_id = self.cve_id
+        cve_id: Union[None, Unset, str]
+        if isinstance(self.cve_id, Unset):
+            cve_id = UNSET
+        else:
+            cve_id = self.cve_id
+
         impact: Union[Unset, str]
         if isinstance(self.impact, Unset):
             impact = UNSET
         elif isinstance(self.impact, ImpactEnum):
             impact = UNSET
             if not isinstance(self.impact, Unset):
-
                 impact = ImpactEnum(self.impact).value
 
         else:
             impact = UNSET
             if not isinstance(self.impact, Unset):
-
                 impact = BlankEnum(self.impact).value
 
-        components: Union[Unset, List[str]] = UNSET
+        components: Union[Unset, list[str]] = UNSET
         if not isinstance(self.components, Unset):
             components = self.components
 
         cve_description = self.cve_description
+
         requires_cve_description: Union[Unset, str]
         if isinstance(self.requires_cve_description, Unset):
             requires_cve_description = UNSET
         elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
             requires_cve_description = UNSET
             if not isinstance(self.requires_cve_description, Unset):
-
                 requires_cve_description = RequiresCveDescriptionEnum(
                     self.requires_cve_description
                 ).value
@@ -194,16 +249,24 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         else:
             requires_cve_description = UNSET
             if not isinstance(self.requires_cve_description, Unset):
-
                 requires_cve_description = BlankEnum(
                     self.requires_cve_description
                 ).value
 
         statement = self.statement
+
         cwe_id = self.cwe_id
-        unembargo_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.unembargo_dt, Unset):
-            unembargo_dt = self.unembargo_dt.isoformat() if self.unembargo_dt else None
+
+        unembargo_dt: Union[None, Unset, str]
+        if isinstance(self.unembargo_dt, Unset):
+            unembargo_dt = UNSET
+        elif isinstance(self.unembargo_dt, datetime.datetime):
+            unembargo_dt = UNSET
+            if not isinstance(self.unembargo_dt, Unset):
+                unembargo_dt = self.unembargo_dt.isoformat()
+
+        else:
+            unembargo_dt = self.unembargo_dt
 
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
@@ -211,27 +274,32 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         elif isinstance(self.source, SourceBe0Enum):
             source = UNSET
             if not isinstance(self.source, Unset):
-
                 source = SourceBe0Enum(self.source).value
 
         else:
             source = UNSET
             if not isinstance(self.source, Unset):
-
                 source = BlankEnum(self.source).value
 
-        reported_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.reported_dt, Unset):
-            reported_dt = self.reported_dt.isoformat() if self.reported_dt else None
+        reported_dt: Union[None, Unset, str]
+        if isinstance(self.reported_dt, Unset):
+            reported_dt = UNSET
+        elif isinstance(self.reported_dt, datetime.datetime):
+            reported_dt = UNSET
+            if not isinstance(self.reported_dt, Unset):
+                reported_dt = self.reported_dt.isoformat()
+
+        else:
+            reported_dt = self.reported_dt
 
         mitigation = self.mitigation
+
         major_incident_state: Union[Unset, str]
         if isinstance(self.major_incident_state, Unset):
             major_incident_state = UNSET
         elif isinstance(self.major_incident_state, MajorIncidentStateEnum):
             major_incident_state = UNSET
             if not isinstance(self.major_incident_state, Unset):
-
                 major_incident_state = MajorIncidentStateEnum(
                     self.major_incident_state
                 ).value
@@ -239,16 +307,18 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         else:
             major_incident_state = UNSET
             if not isinstance(self.major_incident_state, Unset):
-
                 major_incident_state = BlankEnum(self.major_incident_state).value
 
-        major_incident_start_dt: Union[Unset, None, str] = UNSET
-        if not isinstance(self.major_incident_start_dt, Unset):
-            major_incident_start_dt = (
-                self.major_incident_start_dt.isoformat()
-                if self.major_incident_start_dt
-                else None
-            )
+        major_incident_start_dt: Union[None, Unset, str]
+        if isinstance(self.major_incident_start_dt, Unset):
+            major_incident_start_dt = UNSET
+        elif isinstance(self.major_incident_start_dt, datetime.datetime):
+            major_incident_start_dt = UNSET
+            if not isinstance(self.major_incident_start_dt, Unset):
+                major_incident_start_dt = self.major_incident_start_dt.isoformat()
+
+        else:
+            major_incident_start_dt = self.major_incident_start_dt
 
         nist_cvss_validation: Union[Unset, str]
         if isinstance(self.nist_cvss_validation, Unset):
@@ -256,7 +326,6 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         elif isinstance(self.nist_cvss_validation, NistCvssValidationEnum):
             nist_cvss_validation = UNSET
             if not isinstance(self.nist_cvss_validation, Unset):
-
                 nist_cvss_validation = NistCvssValidationEnum(
                     self.nist_cvss_validation
                 ).value
@@ -264,22 +333,27 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         else:
             nist_cvss_validation = UNSET
             if not isinstance(self.nist_cvss_validation, Unset):
-
                 nist_cvss_validation = BlankEnum(self.nist_cvss_validation).value
 
         group_key = self.group_key
+
         owner = self.owner
+
         task_key = self.task_key
+
         team_id = self.team_id
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
@@ -359,110 +433,114 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect import Affect
+        from ..models.alert import Alert
+        from ..models.comment import Comment
+        from ..models.flaw_acknowledgment import FlawAcknowledgment
+        from ..models.flaw_classification import FlawClassification
+        from ..models.flaw_cvss import FlawCVSS
+        from ..models.flaw_reference import FlawReference
+        from ..models.package import Package
+
         d = src_dict.copy()
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         title = d.pop("title", UNSET)
 
-        trackers = cast(List[str], d.pop("trackers", UNSET))
+        trackers = cast(list[str], d.pop("trackers", UNSET))
 
         comment_zero = d.pop("comment_zero", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
-        if _affects is UNSET:
-            affects = UNSET
-        else:
-            for affects_item_data in _affects or []:
-                _affects_item = affects_item_data
-                affects_item: Affect
-                if isinstance(_affects_item, Unset):
-                    affects_item = UNSET
-                else:
-                    affects_item = Affect.from_dict(_affects_item)
+        for affects_item_data in _affects or []:
+            # }
+            _affects_item = affects_item_data
+            affects_item: Affect
+            if isinstance(_affects_item, Unset):
+                affects_item = UNSET
+            else:
+                affects_item = Affect.from_dict(_affects_item)
 
-                affects.append(affects_item)
+            affects.append(affects_item)
 
         comments = []
         _comments = d.pop("comments", UNSET)
-        if _comments is UNSET:
-            comments = UNSET
-        else:
-            for comments_item_data in _comments or []:
-                _comments_item = comments_item_data
-                comments_item: Comment
-                if isinstance(_comments_item, Unset):
-                    comments_item = UNSET
-                else:
-                    comments_item = Comment.from_dict(_comments_item)
+        for comments_item_data in _comments or []:
+            # }
+            _comments_item = comments_item_data
+            comments_item: Comment
+            if isinstance(_comments_item, Unset):
+                comments_item = UNSET
+            else:
+                comments_item = Comment.from_dict(_comments_item)
 
-                comments.append(comments_item)
+            comments.append(comments_item)
 
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
-        if _package_versions is UNSET:
-            package_versions = UNSET
-        else:
-            for package_versions_item_data in _package_versions or []:
-                _package_versions_item = package_versions_item_data
-                package_versions_item: Package
-                if isinstance(_package_versions_item, Unset):
-                    package_versions_item = UNSET
-                else:
-                    package_versions_item = Package.from_dict(_package_versions_item)
+        for package_versions_item_data in _package_versions or []:
+            # }
+            _package_versions_item = package_versions_item_data
+            package_versions_item: Package
+            if isinstance(_package_versions_item, Unset):
+                package_versions_item = UNSET
+            else:
+                package_versions_item = Package.from_dict(_package_versions_item)
 
-                package_versions.append(package_versions_item)
+            package_versions.append(package_versions_item)
 
         acknowledgments = []
         _acknowledgments = d.pop("acknowledgments", UNSET)
-        if _acknowledgments is UNSET:
-            acknowledgments = UNSET
-        else:
-            for acknowledgments_item_data in _acknowledgments or []:
-                _acknowledgments_item = acknowledgments_item_data
-                acknowledgments_item: FlawAcknowledgment
-                if isinstance(_acknowledgments_item, Unset):
-                    acknowledgments_item = UNSET
-                else:
-                    acknowledgments_item = FlawAcknowledgment.from_dict(
-                        _acknowledgments_item
-                    )
+        for acknowledgments_item_data in _acknowledgments or []:
+            # }
+            _acknowledgments_item = acknowledgments_item_data
+            acknowledgments_item: FlawAcknowledgment
+            if isinstance(_acknowledgments_item, Unset):
+                acknowledgments_item = UNSET
+            else:
+                acknowledgments_item = FlawAcknowledgment.from_dict(
+                    _acknowledgments_item
+                )
 
-                acknowledgments.append(acknowledgments_item)
+            acknowledgments.append(acknowledgments_item)
 
         references = []
         _references = d.pop("references", UNSET)
-        if _references is UNSET:
-            references = UNSET
-        else:
-            for references_item_data in _references or []:
-                _references_item = references_item_data
-                references_item: FlawReference
-                if isinstance(_references_item, Unset):
-                    references_item = UNSET
-                else:
-                    references_item = FlawReference.from_dict(_references_item)
+        for references_item_data in _references or []:
+            # }
+            _references_item = references_item_data
+            references_item: FlawReference
+            if isinstance(_references_item, Unset):
+                references_item = UNSET
+            else:
+                references_item = FlawReference.from_dict(_references_item)
 
-                references.append(references_item)
+            references.append(references_item)
 
         cvss_scores = []
         _cvss_scores = d.pop("cvss_scores", UNSET)
-        if _cvss_scores is UNSET:
-            cvss_scores = UNSET
-        else:
-            for cvss_scores_item_data in _cvss_scores or []:
-                _cvss_scores_item = cvss_scores_item_data
-                cvss_scores_item: FlawCVSS
-                if isinstance(_cvss_scores_item, Unset):
-                    cvss_scores_item = UNSET
-                else:
-                    cvss_scores_item = FlawCVSS.from_dict(_cvss_scores_item)
+        for cvss_scores_item_data in _cvss_scores or []:
+            # }
+            _cvss_scores_item = cvss_scores_item_data
+            cvss_scores_item: FlawCVSS
+            if isinstance(_cvss_scores_item, Unset):
+                cvss_scores_item = UNSET
+            else:
+                cvss_scores_item = FlawCVSS.from_dict(_cvss_scores_item)
 
-                cvss_scores.append(cvss_scores_item)
+            cvss_scores.append(cvss_scores_item)
 
         embargoed = d.pop("embargoed", UNSET)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -470,6 +548,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
+        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -477,6 +556,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
+        # }
         _classification = d.pop("classification", UNSET)
         classification: FlawClassification
         if isinstance(_classification, Unset):
@@ -486,20 +566,25 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
-        cve_id = d.pop("cve_id", UNSET)
+        def _parse_cve_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        cve_id = _parse_cve_id(d.pop("cve_id", UNSET))
 
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
             if isinstance(data, Unset):
@@ -507,8 +592,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _impact_type_0 = data
-                impact_type_0: Union[Unset, ImpactEnum]
+                impact_type_0: ImpactEnum
                 if isinstance(_impact_type_0, Unset):
                     impact_type_0 = UNSET
                 else:
@@ -519,8 +605,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _impact_type_1 = data
-            impact_type_1: Union[Unset, BlankEnum]
+            impact_type_1: BlankEnum
             if isinstance(_impact_type_1, Unset):
                 impact_type_1 = UNSET
             else:
@@ -530,7 +617,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
 
         impact = _parse_impact(d.pop("impact", UNSET))
 
-        components = cast(List[str], d.pop("components", UNSET))
+        components = cast(list[str], d.pop("components", UNSET))
 
         cve_description = d.pop("cve_description", UNSET)
 
@@ -542,10 +629,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _requires_cve_description_type_0 = data
-                requires_cve_description_type_0: Union[
-                    Unset, RequiresCveDescriptionEnum
-                ]
+                requires_cve_description_type_0: RequiresCveDescriptionEnum
                 if isinstance(_requires_cve_description_type_0, Unset):
                     requires_cve_description_type_0 = UNSET
                 else:
@@ -558,8 +644,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _requires_cve_description_type_1 = data
-            requires_cve_description_type_1: Union[Unset, BlankEnum]
+            requires_cve_description_type_1: BlankEnum
             if isinstance(_requires_cve_description_type_1, Unset):
                 requires_cve_description_type_1 = UNSET
             else:
@@ -577,14 +664,28 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
 
         cwe_id = d.pop("cwe_id", UNSET)
 
-        _unembargo_dt = d.pop("unembargo_dt", UNSET)
-        unembargo_dt: Union[Unset, None, datetime.datetime]
-        if _unembargo_dt is None:
-            unembargo_dt = None
-        elif isinstance(_unembargo_dt, Unset):
-            unembargo_dt = UNSET
-        else:
-            unembargo_dt = isoparse(_unembargo_dt)
+        def _parse_unembargo_dt(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _unembargo_dt_type_0 = data
+                unembargo_dt_type_0: datetime.datetime
+                if isinstance(_unembargo_dt_type_0, Unset):
+                    unembargo_dt_type_0 = UNSET
+                else:
+                    unembargo_dt_type_0 = isoparse(_unembargo_dt_type_0)
+
+                return unembargo_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        unembargo_dt = _parse_unembargo_dt(d.pop("unembargo_dt", UNSET))
 
         def _parse_source(data: object) -> Union[BlankEnum, SourceBe0Enum, Unset]:
             if isinstance(data, Unset):
@@ -592,8 +693,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _source_type_0 = data
-                source_type_0: Union[Unset, SourceBe0Enum]
+                source_type_0: SourceBe0Enum
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
@@ -604,8 +706,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _source_type_1 = data
-            source_type_1: Union[Unset, BlankEnum]
+            source_type_1: BlankEnum
             if isinstance(_source_type_1, Unset):
                 source_type_1 = UNSET
             else:
@@ -615,14 +718,28 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
 
         source = _parse_source(d.pop("source", UNSET))
 
-        _reported_dt = d.pop("reported_dt", UNSET)
-        reported_dt: Union[Unset, None, datetime.datetime]
-        if _reported_dt is None:
-            reported_dt = None
-        elif isinstance(_reported_dt, Unset):
-            reported_dt = UNSET
-        else:
-            reported_dt = isoparse(_reported_dt)
+        def _parse_reported_dt(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _reported_dt_type_0 = data
+                reported_dt_type_0: datetime.datetime
+                if isinstance(_reported_dt_type_0, Unset):
+                    reported_dt_type_0 = UNSET
+                else:
+                    reported_dt_type_0 = isoparse(_reported_dt_type_0)
+
+                return reported_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        reported_dt = _parse_reported_dt(d.pop("reported_dt", UNSET))
 
         mitigation = d.pop("mitigation", UNSET)
 
@@ -634,8 +751,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _major_incident_state_type_0 = data
-                major_incident_state_type_0: Union[Unset, MajorIncidentStateEnum]
+                major_incident_state_type_0: MajorIncidentStateEnum
                 if isinstance(_major_incident_state_type_0, Unset):
                     major_incident_state_type_0 = UNSET
                 else:
@@ -648,8 +766,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _major_incident_state_type_1 = data
-            major_incident_state_type_1: Union[Unset, BlankEnum]
+            major_incident_state_type_1: BlankEnum
             if isinstance(_major_incident_state_type_1, Unset):
                 major_incident_state_type_1 = UNSET
             else:
@@ -661,14 +780,34 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             d.pop("major_incident_state", UNSET)
         )
 
-        _major_incident_start_dt = d.pop("major_incident_start_dt", UNSET)
-        major_incident_start_dt: Union[Unset, None, datetime.datetime]
-        if _major_incident_start_dt is None:
-            major_incident_start_dt = None
-        elif isinstance(_major_incident_start_dt, Unset):
-            major_incident_start_dt = UNSET
-        else:
-            major_incident_start_dt = isoparse(_major_incident_start_dt)
+        def _parse_major_incident_start_dt(
+            data: object,
+        ) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _major_incident_start_dt_type_0 = data
+                major_incident_start_dt_type_0: datetime.datetime
+                if isinstance(_major_incident_start_dt_type_0, Unset):
+                    major_incident_start_dt_type_0 = UNSET
+                else:
+                    major_incident_start_dt_type_0 = isoparse(
+                        _major_incident_start_dt_type_0
+                    )
+
+                return major_incident_start_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        major_incident_start_dt = _parse_major_incident_start_dt(
+            d.pop("major_incident_start_dt", UNSET)
+        )
 
         def _parse_nist_cvss_validation(
             data: object,
@@ -678,8 +817,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _nist_cvss_validation_type_0 = data
-                nist_cvss_validation_type_0: Union[Unset, NistCvssValidationEnum]
+                nist_cvss_validation_type_0: NistCvssValidationEnum
                 if isinstance(_nist_cvss_validation_type_0, Unset):
                     nist_cvss_validation_type_0 = UNSET
                 else:
@@ -692,8 +832,9 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _nist_cvss_validation_type_1 = data
-            nist_cvss_validation_type_1: Union[Unset, BlankEnum]
+            nist_cvss_validation_type_1: BlankEnum
             if isinstance(_nist_cvss_validation_type_1, Unset):
                 nist_cvss_validation_type_1 = UNSET
             else:
@@ -713,6 +854,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
 
         team_id = d.pop("team_id", UNSET)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -772,34 +914,34 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "uuid": str,
+            "uuid": UUID,
             "title": str,
-            "trackers": List[str],
+            "trackers": list[str],
             "comment_zero": str,
-            "affects": List[Affect],
-            "comments": List[Comment],
-            "package_versions": List[Package],
-            "acknowledgments": List[FlawAcknowledgment],
-            "references": List[FlawReference],
-            "cvss_scores": List[FlawCVSS],
+            "affects": list["Affect"],
+            "comments": list["Comment"],
+            "package_versions": list["Package"],
+            "acknowledgments": list["FlawAcknowledgment"],
+            "references": list["FlawReference"],
+            "cvss_scores": list["FlawCVSS"],
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
-            "alerts": List[Alert],
-            "cve_id": str,
+            "alerts": list["Alert"],
+            "cve_id": Union[None, str],
             "impact": Union[BlankEnum, ImpactEnum],
-            "components": List[str],
+            "components": list[str],
             "cve_description": str,
             "requires_cve_description": Union[BlankEnum, RequiresCveDescriptionEnum],
             "statement": str,
             "cwe_id": str,
-            "unembargo_dt": datetime.datetime,
+            "unembargo_dt": Union[None, datetime.datetime],
             "source": Union[BlankEnum, SourceBe0Enum],
-            "reported_dt": datetime.datetime,
+            "reported_dt": Union[None, datetime.datetime],
             "mitigation": str,
             "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
-            "major_incident_start_dt": datetime.datetime,
+            "major_incident_start_dt": Union[None, datetime.datetime],
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
             "group_key": str,
             "owner": str,
@@ -812,7 +954,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

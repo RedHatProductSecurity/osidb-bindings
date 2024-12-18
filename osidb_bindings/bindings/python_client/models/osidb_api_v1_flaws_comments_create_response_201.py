@@ -1,24 +1,48 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+
 
 T = TypeVar("T", bound="OsidbApiV1FlawsCommentsCreateResponse201")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        flaw (UUID):
+        text (str):
+        uuid (UUID):
+        external_system_id (str):
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
+        embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
+            ACLs but is mandatory as it controls the access to the resource.
+        order (Union[Unset, int]):
+        creator (Union[Unset, str]):
+        is_private (Union[Unset, bool]):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
-    flaw: str
+    flaw: UUID
     text: str
-    uuid: str
+    uuid: UUID
     external_system_id: str
-    alerts: List[Alert]
+    alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
@@ -29,18 +53,26 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        flaw = self.flaw
+    def to_dict(self) -> dict[str, Any]:
+        flaw: str = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
+
         text = self.text
-        uuid = self.uuid
+
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         external_system_id = self.external_system_id
-        alerts: List[Dict[str, Any]] = UNSET
+
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
@@ -55,18 +87,24 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             updated_dt = self.updated_dt.isoformat()
 
         embargoed = self.embargoed
+
         order = self.order
+
         creator = self.creator
+
         is_private = self.is_private
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
@@ -102,31 +140,44 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+
         d = src_dict.copy()
-        flaw = d.pop("flaw", UNSET)
+        # }
+        _flaw = d.pop("flaw", UNSET)
+        flaw: UUID
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = UUID(_flaw)
 
         text = d.pop("text", UNSET)
 
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         external_system_id = d.pop("external_system_id", UNSET)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -134,6 +185,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
+        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -149,6 +201,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
 
         is_private = d.pop("is_private", UNSET)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -186,11 +239,11 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "flaw": str,
+            "flaw": UUID,
             "text": str,
-            "uuid": str,
+            "uuid": UUID,
             "external_system_id": str,
-            "alerts": List[Alert],
+            "alerts": list["Alert"],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "embargoed": bool,
@@ -204,7 +257,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,32 +1,43 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.affect import Affect
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.affect import Affect
+
 
 T = TypeVar("T", bound="OsidbApiV1AffectsBulkCreateResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1AffectsBulkCreateResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        results (list['Affect']):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
-    results: List[Affect]
+    results: list["Affect"]
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        results: List[Dict[str, Any]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        results: list[dict[str, Any]] = UNSET
         if not isinstance(self.results, Unset):
             results = []
             for results_item_data in self.results:
-                results_item: Dict[str, Any] = UNSET
+                results_item: dict[str, Any] = UNSET
                 if not isinstance(results_item_data, Unset):
                     results_item = results_item_data.to_dict()
 
@@ -37,10 +48,12 @@ class OsidbApiV1AffectsBulkCreateResponse200(OSIDBModel):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(results, Unset):
             field_dict["results"] = results
@@ -56,23 +69,24 @@ class OsidbApiV1AffectsBulkCreateResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect import Affect
+
         d = src_dict.copy()
         results = []
         _results = d.pop("results", UNSET)
-        if _results is UNSET:
-            results = UNSET
-        else:
-            for results_item_data in _results or []:
-                _results_item = results_item_data
-                results_item: Affect
-                if isinstance(_results_item, Unset):
-                    results_item = UNSET
-                else:
-                    results_item = Affect.from_dict(_results_item)
+        for results_item_data in _results or []:
+            # }
+            _results_item = results_item_data
+            results_item: Affect
+            if isinstance(_results_item, Unset):
+                results_item = UNSET
+            else:
+                results_item = Affect.from_dict(_results_item)
 
-                results.append(results_item)
+            results.append(results_item)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -100,7 +114,7 @@ class OsidbApiV1AffectsBulkCreateResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "results": List[Affect],
+            "results": list["Affect"],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,
@@ -108,7 +122,7 @@ class OsidbApiV1AffectsBulkCreateResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

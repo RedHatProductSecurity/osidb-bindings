@@ -1,50 +1,66 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import (
-    OsidbApiV1StatusRetrieveResponse200OsidbData,
-)
-from ..models.osidb_api_v1_status_retrieve_response_200_osidb_service import (
-    OsidbApiV1StatusRetrieveResponse200OsidbService,
-)
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import (
+        OsidbApiV1StatusRetrieveResponse200OsidbData,
+    )
+    from ..models.osidb_api_v1_status_retrieve_response_200_osidb_service import (
+        OsidbApiV1StatusRetrieveResponse200OsidbService,
+    )
+
 
 T = TypeVar("T", bound="OsidbApiV1StatusRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        osidb_data (Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbData]):
+        osidb_service (Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbService]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
-    osidb_data: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbData] = UNSET
-    osidb_service: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbService] = UNSET
+    osidb_data: Union[Unset, "OsidbApiV1StatusRetrieveResponse200OsidbData"] = UNSET
+    osidb_service: Union[Unset, "OsidbApiV1StatusRetrieveResponse200OsidbService"] = (
+        UNSET
+    )
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
-        osidb_data: Union[Unset, Dict[str, Any]] = UNSET
+
+        osidb_data: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.osidb_data, Unset):
             osidb_data = self.osidb_data.to_dict()
 
-        osidb_service: Union[Unset, Dict[str, Any]] = UNSET
+        osidb_service: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.osidb_service, Unset):
             osidb_service = self.osidb_service.to_dict()
 
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
@@ -62,8 +78,16 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.osidb_api_v1_status_retrieve_response_200_osidb_data import (
+            OsidbApiV1StatusRetrieveResponse200OsidbData,
+        )
+        from ..models.osidb_api_v1_status_retrieve_response_200_osidb_service import (
+            OsidbApiV1StatusRetrieveResponse200OsidbService,
+        )
+
         d = src_dict.copy()
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -73,6 +97,7 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
 
         env = d.pop("env", UNSET)
 
+        # }
         _osidb_data = d.pop("osidb_data", UNSET)
         osidb_data: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbData]
         if isinstance(_osidb_data, Unset):
@@ -82,6 +107,7 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
                 _osidb_data
             )
 
+        # }
         _osidb_service = d.pop("osidb_service", UNSET)
         osidb_service: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbService]
         if isinstance(_osidb_service, Unset):
@@ -119,7 +145,7 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

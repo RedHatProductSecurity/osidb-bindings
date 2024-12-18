@@ -2,7 +2,6 @@ from enum import Enum
 
 
 class OsidbApiV1AffectsListFlawSource(str, Enum):
-    VALUE_0 = ""
     ADOBE = "ADOBE"
     APPLE = "APPLE"
     ASF = "ASF"
@@ -86,6 +85,7 @@ class OsidbApiV1AffectsListFlawSource(str, Enum):
     TWITTER = "TWITTER"
     UBUNTU = "UBUNTU"
     UPSTREAM = "UPSTREAM"
+    VALUE_0 = ""
     VENDORSEC = "VENDORSEC"
     VULNWATCH = "VULNWATCH"
     WIRESHARK = "WIRESHARK"

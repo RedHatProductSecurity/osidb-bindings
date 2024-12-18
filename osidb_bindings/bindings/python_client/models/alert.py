@@ -1,6 +1,8 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar, Union
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..models.alert_type_enum import AlertTypeEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -8,33 +10,51 @@ from ..types import UNSET, OSIDBModel, Unset
 T = TypeVar("T", bound="Alert")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class Alert(OSIDBModel):
-    """Alerts indicate some inconsistency in a linked flaw, affect, tracker or other models."""
+    """Alerts indicate some inconsistency in a linked flaw, affect, tracker or other models.
 
-    uuid: str
+    Attributes:
+        uuid (UUID):
+        name (str):
+        description (str):
+        parent_uuid (UUID):
+        parent_model (str):
+        alert_type (Union[Unset, AlertTypeEnum]):
+        resolution_steps (Union[Unset, str]):
+    """
+
+    uuid: UUID
     name: str
     description: str
-    parent_uuid: str
+    parent_uuid: UUID
     parent_model: str
     alert_type: Union[Unset, AlertTypeEnum] = UNSET
     resolution_steps: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        uuid = self.uuid
+    def to_dict(self) -> dict[str, Any]:
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         name = self.name
+
         description = self.description
-        parent_uuid = self.parent_uuid
+
+        parent_uuid: str = UNSET
+        if not isinstance(self.parent_uuid, Unset):
+            parent_uuid = str(self.parent_uuid)
+
         parent_model = self.parent_model
+
         alert_type: Union[Unset, str] = UNSET
         if not isinstance(self.alert_type, Unset):
-
             alert_type = AlertTypeEnum(self.alert_type).value
 
         resolution_steps = self.resolution_steps
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
@@ -54,18 +74,31 @@ class Alert(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         name = d.pop("name", UNSET)
 
         description = d.pop("description", UNSET)
 
-        parent_uuid = d.pop("parent_uuid", UNSET)
+        # }
+        _parent_uuid = d.pop("parent_uuid", UNSET)
+        parent_uuid: UUID
+        if isinstance(_parent_uuid, Unset):
+            parent_uuid = UNSET
+        else:
+            parent_uuid = UUID(_parent_uuid)
 
         parent_model = d.pop("parent_model", UNSET)
 
+        # }
         _alert_type = d.pop("alert_type", UNSET)
         alert_type: Union[Unset, AlertTypeEnum]
         if isinstance(_alert_type, Unset):
@@ -91,17 +124,17 @@ class Alert(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "uuid": str,
+            "uuid": UUID,
             "name": str,
             "description": str,
-            "parent_uuid": str,
+            "parent_uuid": UUID,
             "parent_model": str,
             "alert_type": AlertTypeEnum,
             "resolution_steps": str,
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

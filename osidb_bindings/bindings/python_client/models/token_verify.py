@@ -1,48 +1,47 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TokenVerify")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class TokenVerify(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        token (str):
+    """
 
     token: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         token = self.token
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(token, Unset):
             field_dict["token"] = token
 
         return field_dict
 
-    def to_multipart(self) -> Dict[str, Any]:
-        token = (
-            self.token if self.token is UNSET else (None, str(self.token), "text/plain")
-        )
+    def to_multipart(self) -> dict[str, Any]:
+        token = (None, str(self.token).encode(), "text/plain")
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
-        )
+        field_dict: dict[str, Any] = {}
+        for prop_name, prop in self.additional_properties.items():
+            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
+
         if not isinstance(token, Unset):
             field_dict["token"] = token
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         token = d.pop("token", UNSET)
 
@@ -60,7 +59,7 @@ class TokenVerify(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

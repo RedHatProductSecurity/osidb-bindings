@@ -1,58 +1,86 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.alert import Alert
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+
+
 T = TypeVar("T", bound="OsidbApiV1AffectsCvssScoresRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        cvss_version (CvssVersionEnum):
+        issuer (IssuerEnum):
+        score (float):
+        uuid (UUID):
+        vector (str):
+        embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
+            ACLs but is mandatory as it controls the access to the resource.
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
+        affect (Union[Unset, UUID]):
+        comment (Union[None, Unset, str]):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     cvss_version: CvssVersionEnum
     issuer: IssuerEnum
     score: float
-    uuid: str
+    uuid: UUID
     vector: str
     embargoed: bool
-    alerts: List[Alert]
+    alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    affect: Union[Unset, str] = UNSET
-    comment: Union[Unset, None, str] = UNSET
+    affect: Union[Unset, UUID] = UNSET
+    comment: Union[None, Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         cvss_version: str = UNSET
         if not isinstance(self.cvss_version, Unset):
-
             cvss_version = CvssVersionEnum(self.cvss_version).value
 
         issuer: str = UNSET
         if not isinstance(self.issuer, Unset):
-
             issuer = IssuerEnum(self.issuer).value
 
         score = self.score
-        uuid = self.uuid
+
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         vector = self.vector
+
         embargoed = self.embargoed
-        alerts: List[Dict[str, Any]] = UNSET
+
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
@@ -66,17 +94,27 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        affect = self.affect
-        comment = self.comment
+        affect: Union[Unset, str] = UNSET
+        if not isinstance(self.affect, Unset):
+            affect = str(self.affect)
+
+        comment: Union[None, Unset, str]
+        if isinstance(self.comment, Unset):
+            comment = UNSET
+        else:
+            comment = self.comment
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(cvss_version, Unset):
             field_dict["cvss_version"] = cvss_version
@@ -112,8 +150,11 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+
         d = src_dict.copy()
+        # }
         _cvss_version = d.pop("cvss_version", UNSET)
         cvss_version: CvssVersionEnum
         if isinstance(_cvss_version, Unset):
@@ -121,6 +162,7 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         else:
             cvss_version = CvssVersionEnum(_cvss_version)
 
+        # }
         _issuer = d.pop("issuer", UNSET)
         issuer: IssuerEnum
         if isinstance(_issuer, Unset):
@@ -130,7 +172,13 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
 
         score = d.pop("score", UNSET)
 
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         vector = d.pop("vector", UNSET)
 
@@ -138,19 +186,18 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -158,6 +205,7 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
+        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -165,10 +213,24 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        affect = d.pop("affect", UNSET)
+        # }
+        _affect = d.pop("affect", UNSET)
+        affect: Union[Unset, UUID]
+        if isinstance(_affect, Unset):
+            affect = UNSET
+        else:
+            affect = UUID(_affect)
 
-        comment = d.pop("comment", UNSET)
+        def _parse_comment(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
+        comment = _parse_comment(d.pop("comment", UNSET))
+
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -209,14 +271,14 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
             "cvss_version": CvssVersionEnum,
             "issuer": IssuerEnum,
             "score": float,
-            "uuid": str,
+            "uuid": UUID,
             "vector": str,
             "embargoed": bool,
-            "alerts": List[Alert],
+            "alerts": list["Alert"],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
-            "affect": str,
-            "comment": str,
+            "affect": UUID,
+            "comment": Union[None, str],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,
@@ -224,7 +286,7 @@ class OsidbApiV1AffectsCvssScoresRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

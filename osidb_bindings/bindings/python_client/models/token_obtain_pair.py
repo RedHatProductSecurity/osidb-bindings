@@ -1,29 +1,39 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="TokenObtainPair")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class TokenObtainPair(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        username (str):
+        password (str):
+        access (str):
+        refresh (str):
+    """
 
     username: str
     password: str
     access: str
     refresh: str
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         username = self.username
+
         password = self.password
+
         access = self.access
+
         refresh = self.refresh
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(username, Unset):
             field_dict["username"] = username
@@ -36,35 +46,19 @@ class TokenObtainPair(OSIDBModel):
 
         return field_dict
 
-    def to_multipart(self) -> Dict[str, Any]:
-        username = (
-            self.username
-            if self.username is UNSET
-            else (None, str(self.username), "text/plain")
-        )
-        password = (
-            self.password
-            if self.password is UNSET
-            else (None, str(self.password), "text/plain")
-        )
-        access = (
-            self.access
-            if self.access is UNSET
-            else (None, str(self.access), "text/plain")
-        )
-        refresh = (
-            self.refresh
-            if self.refresh is UNSET
-            else (None, str(self.refresh), "text/plain")
-        )
+    def to_multipart(self) -> dict[str, Any]:
+        username = (None, str(self.username).encode(), "text/plain")
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
-        )
+        password = (None, str(self.password).encode(), "text/plain")
+
+        access = (None, str(self.access).encode(), "text/plain")
+
+        refresh = (None, str(self.refresh).encode(), "text/plain")
+
+        field_dict: dict[str, Any] = {}
+        for prop_name, prop in self.additional_properties.items():
+            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
+
         if not isinstance(username, Unset):
             field_dict["username"] = username
         if not isinstance(password, Unset):
@@ -77,7 +71,7 @@ class TokenObtainPair(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         username = d.pop("username", UNSET)
 
@@ -107,7 +101,7 @@ class TokenObtainPair(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

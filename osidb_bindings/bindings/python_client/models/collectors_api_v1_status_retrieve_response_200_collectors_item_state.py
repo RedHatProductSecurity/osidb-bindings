@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(str, Enum):
-    PENDING = "PENDING"
     BLOCKED = "BLOCKED"
+    PENDING = "PENDING"
     READY = "READY"
     RUNNING = "RUNNING"
 

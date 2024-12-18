@@ -1,8 +1,9 @@
-from typing import Any, Dict, Optional
+from http import HTTPStatus
+from typing import Any, Optional, Union
 
 import requests
 
-from ...client import AuthenticatedClient
+from ...client import AuthenticatedClient, Client
 from ...models.collectors_api_v1_status_retrieve_response_200 import (
     CollectorsApiV1StatusRetrieveResponse200,
 )
@@ -14,23 +15,22 @@ QUERY_PARAMS = {}
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-) -> Dict[str, Any]:
-    url = "{}/collectors/api/v1/status".format(
-        client.base_url,
-    )
+) -> dict[str, Any]:
+    headers: dict[str, Any] = client.get_headers()
 
-    headers: Dict[str, Any] = client.get_headers()
-
-    return {
-        "url": url,
-        "headers": headers,
+    _kwargs: dict[str, Any] = {
+        "url": f"{client.base_url}/collectors/api/v1/status",
     }
+
+    _kwargs["headers"] = headers
+    return _kwargs
 
 
 def _parse_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
     if response.status_code == 200:
+        # }
         _response_200 = response.json()
         response_200: CollectorsApiV1StatusRetrieveResponse200
         if isinstance(_response_200, Unset):
@@ -41,17 +41,16 @@ def _parse_response(
             )
 
         return response_200
-    return None
 
 
 def _build_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
     return Response(
-        status_code=response.status_code,
+        status_code=HTTPStatus(response.status_code),
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=_parse_response(client=client, response=response),
     )
 
 
@@ -59,6 +58,16 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
+    """get the overall status of all collectors and the collected data
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[CollectorsApiV1StatusRetrieveResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
     )
@@ -71,24 +80,42 @@ def sync_detailed(
     )
     response.raise_for_status()
 
-    return _build_response(response=response)
+    return _build_response(client=client, response=response)
 
 
 def sync(
     *,
     client: AuthenticatedClient,
 ) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
-    """get the overall status of all collectors and the collected data"""
+    """get the overall status of all collectors and the collected data
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        CollectorsApiV1StatusRetrieveResponse200
+    """
 
     return sync_detailed(
         client=client,
     ).parsed
 
 
-async def async_detailed(
+async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[CollectorsApiV1StatusRetrieveResponse200]:
+    """get the overall status of all collectors and the collected data
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[CollectorsApiV1StatusRetrieveResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
     )
@@ -101,17 +128,25 @@ async def async_detailed(
         resp.status_code = response.status
         resp._content = content
 
-    return _build_response(response=resp)
+    return _build_response(client=client, response=resp)
 
 
-async def async_(
+async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Optional[CollectorsApiV1StatusRetrieveResponse200]:
-    """get the overall status of all collectors and the collected data"""
+    """get the overall status of all collectors and the collected data
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        CollectorsApiV1StatusRetrieveResponse200
+    """
 
     return (
-        await async_detailed(
+        await asyncio_detailed(
             client=client,
         )
     ).parsed

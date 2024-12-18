@@ -1,36 +1,47 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item import (
-    CollectorsApiV1StatusRetrieveResponse200CollectorsItem,
-)
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item import (
+        CollectorsApiV1StatusRetrieveResponse200CollectorsItem,
+    )
+
 
 T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        collectors (Union[Unset, list['CollectorsApiV1StatusRetrieveResponse200CollectorsItem']]):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     collectors: Union[
-        Unset, List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem]
+        Unset, list["CollectorsApiV1StatusRetrieveResponse200CollectorsItem"]
     ] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        collectors: Union[Unset, List[Dict[str, Any]]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        collectors: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.collectors, Unset):
             collectors = []
             for collectors_item_data in self.collectors:
-                collectors_item: Dict[str, Any] = UNSET
+                collectors_item: dict[str, Any] = UNSET
                 if not isinstance(collectors_item_data, Unset):
                     collectors_item = collectors_item_data.to_dict()
 
@@ -41,10 +52,12 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(collectors, Unset):
             field_dict["collectors"] = collectors
@@ -60,25 +73,30 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item import (
+            CollectorsApiV1StatusRetrieveResponse200CollectorsItem,
+        )
+
         d = src_dict.copy()
         collectors = []
         _collectors = d.pop("collectors", UNSET)
-        if _collectors is UNSET:
-            collectors = UNSET
-        else:
-            for collectors_item_data in _collectors or []:
-                _collectors_item = collectors_item_data
-                collectors_item: CollectorsApiV1StatusRetrieveResponse200CollectorsItem
-                if isinstance(_collectors_item, Unset):
-                    collectors_item = UNSET
-                else:
-                    collectors_item = CollectorsApiV1StatusRetrieveResponse200CollectorsItem.from_dict(
+        for collectors_item_data in _collectors or []:
+            # }
+            _collectors_item = collectors_item_data
+            collectors_item: CollectorsApiV1StatusRetrieveResponse200CollectorsItem
+            if isinstance(_collectors_item, Unset):
+                collectors_item = UNSET
+            else:
+                collectors_item = (
+                    CollectorsApiV1StatusRetrieveResponse200CollectorsItem.from_dict(
                         _collectors_item
                     )
+                )
 
-                collectors.append(collectors_item)
+            collectors.append(collectors_item)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -106,7 +124,9 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "collectors": List[CollectorsApiV1StatusRetrieveResponse200CollectorsItem],
+            "collectors": list[
+                "CollectorsApiV1StatusRetrieveResponse200CollectorsItem"
+            ],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,
@@ -114,7 +134,7 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

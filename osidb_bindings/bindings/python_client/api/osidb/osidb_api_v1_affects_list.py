@@ -1,9 +1,11 @@
 import datetime
-from typing import Any, Dict, List, Optional, Union
+from http import HTTPStatus
+from typing import Any, Optional, Union
+from uuid import UUID
 
 import requests
 
-from ...client import AuthenticatedClient
+from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_affects_list_affectedness import (
     OsidbApiV1AffectsListAffectedness,
 )
@@ -61,11 +63,11 @@ QUERY_PARAMS = {
     "cvss_scores__updated_dt__gte": datetime.datetime,
     "cvss_scores__updated_dt__lt": datetime.datetime,
     "cvss_scores__updated_dt__lte": datetime.datetime,
-    "cvss_scores__uuid": str,
+    "cvss_scores__uuid": UUID,
     "cvss_scores__vector": str,
     "embargoed": bool,
-    "exclude_fields": List[str],
-    "flaw__components": List[str],
+    "exclude_fields": list[str],
+    "flaw__components": list[str],
     "flaw__created_dt": datetime.datetime,
     "flaw__created_dt__date": datetime.date,
     "flaw__created_dt__date__gte": datetime.date,
@@ -96,13 +98,13 @@ QUERY_PARAMS = {
     "flaw__updated_dt__gte": datetime.datetime,
     "flaw__updated_dt__lt": datetime.datetime,
     "flaw__updated_dt__lte": datetime.datetime,
-    "flaw__uuid": str,
+    "flaw__uuid": UUID,
     "impact": OsidbApiV1AffectsListImpact,
-    "include_fields": List[str],
-    "include_meta_attr": List[str],
+    "include_fields": list[str],
+    "include_meta_attr": list[str],
     "limit": int,
     "offset": int,
-    "order": List[OsidbApiV1AffectsListOrderItem],
+    "order": list[OsidbApiV1AffectsListOrderItem],
     "ps_component": str,
     "ps_module": str,
     "resolution": OsidbApiV1AffectsListResolution,
@@ -128,7 +130,7 @@ QUERY_PARAMS = {
     "trackers__updated_dt__gte": datetime.datetime,
     "trackers__updated_dt__lt": datetime.datetime,
     "trackers__updated_dt__lte": datetime.datetime,
-    "trackers__uuid": str,
+    "trackers__uuid": UUID,
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
     "updated_dt__date__gte": datetime.date,
@@ -137,782 +139,724 @@ QUERY_PARAMS = {
     "updated_dt__gte": datetime.datetime,
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
-    "uuid": str,
+    "uuid": UUID,
 }
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_comment: Union[Unset, None, str] = UNSET,
-    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
-    cvss_scores_issuer: Union[
-        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
-    ] = UNSET,
-    cvss_scores_score: Union[Unset, None, float] = UNSET,
-    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
-    cvss_scores_vector: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_components: Union[Unset, None, List[str]] = UNSET,
-    flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_cve_id: Union[Unset, None, str] = UNSET,
-    flaw_cwe_id: Union[Unset, None, str] = UNSET,
-    flaw_embargoed: Union[Unset, None, bool] = UNSET,
-    flaw_impact: Union[Unset, None, OsidbApiV1AffectsListFlawImpact] = UNSET,
-    flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_source: Union[Unset, None, OsidbApiV1AffectsListFlawSource] = UNSET,
-    flaw_unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_uuid: Union[Unset, None, str] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    order: Union[Unset, None, List[OsidbApiV1AffectsListOrderItem]] = UNSET,
-    ps_component: Union[Unset, None, str] = UNSET,
-    ps_module: Union[Unset, None, str] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1AffectsListResolution] = UNSET,
-    trackers_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_embargoed: Union[Unset, None, bool] = UNSET,
-    trackers_external_system_id: Union[Unset, None, str] = UNSET,
-    trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
-    trackers_resolution: Union[Unset, None, str] = UNSET,
-    trackers_status: Union[Unset, None, str] = UNSET,
-    trackers_type: Union[Unset, None, OsidbApiV1AffectsListTrackersType] = UNSET,
-    trackers_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_uuid: Union[Unset, None, str] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
-) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/affects".format(
-        client.base_url,
-    )
+    affectedness: Union[Unset, OsidbApiV1AffectsListAffectedness] = UNSET,
+    created_dt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_comment: Union[Unset, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, UUID] = UNSET,
+    cvss_scores_vector: Union[Unset, str] = UNSET,
+    embargoed: Union[Unset, bool] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    flaw_components: Union[Unset, list[str]] = UNSET,
+    flaw_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_cve_id: Union[Unset, str] = UNSET,
+    flaw_cwe_id: Union[Unset, str] = UNSET,
+    flaw_embargoed: Union[Unset, bool] = UNSET,
+    flaw_impact: Union[Unset, OsidbApiV1AffectsListFlawImpact] = UNSET,
+    flaw_reported_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_source: Union[Unset, OsidbApiV1AffectsListFlawSource] = UNSET,
+    flaw_unembargo_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_uuid: Union[Unset, UUID] = UNSET,
+    impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+    include_meta_attr: Union[Unset, list[str]] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    order: Union[Unset, list[OsidbApiV1AffectsListOrderItem]] = UNSET,
+    ps_component: Union[Unset, str] = UNSET,
+    ps_module: Union[Unset, str] = UNSET,
+    resolution: Union[Unset, OsidbApiV1AffectsListResolution] = UNSET,
+    trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_embargoed: Union[Unset, bool] = UNSET,
+    trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_ps_update_stream: Union[Unset, str] = UNSET,
+    trackers_resolution: Union[Unset, str] = UNSET,
+    trackers_status: Union[Unset, str] = UNSET,
+    trackers_type: Union[Unset, OsidbApiV1AffectsListTrackersType] = UNSET,
+    trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_uuid: Union[Unset, UUID] = UNSET,
+    updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    uuid: Union[Unset, UUID] = UNSET,
+) -> dict[str, Any]:
+    headers: dict[str, Any] = client.get_headers()
 
-    headers: Dict[str, Any] = client.get_headers()
+    params: dict[str, Any] = {}
 
-    json_affectedness: Union[Unset, None, str] = UNSET
+    json_affectedness: Union[Unset, str] = UNSET
     if not isinstance(affectedness, Unset):
+        json_affectedness = OsidbApiV1AffectsListAffectedness(affectedness).value
 
-        json_affectedness = (
-            OsidbApiV1AffectsListAffectedness(affectedness).value
-            if affectedness
-            else None
-        )
+    params["affectedness"] = json_affectedness
 
-    json_created_dt: Union[Unset, None, str] = UNSET
+    json_created_dt: Union[Unset, str] = UNSET
     if not isinstance(created_dt, Unset):
-        json_created_dt = created_dt.isoformat() if created_dt else None
+        json_created_dt = created_dt.isoformat()
 
-    json_created_dt_date: Union[Unset, None, str] = UNSET
+    params["created_dt"] = json_created_dt
+
+    json_created_dt_date: Union[Unset, str] = UNSET
     if not isinstance(created_dt_date, Unset):
-        json_created_dt_date = created_dt_date.isoformat() if created_dt_date else None
+        json_created_dt_date = created_dt_date.isoformat()
 
-    json_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["created_dt__date"] = json_created_dt_date
+
+    json_created_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(created_dt_date_gte, Unset):
-        json_created_dt_date_gte = (
-            created_dt_date_gte.isoformat() if created_dt_date_gte else None
-        )
+        json_created_dt_date_gte = created_dt_date_gte.isoformat()
 
-    json_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["created_dt__date__gte"] = json_created_dt_date_gte
+
+    json_created_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(created_dt_date_lte, Unset):
-        json_created_dt_date_lte = (
-            created_dt_date_lte.isoformat() if created_dt_date_lte else None
-        )
+        json_created_dt_date_lte = created_dt_date_lte.isoformat()
 
-    json_created_dt_gt: Union[Unset, None, str] = UNSET
+    params["created_dt__date__lte"] = json_created_dt_date_lte
+
+    json_created_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(created_dt_gt, Unset):
-        json_created_dt_gt = created_dt_gt.isoformat() if created_dt_gt else None
+        json_created_dt_gt = created_dt_gt.isoformat()
 
-    json_created_dt_gte: Union[Unset, None, str] = UNSET
+    params["created_dt__gt"] = json_created_dt_gt
+
+    json_created_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(created_dt_gte, Unset):
-        json_created_dt_gte = created_dt_gte.isoformat() if created_dt_gte else None
+        json_created_dt_gte = created_dt_gte.isoformat()
 
-    json_created_dt_lt: Union[Unset, None, str] = UNSET
+    params["created_dt__gte"] = json_created_dt_gte
+
+    json_created_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(created_dt_lt, Unset):
-        json_created_dt_lt = created_dt_lt.isoformat() if created_dt_lt else None
+        json_created_dt_lt = created_dt_lt.isoformat()
 
-    json_created_dt_lte: Union[Unset, None, str] = UNSET
+    params["created_dt__lt"] = json_created_dt_lt
+
+    json_created_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(created_dt_lte, Unset):
-        json_created_dt_lte = created_dt_lte.isoformat() if created_dt_lte else None
+        json_created_dt_lte = created_dt_lte.isoformat()
 
-    json_cvss_scores_created_dt: Union[Unset, None, str] = UNSET
+    params["created_dt__lte"] = json_created_dt_lte
+
+    params["cvss_scores__comment"] = cvss_scores_comment
+
+    json_cvss_scores_created_dt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt, Unset):
-        json_cvss_scores_created_dt = (
-            cvss_scores_created_dt.isoformat() if cvss_scores_created_dt else None
-        )
+        json_cvss_scores_created_dt = cvss_scores_created_dt.isoformat()
 
-    json_cvss_scores_created_dt_date: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt"] = json_cvss_scores_created_dt
+
+    json_cvss_scores_created_dt_date: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_date, Unset):
-        json_cvss_scores_created_dt_date = (
-            cvss_scores_created_dt_date.isoformat()
-            if cvss_scores_created_dt_date
-            else None
-        )
+        json_cvss_scores_created_dt_date = cvss_scores_created_dt_date.isoformat()
 
-    json_cvss_scores_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__date"] = json_cvss_scores_created_dt_date
+
+    json_cvss_scores_created_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_date_gte, Unset):
         json_cvss_scores_created_dt_date_gte = (
             cvss_scores_created_dt_date_gte.isoformat()
-            if cvss_scores_created_dt_date_gte
-            else None
         )
 
-    json_cvss_scores_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__date__gte"] = json_cvss_scores_created_dt_date_gte
+
+    json_cvss_scores_created_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_date_lte, Unset):
         json_cvss_scores_created_dt_date_lte = (
             cvss_scores_created_dt_date_lte.isoformat()
-            if cvss_scores_created_dt_date_lte
-            else None
         )
 
-    json_cvss_scores_created_dt_gt: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__date__lte"] = json_cvss_scores_created_dt_date_lte
+
+    json_cvss_scores_created_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_gt, Unset):
-        json_cvss_scores_created_dt_gt = (
-            cvss_scores_created_dt_gt.isoformat() if cvss_scores_created_dt_gt else None
-        )
+        json_cvss_scores_created_dt_gt = cvss_scores_created_dt_gt.isoformat()
 
-    json_cvss_scores_created_dt_gte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__gt"] = json_cvss_scores_created_dt_gt
+
+    json_cvss_scores_created_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_gte, Unset):
-        json_cvss_scores_created_dt_gte = (
-            cvss_scores_created_dt_gte.isoformat()
-            if cvss_scores_created_dt_gte
-            else None
-        )
+        json_cvss_scores_created_dt_gte = cvss_scores_created_dt_gte.isoformat()
 
-    json_cvss_scores_created_dt_lt: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__gte"] = json_cvss_scores_created_dt_gte
+
+    json_cvss_scores_created_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_lt, Unset):
-        json_cvss_scores_created_dt_lt = (
-            cvss_scores_created_dt_lt.isoformat() if cvss_scores_created_dt_lt else None
-        )
+        json_cvss_scores_created_dt_lt = cvss_scores_created_dt_lt.isoformat()
 
-    json_cvss_scores_created_dt_lte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__lt"] = json_cvss_scores_created_dt_lt
+
+    json_cvss_scores_created_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_created_dt_lte, Unset):
-        json_cvss_scores_created_dt_lte = (
-            cvss_scores_created_dt_lte.isoformat()
-            if cvss_scores_created_dt_lte
-            else None
-        )
+        json_cvss_scores_created_dt_lte = cvss_scores_created_dt_lte.isoformat()
 
-    json_cvss_scores_issuer: Union[Unset, None, str] = UNSET
+    params["cvss_scores__created_dt__lte"] = json_cvss_scores_created_dt_lte
+
+    params["cvss_scores__cvss_version"] = cvss_scores_cvss_version
+
+    json_cvss_scores_issuer: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_issuer, Unset):
+        json_cvss_scores_issuer = OsidbApiV1AffectsListCvssScoresIssuer(
+            cvss_scores_issuer
+        ).value
 
-        json_cvss_scores_issuer = (
-            OsidbApiV1AffectsListCvssScoresIssuer(cvss_scores_issuer).value
-            if cvss_scores_issuer
-            else None
-        )
+    params["cvss_scores__issuer"] = json_cvss_scores_issuer
 
-    json_cvss_scores_updated_dt: Union[Unset, None, str] = UNSET
+    params["cvss_scores__score"] = cvss_scores_score
+
+    json_cvss_scores_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt, Unset):
-        json_cvss_scores_updated_dt = (
-            cvss_scores_updated_dt.isoformat() if cvss_scores_updated_dt else None
-        )
+        json_cvss_scores_updated_dt = cvss_scores_updated_dt.isoformat()
 
-    json_cvss_scores_updated_dt_date: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt"] = json_cvss_scores_updated_dt
+
+    json_cvss_scores_updated_dt_date: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_date, Unset):
-        json_cvss_scores_updated_dt_date = (
-            cvss_scores_updated_dt_date.isoformat()
-            if cvss_scores_updated_dt_date
-            else None
-        )
+        json_cvss_scores_updated_dt_date = cvss_scores_updated_dt_date.isoformat()
 
-    json_cvss_scores_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__date"] = json_cvss_scores_updated_dt_date
+
+    json_cvss_scores_updated_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_date_gte, Unset):
         json_cvss_scores_updated_dt_date_gte = (
             cvss_scores_updated_dt_date_gte.isoformat()
-            if cvss_scores_updated_dt_date_gte
-            else None
         )
 
-    json_cvss_scores_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__date__gte"] = json_cvss_scores_updated_dt_date_gte
+
+    json_cvss_scores_updated_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_date_lte, Unset):
         json_cvss_scores_updated_dt_date_lte = (
             cvss_scores_updated_dt_date_lte.isoformat()
-            if cvss_scores_updated_dt_date_lte
-            else None
         )
 
-    json_cvss_scores_updated_dt_gt: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__date__lte"] = json_cvss_scores_updated_dt_date_lte
+
+    json_cvss_scores_updated_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_gt, Unset):
-        json_cvss_scores_updated_dt_gt = (
-            cvss_scores_updated_dt_gt.isoformat() if cvss_scores_updated_dt_gt else None
-        )
+        json_cvss_scores_updated_dt_gt = cvss_scores_updated_dt_gt.isoformat()
 
-    json_cvss_scores_updated_dt_gte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__gt"] = json_cvss_scores_updated_dt_gt
+
+    json_cvss_scores_updated_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_gte, Unset):
-        json_cvss_scores_updated_dt_gte = (
-            cvss_scores_updated_dt_gte.isoformat()
-            if cvss_scores_updated_dt_gte
-            else None
-        )
+        json_cvss_scores_updated_dt_gte = cvss_scores_updated_dt_gte.isoformat()
 
-    json_cvss_scores_updated_dt_lt: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__gte"] = json_cvss_scores_updated_dt_gte
+
+    json_cvss_scores_updated_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_lt, Unset):
-        json_cvss_scores_updated_dt_lt = (
-            cvss_scores_updated_dt_lt.isoformat() if cvss_scores_updated_dt_lt else None
-        )
+        json_cvss_scores_updated_dt_lt = cvss_scores_updated_dt_lt.isoformat()
 
-    json_cvss_scores_updated_dt_lte: Union[Unset, None, str] = UNSET
+    params["cvss_scores__updated_dt__lt"] = json_cvss_scores_updated_dt_lt
+
+    json_cvss_scores_updated_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(cvss_scores_updated_dt_lte, Unset):
-        json_cvss_scores_updated_dt_lte = (
-            cvss_scores_updated_dt_lte.isoformat()
-            if cvss_scores_updated_dt_lte
-            else None
-        )
+        json_cvss_scores_updated_dt_lte = cvss_scores_updated_dt_lte.isoformat()
 
-    json_exclude_fields: Union[Unset, None, List[str]] = UNSET
+    params["cvss_scores__updated_dt__lte"] = json_cvss_scores_updated_dt_lte
+
+    json_cvss_scores_uuid: Union[Unset, str] = UNSET
+    if not isinstance(cvss_scores_uuid, Unset):
+        json_cvss_scores_uuid = str(cvss_scores_uuid)
+
+    params["cvss_scores__uuid"] = json_cvss_scores_uuid
+
+    params["cvss_scores__vector"] = cvss_scores_vector
+
+    params["embargoed"] = embargoed
+
+    json_exclude_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
-        if exclude_fields is None:
-            json_exclude_fields = None
-        else:
-            json_exclude_fields = exclude_fields
+        json_exclude_fields = exclude_fields
 
-    json_flaw_components: Union[Unset, None, List[str]] = UNSET
+    params["exclude_fields"] = json_exclude_fields
+
+    json_flaw_components: Union[Unset, list[str]] = UNSET
     if not isinstance(flaw_components, Unset):
-        if flaw_components is None:
-            json_flaw_components = None
-        else:
-            json_flaw_components = flaw_components
+        json_flaw_components = flaw_components
 
-    json_flaw_created_dt: Union[Unset, None, str] = UNSET
+    params["flaw__components"] = json_flaw_components
+
+    json_flaw_created_dt: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt, Unset):
-        json_flaw_created_dt = flaw_created_dt.isoformat() if flaw_created_dt else None
+        json_flaw_created_dt = flaw_created_dt.isoformat()
 
-    json_flaw_created_dt_date: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt"] = json_flaw_created_dt
+
+    json_flaw_created_dt_date: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_date, Unset):
-        json_flaw_created_dt_date = (
-            flaw_created_dt_date.isoformat() if flaw_created_dt_date else None
-        )
+        json_flaw_created_dt_date = flaw_created_dt_date.isoformat()
 
-    json_flaw_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__date"] = json_flaw_created_dt_date
+
+    json_flaw_created_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_date_gte, Unset):
-        json_flaw_created_dt_date_gte = (
-            flaw_created_dt_date_gte.isoformat() if flaw_created_dt_date_gte else None
-        )
+        json_flaw_created_dt_date_gte = flaw_created_dt_date_gte.isoformat()
 
-    json_flaw_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__date__gte"] = json_flaw_created_dt_date_gte
+
+    json_flaw_created_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_date_lte, Unset):
-        json_flaw_created_dt_date_lte = (
-            flaw_created_dt_date_lte.isoformat() if flaw_created_dt_date_lte else None
-        )
+        json_flaw_created_dt_date_lte = flaw_created_dt_date_lte.isoformat()
 
-    json_flaw_created_dt_gt: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__date__lte"] = json_flaw_created_dt_date_lte
+
+    json_flaw_created_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_gt, Unset):
-        json_flaw_created_dt_gt = (
-            flaw_created_dt_gt.isoformat() if flaw_created_dt_gt else None
-        )
+        json_flaw_created_dt_gt = flaw_created_dt_gt.isoformat()
 
-    json_flaw_created_dt_gte: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__gt"] = json_flaw_created_dt_gt
+
+    json_flaw_created_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_gte, Unset):
-        json_flaw_created_dt_gte = (
-            flaw_created_dt_gte.isoformat() if flaw_created_dt_gte else None
-        )
+        json_flaw_created_dt_gte = flaw_created_dt_gte.isoformat()
 
-    json_flaw_created_dt_lt: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__gte"] = json_flaw_created_dt_gte
+
+    json_flaw_created_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_lt, Unset):
-        json_flaw_created_dt_lt = (
-            flaw_created_dt_lt.isoformat() if flaw_created_dt_lt else None
-        )
+        json_flaw_created_dt_lt = flaw_created_dt_lt.isoformat()
 
-    json_flaw_created_dt_lte: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__lt"] = json_flaw_created_dt_lt
+
+    json_flaw_created_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_created_dt_lte, Unset):
-        json_flaw_created_dt_lte = (
-            flaw_created_dt_lte.isoformat() if flaw_created_dt_lte else None
-        )
+        json_flaw_created_dt_lte = flaw_created_dt_lte.isoformat()
 
-    json_flaw_impact: Union[Unset, None, str] = UNSET
+    params["flaw__created_dt__lte"] = json_flaw_created_dt_lte
+
+    params["flaw__cve_id"] = flaw_cve_id
+
+    params["flaw__cwe_id"] = flaw_cwe_id
+
+    params["flaw__embargoed"] = flaw_embargoed
+
+    json_flaw_impact: Union[Unset, str] = UNSET
     if not isinstance(flaw_impact, Unset):
+        json_flaw_impact = OsidbApiV1AffectsListFlawImpact(flaw_impact).value
 
-        json_flaw_impact = (
-            OsidbApiV1AffectsListFlawImpact(flaw_impact).value if flaw_impact else None
-        )
+    params["flaw__impact"] = json_flaw_impact
 
-    json_flaw_reported_dt: Union[Unset, None, str] = UNSET
+    json_flaw_reported_dt: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt, Unset):
-        json_flaw_reported_dt = (
-            flaw_reported_dt.isoformat() if flaw_reported_dt else None
-        )
+        json_flaw_reported_dt = flaw_reported_dt.isoformat()
 
-    json_flaw_reported_dt_date: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt"] = json_flaw_reported_dt
+
+    json_flaw_reported_dt_date: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_date, Unset):
-        json_flaw_reported_dt_date = (
-            flaw_reported_dt_date.isoformat() if flaw_reported_dt_date else None
-        )
+        json_flaw_reported_dt_date = flaw_reported_dt_date.isoformat()
 
-    json_flaw_reported_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__date"] = json_flaw_reported_dt_date
+
+    json_flaw_reported_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_date_gte, Unset):
-        json_flaw_reported_dt_date_gte = (
-            flaw_reported_dt_date_gte.isoformat() if flaw_reported_dt_date_gte else None
-        )
+        json_flaw_reported_dt_date_gte = flaw_reported_dt_date_gte.isoformat()
 
-    json_flaw_reported_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__date__gte"] = json_flaw_reported_dt_date_gte
+
+    json_flaw_reported_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_date_lte, Unset):
-        json_flaw_reported_dt_date_lte = (
-            flaw_reported_dt_date_lte.isoformat() if flaw_reported_dt_date_lte else None
-        )
+        json_flaw_reported_dt_date_lte = flaw_reported_dt_date_lte.isoformat()
 
-    json_flaw_reported_dt_gt: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__date__lte"] = json_flaw_reported_dt_date_lte
+
+    json_flaw_reported_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_gt, Unset):
-        json_flaw_reported_dt_gt = (
-            flaw_reported_dt_gt.isoformat() if flaw_reported_dt_gt else None
-        )
+        json_flaw_reported_dt_gt = flaw_reported_dt_gt.isoformat()
 
-    json_flaw_reported_dt_gte: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__gt"] = json_flaw_reported_dt_gt
+
+    json_flaw_reported_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_gte, Unset):
-        json_flaw_reported_dt_gte = (
-            flaw_reported_dt_gte.isoformat() if flaw_reported_dt_gte else None
-        )
+        json_flaw_reported_dt_gte = flaw_reported_dt_gte.isoformat()
 
-    json_flaw_reported_dt_lt: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__gte"] = json_flaw_reported_dt_gte
+
+    json_flaw_reported_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_lt, Unset):
-        json_flaw_reported_dt_lt = (
-            flaw_reported_dt_lt.isoformat() if flaw_reported_dt_lt else None
-        )
+        json_flaw_reported_dt_lt = flaw_reported_dt_lt.isoformat()
 
-    json_flaw_reported_dt_lte: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__lt"] = json_flaw_reported_dt_lt
+
+    json_flaw_reported_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_reported_dt_lte, Unset):
-        json_flaw_reported_dt_lte = (
-            flaw_reported_dt_lte.isoformat() if flaw_reported_dt_lte else None
-        )
+        json_flaw_reported_dt_lte = flaw_reported_dt_lte.isoformat()
 
-    json_flaw_source: Union[Unset, None, str] = UNSET
+    params["flaw__reported_dt__lte"] = json_flaw_reported_dt_lte
+
+    json_flaw_source: Union[Unset, str] = UNSET
     if not isinstance(flaw_source, Unset):
+        json_flaw_source = OsidbApiV1AffectsListFlawSource(flaw_source).value
 
-        json_flaw_source = (
-            OsidbApiV1AffectsListFlawSource(flaw_source).value if flaw_source else None
-        )
+    params["flaw__source"] = json_flaw_source
 
-    json_flaw_unembargo_dt: Union[Unset, None, str] = UNSET
+    json_flaw_unembargo_dt: Union[Unset, str] = UNSET
     if not isinstance(flaw_unembargo_dt, Unset):
-        json_flaw_unembargo_dt = (
-            flaw_unembargo_dt.isoformat() if flaw_unembargo_dt else None
-        )
+        json_flaw_unembargo_dt = flaw_unembargo_dt.isoformat()
 
-    json_flaw_updated_dt: Union[Unset, None, str] = UNSET
+    params["flaw__unembargo_dt"] = json_flaw_unembargo_dt
+
+    json_flaw_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt, Unset):
-        json_flaw_updated_dt = flaw_updated_dt.isoformat() if flaw_updated_dt else None
+        json_flaw_updated_dt = flaw_updated_dt.isoformat()
 
-    json_flaw_updated_dt_date: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt"] = json_flaw_updated_dt
+
+    json_flaw_updated_dt_date: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_date, Unset):
-        json_flaw_updated_dt_date = (
-            flaw_updated_dt_date.isoformat() if flaw_updated_dt_date else None
-        )
+        json_flaw_updated_dt_date = flaw_updated_dt_date.isoformat()
 
-    json_flaw_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__date"] = json_flaw_updated_dt_date
+
+    json_flaw_updated_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_date_gte, Unset):
-        json_flaw_updated_dt_date_gte = (
-            flaw_updated_dt_date_gte.isoformat() if flaw_updated_dt_date_gte else None
-        )
+        json_flaw_updated_dt_date_gte = flaw_updated_dt_date_gte.isoformat()
 
-    json_flaw_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__date__gte"] = json_flaw_updated_dt_date_gte
+
+    json_flaw_updated_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_date_lte, Unset):
-        json_flaw_updated_dt_date_lte = (
-            flaw_updated_dt_date_lte.isoformat() if flaw_updated_dt_date_lte else None
-        )
+        json_flaw_updated_dt_date_lte = flaw_updated_dt_date_lte.isoformat()
 
-    json_flaw_updated_dt_gt: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__date__lte"] = json_flaw_updated_dt_date_lte
+
+    json_flaw_updated_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_gt, Unset):
-        json_flaw_updated_dt_gt = (
-            flaw_updated_dt_gt.isoformat() if flaw_updated_dt_gt else None
-        )
+        json_flaw_updated_dt_gt = flaw_updated_dt_gt.isoformat()
 
-    json_flaw_updated_dt_gte: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__gt"] = json_flaw_updated_dt_gt
+
+    json_flaw_updated_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_gte, Unset):
-        json_flaw_updated_dt_gte = (
-            flaw_updated_dt_gte.isoformat() if flaw_updated_dt_gte else None
-        )
+        json_flaw_updated_dt_gte = flaw_updated_dt_gte.isoformat()
 
-    json_flaw_updated_dt_lt: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__gte"] = json_flaw_updated_dt_gte
+
+    json_flaw_updated_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_lt, Unset):
-        json_flaw_updated_dt_lt = (
-            flaw_updated_dt_lt.isoformat() if flaw_updated_dt_lt else None
-        )
+        json_flaw_updated_dt_lt = flaw_updated_dt_lt.isoformat()
 
-    json_flaw_updated_dt_lte: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__lt"] = json_flaw_updated_dt_lt
+
+    json_flaw_updated_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(flaw_updated_dt_lte, Unset):
-        json_flaw_updated_dt_lte = (
-            flaw_updated_dt_lte.isoformat() if flaw_updated_dt_lte else None
-        )
+        json_flaw_updated_dt_lte = flaw_updated_dt_lte.isoformat()
 
-    json_impact: Union[Unset, None, str] = UNSET
+    params["flaw__updated_dt__lte"] = json_flaw_updated_dt_lte
+
+    json_flaw_uuid: Union[Unset, str] = UNSET
+    if not isinstance(flaw_uuid, Unset):
+        json_flaw_uuid = str(flaw_uuid)
+
+    params["flaw__uuid"] = json_flaw_uuid
+
+    json_impact: Union[Unset, str] = UNSET
     if not isinstance(impact, Unset):
+        json_impact = OsidbApiV1AffectsListImpact(impact).value
 
-        json_impact = OsidbApiV1AffectsListImpact(impact).value if impact else None
+    params["impact"] = json_impact
 
-    json_include_fields: Union[Unset, None, List[str]] = UNSET
+    json_include_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(include_fields, Unset):
-        if include_fields is None:
-            json_include_fields = None
-        else:
-            json_include_fields = include_fields
+        json_include_fields = include_fields
 
-    json_include_meta_attr: Union[Unset, None, List[str]] = UNSET
+    params["include_fields"] = json_include_fields
+
+    json_include_meta_attr: Union[Unset, list[str]] = UNSET
     if not isinstance(include_meta_attr, Unset):
-        if include_meta_attr is None:
-            json_include_meta_attr = None
-        else:
-            json_include_meta_attr = include_meta_attr
+        json_include_meta_attr = include_meta_attr
 
-    json_order: Union[Unset, None, List[str]] = UNSET
+    params["include_meta_attr"] = json_include_meta_attr
+
+    params["limit"] = limit
+
+    params["offset"] = offset
+
+    json_order: Union[Unset, list[str]] = UNSET
     if not isinstance(order, Unset):
-        if order is None:
-            json_order = None
-        else:
-            json_order = []
-            for order_item_data in order:
-                order_item: str = UNSET
-                if not isinstance(order_item_data, Unset):
+        json_order = []
+        for order_item_data in order:
+            order_item: str = UNSET
+            if not isinstance(order_item_data, Unset):
+                order_item = OsidbApiV1AffectsListOrderItem(order_item_data).value
 
-                    order_item = OsidbApiV1AffectsListOrderItem(order_item_data).value
+            json_order.append(order_item)
 
-                json_order.append(order_item)
+    params["order"] = json_order
 
-    json_resolution: Union[Unset, None, str] = UNSET
+    params["ps_component"] = ps_component
+
+    params["ps_module"] = ps_module
+
+    json_resolution: Union[Unset, str] = UNSET
     if not isinstance(resolution, Unset):
+        json_resolution = OsidbApiV1AffectsListResolution(resolution).value
 
-        json_resolution = (
-            OsidbApiV1AffectsListResolution(resolution).value if resolution else None
-        )
+    params["resolution"] = json_resolution
 
-    json_trackers_created_dt: Union[Unset, None, str] = UNSET
+    json_trackers_created_dt: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt, Unset):
-        json_trackers_created_dt = (
-            trackers_created_dt.isoformat() if trackers_created_dt else None
-        )
+        json_trackers_created_dt = trackers_created_dt.isoformat()
 
-    json_trackers_created_dt_date: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt"] = json_trackers_created_dt
+
+    json_trackers_created_dt_date: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_date, Unset):
-        json_trackers_created_dt_date = (
-            trackers_created_dt_date.isoformat() if trackers_created_dt_date else None
-        )
+        json_trackers_created_dt_date = trackers_created_dt_date.isoformat()
 
-    json_trackers_created_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__date"] = json_trackers_created_dt_date
+
+    json_trackers_created_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_date_gte, Unset):
-        json_trackers_created_dt_date_gte = (
-            trackers_created_dt_date_gte.isoformat()
-            if trackers_created_dt_date_gte
-            else None
-        )
+        json_trackers_created_dt_date_gte = trackers_created_dt_date_gte.isoformat()
 
-    json_trackers_created_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__date__gte"] = json_trackers_created_dt_date_gte
+
+    json_trackers_created_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_date_lte, Unset):
-        json_trackers_created_dt_date_lte = (
-            trackers_created_dt_date_lte.isoformat()
-            if trackers_created_dt_date_lte
-            else None
-        )
+        json_trackers_created_dt_date_lte = trackers_created_dt_date_lte.isoformat()
 
-    json_trackers_created_dt_gt: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__date__lte"] = json_trackers_created_dt_date_lte
+
+    json_trackers_created_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_gt, Unset):
-        json_trackers_created_dt_gt = (
-            trackers_created_dt_gt.isoformat() if trackers_created_dt_gt else None
-        )
+        json_trackers_created_dt_gt = trackers_created_dt_gt.isoformat()
 
-    json_trackers_created_dt_gte: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__gt"] = json_trackers_created_dt_gt
+
+    json_trackers_created_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_gte, Unset):
-        json_trackers_created_dt_gte = (
-            trackers_created_dt_gte.isoformat() if trackers_created_dt_gte else None
-        )
+        json_trackers_created_dt_gte = trackers_created_dt_gte.isoformat()
 
-    json_trackers_created_dt_lt: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__gte"] = json_trackers_created_dt_gte
+
+    json_trackers_created_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_lt, Unset):
-        json_trackers_created_dt_lt = (
-            trackers_created_dt_lt.isoformat() if trackers_created_dt_lt else None
-        )
+        json_trackers_created_dt_lt = trackers_created_dt_lt.isoformat()
 
-    json_trackers_created_dt_lte: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__lt"] = json_trackers_created_dt_lt
+
+    json_trackers_created_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(trackers_created_dt_lte, Unset):
-        json_trackers_created_dt_lte = (
-            trackers_created_dt_lte.isoformat() if trackers_created_dt_lte else None
-        )
+        json_trackers_created_dt_lte = trackers_created_dt_lte.isoformat()
 
-    json_trackers_type: Union[Unset, None, str] = UNSET
+    params["trackers__created_dt__lte"] = json_trackers_created_dt_lte
+
+    params["trackers__embargoed"] = trackers_embargoed
+
+    params["trackers__external_system_id"] = trackers_external_system_id
+
+    params["trackers__ps_update_stream"] = trackers_ps_update_stream
+
+    params["trackers__resolution"] = trackers_resolution
+
+    params["trackers__status"] = trackers_status
+
+    json_trackers_type: Union[Unset, str] = UNSET
     if not isinstance(trackers_type, Unset):
+        json_trackers_type = OsidbApiV1AffectsListTrackersType(trackers_type).value
 
-        json_trackers_type = (
-            OsidbApiV1AffectsListTrackersType(trackers_type).value
-            if trackers_type
-            else None
-        )
+    params["trackers__type"] = json_trackers_type
 
-    json_trackers_updated_dt: Union[Unset, None, str] = UNSET
+    json_trackers_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt, Unset):
-        json_trackers_updated_dt = (
-            trackers_updated_dt.isoformat() if trackers_updated_dt else None
-        )
+        json_trackers_updated_dt = trackers_updated_dt.isoformat()
 
-    json_trackers_updated_dt_date: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt"] = json_trackers_updated_dt
+
+    json_trackers_updated_dt_date: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_date, Unset):
-        json_trackers_updated_dt_date = (
-            trackers_updated_dt_date.isoformat() if trackers_updated_dt_date else None
-        )
+        json_trackers_updated_dt_date = trackers_updated_dt_date.isoformat()
 
-    json_trackers_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__date"] = json_trackers_updated_dt_date
+
+    json_trackers_updated_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_date_gte, Unset):
-        json_trackers_updated_dt_date_gte = (
-            trackers_updated_dt_date_gte.isoformat()
-            if trackers_updated_dt_date_gte
-            else None
-        )
+        json_trackers_updated_dt_date_gte = trackers_updated_dt_date_gte.isoformat()
 
-    json_trackers_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__date__gte"] = json_trackers_updated_dt_date_gte
+
+    json_trackers_updated_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_date_lte, Unset):
-        json_trackers_updated_dt_date_lte = (
-            trackers_updated_dt_date_lte.isoformat()
-            if trackers_updated_dt_date_lte
-            else None
-        )
+        json_trackers_updated_dt_date_lte = trackers_updated_dt_date_lte.isoformat()
 
-    json_trackers_updated_dt_gt: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__date__lte"] = json_trackers_updated_dt_date_lte
+
+    json_trackers_updated_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_gt, Unset):
-        json_trackers_updated_dt_gt = (
-            trackers_updated_dt_gt.isoformat() if trackers_updated_dt_gt else None
-        )
+        json_trackers_updated_dt_gt = trackers_updated_dt_gt.isoformat()
 
-    json_trackers_updated_dt_gte: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__gt"] = json_trackers_updated_dt_gt
+
+    json_trackers_updated_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_gte, Unset):
-        json_trackers_updated_dt_gte = (
-            trackers_updated_dt_gte.isoformat() if trackers_updated_dt_gte else None
-        )
+        json_trackers_updated_dt_gte = trackers_updated_dt_gte.isoformat()
 
-    json_trackers_updated_dt_lt: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__gte"] = json_trackers_updated_dt_gte
+
+    json_trackers_updated_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_lt, Unset):
-        json_trackers_updated_dt_lt = (
-            trackers_updated_dt_lt.isoformat() if trackers_updated_dt_lt else None
-        )
+        json_trackers_updated_dt_lt = trackers_updated_dt_lt.isoformat()
 
-    json_trackers_updated_dt_lte: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__lt"] = json_trackers_updated_dt_lt
+
+    json_trackers_updated_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(trackers_updated_dt_lte, Unset):
-        json_trackers_updated_dt_lte = (
-            trackers_updated_dt_lte.isoformat() if trackers_updated_dt_lte else None
-        )
+        json_trackers_updated_dt_lte = trackers_updated_dt_lte.isoformat()
 
-    json_updated_dt: Union[Unset, None, str] = UNSET
+    params["trackers__updated_dt__lte"] = json_trackers_updated_dt_lte
+
+    json_trackers_uuid: Union[Unset, str] = UNSET
+    if not isinstance(trackers_uuid, Unset):
+        json_trackers_uuid = str(trackers_uuid)
+
+    params["trackers__uuid"] = json_trackers_uuid
+
+    json_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt, Unset):
-        json_updated_dt = updated_dt.isoformat() if updated_dt else None
+        json_updated_dt = updated_dt.isoformat()
 
-    json_updated_dt_date: Union[Unset, None, str] = UNSET
+    params["updated_dt"] = json_updated_dt
+
+    json_updated_dt_date: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_date, Unset):
-        json_updated_dt_date = updated_dt_date.isoformat() if updated_dt_date else None
+        json_updated_dt_date = updated_dt_date.isoformat()
 
-    json_updated_dt_date_gte: Union[Unset, None, str] = UNSET
+    params["updated_dt__date"] = json_updated_dt_date
+
+    json_updated_dt_date_gte: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_date_gte, Unset):
-        json_updated_dt_date_gte = (
-            updated_dt_date_gte.isoformat() if updated_dt_date_gte else None
-        )
+        json_updated_dt_date_gte = updated_dt_date_gte.isoformat()
 
-    json_updated_dt_date_lte: Union[Unset, None, str] = UNSET
+    params["updated_dt__date__gte"] = json_updated_dt_date_gte
+
+    json_updated_dt_date_lte: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_date_lte, Unset):
-        json_updated_dt_date_lte = (
-            updated_dt_date_lte.isoformat() if updated_dt_date_lte else None
-        )
+        json_updated_dt_date_lte = updated_dt_date_lte.isoformat()
 
-    json_updated_dt_gt: Union[Unset, None, str] = UNSET
+    params["updated_dt__date__lte"] = json_updated_dt_date_lte
+
+    json_updated_dt_gt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_gt, Unset):
-        json_updated_dt_gt = updated_dt_gt.isoformat() if updated_dt_gt else None
+        json_updated_dt_gt = updated_dt_gt.isoformat()
 
-    json_updated_dt_gte: Union[Unset, None, str] = UNSET
+    params["updated_dt__gt"] = json_updated_dt_gt
+
+    json_updated_dt_gte: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_gte, Unset):
-        json_updated_dt_gte = updated_dt_gte.isoformat() if updated_dt_gte else None
+        json_updated_dt_gte = updated_dt_gte.isoformat()
 
-    json_updated_dt_lt: Union[Unset, None, str] = UNSET
+    params["updated_dt__gte"] = json_updated_dt_gte
+
+    json_updated_dt_lt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_lt, Unset):
-        json_updated_dt_lt = updated_dt_lt.isoformat() if updated_dt_lt else None
+        json_updated_dt_lt = updated_dt_lt.isoformat()
 
-    json_updated_dt_lte: Union[Unset, None, str] = UNSET
+    params["updated_dt__lt"] = json_updated_dt_lt
+
+    json_updated_dt_lte: Union[Unset, str] = UNSET
     if not isinstance(updated_dt_lte, Unset):
-        json_updated_dt_lte = updated_dt_lte.isoformat() if updated_dt_lte else None
+        json_updated_dt_lte = updated_dt_lte.isoformat()
 
-    params: Dict[str, Any] = {
-        "affectedness": json_affectedness,
-        "created_dt": json_created_dt,
-        "created_dt__date": json_created_dt_date,
-        "created_dt__date__gte": json_created_dt_date_gte,
-        "created_dt__date__lte": json_created_dt_date_lte,
-        "created_dt__gt": json_created_dt_gt,
-        "created_dt__gte": json_created_dt_gte,
-        "created_dt__lt": json_created_dt_lt,
-        "created_dt__lte": json_created_dt_lte,
-        "cvss_scores__comment": cvss_scores_comment,
-        "cvss_scores__created_dt": json_cvss_scores_created_dt,
-        "cvss_scores__created_dt__date": json_cvss_scores_created_dt_date,
-        "cvss_scores__created_dt__date__gte": json_cvss_scores_created_dt_date_gte,
-        "cvss_scores__created_dt__date__lte": json_cvss_scores_created_dt_date_lte,
-        "cvss_scores__created_dt__gt": json_cvss_scores_created_dt_gt,
-        "cvss_scores__created_dt__gte": json_cvss_scores_created_dt_gte,
-        "cvss_scores__created_dt__lt": json_cvss_scores_created_dt_lt,
-        "cvss_scores__created_dt__lte": json_cvss_scores_created_dt_lte,
-        "cvss_scores__cvss_version": cvss_scores_cvss_version,
-        "cvss_scores__issuer": json_cvss_scores_issuer,
-        "cvss_scores__score": cvss_scores_score,
-        "cvss_scores__updated_dt": json_cvss_scores_updated_dt,
-        "cvss_scores__updated_dt__date": json_cvss_scores_updated_dt_date,
-        "cvss_scores__updated_dt__date__gte": json_cvss_scores_updated_dt_date_gte,
-        "cvss_scores__updated_dt__date__lte": json_cvss_scores_updated_dt_date_lte,
-        "cvss_scores__updated_dt__gt": json_cvss_scores_updated_dt_gt,
-        "cvss_scores__updated_dt__gte": json_cvss_scores_updated_dt_gte,
-        "cvss_scores__updated_dt__lt": json_cvss_scores_updated_dt_lt,
-        "cvss_scores__updated_dt__lte": json_cvss_scores_updated_dt_lte,
-        "cvss_scores__uuid": cvss_scores_uuid,
-        "cvss_scores__vector": cvss_scores_vector,
-        "embargoed": embargoed,
-        "exclude_fields": json_exclude_fields,
-        "flaw__components": json_flaw_components,
-        "flaw__created_dt": json_flaw_created_dt,
-        "flaw__created_dt__date": json_flaw_created_dt_date,
-        "flaw__created_dt__date__gte": json_flaw_created_dt_date_gte,
-        "flaw__created_dt__date__lte": json_flaw_created_dt_date_lte,
-        "flaw__created_dt__gt": json_flaw_created_dt_gt,
-        "flaw__created_dt__gte": json_flaw_created_dt_gte,
-        "flaw__created_dt__lt": json_flaw_created_dt_lt,
-        "flaw__created_dt__lte": json_flaw_created_dt_lte,
-        "flaw__cve_id": flaw_cve_id,
-        "flaw__cwe_id": flaw_cwe_id,
-        "flaw__embargoed": flaw_embargoed,
-        "flaw__impact": json_flaw_impact,
-        "flaw__reported_dt": json_flaw_reported_dt,
-        "flaw__reported_dt__date": json_flaw_reported_dt_date,
-        "flaw__reported_dt__date__gte": json_flaw_reported_dt_date_gte,
-        "flaw__reported_dt__date__lte": json_flaw_reported_dt_date_lte,
-        "flaw__reported_dt__gt": json_flaw_reported_dt_gt,
-        "flaw__reported_dt__gte": json_flaw_reported_dt_gte,
-        "flaw__reported_dt__lt": json_flaw_reported_dt_lt,
-        "flaw__reported_dt__lte": json_flaw_reported_dt_lte,
-        "flaw__source": json_flaw_source,
-        "flaw__unembargo_dt": json_flaw_unembargo_dt,
-        "flaw__updated_dt": json_flaw_updated_dt,
-        "flaw__updated_dt__date": json_flaw_updated_dt_date,
-        "flaw__updated_dt__date__gte": json_flaw_updated_dt_date_gte,
-        "flaw__updated_dt__date__lte": json_flaw_updated_dt_date_lte,
-        "flaw__updated_dt__gt": json_flaw_updated_dt_gt,
-        "flaw__updated_dt__gte": json_flaw_updated_dt_gte,
-        "flaw__updated_dt__lt": json_flaw_updated_dt_lt,
-        "flaw__updated_dt__lte": json_flaw_updated_dt_lte,
-        "flaw__uuid": flaw_uuid,
-        "impact": json_impact,
-        "include_fields": json_include_fields,
-        "include_meta_attr": json_include_meta_attr,
-        "limit": limit,
-        "offset": offset,
-        "order": json_order,
-        "ps_component": ps_component,
-        "ps_module": ps_module,
-        "resolution": json_resolution,
-        "trackers__created_dt": json_trackers_created_dt,
-        "trackers__created_dt__date": json_trackers_created_dt_date,
-        "trackers__created_dt__date__gte": json_trackers_created_dt_date_gte,
-        "trackers__created_dt__date__lte": json_trackers_created_dt_date_lte,
-        "trackers__created_dt__gt": json_trackers_created_dt_gt,
-        "trackers__created_dt__gte": json_trackers_created_dt_gte,
-        "trackers__created_dt__lt": json_trackers_created_dt_lt,
-        "trackers__created_dt__lte": json_trackers_created_dt_lte,
-        "trackers__embargoed": trackers_embargoed,
-        "trackers__external_system_id": trackers_external_system_id,
-        "trackers__ps_update_stream": trackers_ps_update_stream,
-        "trackers__resolution": trackers_resolution,
-        "trackers__status": trackers_status,
-        "trackers__type": json_trackers_type,
-        "trackers__updated_dt": json_trackers_updated_dt,
-        "trackers__updated_dt__date": json_trackers_updated_dt_date,
-        "trackers__updated_dt__date__gte": json_trackers_updated_dt_date_gte,
-        "trackers__updated_dt__date__lte": json_trackers_updated_dt_date_lte,
-        "trackers__updated_dt__gt": json_trackers_updated_dt_gt,
-        "trackers__updated_dt__gte": json_trackers_updated_dt_gte,
-        "trackers__updated_dt__lt": json_trackers_updated_dt_lt,
-        "trackers__updated_dt__lte": json_trackers_updated_dt_lte,
-        "trackers__uuid": trackers_uuid,
-        "updated_dt": json_updated_dt,
-        "updated_dt__date": json_updated_dt_date,
-        "updated_dt__date__gte": json_updated_dt_date_gte,
-        "updated_dt__date__lte": json_updated_dt_date_lte,
-        "updated_dt__gt": json_updated_dt_gt,
-        "updated_dt__gte": json_updated_dt_gte,
-        "updated_dt__lt": json_updated_dt_lt,
-        "updated_dt__lte": json_updated_dt_lte,
-        "uuid": uuid,
-    }
+    params["updated_dt__lte"] = json_updated_dt_lte
+
+    json_uuid: Union[Unset, str] = UNSET
+    if not isinstance(uuid, Unset):
+        json_uuid = str(uuid)
+
+    params["uuid"] = json_uuid
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
-        "url": url,
-        "headers": headers,
+    _kwargs: dict[str, Any] = {
+        "url": f"{client.base_url}/osidb/api/v1/affects",
         "params": params,
     }
 
+    _kwargs["headers"] = headers
+    return _kwargs
+
 
 def _parse_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AffectsListResponse200]:
     if response.status_code == 200:
+        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AffectsListResponse200
         if isinstance(_response_200, Unset):
@@ -921,132 +865,246 @@ def _parse_response(
             response_200 = OsidbApiV1AffectsListResponse200.from_dict(_response_200)
 
         return response_200
-    return None
 
 
 def _build_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Response[OsidbApiV1AffectsListResponse200]:
     return Response(
-        status_code=response.status_code,
+        status_code=HTTPStatus(response.status_code),
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=_parse_response(client=client, response=response),
     )
 
 
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_comment: Union[Unset, None, str] = UNSET,
-    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
-    cvss_scores_issuer: Union[
-        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
-    ] = UNSET,
-    cvss_scores_score: Union[Unset, None, float] = UNSET,
-    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
-    cvss_scores_vector: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_components: Union[Unset, None, List[str]] = UNSET,
-    flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_cve_id: Union[Unset, None, str] = UNSET,
-    flaw_cwe_id: Union[Unset, None, str] = UNSET,
-    flaw_embargoed: Union[Unset, None, bool] = UNSET,
-    flaw_impact: Union[Unset, None, OsidbApiV1AffectsListFlawImpact] = UNSET,
-    flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_source: Union[Unset, None, OsidbApiV1AffectsListFlawSource] = UNSET,
-    flaw_unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_uuid: Union[Unset, None, str] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    order: Union[Unset, None, List[OsidbApiV1AffectsListOrderItem]] = UNSET,
-    ps_component: Union[Unset, None, str] = UNSET,
-    ps_module: Union[Unset, None, str] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1AffectsListResolution] = UNSET,
-    trackers_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_embargoed: Union[Unset, None, bool] = UNSET,
-    trackers_external_system_id: Union[Unset, None, str] = UNSET,
-    trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
-    trackers_resolution: Union[Unset, None, str] = UNSET,
-    trackers_status: Union[Unset, None, str] = UNSET,
-    trackers_type: Union[Unset, None, OsidbApiV1AffectsListTrackersType] = UNSET,
-    trackers_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_uuid: Union[Unset, None, str] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
+    affectedness: Union[Unset, OsidbApiV1AffectsListAffectedness] = UNSET,
+    created_dt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_comment: Union[Unset, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, UUID] = UNSET,
+    cvss_scores_vector: Union[Unset, str] = UNSET,
+    embargoed: Union[Unset, bool] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    flaw_components: Union[Unset, list[str]] = UNSET,
+    flaw_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_cve_id: Union[Unset, str] = UNSET,
+    flaw_cwe_id: Union[Unset, str] = UNSET,
+    flaw_embargoed: Union[Unset, bool] = UNSET,
+    flaw_impact: Union[Unset, OsidbApiV1AffectsListFlawImpact] = UNSET,
+    flaw_reported_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_source: Union[Unset, OsidbApiV1AffectsListFlawSource] = UNSET,
+    flaw_unembargo_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_uuid: Union[Unset, UUID] = UNSET,
+    impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+    include_meta_attr: Union[Unset, list[str]] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    order: Union[Unset, list[OsidbApiV1AffectsListOrderItem]] = UNSET,
+    ps_component: Union[Unset, str] = UNSET,
+    ps_module: Union[Unset, str] = UNSET,
+    resolution: Union[Unset, OsidbApiV1AffectsListResolution] = UNSET,
+    trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_embargoed: Union[Unset, bool] = UNSET,
+    trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_ps_update_stream: Union[Unset, str] = UNSET,
+    trackers_resolution: Union[Unset, str] = UNSET,
+    trackers_status: Union[Unset, str] = UNSET,
+    trackers_type: Union[Unset, OsidbApiV1AffectsListTrackersType] = UNSET,
+    trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_uuid: Union[Unset, UUID] = UNSET,
+    updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    uuid: Union[Unset, UUID] = UNSET,
 ) -> Response[OsidbApiV1AffectsListResponse200]:
+    """
+    Args:
+        affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
+        created_dt (Union[Unset, datetime.datetime]):
+        created_dt_date (Union[Unset, datetime.date]):
+        created_dt_date_gte (Union[Unset, datetime.date]):
+        created_dt_date_lte (Union[Unset, datetime.date]):
+        created_dt_gt (Union[Unset, datetime.datetime]):
+        created_dt_gte (Union[Unset, datetime.datetime]):
+        created_dt_lt (Union[Unset, datetime.datetime]):
+        created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_comment (Union[Unset, str]):
+        cvss_scores_created_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_cvss_version (Union[Unset, str]):
+        cvss_scores_issuer (Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer]):
+        cvss_scores_score (Union[Unset, float]):
+        cvss_scores_updated_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_uuid (Union[Unset, UUID]):
+        cvss_scores_vector (Union[Unset, str]):
+        embargoed (Union[Unset, bool]):
+        exclude_fields (Union[Unset, list[str]]):
+        flaw_components (Union[Unset, list[str]]):
+        flaw_created_dt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_date (Union[Unset, datetime.date]):
+        flaw_created_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_created_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_created_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_cve_id (Union[Unset, str]):
+        flaw_cwe_id (Union[Unset, str]):
+        flaw_embargoed (Union[Unset, bool]):
+        flaw_impact (Union[Unset, OsidbApiV1AffectsListFlawImpact]):
+        flaw_reported_dt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_date (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_reported_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_source (Union[Unset, OsidbApiV1AffectsListFlawSource]):
+        flaw_unembargo_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_date (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_updated_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_uuid (Union[Unset, UUID]):
+        impact (Union[Unset, OsidbApiV1AffectsListImpact]):
+        include_fields (Union[Unset, list[str]]):
+        include_meta_attr (Union[Unset, list[str]]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        order (Union[Unset, list[OsidbApiV1AffectsListOrderItem]]):
+        ps_component (Union[Unset, str]):
+        ps_module (Union[Unset, str]):
+        resolution (Union[Unset, OsidbApiV1AffectsListResolution]):
+        trackers_created_dt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_date (Union[Unset, datetime.date]):
+        trackers_created_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_created_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_created_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_embargoed (Union[Unset, bool]):
+        trackers_external_system_id (Union[Unset, str]):
+        trackers_ps_update_stream (Union[Unset, str]):
+        trackers_resolution (Union[Unset, str]):
+        trackers_status (Union[Unset, str]):
+        trackers_type (Union[Unset, OsidbApiV1AffectsListTrackersType]):
+        trackers_updated_dt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_date (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_uuid (Union[Unset, UUID]):
+        updated_dt (Union[Unset, datetime.datetime]):
+        updated_dt_date (Union[Unset, datetime.date]):
+        updated_dt_date_gte (Union[Unset, datetime.date]):
+        updated_dt_date_lte (Union[Unset, datetime.date]):
+        updated_dt_gt (Union[Unset, datetime.datetime]):
+        updated_dt_gte (Union[Unset, datetime.datetime]):
+        updated_dt_lt (Union[Unset, datetime.datetime]):
+        updated_dt_lte (Union[Unset, datetime.datetime]):
+        uuid (Union[Unset, UUID]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AffectsListResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         affectedness=affectedness,
@@ -1165,122 +1223,235 @@ def sync_detailed(
     )
     response.raise_for_status()
 
-    return _build_response(response=response)
+    return _build_response(client=client, response=response)
 
 
 def sync(
     *,
     client: AuthenticatedClient,
-    affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_comment: Union[Unset, None, str] = UNSET,
-    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
-    cvss_scores_issuer: Union[
-        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
-    ] = UNSET,
-    cvss_scores_score: Union[Unset, None, float] = UNSET,
-    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
-    cvss_scores_vector: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_components: Union[Unset, None, List[str]] = UNSET,
-    flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_cve_id: Union[Unset, None, str] = UNSET,
-    flaw_cwe_id: Union[Unset, None, str] = UNSET,
-    flaw_embargoed: Union[Unset, None, bool] = UNSET,
-    flaw_impact: Union[Unset, None, OsidbApiV1AffectsListFlawImpact] = UNSET,
-    flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_source: Union[Unset, None, OsidbApiV1AffectsListFlawSource] = UNSET,
-    flaw_unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_uuid: Union[Unset, None, str] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    order: Union[Unset, None, List[OsidbApiV1AffectsListOrderItem]] = UNSET,
-    ps_component: Union[Unset, None, str] = UNSET,
-    ps_module: Union[Unset, None, str] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1AffectsListResolution] = UNSET,
-    trackers_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_embargoed: Union[Unset, None, bool] = UNSET,
-    trackers_external_system_id: Union[Unset, None, str] = UNSET,
-    trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
-    trackers_resolution: Union[Unset, None, str] = UNSET,
-    trackers_status: Union[Unset, None, str] = UNSET,
-    trackers_type: Union[Unset, None, OsidbApiV1AffectsListTrackersType] = UNSET,
-    trackers_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_uuid: Union[Unset, None, str] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
+    affectedness: Union[Unset, OsidbApiV1AffectsListAffectedness] = UNSET,
+    created_dt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_comment: Union[Unset, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, UUID] = UNSET,
+    cvss_scores_vector: Union[Unset, str] = UNSET,
+    embargoed: Union[Unset, bool] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    flaw_components: Union[Unset, list[str]] = UNSET,
+    flaw_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_cve_id: Union[Unset, str] = UNSET,
+    flaw_cwe_id: Union[Unset, str] = UNSET,
+    flaw_embargoed: Union[Unset, bool] = UNSET,
+    flaw_impact: Union[Unset, OsidbApiV1AffectsListFlawImpact] = UNSET,
+    flaw_reported_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_source: Union[Unset, OsidbApiV1AffectsListFlawSource] = UNSET,
+    flaw_unembargo_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_uuid: Union[Unset, UUID] = UNSET,
+    impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+    include_meta_attr: Union[Unset, list[str]] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    order: Union[Unset, list[OsidbApiV1AffectsListOrderItem]] = UNSET,
+    ps_component: Union[Unset, str] = UNSET,
+    ps_module: Union[Unset, str] = UNSET,
+    resolution: Union[Unset, OsidbApiV1AffectsListResolution] = UNSET,
+    trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_embargoed: Union[Unset, bool] = UNSET,
+    trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_ps_update_stream: Union[Unset, str] = UNSET,
+    trackers_resolution: Union[Unset, str] = UNSET,
+    trackers_status: Union[Unset, str] = UNSET,
+    trackers_type: Union[Unset, OsidbApiV1AffectsListTrackersType] = UNSET,
+    trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_uuid: Union[Unset, UUID] = UNSET,
+    updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    uuid: Union[Unset, UUID] = UNSET,
 ) -> Optional[OsidbApiV1AffectsListResponse200]:
-    """ """
+    """
+    Args:
+        affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
+        created_dt (Union[Unset, datetime.datetime]):
+        created_dt_date (Union[Unset, datetime.date]):
+        created_dt_date_gte (Union[Unset, datetime.date]):
+        created_dt_date_lte (Union[Unset, datetime.date]):
+        created_dt_gt (Union[Unset, datetime.datetime]):
+        created_dt_gte (Union[Unset, datetime.datetime]):
+        created_dt_lt (Union[Unset, datetime.datetime]):
+        created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_comment (Union[Unset, str]):
+        cvss_scores_created_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_cvss_version (Union[Unset, str]):
+        cvss_scores_issuer (Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer]):
+        cvss_scores_score (Union[Unset, float]):
+        cvss_scores_updated_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_uuid (Union[Unset, UUID]):
+        cvss_scores_vector (Union[Unset, str]):
+        embargoed (Union[Unset, bool]):
+        exclude_fields (Union[Unset, list[str]]):
+        flaw_components (Union[Unset, list[str]]):
+        flaw_created_dt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_date (Union[Unset, datetime.date]):
+        flaw_created_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_created_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_created_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_cve_id (Union[Unset, str]):
+        flaw_cwe_id (Union[Unset, str]):
+        flaw_embargoed (Union[Unset, bool]):
+        flaw_impact (Union[Unset, OsidbApiV1AffectsListFlawImpact]):
+        flaw_reported_dt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_date (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_reported_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_source (Union[Unset, OsidbApiV1AffectsListFlawSource]):
+        flaw_unembargo_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_date (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_updated_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_uuid (Union[Unset, UUID]):
+        impact (Union[Unset, OsidbApiV1AffectsListImpact]):
+        include_fields (Union[Unset, list[str]]):
+        include_meta_attr (Union[Unset, list[str]]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        order (Union[Unset, list[OsidbApiV1AffectsListOrderItem]]):
+        ps_component (Union[Unset, str]):
+        ps_module (Union[Unset, str]):
+        resolution (Union[Unset, OsidbApiV1AffectsListResolution]):
+        trackers_created_dt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_date (Union[Unset, datetime.date]):
+        trackers_created_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_created_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_created_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_embargoed (Union[Unset, bool]):
+        trackers_external_system_id (Union[Unset, str]):
+        trackers_ps_update_stream (Union[Unset, str]):
+        trackers_resolution (Union[Unset, str]):
+        trackers_status (Union[Unset, str]):
+        trackers_type (Union[Unset, OsidbApiV1AffectsListTrackersType]):
+        trackers_updated_dt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_date (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_uuid (Union[Unset, UUID]):
+        updated_dt (Union[Unset, datetime.datetime]):
+        updated_dt_date (Union[Unset, datetime.date]):
+        updated_dt_date_gte (Union[Unset, datetime.date]):
+        updated_dt_date_lte (Union[Unset, datetime.date]):
+        updated_dt_gt (Union[Unset, datetime.datetime]):
+        updated_dt_gte (Union[Unset, datetime.datetime]):
+        updated_dt_lt (Union[Unset, datetime.datetime]):
+        updated_dt_lte (Union[Unset, datetime.datetime]):
+        uuid (Union[Unset, UUID]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AffectsListResponse200
+    """
 
     return sync_detailed(
         client=client,
@@ -1393,118 +1564,233 @@ def sync(
     ).parsed
 
 
-async def async_detailed(
+async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_comment: Union[Unset, None, str] = UNSET,
-    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
-    cvss_scores_issuer: Union[
-        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
-    ] = UNSET,
-    cvss_scores_score: Union[Unset, None, float] = UNSET,
-    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
-    cvss_scores_vector: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_components: Union[Unset, None, List[str]] = UNSET,
-    flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_cve_id: Union[Unset, None, str] = UNSET,
-    flaw_cwe_id: Union[Unset, None, str] = UNSET,
-    flaw_embargoed: Union[Unset, None, bool] = UNSET,
-    flaw_impact: Union[Unset, None, OsidbApiV1AffectsListFlawImpact] = UNSET,
-    flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_source: Union[Unset, None, OsidbApiV1AffectsListFlawSource] = UNSET,
-    flaw_unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_uuid: Union[Unset, None, str] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    order: Union[Unset, None, List[OsidbApiV1AffectsListOrderItem]] = UNSET,
-    ps_component: Union[Unset, None, str] = UNSET,
-    ps_module: Union[Unset, None, str] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1AffectsListResolution] = UNSET,
-    trackers_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_embargoed: Union[Unset, None, bool] = UNSET,
-    trackers_external_system_id: Union[Unset, None, str] = UNSET,
-    trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
-    trackers_resolution: Union[Unset, None, str] = UNSET,
-    trackers_status: Union[Unset, None, str] = UNSET,
-    trackers_type: Union[Unset, None, OsidbApiV1AffectsListTrackersType] = UNSET,
-    trackers_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_uuid: Union[Unset, None, str] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
+    affectedness: Union[Unset, OsidbApiV1AffectsListAffectedness] = UNSET,
+    created_dt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_comment: Union[Unset, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, UUID] = UNSET,
+    cvss_scores_vector: Union[Unset, str] = UNSET,
+    embargoed: Union[Unset, bool] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    flaw_components: Union[Unset, list[str]] = UNSET,
+    flaw_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_cve_id: Union[Unset, str] = UNSET,
+    flaw_cwe_id: Union[Unset, str] = UNSET,
+    flaw_embargoed: Union[Unset, bool] = UNSET,
+    flaw_impact: Union[Unset, OsidbApiV1AffectsListFlawImpact] = UNSET,
+    flaw_reported_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_source: Union[Unset, OsidbApiV1AffectsListFlawSource] = UNSET,
+    flaw_unembargo_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_uuid: Union[Unset, UUID] = UNSET,
+    impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+    include_meta_attr: Union[Unset, list[str]] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    order: Union[Unset, list[OsidbApiV1AffectsListOrderItem]] = UNSET,
+    ps_component: Union[Unset, str] = UNSET,
+    ps_module: Union[Unset, str] = UNSET,
+    resolution: Union[Unset, OsidbApiV1AffectsListResolution] = UNSET,
+    trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_embargoed: Union[Unset, bool] = UNSET,
+    trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_ps_update_stream: Union[Unset, str] = UNSET,
+    trackers_resolution: Union[Unset, str] = UNSET,
+    trackers_status: Union[Unset, str] = UNSET,
+    trackers_type: Union[Unset, OsidbApiV1AffectsListTrackersType] = UNSET,
+    trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_uuid: Union[Unset, UUID] = UNSET,
+    updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    uuid: Union[Unset, UUID] = UNSET,
 ) -> Response[OsidbApiV1AffectsListResponse200]:
+    """
+    Args:
+        affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
+        created_dt (Union[Unset, datetime.datetime]):
+        created_dt_date (Union[Unset, datetime.date]):
+        created_dt_date_gte (Union[Unset, datetime.date]):
+        created_dt_date_lte (Union[Unset, datetime.date]):
+        created_dt_gt (Union[Unset, datetime.datetime]):
+        created_dt_gte (Union[Unset, datetime.datetime]):
+        created_dt_lt (Union[Unset, datetime.datetime]):
+        created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_comment (Union[Unset, str]):
+        cvss_scores_created_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_cvss_version (Union[Unset, str]):
+        cvss_scores_issuer (Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer]):
+        cvss_scores_score (Union[Unset, float]):
+        cvss_scores_updated_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_uuid (Union[Unset, UUID]):
+        cvss_scores_vector (Union[Unset, str]):
+        embargoed (Union[Unset, bool]):
+        exclude_fields (Union[Unset, list[str]]):
+        flaw_components (Union[Unset, list[str]]):
+        flaw_created_dt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_date (Union[Unset, datetime.date]):
+        flaw_created_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_created_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_created_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_cve_id (Union[Unset, str]):
+        flaw_cwe_id (Union[Unset, str]):
+        flaw_embargoed (Union[Unset, bool]):
+        flaw_impact (Union[Unset, OsidbApiV1AffectsListFlawImpact]):
+        flaw_reported_dt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_date (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_reported_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_source (Union[Unset, OsidbApiV1AffectsListFlawSource]):
+        flaw_unembargo_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_date (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_updated_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_uuid (Union[Unset, UUID]):
+        impact (Union[Unset, OsidbApiV1AffectsListImpact]):
+        include_fields (Union[Unset, list[str]]):
+        include_meta_attr (Union[Unset, list[str]]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        order (Union[Unset, list[OsidbApiV1AffectsListOrderItem]]):
+        ps_component (Union[Unset, str]):
+        ps_module (Union[Unset, str]):
+        resolution (Union[Unset, OsidbApiV1AffectsListResolution]):
+        trackers_created_dt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_date (Union[Unset, datetime.date]):
+        trackers_created_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_created_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_created_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_embargoed (Union[Unset, bool]):
+        trackers_external_system_id (Union[Unset, str]):
+        trackers_ps_update_stream (Union[Unset, str]):
+        trackers_resolution (Union[Unset, str]):
+        trackers_status (Union[Unset, str]):
+        trackers_type (Union[Unset, OsidbApiV1AffectsListTrackersType]):
+        trackers_updated_dt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_date (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_uuid (Union[Unset, UUID]):
+        updated_dt (Union[Unset, datetime.datetime]):
+        updated_dt_date (Union[Unset, datetime.date]):
+        updated_dt_date_gte (Union[Unset, datetime.date]):
+        updated_dt_date_lte (Union[Unset, datetime.date]):
+        updated_dt_gt (Union[Unset, datetime.datetime]):
+        updated_dt_gte (Union[Unset, datetime.datetime]):
+        updated_dt_lt (Union[Unset, datetime.datetime]):
+        updated_dt_lte (Union[Unset, datetime.datetime]):
+        uuid (Union[Unset, UUID]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AffectsListResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         affectedness=affectedness,
@@ -1623,125 +1909,238 @@ async def async_detailed(
         resp.status_code = response.status
         resp._content = content
 
-    return _build_response(response=resp)
+    return _build_response(client=client, response=resp)
 
 
-async def async_(
+async def asyncio(
     *,
     client: AuthenticatedClient,
-    affectedness: Union[Unset, None, OsidbApiV1AffectsListAffectedness] = UNSET,
-    created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_comment: Union[Unset, None, str] = UNSET,
-    cvss_scores_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_cvss_version: Union[Unset, None, str] = UNSET,
-    cvss_scores_issuer: Union[
-        Unset, None, OsidbApiV1AffectsListCvssScoresIssuer
-    ] = UNSET,
-    cvss_scores_score: Union[Unset, None, float] = UNSET,
-    cvss_scores_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    cvss_scores_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    cvss_scores_uuid: Union[Unset, None, str] = UNSET,
-    cvss_scores_vector: Union[Unset, None, str] = UNSET,
-    embargoed: Union[Unset, None, bool] = UNSET,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    flaw_components: Union[Unset, None, List[str]] = UNSET,
-    flaw_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_cve_id: Union[Unset, None, str] = UNSET,
-    flaw_cwe_id: Union[Unset, None, str] = UNSET,
-    flaw_embargoed: Union[Unset, None, bool] = UNSET,
-    flaw_impact: Union[Unset, None, OsidbApiV1AffectsListFlawImpact] = UNSET,
-    flaw_reported_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_reported_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_reported_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_source: Union[Unset, None, OsidbApiV1AffectsListFlawSource] = UNSET,
-    flaw_unembargo_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    flaw_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    flaw_uuid: Union[Unset, None, str] = UNSET,
-    impact: Union[Unset, None, OsidbApiV1AffectsListImpact] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-    include_meta_attr: Union[Unset, None, List[str]] = UNSET,
-    limit: Union[Unset, None, int] = UNSET,
-    offset: Union[Unset, None, int] = UNSET,
-    order: Union[Unset, None, List[OsidbApiV1AffectsListOrderItem]] = UNSET,
-    ps_component: Union[Unset, None, str] = UNSET,
-    ps_module: Union[Unset, None, str] = UNSET,
-    resolution: Union[Unset, None, OsidbApiV1AffectsListResolution] = UNSET,
-    trackers_created_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_created_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_created_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_embargoed: Union[Unset, None, bool] = UNSET,
-    trackers_external_system_id: Union[Unset, None, str] = UNSET,
-    trackers_ps_update_stream: Union[Unset, None, str] = UNSET,
-    trackers_resolution: Union[Unset, None, str] = UNSET,
-    trackers_status: Union[Unset, None, str] = UNSET,
-    trackers_type: Union[Unset, None, OsidbApiV1AffectsListTrackersType] = UNSET,
-    trackers_updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    trackers_updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    trackers_uuid: Union[Unset, None, str] = UNSET,
-    updated_dt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_date: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_gte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_date_lte: Union[Unset, None, datetime.date] = UNSET,
-    updated_dt_gt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_gte: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lt: Union[Unset, None, datetime.datetime] = UNSET,
-    updated_dt_lte: Union[Unset, None, datetime.datetime] = UNSET,
-    uuid: Union[Unset, None, str] = UNSET,
+    affectedness: Union[Unset, OsidbApiV1AffectsListAffectedness] = UNSET,
+    created_dt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_date: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_comment: Union[Unset, str] = UNSET,
+    cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_cvss_version: Union[Unset, str] = UNSET,
+    cvss_scores_issuer: Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer] = UNSET,
+    cvss_scores_score: Union[Unset, float] = UNSET,
+    cvss_scores_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    cvss_scores_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cvss_scores_uuid: Union[Unset, UUID] = UNSET,
+    cvss_scores_vector: Union[Unset, str] = UNSET,
+    embargoed: Union[Unset, bool] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    flaw_components: Union[Unset, list[str]] = UNSET,
+    flaw_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_cve_id: Union[Unset, str] = UNSET,
+    flaw_cwe_id: Union[Unset, str] = UNSET,
+    flaw_embargoed: Union[Unset, bool] = UNSET,
+    flaw_impact: Union[Unset, OsidbApiV1AffectsListFlawImpact] = UNSET,
+    flaw_reported_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_reported_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_source: Union[Unset, OsidbApiV1AffectsListFlawSource] = UNSET,
+    flaw_unembargo_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    flaw_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    flaw_uuid: Union[Unset, UUID] = UNSET,
+    impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+    include_meta_attr: Union[Unset, list[str]] = UNSET,
+    limit: Union[Unset, int] = UNSET,
+    offset: Union[Unset, int] = UNSET,
+    order: Union[Unset, list[OsidbApiV1AffectsListOrderItem]] = UNSET,
+    ps_component: Union[Unset, str] = UNSET,
+    ps_module: Union[Unset, str] = UNSET,
+    resolution: Union[Unset, OsidbApiV1AffectsListResolution] = UNSET,
+    trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_embargoed: Union[Unset, bool] = UNSET,
+    trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_ps_update_stream: Union[Unset, str] = UNSET,
+    trackers_resolution: Union[Unset, str] = UNSET,
+    trackers_status: Union[Unset, str] = UNSET,
+    trackers_type: Union[Unset, OsidbApiV1AffectsListTrackersType] = UNSET,
+    trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    trackers_uuid: Union[Unset, UUID] = UNSET,
+    updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    uuid: Union[Unset, UUID] = UNSET,
 ) -> Optional[OsidbApiV1AffectsListResponse200]:
-    """ """
+    """
+    Args:
+        affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
+        created_dt (Union[Unset, datetime.datetime]):
+        created_dt_date (Union[Unset, datetime.date]):
+        created_dt_date_gte (Union[Unset, datetime.date]):
+        created_dt_date_lte (Union[Unset, datetime.date]):
+        created_dt_gt (Union[Unset, datetime.datetime]):
+        created_dt_gte (Union[Unset, datetime.datetime]):
+        created_dt_lt (Union[Unset, datetime.datetime]):
+        created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_comment (Union[Unset, str]):
+        cvss_scores_created_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_created_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_created_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_cvss_version (Union[Unset, str]):
+        cvss_scores_issuer (Union[Unset, OsidbApiV1AffectsListCvssScoresIssuer]):
+        cvss_scores_score (Union[Unset, float]):
+        cvss_scores_updated_dt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_date (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_gte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_date_lte (Union[Unset, datetime.date]):
+        cvss_scores_updated_dt_gt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_gte (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lt (Union[Unset, datetime.datetime]):
+        cvss_scores_updated_dt_lte (Union[Unset, datetime.datetime]):
+        cvss_scores_uuid (Union[Unset, UUID]):
+        cvss_scores_vector (Union[Unset, str]):
+        embargoed (Union[Unset, bool]):
+        exclude_fields (Union[Unset, list[str]]):
+        flaw_components (Union[Unset, list[str]]):
+        flaw_created_dt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_date (Union[Unset, datetime.date]):
+        flaw_created_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_created_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_created_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_created_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_cve_id (Union[Unset, str]):
+        flaw_cwe_id (Union[Unset, str]):
+        flaw_embargoed (Union[Unset, bool]):
+        flaw_impact (Union[Unset, OsidbApiV1AffectsListFlawImpact]):
+        flaw_reported_dt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_date (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_reported_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_reported_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_reported_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_source (Union[Unset, OsidbApiV1AffectsListFlawSource]):
+        flaw_unembargo_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_date (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_gte (Union[Unset, datetime.date]):
+        flaw_updated_dt_date_lte (Union[Unset, datetime.date]):
+        flaw_updated_dt_gt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_gte (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
+        flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
+        flaw_uuid (Union[Unset, UUID]):
+        impact (Union[Unset, OsidbApiV1AffectsListImpact]):
+        include_fields (Union[Unset, list[str]]):
+        include_meta_attr (Union[Unset, list[str]]):
+        limit (Union[Unset, int]):
+        offset (Union[Unset, int]):
+        order (Union[Unset, list[OsidbApiV1AffectsListOrderItem]]):
+        ps_component (Union[Unset, str]):
+        ps_module (Union[Unset, str]):
+        resolution (Union[Unset, OsidbApiV1AffectsListResolution]):
+        trackers_created_dt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_date (Union[Unset, datetime.date]):
+        trackers_created_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_created_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_created_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_created_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_embargoed (Union[Unset, bool]):
+        trackers_external_system_id (Union[Unset, str]):
+        trackers_ps_update_stream (Union[Unset, str]):
+        trackers_resolution (Union[Unset, str]):
+        trackers_status (Union[Unset, str]):
+        trackers_type (Union[Unset, OsidbApiV1AffectsListTrackersType]):
+        trackers_updated_dt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_date (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
+        trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
+        trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
+        trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
+        trackers_uuid (Union[Unset, UUID]):
+        updated_dt (Union[Unset, datetime.datetime]):
+        updated_dt_date (Union[Unset, datetime.date]):
+        updated_dt_date_gte (Union[Unset, datetime.date]):
+        updated_dt_date_lte (Union[Unset, datetime.date]):
+        updated_dt_gt (Union[Unset, datetime.datetime]):
+        updated_dt_gte (Union[Unset, datetime.datetime]):
+        updated_dt_lt (Union[Unset, datetime.datetime]):
+        updated_dt_lte (Union[Unset, datetime.datetime]):
+        uuid (Union[Unset, UUID]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AffectsListResponse200
+    """
 
     return (
-        await async_detailed(
+        await asyncio_detailed(
             client=client,
             affectedness=affectedness,
             created_dt=created_dt,

@@ -2,11 +2,11 @@ from enum import Enum
 
 
 class OsidbApiV1FlawsListAffectsResolution(str, Enum):
-    VALUE_0 = ""
     DEFER = "DEFER"
     DELEGATED = "DELEGATED"
     FIX = "FIX"
     OOSS = "OOSS"
+    VALUE_0 = ""
     WONTFIX = "WONTFIX"
     WONTREPORT = "WONTREPORT"
 
