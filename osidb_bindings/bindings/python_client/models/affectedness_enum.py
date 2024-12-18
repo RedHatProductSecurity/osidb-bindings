@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class AffectednessEnum(str, Enum):
-    NEW = "NEW"
     AFFECTED = "AFFECTED"
+    NEW = "NEW"
     NOTAFFECTED = "NOTAFFECTED"
 
     def __str__(self) -> str:

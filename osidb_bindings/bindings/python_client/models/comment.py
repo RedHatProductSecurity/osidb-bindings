@@ -1,38 +1,60 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+
 
 T = TypeVar("T", bound="Comment")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class Comment(OSIDBModel):
-    """FlawComment serializer for use by FlawSerializer"""
+    """FlawComment serializer for use by FlawSerializer
 
-    uuid: str
+    Attributes:
+        uuid (UUID):
+        text (str):
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
+        external_system_id (Union[Unset, str]):
+        order (Union[None, Unset, int]):
+        creator (Union[Unset, str]):
+        is_private (Union[Unset, bool]):
+    """
+
+    uuid: UUID
     text: str
-    alerts: List[Alert]
+    alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     external_system_id: Union[Unset, str] = UNSET
-    order: Union[Unset, None, int] = UNSET
+    order: Union[None, Unset, int] = UNSET
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        uuid = self.uuid
+    def to_dict(self) -> dict[str, Any]:
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         text = self.text
-        alerts: List[Dict[str, Any]] = UNSET
+
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
@@ -47,11 +69,18 @@ class Comment(OSIDBModel):
             updated_dt = self.updated_dt.isoformat()
 
         external_system_id = self.external_system_id
-        order = self.order
+
+        order: Union[None, Unset, int]
+        if isinstance(self.order, Unset):
+            order = UNSET
+        else:
+            order = self.order
+
         creator = self.creator
+
         is_private = self.is_private
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
@@ -75,27 +104,34 @@ class Comment(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+
         d = src_dict.copy()
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         text = d.pop("text", UNSET)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -103,6 +139,7 @@ class Comment(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
+        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -112,7 +149,14 @@ class Comment(OSIDBModel):
 
         external_system_id = d.pop("external_system_id", UNSET)
 
-        order = d.pop("order", UNSET)
+        def _parse_order(data: object) -> Union[None, Unset, int]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, int], data)
+
+        order = _parse_order(d.pop("order", UNSET))
 
         creator = d.pop("creator", UNSET)
 
@@ -136,19 +180,19 @@ class Comment(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "uuid": str,
+            "uuid": UUID,
             "text": str,
-            "alerts": List[Alert],
+            "alerts": list["Alert"],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "external_system_id": str,
-            "order": int,
+            "order": Union[None, int],
             "creator": str,
             "is_private": bool,
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,44 +1,58 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
-from ..models.affect import Affect
-from ..models.ps_stream_selection import PsStreamSelection
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.affect import Affect
+    from ..models.ps_stream_selection import PsStreamSelection
+
 
 T = TypeVar("T", bound="ModuleComponent")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class ModuleComponent(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        ps_module (str):
+        ps_component (str):
+        streams (list['PsStreamSelection']):
+        selected (bool):
+        affect (Affect): Affect serializer
+    """
 
     ps_module: str
     ps_component: str
-    streams: List[PsStreamSelection]
+    streams: list["PsStreamSelection"]
     selected: bool
-    affect: Affect
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    affect: "Affect"
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         ps_module = self.ps_module
+
         ps_component = self.ps_component
-        streams: List[Dict[str, Any]] = UNSET
+
+        streams: list[dict[str, Any]] = UNSET
         if not isinstance(self.streams, Unset):
             streams = []
             for streams_item_data in self.streams:
-                streams_item: Dict[str, Any] = UNSET
+                streams_item: dict[str, Any] = UNSET
                 if not isinstance(streams_item_data, Unset):
                     streams_item = streams_item_data.to_dict()
 
                 streams.append(streams_item)
 
         selected = self.selected
-        affect: Dict[str, Any] = UNSET
+
+        affect: dict[str, Any] = UNSET
         if not isinstance(self.affect, Unset):
             affect = self.affect.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
@@ -54,7 +68,10 @@ class ModuleComponent(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect import Affect
+        from ..models.ps_stream_selection import PsStreamSelection
+
         d = src_dict.copy()
         ps_module = d.pop("ps_module", UNSET)
 
@@ -62,21 +79,20 @@ class ModuleComponent(OSIDBModel):
 
         streams = []
         _streams = d.pop("streams", UNSET)
-        if _streams is UNSET:
-            streams = UNSET
-        else:
-            for streams_item_data in _streams or []:
-                _streams_item = streams_item_data
-                streams_item: PsStreamSelection
-                if isinstance(_streams_item, Unset):
-                    streams_item = UNSET
-                else:
-                    streams_item = PsStreamSelection.from_dict(_streams_item)
+        for streams_item_data in _streams or []:
+            # }
+            _streams_item = streams_item_data
+            streams_item: PsStreamSelection
+            if isinstance(_streams_item, Unset):
+                streams_item = UNSET
+            else:
+                streams_item = PsStreamSelection.from_dict(_streams_item)
 
-                streams.append(streams_item)
+            streams.append(streams_item)
 
         selected = d.pop("selected", UNSET)
 
+        # }
         _affect = d.pop("affect", UNSET)
         affect: Affect
         if isinstance(_affect, Unset):
@@ -100,13 +116,13 @@ class ModuleComponent(OSIDBModel):
         return {
             "ps_module": str,
             "ps_component": str,
-            "streams": List[PsStreamSelection],
+            "streams": list["PsStreamSelection"],
             "selected": bool,
             "affect": Affect,
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,46 +1,57 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
-from ..models.alert import Alert
-from ..models.package_ver import PackageVer
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+    from ..models.package_ver import PackageVer
+
 
 T = TypeVar("T", bound="Package")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class Package(OSIDBModel):
-    """package_versions (Package model) serializer for read-only use in FlawSerializer."""
+    """package_versions (Package model) serializer for read-only use in FlawSerializer.
+
+    Attributes:
+        package (str):
+        versions (list['PackageVer']):
+        alerts (list['Alert']):
+    """
 
     package: str
-    versions: List[PackageVer]
-    alerts: List[Alert]
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    versions: list["PackageVer"]
+    alerts: list["Alert"]
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         package = self.package
-        versions: List[Dict[str, Any]] = UNSET
+
+        versions: list[dict[str, Any]] = UNSET
         if not isinstance(self.versions, Unset):
             versions = []
             for versions_item_data in self.versions:
-                versions_item: Dict[str, Any] = UNSET
+                versions_item: dict[str, Any] = UNSET
                 if not isinstance(versions_item_data, Unset):
                     versions_item = versions_item_data.to_dict()
 
                 versions.append(versions_item)
 
-        alerts: List[Dict[str, Any]] = UNSET
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
                 alerts.append(alerts_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(package, Unset):
             field_dict["package"] = package
@@ -52,39 +63,38 @@ class Package(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+        from ..models.package_ver import PackageVer
+
         d = src_dict.copy()
         package = d.pop("package", UNSET)
 
         versions = []
         _versions = d.pop("versions", UNSET)
-        if _versions is UNSET:
-            versions = UNSET
-        else:
-            for versions_item_data in _versions or []:
-                _versions_item = versions_item_data
-                versions_item: PackageVer
-                if isinstance(_versions_item, Unset):
-                    versions_item = UNSET
-                else:
-                    versions_item = PackageVer.from_dict(_versions_item)
+        for versions_item_data in _versions or []:
+            # }
+            _versions_item = versions_item_data
+            versions_item: PackageVer
+            if isinstance(_versions_item, Unset):
+                versions_item = UNSET
+            else:
+                versions_item = PackageVer.from_dict(_versions_item)
 
-                versions.append(versions_item)
+            versions.append(versions_item)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
         package = cls(
             package=package,
@@ -99,12 +109,12 @@ class Package(OSIDBModel):
     def get_fields():
         return {
             "package": str,
-            "versions": List[PackageVer],
-            "alerts": List[Alert],
+            "versions": list["PackageVer"],
+            "alerts": list["Alert"],
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
