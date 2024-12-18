@@ -16,9 +16,10 @@ UUID({{ source }})
 
 {% macro transform(property, source, destination, declare_type=True) %}
 {% set transformed = "str(" + source + ")" %}
-{% if property.required %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {% if declare_type %}
 {% set type_annotation = property.get_type_string(json=True) %}
 {{ destination }}: {{ type_annotation }} = UNSET
@@ -27,16 +28,19 @@ UUID({{ source }})
 {% endif %}
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (1) #}
 {% endmacro %}
 
 {% macro transform_multipart(property, source, destination) %}
-{% if property.required %}
+{# CHANGE START (2) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = str({{ source }})
-{%- else %}
+{%- else %} #}
 {% set type_annotation = property.get_type_string(json=True) | replace("str", "bytes") %}
 {{ destination }}: {{ type_annotation }} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = str({{ source }})
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (2) #}
 {% endmacro %}

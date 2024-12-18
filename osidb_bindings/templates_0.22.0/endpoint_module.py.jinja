@@ -5,10 +5,15 @@
 from http import HTTPStatus
 from typing import Any, Optional, Union, cast
 
-import httpx
+{# CHANGE START (1) - switch out httpx for requests #}
+{# import httpx #}
+import requests
+{# CHANGE END (1) #}
 
 from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
+{# CHANGE START (2) - add missing Unset import #}
+from ...types import Response, UNSET, Unset
+{# CHANGE END (2) #}
 from ... import errors
 
 {% for relative in endpoint.relative_imports | sort %}
@@ -21,8 +26,24 @@ from ... import errors
 {% set return_string = endpoint.response_type() %}
 {% set parsed_responses = (endpoint.responses | length > 0) and return_string != "Any" %}
 
+{# CHANGE START (3) - expose endpoint query parameters #}
+QUERY_PARAMS = {
+    {% for parameter in endpoint.query_parameters %}
+    "{{ parameter.name }}": {{ parameter.get_type_string(no_optional=True) }},
+    {% endfor %}
+}
+{# CHANGE END (3) #}
+
+{# CHANGE START (4) - expose request body type if exists #}
+{% if endpoint.bodies | length >= 1 %}
+REQUEST_BODY_TYPE = {{ endpoint.bodies[0].prop.get_type_string() }}
+{% endif %}
+{# CHANGE END (4) #}
+
 def _get_kwargs(
-    {{ arguments(endpoint, include_client=False) | indent(4) }}
+{# CHANGE START (5) - include client in arguments #}
+    {{ arguments(endpoint, include_client=True) | indent(4) }}
+{# CHANGE END (5) #}
 ) -> dict[str, Any]:
     {{ header_params(endpoint) | indent(4) }}
 
@@ -31,15 +52,21 @@ def _get_kwargs(
     {{ query_params(endpoint) | indent(4) }}
 
     _kwargs: dict[str, Any] = {
-        "method": "{{ endpoint.method }}",
+        {# CHANGE START (6) - don't include method in kwargs #}
+        {# "method": "{{ endpoint.method }}", #}
+        {# CHANGE END (6) #}
         {% if endpoint.path_parameters %}
-        "url": "{{ endpoint.path }}".format(
+        {# CHANGE START (7) - use base URL from client #}
+        "url": f"{client.base_url}{{ endpoint.path }}".format(
+        {# CHANGE END (7) #}
         {%- for parameter in endpoint.path_parameters -%}
         {{parameter.python_name}}={{parameter.python_name}},
         {%- endfor -%}
         ),
         {% else %}
-        "url": "{{ endpoint.path }}",
+        {# CHANGE START (8) - use base URL from client #}
+        "url": f"{client.base_url}{{ endpoint.path }}",
+        {# CHANGE END (8) #}
         {% endif %}
         {% if endpoint.query_parameters %}
         "params": params,
@@ -51,11 +78,15 @@ def _get_kwargs(
 
 {% if endpoint.bodies | length > 1 %}
 {% for body in endpoint.bodies %}
+    {# CHANGE START (9) - keep only application/json content type #}
+    {% if body.content_type == "application/json" %}
     if isinstance(body, {{body.prop.get_type_string() }}):
         {% set destination = "_" + body.body_type + "_body" %}
         {{ body_to_kwarg(body, destination) | indent(8) }}
         _kwargs["{{ body.body_type.value }}"] = {{ destination }}
         headers["Content-Type"] = "{{ body.content_type }}"
+    {% endif %}
+    {# CHANGE END (9) #}
 {% endfor %}
 {% elif endpoint.bodies | length == 1 %}
 {% set body = endpoint.bodies[0] %}
@@ -66,13 +97,16 @@ def _get_kwargs(
     {% endif %}
 {% endif %}
 
-{% if endpoint.header_parameters or endpoint.bodies | length > 0 %}
+{# CHANGE START (10) - fill in headers always #}
+{# {% if endpoint.header_parameters or endpoint.bodies | length > 0 %} #}
     _kwargs["headers"] = headers
-{% endif %}
+{# {% endif %} #}
+{# CHANGE END (10) #}
     return _kwargs
 
-
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[{{ return_string }}]:
+{# CHANGE START (11) - switch out httpx for requests  #}
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: requests.Response) -> Optional[{{ return_string }}]:
+{# CHANGE END (11) #}
     {% for response in endpoint.responses %}
     if response.status_code == {{ response.status_code.value }}:
         {% if parsed_responses %}{% import "property_templates/" + response.prop.template as prop_template %}
@@ -88,13 +122,17 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
         {% endif %}
     {% endfor %}
-    if client.raise_on_unexpected_status:
+    {# TODO: consider using this once we switch to the more advanced httpx client #}
+    {# CHANGE START (12) - don't use UnexpectedStatus raising #}
+    {# if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
-        return None
+        return None #}
+    {# CHANGE END (12) #}
 
-
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[{{ return_string }}]:
+{# CHANGE START (13) - switch out httpx for requests  #}
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: requests.Response) -> Response[{{ return_string }}]:
+{# CHANGE END (13) #}
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -109,12 +147,25 @@ def sync_detailed(
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
     kwargs = _get_kwargs(
-        {{ kwargs(endpoint, include_client=False) }}
+        {# CHANGE START (14) - include client in passed arguments #}
+        {{ kwargs(endpoint, include_client=True) }}
+        {# CHANGE END (14) #}
     )
 
-    response = client.get_httpx_client().request(
+    {# CHANGE START (15) - use basic requests calls instead of httpx client #}
+    {# response = client.get_httpx_client().request(
+        **kwargs,
+    ) #}
+    response = requests.{{ endpoint.method }}(
+        verify=client.verify_ssl,
+        auth=client.auth,
+        timeout=client.timeout,
         **kwargs,
     )
+    {# CHANGE END (15) #}
+    {# CHANGE START (16) - call raise for status #}
+    response.raise_for_status()
+    {# CHANGE END (16) #}
 
     return _build_response(client=client, response=response)
 
@@ -134,15 +185,26 @@ async def asyncio_detailed(
 ) -> Response[{{ return_string }}]:
     {{ docstring(endpoint, return_string, is_detailed=true) | indent(4) }}
 
+    {# CHANGE START (17) - include client in passed arguments #}
     kwargs = _get_kwargs(
-        {{ kwargs(endpoint, include_client=False) }}
+        {{ kwargs(endpoint, include_client=True) }}
     )
+    {# CHANGE END (17) #}
 
-    response = await client.get_async_httpx_client().request(
+    {# CHANGE START (18) - async session with aiohttp instead of httpx client #}
+    {# response = await client.get_async_httpx_client().request(
         **kwargs
-    )
+    ) #}
+    async with client.get_async_session().{{ endpoint.method }}(
+        verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
+    ) as response:
+        content = await response.read()
+        resp = requests.Response()
+        resp.status_code = response.status
+        resp._content = content
 
-    return _build_response(client=client, response=response)
+    return _build_response(client=client, response=resp)
+    {# CHANGE END (18) #}
 
 {% if parsed_responses %}
 async def asyncio(

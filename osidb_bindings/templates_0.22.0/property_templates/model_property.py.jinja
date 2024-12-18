@@ -17,35 +17,41 @@
 {% macro transform(property, source, destination, declare_type=True) %}
 {% set transformed = source + ".to_dict()" %}
 {% set type_string = property.get_type_string(json=True) %}
-{% if property.required %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (1) #}
 {% endmacro %}
 
 {% macro transform_multipart_body(property, source, destination) %}
 {% set transformed = source + ".to_multipart()" %}
 {% set type_string = property.get_type_string(multipart=True) %}
-{% if property.required %}
+{# CHANGE START (2) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {{ destination }}: {{ type_string }} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (2) #}
 {% endmacro %}
 
 {% macro transform_multipart(property, source, destination) %}
 {% set transformed = "(None, json.dumps(" + source + ".to_dict()" + ").encode(), 'application/json')" %}
 {% set type_string = property.get_type_string(multipart=True) %}
-{% if property.required %}
+{# CHANGE START (3) - make all the fields treated as non-required #}
+{# {% if property.required %}
 {{ destination }} = {{ transformed }}
-{%- else %}
+{%- else %} #}
 {{ destination }}: {{ type_string }} = UNSET
 if not isinstance({{ source }}, Unset):
     {{ destination }} = {{ transformed }}
-{%- endif %}
+{# {%- endif %} #}
+{# CHANGE END (3) #}
 {% endmacro %}
