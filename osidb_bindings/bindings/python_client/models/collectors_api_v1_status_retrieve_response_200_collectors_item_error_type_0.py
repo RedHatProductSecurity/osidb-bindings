@@ -1,50 +1,42 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import UNSET, OSIDBModel, Unset
+from ..types import OSIDBModel
 
-T = TypeVar("T", bound="OsidbApiV1StatusRetrieveResponse200OsidbData")
+T = TypeVar(
+    "T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0"
+)
 
 
 @_attrs_define
-class OsidbApiV1StatusRetrieveResponse200OsidbData(OSIDBModel):
-    """
-    Attributes:
-        flaw_count (Union[Unset, int]):
-    """
+class CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0(OSIDBModel):
+    """ """
 
-    flaw_count: Union[Unset, int] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        flaw_count = self.flaw_count
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(flaw_count, Unset):
-            field_dict["flaw_count"] = flaw_count
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        flaw_count = d.pop("flaw_count", UNSET)
-
-        osidb_api_v1_status_retrieve_response_200_osidb_data = cls(
-            flaw_count=flaw_count,
+        collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0 = (
+            cls()
         )
 
-        osidb_api_v1_status_retrieve_response_200_osidb_data.additional_properties = d
-        return osidb_api_v1_status_retrieve_response_200_osidb_data
+        collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0.additional_properties = d
+        return (
+            collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0
+        )
 
     @staticmethod
     def get_fields():
-        return {
-            "flaw_count": int,
-        }
+        return {}
 
     @property
     def additional_keys(self) -> list[str]:

@@ -1,65 +1,98 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.alert import Alert
-from ..models.erratum import Erratum
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+    from ..models.erratum import Erratum
+
 
 T = TypeVar("T", bound="OsidbApiV1TrackersCreateResponse201")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        errata (list['Erratum']):
+        ps_update_stream (str):
+        status (str):
+        resolution (str):
+        type_ (TrackerType):
+        uuid (UUID):
+        embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
+            ACLs but is mandatory as it controls the access to the resource.
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
+        affects (Union[Unset, list[UUID]]):
+        sync_to_bz (Union[Unset, bool]): Setting sync_to_bz to false disables flaw sync with Bugzilla after this
+            operation. Use only as part of bulk actions and trigger a flaw bugzilla sync afterwards. Does nothing if BZ is
+            disabled.
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
-    errata: List[Erratum]
+    errata: list["Erratum"]
     ps_update_stream: str
     status: str
     resolution: str
-    type: TrackerType
-    uuid: str
+    type_: TrackerType
+    uuid: UUID
     embargoed: bool
-    alerts: List[Alert]
+    alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    affects: Union[Unset, List[str]] = UNSET
+    affects: Union[Unset, list[UUID]] = UNSET
     sync_to_bz: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        errata: List[Dict[str, Any]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        errata: list[dict[str, Any]] = UNSET
         if not isinstance(self.errata, Unset):
             errata = []
             for errata_item_data in self.errata:
-                errata_item: Dict[str, Any] = UNSET
+                errata_item: dict[str, Any] = UNSET
                 if not isinstance(errata_item_data, Unset):
                     errata_item = errata_item_data.to_dict()
 
                 errata.append(errata_item)
 
         ps_update_stream = self.ps_update_stream
+
         status = self.status
+
         resolution = self.resolution
-        type: str = UNSET
-        if not isinstance(self.type, Unset):
 
-            type = TrackerType(self.type).value
+        type_: str = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = TrackerType(self.type_).value
 
-        uuid = self.uuid
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
         embargoed = self.embargoed
-        alerts: List[Dict[str, Any]] = UNSET
+
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
@@ -73,20 +106,29 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        affects: Union[Unset, List[str]] = UNSET
+        affects: Union[Unset, list[str]] = UNSET
         if not isinstance(self.affects, Unset):
-            affects = self.affects
+            affects = []
+            for affects_item_data in self.affects:
+                affects_item: str = UNSET
+                if not isinstance(affects_item_data, Unset):
+                    affects_item = str(affects_item_data)
+
+                affects.append(affects_item)
 
         sync_to_bz = self.sync_to_bz
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
@@ -96,8 +138,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
@@ -124,22 +166,23 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+        from ..models.erratum import Erratum
+
         d = src_dict.copy()
         errata = []
         _errata = d.pop("errata", UNSET)
-        if _errata is UNSET:
-            errata = UNSET
-        else:
-            for errata_item_data in _errata or []:
-                _errata_item = errata_item_data
-                errata_item: Erratum
-                if isinstance(_errata_item, Unset):
-                    errata_item = UNSET
-                else:
-                    errata_item = Erratum.from_dict(_errata_item)
+        for errata_item_data in _errata or []:
+            # }
+            _errata_item = errata_item_data
+            errata_item: Erratum
+            if isinstance(_errata_item, Unset):
+                errata_item = UNSET
+            else:
+                errata_item = Erratum.from_dict(_errata_item)
 
-                errata.append(errata_item)
+            errata.append(errata_item)
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
@@ -147,32 +190,38 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
         resolution = d.pop("resolution", UNSET)
 
-        _type = d.pop("type", UNSET)
-        type: TrackerType
-        if isinstance(_type, Unset):
-            type = UNSET
+        # }
+        _type_ = d.pop("type", UNSET)
+        type_: TrackerType
+        if isinstance(_type_, Unset):
+            type_ = UNSET
         else:
-            type = TrackerType(_type)
+            type_ = TrackerType(_type_)
 
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         embargoed = d.pop("embargoed", UNSET)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -180,6 +229,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
+        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -187,10 +237,22 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        affects = cast(List[str], d.pop("affects", UNSET))
+        affects = []
+        _affects = d.pop("affects", UNSET)
+        for affects_item_data in _affects or []:
+            # }
+            _affects_item = affects_item_data
+            affects_item: UUID
+            if isinstance(_affects_item, Unset):
+                affects_item = UNSET
+            else:
+                affects_item = UUID(_affects_item)
+
+            affects.append(affects_item)
 
         sync_to_bz = d.pop("sync_to_bz", UNSET)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -209,7 +271,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             ps_update_stream=ps_update_stream,
             status=status,
             resolution=resolution,
-            type=type,
+            type_=type_,
             uuid=uuid,
             embargoed=embargoed,
             alerts=alerts,
@@ -229,17 +291,17 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "errata": List[Erratum],
+            "errata": list["Erratum"],
             "ps_update_stream": str,
             "status": str,
             "resolution": str,
             "type": TrackerType,
-            "uuid": str,
+            "uuid": UUID,
             "embargoed": bool,
-            "alerts": List[Alert],
+            "alerts": list["Alert"],
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
-            "affects": List[str],
+            "affects": list[UUID],
             "sync_to_bz": bool,
             "dt": datetime.datetime,
             "env": str,
@@ -248,7 +310,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

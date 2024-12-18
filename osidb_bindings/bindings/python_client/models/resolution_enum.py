@@ -2,11 +2,11 @@ from enum import Enum
 
 
 class ResolutionEnum(str, Enum):
-    FIX = "FIX"
     DEFER = "DEFER"
-    WONTFIX = "WONTFIX"
-    OOSS = "OOSS"
     DELEGATED = "DELEGATED"
+    FIX = "FIX"
+    OOSS = "OOSS"
+    WONTFIX = "WONTFIX"
     WONTREPORT = "WONTREPORT"
 
     def __str__(self) -> str:

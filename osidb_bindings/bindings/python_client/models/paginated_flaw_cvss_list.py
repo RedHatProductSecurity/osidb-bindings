@@ -1,39 +1,59 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
-from ..models.flaw_cvss import FlawCVSS
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.flaw_cvss import FlawCVSS
+
 
 T = TypeVar("T", bound="PaginatedFlawCVSSList")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class PaginatedFlawCVSSList(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        count (int):  Example: 123.
+        results (list['FlawCVSS']):
+        next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
+        previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
+    """
 
     count: int
-    results: List[FlawCVSS]
-    next_: Union[Unset, None, str] = UNSET
-    previous: Union[Unset, None, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    results: list["FlawCVSS"]
+    next_: Union[None, Unset, str] = UNSET
+    previous: Union[None, Unset, str] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         count = self.count
-        results: List[Dict[str, Any]] = UNSET
+
+        results: list[dict[str, Any]] = UNSET
         if not isinstance(self.results, Unset):
             results = []
             for results_item_data in self.results:
-                results_item: Dict[str, Any] = UNSET
+                results_item: dict[str, Any] = UNSET
                 if not isinstance(results_item_data, Unset):
                     results_item = results_item_data.to_dict()
 
                 results.append(results_item)
 
-        next_ = self.next_
-        previous = self.previous
+        next_: Union[None, Unset, str]
+        if isinstance(self.next_, Unset):
+            next_ = UNSET
+        else:
+            next_ = self.next_
 
-        field_dict: Dict[str, Any] = {}
+        previous: Union[None, Unset, str]
+        if isinstance(self.previous, Unset):
+            previous = UNSET
+        else:
+            previous = self.previous
+
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(count, Unset):
             field_dict["count"] = count
@@ -47,28 +67,42 @@ class PaginatedFlawCVSSList(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.flaw_cvss import FlawCVSS
+
         d = src_dict.copy()
         count = d.pop("count", UNSET)
 
         results = []
         _results = d.pop("results", UNSET)
-        if _results is UNSET:
-            results = UNSET
-        else:
-            for results_item_data in _results or []:
-                _results_item = results_item_data
-                results_item: FlawCVSS
-                if isinstance(_results_item, Unset):
-                    results_item = UNSET
-                else:
-                    results_item = FlawCVSS.from_dict(_results_item)
+        for results_item_data in _results or []:
+            # }
+            _results_item = results_item_data
+            results_item: FlawCVSS
+            if isinstance(_results_item, Unset):
+                results_item = UNSET
+            else:
+                results_item = FlawCVSS.from_dict(_results_item)
 
-                results.append(results_item)
+            results.append(results_item)
 
-        next_ = d.pop("next", UNSET)
+        def _parse_next_(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
 
-        previous = d.pop("previous", UNSET)
+        next_ = _parse_next_(d.pop("next", UNSET))
+
+        def _parse_previous(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        previous = _parse_previous(d.pop("previous", UNSET))
 
         paginated_flaw_cvss_list = cls(
             count=count,
@@ -84,13 +118,13 @@ class PaginatedFlawCVSSList(OSIDBModel):
     def get_fields():
         return {
             "count": int,
-            "results": List[FlawCVSS],
-            "next": str,
-            "previous": str,
+            "results": list["FlawCVSS"],
+            "next": Union[None, str],
+            "previous": Union[None, str],
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

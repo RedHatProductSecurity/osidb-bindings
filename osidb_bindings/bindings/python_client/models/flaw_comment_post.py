@@ -1,37 +1,57 @@
 import datetime
 import json
-from typing import Any, Dict, List, Tuple, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
+from uuid import UUID
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.alert import Alert
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.alert import Alert
+
 
 T = TypeVar("T", bound="FlawCommentPost")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class FlawCommentPost(OSIDBModel):
-    """FlawComment serializer for use by flaw_comments endpoint"""
+    """FlawComment serializer for use by flaw_comments endpoint
+
+    Attributes:
+        text (str):
+        uuid (UUID):
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
+        embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
+            ACLs but is mandatory as it controls the access to the resource.
+        creator (Union[Unset, str]):
+        is_private (Union[Unset, bool]):
+    """
 
     text: str
-    uuid: str
-    alerts: List[Alert]
+    uuid: UUID
+    alerts: list["Alert"]
     created_dt: datetime.datetime
     embargoed: bool
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         text = self.text
-        uuid = self.uuid
-        alerts: List[Dict[str, Any]] = UNSET
+
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
+        alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
@@ -42,10 +62,12 @@ class FlawCommentPost(OSIDBModel):
             created_dt = self.created_dt.isoformat()
 
         embargoed = self.embargoed
+
         creator = self.creator
+
         is_private = self.is_private
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(text, Unset):
             field_dict["text"] = text
@@ -64,47 +86,46 @@ class FlawCommentPost(OSIDBModel):
 
         return field_dict
 
-    def to_multipart(self) -> Dict[str, Any]:
-        text = self.text if self.text is UNSET else (None, str(self.text), "text/plain")
-        uuid = self.uuid if self.uuid is UNSET else (None, str(self.uuid), "text/plain")
-        alerts: Union[Unset, Tuple[None, str, str]] = UNSET
+    def to_multipart(self) -> dict[str, Any]:
+        text = (None, str(self.text).encode(), "text/plain")
+
+        uuid: bytes = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
+        alerts: Union[Unset, tuple[None, bytes, str]] = UNSET
         if not isinstance(self.alerts, Unset):
             _temp_alerts = []
             for alerts_item_data in self.alerts:
-                alerts_item: Dict[str, Any] = UNSET
+                alerts_item: dict[str, Any] = UNSET
                 if not isinstance(alerts_item_data, Unset):
                     alerts_item = alerts_item_data.to_dict()
 
                 _temp_alerts.append(alerts_item)
-            alerts = (None, json.dumps(_temp_alerts), "application/json")
+            alerts = (None, json.dumps(_temp_alerts).encode(), "application/json")
 
-        created_dt: str = UNSET
+        created_dt: bytes = UNSET
         if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
+            created_dt = self.created_dt.isoformat().encode()
 
-        embargoed = (
-            self.embargoed
-            if self.embargoed is UNSET
-            else (None, str(self.embargoed), "text/plain")
-        )
+        embargoed = (None, str(self.embargoed).encode(), "text/plain")
+
         creator = (
             self.creator
-            if self.creator is UNSET
-            else (None, str(self.creator), "text/plain")
-        )
-        is_private = (
-            self.is_private
-            if self.is_private is UNSET
-            else (None, str(self.is_private), "text/plain")
+            if isinstance(self.creator, Unset)
+            else (None, str(self.creator).encode(), "text/plain")
         )
 
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {
-                key: (None, str(value), "text/plain")
-                for key, value in self.additional_properties.items()
-            }
+        is_private = (
+            self.is_private
+            if isinstance(self.is_private, Unset)
+            else (None, str(self.is_private).encode(), "text/plain")
         )
+
+        field_dict: dict[str, Any] = {}
+        for prop_name, prop in self.additional_properties.items():
+            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
+
         if not isinstance(text, Unset):
             field_dict["text"] = text
         if not isinstance(uuid, Unset):
@@ -123,27 +144,34 @@ class FlawCommentPost(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.alert import Alert
+
         d = src_dict.copy()
         text = d.pop("text", UNSET)
 
-        uuid = d.pop("uuid", UNSET)
+        # }
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = UUID(_uuid)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
-        if _alerts is UNSET:
-            alerts = UNSET
-        else:
-            for alerts_item_data in _alerts or []:
-                _alerts_item = alerts_item_data
-                alerts_item: Alert
-                if isinstance(_alerts_item, Unset):
-                    alerts_item = UNSET
-                else:
-                    alerts_item = Alert.from_dict(_alerts_item)
+        for alerts_item_data in _alerts or []:
+            # }
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
 
-                alerts.append(alerts_item)
+            alerts.append(alerts_item)
 
+        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -174,8 +202,8 @@ class FlawCommentPost(OSIDBModel):
     def get_fields():
         return {
             "text": str,
-            "uuid": str,
-            "alerts": List[Alert],
+            "uuid": UUID,
+            "alerts": list["Alert"],
             "created_dt": datetime.datetime,
             "embargoed": bool,
             "creator": str,
@@ -183,7 +211,7 @@ class FlawCommentPost(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

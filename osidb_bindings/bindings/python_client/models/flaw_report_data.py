@@ -1,34 +1,47 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
-from ..models.affect_report_data import AffectReportData
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.affect_report_data import AffectReportData
+
 
 T = TypeVar("T", bound="FlawReportData")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class FlawReportData(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        cve_id (Union[None, Unset, str]):
+        affects (Union[Unset, list['AffectReportData']]):
+    """
 
-    cve_id: Union[Unset, None, str] = UNSET
-    affects: Union[Unset, List[AffectReportData]] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    cve_id: Union[None, Unset, str] = UNSET
+    affects: Union[Unset, list["AffectReportData"]] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        cve_id = self.cve_id
-        affects: Union[Unset, List[Dict[str, Any]]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        cve_id: Union[None, Unset, str]
+        if isinstance(self.cve_id, Unset):
+            cve_id = UNSET
+        else:
+            cve_id = self.cve_id
+
+        affects: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.affects, Unset):
             affects = []
             for affects_item_data in self.affects:
-                affects_item: Dict[str, Any] = UNSET
+                affects_item: dict[str, Any] = UNSET
                 if not isinstance(affects_item_data, Unset):
                     affects_item = affects_item_data.to_dict()
 
                 affects.append(affects_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
@@ -38,24 +51,32 @@ class FlawReportData(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect_report_data import AffectReportData
+
         d = src_dict.copy()
-        cve_id = d.pop("cve_id", UNSET)
+
+        def _parse_cve_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        cve_id = _parse_cve_id(d.pop("cve_id", UNSET))
 
         affects = []
         _affects = d.pop("affects", UNSET)
-        if _affects is UNSET:
-            affects = UNSET
-        else:
-            for affects_item_data in _affects or []:
-                _affects_item = affects_item_data
-                affects_item: AffectReportData
-                if isinstance(_affects_item, Unset):
-                    affects_item = UNSET
-                else:
-                    affects_item = AffectReportData.from_dict(_affects_item)
+        for affects_item_data in _affects or []:
+            # }
+            _affects_item = affects_item_data
+            affects_item: AffectReportData
+            if isinstance(_affects_item, Unset):
+                affects_item = UNSET
+            else:
+                affects_item = AffectReportData.from_dict(_affects_item)
 
-                affects.append(affects_item)
+            affects.append(affects_item)
 
         flaw_report_data = cls(
             cve_id=cve_id,
@@ -68,12 +89,12 @@ class FlawReportData(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "cve_id": str,
-            "affects": List[AffectReportData],
+            "cve_id": Union[None, str],
+            "affects": list["AffectReportData"],
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,7 +1,8 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -9,9 +10,17 @@ from ..types import UNSET, OSIDBModel, Unset
 T = TypeVar("T", bound="AuthTokenRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class AuthTokenRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        access (Union[Unset, str]):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        refresh (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     access: Union[Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -19,20 +28,24 @@ class AuthTokenRetrieveResponse200(OSIDBModel):
     refresh: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         access = self.access
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         env = self.env
+
         refresh = self.refresh
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(access, Unset):
             field_dict["access"] = access
@@ -50,10 +63,11 @@ class AuthTokenRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         access = d.pop("access", UNSET)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -93,7 +107,7 @@ class AuthTokenRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

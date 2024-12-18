@@ -1,68 +1,95 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_data import (
     CollectorsApiV1StatusRetrieveResponse200CollectorsItemData,
-)
-from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_error import (
-    CollectorsApiV1StatusRetrieveResponse200CollectorsItemError,
 )
 from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_state import (
     CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
 )
 from ..types import UNSET, OSIDBModel, Unset
 
+if TYPE_CHECKING:
+    from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0 import (
+        CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0,
+    )
+
+
 T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItem")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        data (Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData]):
+        depends_on (Union[Unset, list[str]]):
+        error (Union['CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0', None, Unset]):
+        is_complete (Union[Unset, bool]):
+        is_up2date (Union[Unset, bool]):
+        data_models (Union[Unset, list[str]]):
+        state (Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState]):
+        updated_until (Union[Unset, datetime.datetime]):
+    """
 
-    data: Union[
-        Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData
-    ] = UNSET
-    depends_on: Union[Unset, List[str]] = UNSET
+    data: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData] = (
+        UNSET
+    )
+    depends_on: Union[Unset, list[str]] = UNSET
     error: Union[
-        Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError
+        "CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0", None, Unset
     ] = UNSET
     is_complete: Union[Unset, bool] = UNSET
     is_up2date: Union[Unset, bool] = UNSET
-    data_models: Union[Unset, List[str]] = UNSET
-    state: Union[
-        Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState
-    ] = UNSET
+    data_models: Union[Unset, list[str]] = UNSET
+    state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState] = (
+        UNSET
+    )
     updated_until: Union[Unset, datetime.datetime] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
+        from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0 import (
+            CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0,
+        )
+
         data: Union[Unset, str] = UNSET
         if not isinstance(self.data, Unset):
-
             data = CollectorsApiV1StatusRetrieveResponse200CollectorsItemData(
                 self.data
             ).value
 
-        depends_on: Union[Unset, List[str]] = UNSET
+        depends_on: Union[Unset, list[str]] = UNSET
         if not isinstance(self.depends_on, Unset):
             depends_on = self.depends_on
 
-        error: Union[Unset, None, Dict[str, Any]] = UNSET
-        if not isinstance(self.error, Unset):
-            error = self.error.to_dict() if self.error else None
+        error: Union[None, Unset, dict[str, Any]]
+        if isinstance(self.error, Unset):
+            error = UNSET
+        elif isinstance(
+            self.error, CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0
+        ):
+            error = UNSET
+            if not isinstance(self.error, Unset):
+                error = self.error.to_dict()
+
+        else:
+            error = self.error
 
         is_complete = self.is_complete
+
         is_up2date = self.is_up2date
-        data_models: Union[Unset, List[str]] = UNSET
+
+        data_models: Union[Unset, list[str]] = UNSET
         if not isinstance(self.data_models, Unset):
             data_models = self.data_models
 
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
-
             state = CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(
                 self.state
             ).value
@@ -71,7 +98,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         if not isinstance(self.updated_until, Unset):
             updated_until = self.updated_until.isoformat()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(data, Unset):
             field_dict["data"] = data
@@ -93,8 +120,13 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0 import (
+            CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0,
+        )
+
         d = src_dict.copy()
+        # }
         _data = d.pop("data", UNSET)
         data: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData]
         if isinstance(_data, Unset):
@@ -102,29 +134,55 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         else:
             data = CollectorsApiV1StatusRetrieveResponse200CollectorsItemData(_data)
 
-        depends_on = cast(List[str], d.pop("depends_on", UNSET))
+        depends_on = cast(list[str], d.pop("depends_on", UNSET))
 
-        _error = d.pop("error", UNSET)
-        error: Union[
-            Unset, None, CollectorsApiV1StatusRetrieveResponse200CollectorsItemError
-        ]
-        if _error is None:
-            error = None
-        elif isinstance(_error, Unset):
-            error = UNSET
-        else:
-            error = (
-                CollectorsApiV1StatusRetrieveResponse200CollectorsItemError.from_dict(
-                    _error
+        def _parse_error(
+            data: object,
+        ) -> Union[
+            "CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0",
+            None,
+            Unset,
+        ]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                # }
+                _error_type_0 = data
+                error_type_0: (
+                    CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0
                 )
+                if isinstance(_error_type_0, Unset):
+                    error_type_0 = UNSET
+                else:
+                    error_type_0 = CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0.from_dict(
+                        _error_type_0
+                    )
+
+                return error_type_0
+            except:  # noqa: E722
+                pass
+            return cast(
+                Union[
+                    "CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0",
+                    None,
+                    Unset,
+                ],
+                data,
             )
+
+        error = _parse_error(d.pop("error", UNSET))
 
         is_complete = d.pop("is_complete", UNSET)
 
         is_up2date = d.pop("is_up2date", UNSET)
 
-        data_models = cast(List[str], d.pop("data_models", UNSET))
+        data_models = cast(list[str], d.pop("data_models", UNSET))
 
+        # }
         _state = d.pop("state", UNSET)
         state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState]
         if isinstance(_state, Unset):
@@ -132,6 +190,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         else:
             state = CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(_state)
 
+        # }
         _updated_until = d.pop("updated_until", UNSET)
         updated_until: Union[Unset, datetime.datetime]
         if isinstance(_updated_until, Unset):
@@ -150,26 +209,26 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             updated_until=updated_until,
         )
 
-        collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = (
-            d
-        )
+        collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = d
         return collectors_api_v1_status_retrieve_response_200_collectors_item
 
     @staticmethod
     def get_fields():
         return {
             "data": CollectorsApiV1StatusRetrieveResponse200CollectorsItemData,
-            "depends_on": List[str],
-            "error": CollectorsApiV1StatusRetrieveResponse200CollectorsItemError,
+            "depends_on": list[str],
+            "error": Union[
+                "CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0", None
+            ],
             "is_complete": bool,
             "is_up2date": bool,
-            "data_models": List[str],
+            "data_models": list[str],
             "state": CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
             "updated_until": datetime.datetime,
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

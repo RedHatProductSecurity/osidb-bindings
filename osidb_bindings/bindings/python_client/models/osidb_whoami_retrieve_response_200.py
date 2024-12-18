@@ -1,51 +1,69 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.osidb_whoami_retrieve_response_200_profile import (
-    OsidbWhoamiRetrieveResponse200Profile,
-)
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.osidb_whoami_retrieve_response_200_profile import (
+        OsidbWhoamiRetrieveResponse200Profile,
+    )
+
 
 T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbWhoamiRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        dt (Union[Unset, datetime.datetime]):
+        email (Union[Unset, str]):
+        env (Union[Unset, str]):
+        groups (Union[Unset, list[str]]):
+        profile (Union[Unset, OsidbWhoamiRetrieveResponse200Profile]):
+        revision (Union[Unset, str]):
+        username (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     dt: Union[Unset, datetime.datetime] = UNSET
     email: Union[Unset, str] = UNSET
     env: Union[Unset, str] = UNSET
-    groups: Union[Unset, List[str]] = UNSET
-    profile: Union[Unset, OsidbWhoamiRetrieveResponse200Profile] = UNSET
+    groups: Union[Unset, list[str]] = UNSET
+    profile: Union[Unset, "OsidbWhoamiRetrieveResponse200Profile"] = UNSET
     revision: Union[Unset, str] = UNSET
     username: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
 
         email = self.email
+
         env = self.env
-        groups: Union[Unset, List[str]] = UNSET
+
+        groups: Union[Unset, list[str]] = UNSET
         if not isinstance(self.groups, Unset):
             groups = self.groups
 
-        profile: Union[Unset, Dict[str, Any]] = UNSET
+        profile: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.profile, Unset):
             profile = self.profile.to_dict()
 
         revision = self.revision
+
         username = self.username
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
@@ -67,8 +85,13 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.osidb_whoami_retrieve_response_200_profile import (
+            OsidbWhoamiRetrieveResponse200Profile,
+        )
+
         d = src_dict.copy()
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -80,8 +103,9 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         env = d.pop("env", UNSET)
 
-        groups = cast(List[str], d.pop("groups", UNSET))
+        groups = cast(list[str], d.pop("groups", UNSET))
 
+        # }
         _profile = d.pop("profile", UNSET)
         profile: Union[Unset, OsidbWhoamiRetrieveResponse200Profile]
         if isinstance(_profile, Unset):
@@ -115,7 +139,7 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
             "dt": datetime.datetime,
             "email": str,
             "env": str,
-            "groups": List[str],
+            "groups": list[str],
             "profile": OsidbWhoamiRetrieveResponse200Profile,
             "revision": str,
             "username": str,
@@ -123,7 +147,7 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

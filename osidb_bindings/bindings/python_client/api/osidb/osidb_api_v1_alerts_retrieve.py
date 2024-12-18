@@ -1,64 +1,62 @@
-from typing import Any, Dict, List, Optional, Union
+from http import HTTPStatus
+from typing import Any, Optional, Union
+from uuid import UUID
 
 import requests
 
-from ...client import AuthenticatedClient
+from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_alerts_retrieve_response_200 import (
     OsidbApiV1AlertsRetrieveResponse200,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
-    "exclude_fields": List[str],
-    "include_fields": List[str],
+    "exclude_fields": list[str],
+    "include_fields": list[str],
 }
 
 
 def _get_kwargs(
-    uuid: str,
+    uuid: UUID,
     *,
     client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
-) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/alerts/{uuid}".format(
-        client.base_url,
-        uuid=uuid,
-    )
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
+) -> dict[str, Any]:
+    headers: dict[str, Any] = client.get_headers()
 
-    headers: Dict[str, Any] = client.get_headers()
+    params: dict[str, Any] = {}
 
-    json_exclude_fields: Union[Unset, None, List[str]] = UNSET
+    json_exclude_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
-        if exclude_fields is None:
-            json_exclude_fields = None
-        else:
-            json_exclude_fields = exclude_fields
+        json_exclude_fields = exclude_fields
 
-    json_include_fields: Union[Unset, None, List[str]] = UNSET
+    params["exclude_fields"] = json_exclude_fields
+
+    json_include_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(include_fields, Unset):
-        if include_fields is None:
-            json_include_fields = None
-        else:
-            json_include_fields = include_fields
+        json_include_fields = include_fields
 
-    params: Dict[str, Any] = {
-        "exclude_fields": json_exclude_fields,
-        "include_fields": json_include_fields,
-    }
+    params["include_fields"] = json_include_fields
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
-    return {
-        "url": url,
-        "headers": headers,
+    _kwargs: dict[str, Any] = {
+        "url": f"{client.base_url}/osidb/api/v1/alerts/{uuid}".format(
+            uuid=uuid,
+        ),
         "params": params,
     }
 
+    _kwargs["headers"] = headers
+    return _kwargs
+
 
 def _parse_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AlertsRetrieveResponse200]:
     if response.status_code == 200:
+        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AlertsRetrieveResponse200
         if isinstance(_response_200, Unset):
@@ -67,27 +65,40 @@ def _parse_response(
             response_200 = OsidbApiV1AlertsRetrieveResponse200.from_dict(_response_200)
 
         return response_200
-    return None
 
 
 def _build_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Response[OsidbApiV1AlertsRetrieveResponse200]:
     return Response(
-        status_code=response.status_code,
+        status_code=HTTPStatus(response.status_code),
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=_parse_response(client=client, response=response),
     )
 
 
 def sync_detailed(
-    uuid: str,
+    uuid: UUID,
     *,
     client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1AlertsRetrieveResponse200]:
+    """
+    Args:
+        uuid (UUID):
+        exclude_fields (Union[Unset, list[str]]):
+        include_fields (Union[Unset, list[str]]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AlertsRetrieveResponse200]
+    """
+
     kwargs = _get_kwargs(
         uuid=uuid,
         client=client,
@@ -103,17 +114,29 @@ def sync_detailed(
     )
     response.raise_for_status()
 
-    return _build_response(response=response)
+    return _build_response(client=client, response=response)
 
 
 def sync(
-    uuid: str,
+    uuid: UUID,
     *,
     client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1AlertsRetrieveResponse200]:
-    """ """
+    """
+    Args:
+        uuid (UUID):
+        exclude_fields (Union[Unset, list[str]]):
+        include_fields (Union[Unset, list[str]]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AlertsRetrieveResponse200
+    """
 
     return sync_detailed(
         uuid=uuid,
@@ -123,13 +146,27 @@ def sync(
     ).parsed
 
 
-async def async_detailed(
-    uuid: str,
+async def asyncio_detailed(
+    uuid: UUID,
     *,
     client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1AlertsRetrieveResponse200]:
+    """
+    Args:
+        uuid (UUID):
+        exclude_fields (Union[Unset, list[str]]):
+        include_fields (Union[Unset, list[str]]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AlertsRetrieveResponse200]
+    """
+
     kwargs = _get_kwargs(
         uuid=uuid,
         client=client,
@@ -145,20 +182,32 @@ async def async_detailed(
         resp.status_code = response.status
         resp._content = content
 
-    return _build_response(response=resp)
+    return _build_response(client=client, response=resp)
 
 
-async def async_(
-    uuid: str,
+async def asyncio(
+    uuid: UUID,
     *,
     client: AuthenticatedClient,
-    exclude_fields: Union[Unset, None, List[str]] = UNSET,
-    include_fields: Union[Unset, None, List[str]] = UNSET,
+    exclude_fields: Union[Unset, list[str]] = UNSET,
+    include_fields: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1AlertsRetrieveResponse200]:
-    """ """
+    """
+    Args:
+        uuid (UUID):
+        exclude_fields (Union[Unset, list[str]]):
+        include_fields (Union[Unset, list[str]]):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AlertsRetrieveResponse200
+    """
 
     return (
-        await async_detailed(
+        await asyncio_detailed(
             uuid=uuid,
             client=client,
             exclude_fields=exclude_fields,

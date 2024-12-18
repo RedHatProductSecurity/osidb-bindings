@@ -1,33 +1,31 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, TypeVar
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..types import OSIDBModel
 
 T = TypeVar("T", bound="OsidbApiV1StatusRetrieveResponse200OsidbService")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1StatusRetrieveResponse200OsidbService(OSIDBModel):
     """ """
 
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-
-        field_dict: Dict[str, Any] = {}
+    def to_dict(self) -> dict[str, Any]:
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
         osidb_api_v1_status_retrieve_response_200_osidb_service = cls()
 
-        osidb_api_v1_status_retrieve_response_200_osidb_service.additional_properties = (
-            d
-        )
+        osidb_api_v1_status_retrieve_response_200_osidb_service.additional_properties = d
         return osidb_api_v1_status_retrieve_response_200_osidb_service
 
     @staticmethod
@@ -35,7 +33,7 @@ class OsidbApiV1StatusRetrieveResponse200OsidbService(OSIDBModel):
         return {}
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

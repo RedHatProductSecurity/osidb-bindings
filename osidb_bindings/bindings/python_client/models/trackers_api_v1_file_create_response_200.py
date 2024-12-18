@@ -1,44 +1,56 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
-from ..models.affect import Affect
-from ..models.module_component import ModuleComponent
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.affect import Affect
+    from ..models.module_component import ModuleComponent
+
 
 T = TypeVar("T", bound="TrackersApiV1FileCreateResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class TrackersApiV1FileCreateResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        modules_components (list['ModuleComponent']):
+        not_applicable (list['Affect']):
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
-    modules_components: List[ModuleComponent]
-    not_applicable: List[Affect]
+    modules_components: list["ModuleComponent"]
+    not_applicable: list["Affect"]
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        modules_components: List[Dict[str, Any]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        modules_components: list[dict[str, Any]] = UNSET
         if not isinstance(self.modules_components, Unset):
             modules_components = []
             for modules_components_item_data in self.modules_components:
-                modules_components_item: Dict[str, Any] = UNSET
+                modules_components_item: dict[str, Any] = UNSET
                 if not isinstance(modules_components_item_data, Unset):
                     modules_components_item = modules_components_item_data.to_dict()
 
                 modules_components.append(modules_components_item)
 
-        not_applicable: List[Dict[str, Any]] = UNSET
+        not_applicable: list[dict[str, Any]] = UNSET
         if not isinstance(self.not_applicable, Unset):
             not_applicable = []
             for not_applicable_item_data in self.not_applicable:
-                not_applicable_item: Dict[str, Any] = UNSET
+                not_applicable_item: dict[str, Any] = UNSET
                 if not isinstance(not_applicable_item_data, Unset):
                     not_applicable_item = not_applicable_item_data.to_dict()
 
@@ -49,10 +61,12 @@ class TrackersApiV1FileCreateResponse200(OSIDBModel):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(modules_components, Unset):
             field_dict["modules_components"] = modules_components
@@ -70,40 +84,40 @@ class TrackersApiV1FileCreateResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect import Affect
+        from ..models.module_component import ModuleComponent
+
         d = src_dict.copy()
         modules_components = []
         _modules_components = d.pop("modules_components", UNSET)
-        if _modules_components is UNSET:
-            modules_components = UNSET
-        else:
-            for modules_components_item_data in _modules_components or []:
-                _modules_components_item = modules_components_item_data
-                modules_components_item: ModuleComponent
-                if isinstance(_modules_components_item, Unset):
-                    modules_components_item = UNSET
-                else:
-                    modules_components_item = ModuleComponent.from_dict(
-                        _modules_components_item
-                    )
+        for modules_components_item_data in _modules_components or []:
+            # }
+            _modules_components_item = modules_components_item_data
+            modules_components_item: ModuleComponent
+            if isinstance(_modules_components_item, Unset):
+                modules_components_item = UNSET
+            else:
+                modules_components_item = ModuleComponent.from_dict(
+                    _modules_components_item
+                )
 
-                modules_components.append(modules_components_item)
+            modules_components.append(modules_components_item)
 
         not_applicable = []
         _not_applicable = d.pop("not_applicable", UNSET)
-        if _not_applicable is UNSET:
-            not_applicable = UNSET
-        else:
-            for not_applicable_item_data in _not_applicable or []:
-                _not_applicable_item = not_applicable_item_data
-                not_applicable_item: Affect
-                if isinstance(_not_applicable_item, Unset):
-                    not_applicable_item = UNSET
-                else:
-                    not_applicable_item = Affect.from_dict(_not_applicable_item)
+        for not_applicable_item_data in _not_applicable or []:
+            # }
+            _not_applicable_item = not_applicable_item_data
+            not_applicable_item: Affect
+            if isinstance(_not_applicable_item, Unset):
+                not_applicable_item = UNSET
+            else:
+                not_applicable_item = Affect.from_dict(_not_applicable_item)
 
-                not_applicable.append(not_applicable_item)
+            not_applicable.append(not_applicable_item)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -132,8 +146,8 @@ class TrackersApiV1FileCreateResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "modules_components": List[ModuleComponent],
-            "not_applicable": List[Affect],
+            "modules_components": list["ModuleComponent"],
+            "not_applicable": list["Affect"],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,
@@ -141,7 +155,7 @@ class TrackersApiV1FileCreateResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

@@ -1,8 +1,9 @@
-from typing import Any, Dict, List, Optional
+from http import HTTPStatus
+from typing import Any, Optional, Union
 
 import requests
 
-from ...client import AuthenticatedClient
+from ...client import AuthenticatedClient, Client
 from ...models.affect_bulk_put import AffectBulkPut
 from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
     OsidbApiV1AffectsBulkUpdateResponse200,
@@ -10,52 +11,48 @@ from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-REQUEST_BODY_TYPE = List[AffectBulkPut]
+
+REQUEST_BODY_TYPE = list["AffectBulkPut"]
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
-) -> Dict[str, Any]:
-    url = "{}/osidb/api/v1/affects/bulk".format(
-        client.base_url,
-    )
+    body: Union[
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+    ],
+) -> dict[str, Any]:
+    headers: dict[str, Any] = client.get_headers()
 
-    headers: Dict[str, Any] = client.get_headers()
-
-    json_json_body: List[Dict[str, Any]] = UNSET
-    if not isinstance(json_body, Unset):
-        json_json_body = []
-        for json_body_item_data in json_body:
-            json_body_item: Dict[str, Any] = UNSET
-            if not isinstance(json_body_item_data, Unset):
-                json_body_item = json_body_item_data.to_dict()
-
-            json_json_body.append(json_body_item)
-
-    multipart_multipart_data: List[Dict[str, Any]] = UNSET
-    if not isinstance(multipart_data, Unset):
-        multipart_multipart_data = []
-        for multipart_data_item_data in multipart_data:
-            multipart_data_item: Dict[str, Any] = UNSET
-            if not isinstance(multipart_data_item_data, Unset):
-                multipart_data_item = multipart_data_item_data.to_dict()
-
-            multipart_multipart_data.append(multipart_data_item)
-
-    return {
-        "url": url,
-        "headers": headers,
-        "json": json_json_body,
+    _kwargs: dict[str, Any] = {
+        "url": f"{client.base_url}/osidb/api/v1/affects/bulk",
     }
+
+    if isinstance(body, list["AffectBulkPut"]):
+        _json_body: list[dict[str, Any]] = UNSET
+        if not isinstance(body, Unset):
+            _json_body = []
+            for body_item_data in body:
+                body_item: dict[str, Any] = UNSET
+                if not isinstance(body_item_data, Unset):
+                    body_item = body_item_data.to_dict()
+
+                _json_body.append(body_item)
+
+        _kwargs["json"] = _json_body
+        headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
+    return _kwargs
 
 
 def _parse_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
     if response.status_code == 200:
+        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AffectsBulkUpdateResponse200
         if isinstance(_response_200, Unset):
@@ -66,30 +63,48 @@ def _parse_response(
             )
 
         return response_200
-    return None
 
 
 def _build_response(
-    *, response: requests.Response
+    *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
     return Response(
-        status_code=response.status_code,
+        status_code=HTTPStatus(response.status_code),
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=_parse_response(client=client, response=response),
     )
 
 
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    body: Union[
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+    ],
 ) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    """Bulk update endpoint. Expects a list of dict Affect objects.
+
+    Args:
+        bugzilla_api_key (str):
+        jira_api_key (str):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AffectsBulkUpdateResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
-        multipart_data=multipart_data,
-        json_body=json_body,
+        body=body,
     )
 
     response = requests.put(
@@ -100,34 +115,70 @@ def sync_detailed(
     )
     response.raise_for_status()
 
-    return _build_response(response=response)
+    return _build_response(client=client, response=response)
 
 
 def sync(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    body: Union[
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+    ],
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    """Bulk update endpoint. Expects a list of dict Affect objects.
+
+    Args:
+        bugzilla_api_key (str):
+        jira_api_key (str):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AffectsBulkUpdateResponse200
+    """
 
     return sync_detailed(
         client=client,
-        multipart_data=multipart_data,
-        json_body=json_body,
+        body=body,
     ).parsed
 
 
-async def async_detailed(
+async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    body: Union[
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+    ],
 ) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
+    """Bulk update endpoint. Expects a list of dict Affect objects.
+
+    Args:
+        bugzilla_api_key (str):
+        jira_api_key (str):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        Response[OsidbApiV1AffectsBulkUpdateResponse200]
+    """
+
     kwargs = _get_kwargs(
         client=client,
-        multipart_data=multipart_data,
-        json_body=json_body,
+        body=body,
     )
 
     async with client.get_async_session().put(
@@ -138,21 +189,38 @@ async def async_detailed(
         resp.status_code = response.status
         resp._content = content
 
-    return _build_response(response=resp)
+    return _build_response(client=client, response=resp)
 
 
-async def async_(
+async def asyncio(
     *,
     client: AuthenticatedClient,
-    multipart_data: List[AffectBulkPut],
-    json_body: List[AffectBulkPut],
+    body: Union[
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+        list["AffectBulkPut"],
+    ],
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
-    """Bulk update endpoint. Expects a list of dict Affect objects."""
+    """Bulk update endpoint. Expects a list of dict Affect objects.
+
+    Args:
+        bugzilla_api_key (str):
+        jira_api_key (str):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+        body (list['AffectBulkPut']):
+
+    Raises:
+        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
+        httpx.TimeoutException: If the request takes longer than Client.timeout.
+
+    Returns:
+        OsidbApiV1AffectsBulkUpdateResponse200
+    """
 
     return (
-        await async_detailed(
+        await asyncio_detailed(
             client=client,
-            multipart_data=multipart_data,
-            json_body=json_body,
+            body=body,
         )
     ).parsed

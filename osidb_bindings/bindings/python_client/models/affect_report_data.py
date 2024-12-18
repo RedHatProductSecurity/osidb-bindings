@@ -1,43 +1,54 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.resolution_enum import ResolutionEnum
-from ..models.tracker_report_data import TrackerReportData
 from ..types import UNSET, OSIDBModel, Unset
+
+if TYPE_CHECKING:
+    from ..models.tracker_report_data import TrackerReportData
+
 
 T = TypeVar("T", bound="AffectReportData")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class AffectReportData(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        ps_module (str):
+        ps_component (str):
+        affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
+        resolution (Union[BlankEnum, ResolutionEnum, Unset]):
+        trackers (Union[Unset, list['TrackerReportData']]):
+    """
 
     ps_module: str
     ps_component: str
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
-    trackers: Union[Unset, List[TrackerReportData]] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    trackers: Union[Unset, list["TrackerReportData"]] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         ps_module = self.ps_module
+
         ps_component = self.ps_component
+
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
             affectedness = UNSET
         elif isinstance(self.affectedness, AffectednessEnum):
             affectedness = UNSET
             if not isinstance(self.affectedness, Unset):
-
                 affectedness = AffectednessEnum(self.affectedness).value
 
         else:
             affectedness = UNSET
             if not isinstance(self.affectedness, Unset):
-
                 affectedness = BlankEnum(self.affectedness).value
 
         resolution: Union[Unset, str]
@@ -46,26 +57,24 @@ class AffectReportData(OSIDBModel):
         elif isinstance(self.resolution, ResolutionEnum):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
-
                 resolution = ResolutionEnum(self.resolution).value
 
         else:
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
-
                 resolution = BlankEnum(self.resolution).value
 
-        trackers: Union[Unset, List[Dict[str, Any]]] = UNSET
+        trackers: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.trackers, Unset):
             trackers = []
             for trackers_item_data in self.trackers:
-                trackers_item: Dict[str, Any] = UNSET
+                trackers_item: dict[str, Any] = UNSET
                 if not isinstance(trackers_item_data, Unset):
                     trackers_item = trackers_item_data.to_dict()
 
                 trackers.append(trackers_item)
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
@@ -81,7 +90,9 @@ class AffectReportData(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.tracker_report_data import TrackerReportData
+
         d = src_dict.copy()
         ps_module = d.pop("ps_module", UNSET)
 
@@ -95,8 +106,9 @@ class AffectReportData(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _affectedness_type_0 = data
-                affectedness_type_0: Union[Unset, AffectednessEnum]
+                affectedness_type_0: AffectednessEnum
                 if isinstance(_affectedness_type_0, Unset):
                     affectedness_type_0 = UNSET
                 else:
@@ -107,8 +119,9 @@ class AffectReportData(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _affectedness_type_1 = data
-            affectedness_type_1: Union[Unset, BlankEnum]
+            affectedness_type_1: BlankEnum
             if isinstance(_affectedness_type_1, Unset):
                 affectedness_type_1 = UNSET
             else:
@@ -124,8 +137,9 @@ class AffectReportData(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
+                # }
                 _resolution_type_0 = data
-                resolution_type_0: Union[Unset, ResolutionEnum]
+                resolution_type_0: ResolutionEnum
                 if isinstance(_resolution_type_0, Unset):
                     resolution_type_0 = UNSET
                 else:
@@ -136,8 +150,9 @@ class AffectReportData(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
+            # }
             _resolution_type_1 = data
-            resolution_type_1: Union[Unset, BlankEnum]
+            resolution_type_1: BlankEnum
             if isinstance(_resolution_type_1, Unset):
                 resolution_type_1 = UNSET
             else:
@@ -149,18 +164,16 @@ class AffectReportData(OSIDBModel):
 
         trackers = []
         _trackers = d.pop("trackers", UNSET)
-        if _trackers is UNSET:
-            trackers = UNSET
-        else:
-            for trackers_item_data in _trackers or []:
-                _trackers_item = trackers_item_data
-                trackers_item: TrackerReportData
-                if isinstance(_trackers_item, Unset):
-                    trackers_item = UNSET
-                else:
-                    trackers_item = TrackerReportData.from_dict(_trackers_item)
+        for trackers_item_data in _trackers or []:
+            # }
+            _trackers_item = trackers_item_data
+            trackers_item: TrackerReportData
+            if isinstance(_trackers_item, Unset):
+                trackers_item = UNSET
+            else:
+                trackers_item = TrackerReportData.from_dict(_trackers_item)
 
-                trackers.append(trackers_item)
+            trackers.append(trackers_item)
 
         affect_report_data = cls(
             ps_module=ps_module,
@@ -180,11 +193,11 @@ class AffectReportData(OSIDBModel):
             "ps_component": str,
             "affectedness": Union[AffectednessEnum, BlankEnum],
             "resolution": Union[BlankEnum, ResolutionEnum],
-            "trackers": List[TrackerReportData],
+            "trackers": list["TrackerReportData"],
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
