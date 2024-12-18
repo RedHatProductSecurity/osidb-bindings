@@ -6,11 +6,11 @@ from attrs import field as _attrs_field
 from ..types import OSIDBModel
 
 
-T = TypeVar("T", bound="OsidbApiV1SchemaRetrieveResponse200")
+T = TypeVar("T", bound="CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0")
 
 
 @_attrs_define
-class OsidbApiV1SchemaRetrieveResponse200(OSIDBModel):
+class CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0(OSIDBModel):
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -24,10 +24,10 @@ class OsidbApiV1SchemaRetrieveResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        osidb_api_v1_schema_retrieve_response_200 = cls()
+        collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0 = cls()
 
-        osidb_api_v1_schema_retrieve_response_200.additional_properties = d
-        return osidb_api_v1_schema_retrieve_response_200
+        collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0.additional_properties = d
+        return collectors_api_v1_status_retrieve_response_200_collectors_item_error_type_0
 
     @staticmethod
     def get_fields():
