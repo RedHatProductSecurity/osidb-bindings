@@ -99,10 +99,10 @@ class Paginator:
             if param is None:
                 setattr(response, func_name, lambda: None)
             else:
-                limit = re.search("limit=(\d+)", param)
+                limit = re.search(r"limit=(\d+)", param)
                 if limit is not None:
                     kwargs["limit"] = limit.group(1)
-                offset = re.search("offset=(\d+)", param)
+                offset = re.search(r"offset=(\d+)", param)
                 if offset is not None:
                     kwargs["offset"] = offset.group(1)
 
