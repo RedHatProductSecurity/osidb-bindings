@@ -3,4 +3,5 @@
 openapi-python-client
 pip-tools
 pytest
+ruff
 tox

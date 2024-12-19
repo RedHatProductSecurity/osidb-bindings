@@ -1,6 +1,7 @@
 """
 osidb-registry-bindings helpers
 """
+
 import json
 from os import getenv
 from typing import Any, Union

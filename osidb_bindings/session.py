@@ -18,7 +18,6 @@ from .bindings.python_client.api.auth import (
     auth_token_refresh_create,
     auth_token_retrieve,
 )
-from .bindings.python_client.types import UNSET
 from .constants import (
     ALL_SESSION_OPERATIONS,
     DEFAULT_LIMIT,
@@ -55,8 +54,8 @@ def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
     if model is None:
         raise UndefinedRequestBody(
-            f'The request body for the resource "trackers" '
-            f'and the operation "file" is not defined.'
+            'The request body for the resource "trackers" '
+            'and the operation "file" is not defined.'
         )
 
     transformed_data = serialize_data(form_data, model)
@@ -92,8 +91,8 @@ def reject_flaw(self, id: str, form_data: Dict[str, Any], *args, **kwargs):
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
     if model is None:
         raise UndefinedRequestBody(
-            f'The request body for the resource "flaw" '
-            f'and the operation "reject" is not defined.'
+            'The request body for the resource "flaw" '
+            'and the operation "reject" is not defined.'
         )
     transformed_data = serialize_data(form_data, model)
     return sync_fn(
@@ -168,11 +167,9 @@ def new_session(
     """Create a new session for selected OSIDB URI"""
 
     if username and password:
-
         # OSIDB instances with the username/password auth for token acquirement
         auth = (username, password)
     else:
-
         # OSIDB instances with the kerberos auth for token acquirement
         auth = "kerberos"
 
@@ -185,7 +182,6 @@ class Session:
     """Simple session wrapper which encapsulates the client"""
 
     def __init__(self, base_url, auth=None, verify_ssl=True):
-
         # Store auth for the refresh token acquirement
         self.auth = auth
 
@@ -316,19 +312,14 @@ class Session:
         try:
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefresh.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
+                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
             )
         except requests.HTTPError:
-
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefresh.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
+                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
             )
 
         return response.access
