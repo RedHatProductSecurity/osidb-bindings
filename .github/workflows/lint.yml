@@ -1,25 +1,14 @@
 name: Lint
 on: [push]
 jobs:
-  black:
+  ruff:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.12
       - name: Install dependencies
-        run: pip install tox==3.24.5
-      - name: Check that code is formatted with black
-        run: tox -e black
-  isort:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.9
-      - name: Install dependencies
-        run: pip install tox==3.24.5
-      - name: Check that imports are formatted with isort
-        run: tox -e isort
+        run: pip install tox==4.23.2
+      - name: Check that code is formatted and linted with ruff
+        run: tox -e ruff
