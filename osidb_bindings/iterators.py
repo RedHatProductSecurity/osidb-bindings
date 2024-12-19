@@ -29,7 +29,6 @@ class Paginator:
         init_response=None,
         **kwargs,
     ):
-
         if not init_response and not retrieve_list_fn:
             raise OSIDBBindingsException(
                 (
@@ -59,7 +58,6 @@ class Paginator:
 
     def __next__(self):
         if self.current_response is None:
-
             # no current response page - obtain the first page
             response = self.retrieve_list_fn(
                 *self.args,
@@ -73,7 +71,6 @@ class Paginator:
             self.current_response = response
             return response
         else:
-
             # existing current response - call next page
             response = self.current_response.next()
             if response is not None:
