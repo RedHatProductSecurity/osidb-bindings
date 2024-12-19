@@ -2,7 +2,6 @@
 osidb-bindings constants
 """
 
-
 from typing import List
 
 OSIDB_API_VERSION: str = "v1"

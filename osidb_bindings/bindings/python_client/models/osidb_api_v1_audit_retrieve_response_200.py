@@ -1,7 +1,8 @@
 import datetime
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar, Union, cast
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -9,9 +10,23 @@ from ..types import UNSET, OSIDBModel, Unset
 T = TypeVar("T", bound="OsidbApiV1AuditRetrieveResponse200")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        pgh_created_at (datetime.datetime): When the event was created.
+        pgh_slug (str): The unique identifier across all event tables.
+        pgh_obj_model (str): The object model.
+        pgh_label (str): The event label.
+        pgh_diff (Any): The diff between the previous event of the same label.
+        pgh_data (str):
+        pgh_obj_id (Union[None, Unset, str]): The primary key of the object.
+        pgh_context (Union[Unset, Any]): The context associated with the event.
+        dt (Union[Unset, datetime.datetime]):
+        env (Union[Unset, str]):
+        revision (Union[Unset, str]):
+        version (Union[Unset, str]):
+    """
 
     pgh_created_at: datetime.datetime
     pgh_slug: str
@@ -19,26 +34,35 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
     pgh_label: str
     pgh_diff: Any
     pgh_data: str
-    pgh_obj_id: Union[Unset, None, str] = UNSET
+    pgh_obj_id: Union[None, Unset, str] = UNSET
     pgh_context: Union[Unset, Any] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
     version: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         pgh_created_at: str = UNSET
         if not isinstance(self.pgh_created_at, Unset):
             pgh_created_at = self.pgh_created_at.isoformat()
 
         pgh_slug = self.pgh_slug
+
         pgh_obj_model = self.pgh_obj_model
+
         pgh_label = self.pgh_label
+
         pgh_diff = self.pgh_diff
 
         pgh_data = self.pgh_data
-        pgh_obj_id = self.pgh_obj_id
+
+        pgh_obj_id: Union[None, Unset, str]
+        if isinstance(self.pgh_obj_id, Unset):
+            pgh_obj_id = UNSET
+        else:
+            pgh_obj_id = self.pgh_obj_id
+
         pgh_context = self.pgh_context
 
         dt: Union[Unset, str] = UNSET
@@ -46,10 +70,12 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
             dt = self.dt.isoformat()
 
         env = self.env
+
         revision = self.revision
+
         version = self.version
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(pgh_created_at, Unset):
             field_dict["pgh_created_at"] = pgh_created_at
@@ -79,8 +105,9 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
+        # }
         _pgh_created_at = d.pop("pgh_created_at", UNSET)
         pgh_created_at: datetime.datetime
         if isinstance(_pgh_created_at, Unset):
@@ -98,10 +125,18 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
 
         pgh_data = d.pop("pgh_data", UNSET)
 
-        pgh_obj_id = d.pop("pgh_obj_id", UNSET)
+        def _parse_pgh_obj_id(data: object) -> Union[None, Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, str], data)
+
+        pgh_obj_id = _parse_pgh_obj_id(d.pop("pgh_obj_id", UNSET))
 
         pgh_context = d.pop("pgh_context", UNSET)
 
+        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -142,7 +177,7 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
             "pgh_label": str,
             "pgh_diff": Any,
             "pgh_data": str,
-            "pgh_obj_id": str,
+            "pgh_obj_id": Union[None, str],
             "pgh_context": Any,
             "dt": datetime.datetime,
             "env": str,
@@ -151,7 +186,7 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

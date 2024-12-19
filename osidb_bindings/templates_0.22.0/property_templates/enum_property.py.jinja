@@ -1,0 +1,51 @@
+{#
+    This is a custom template derived from:
+    https://github.com/openapi-generators/openapi-python-client/blob/v0.22.0/openapi_python_client/templates/property_templates/enum_property.py.jinja
+#}
+{% macro construct_function(property, source) %}
+{{ property.class_info.name }}({{ source }})
+{% endmacro %}
+
+{% from "property_templates/property_macros.py.jinja" import construct_template %}
+
+{% macro construct(property, source) %}
+{{ construct_template(construct_function, property, source) }}
+{% endmacro %}
+
+{% macro check_type_for_construct(property, source) %}isinstance({{ source }}, {{ property.value_type.__name__ }}){% endmacro %}
+
+{% macro transform(property, source, destination, declare_type=True, multipart=False) %}
+{% set transformed = source + ".value" %}
+{% set type_string = property.get_type_string(json=True) %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{# {% if property.required %}
+{{ destination }} = {{ transformed }}
+{%- else %} #}
+{# CHANGE START (2) - attempt to convert basic types to enums if provided #}
+{% set type_base = property.get_type_string(no_optional=True) %}
+{% set transformed_typed = type_base + "(" +  source  + ").value" %}
+{{ destination }}{% if declare_type %}: {{ type_string }}{% endif %} = UNSET
+if not isinstance({{ source }}, Unset):
+    {{ destination }} = {{ transformed_typed }}
+{# CHANGE END (2) #}
+{# {% endif %} #}
+{# CHANGE END (1) #}
+{% endmacro %}
+
+{% macro transform_multipart(property, source, destination) %}
+{% set transformed = "(None, str(" + source + ".value" + ").encode(), \"text/plain\")" %}
+{% set type_string = "Union[Unset, tuple[None, bytes, str]]" %}
+{# CHANGE START (3) - make all the fields treated as non-required #}
+{# {% if property.required %}
+{{ destination }} = {{ transformed }}
+{%- else %} #}
+{{ destination }}: {{ type_string }} = UNSET
+if not isinstance({{ source }}, Unset):
+    {{ destination }} = {{ transformed }}
+{# {% endif %} #}
+# CHANGE END (3) #}
+{% endmacro %}
+
+{% macro transform_header(source) %}
+str({{ source }})
+{% endmacro %}

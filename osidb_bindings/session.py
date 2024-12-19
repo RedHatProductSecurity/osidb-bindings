@@ -18,7 +18,6 @@ from .bindings.python_client.api.auth import (
     auth_token_refresh_create,
     auth_token_retrieve,
 )
-from .bindings.python_client.types import UNSET
 from .constants import (
     ALL_SESSION_OPERATIONS,
     DEFAULT_LIMIT,
@@ -55,8 +54,8 @@ def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
     if model is None:
         raise UndefinedRequestBody(
-            f'The request body for the resource "trackers" '
-            f'and the operation "file" is not defined.'
+            'The request body for the resource "trackers" '
+            'and the operation "file" is not defined.'
         )
 
     transformed_data = serialize_data(form_data, model)
@@ -64,9 +63,7 @@ def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
     return sync_fn(
         *args,
         client=self.client(),
-        form_data=transformed_data,
-        multipart_data=UNSET,
-        json_body=UNSET,
+        body=transformed_data,
         **kwargs,
     )
 
@@ -94,17 +91,15 @@ def reject_flaw(self, id: str, form_data: Dict[str, Any], *args, **kwargs):
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
     if model is None:
         raise UndefinedRequestBody(
-            f'The request body for the resource "flaw" '
-            f'and the operation "reject" is not defined.'
+            'The request body for the resource "flaw" '
+            'and the operation "reject" is not defined.'
         )
     transformed_data = serialize_data(form_data, model)
     return sync_fn(
         id,
         *args,
         client=self.client(),
-        form_data=transformed_data,
-        multipart_data=UNSET,
-        json_body=UNSET,
+        body=transformed_data,
         **kwargs,
     )
 
@@ -140,13 +135,13 @@ def get_sync_function(api_module: ModuleType) -> Callable:
     )
 
 
-def get_async_function(api_module: ModuleType) -> Callable:
+def get_asyncio_function(api_module: ModuleType) -> Callable:
     """
-    Get 'sync' function from API module if available (response example is defined in schema)
-    or get basic 'sync_detailed' function (response example is not defined in schema)
+    Get 'asyncio' function from API module if available (response example is defined in schema)
+    or get basic 'asyncio_detailed' function (response example is not defined in schema)
     """
     return double_underscores_to_single_underscores(
-        getattr(api_module, "async_", getattr(api_module, "async_detailed"))
+        getattr(api_module, "asyncio_", getattr(api_module, "asyncio_detailed"))
     )
 
 
@@ -172,11 +167,9 @@ def new_session(
     """Create a new session for selected OSIDB URI"""
 
     if username and password:
-
         # OSIDB instances with the username/password auth for token acquirement
         auth = (username, password)
     else:
-
         # OSIDB instances with the kerberos auth for token acquirement
         auth = "kerberos"
 
@@ -189,7 +182,6 @@ class Session:
     """Simple session wrapper which encapsulates the client"""
 
     def __init__(self, base_url, auth=None, verify_ssl=True):
-
         # Store auth for the refresh token acquirement
         self.auth = auth
 
@@ -304,11 +296,9 @@ class Session:
         if isinstance(self.auth, tuple):
             response = auth_token_create.sync(
                 client=self.__client,
-                form_data=models.TokenObtainPair.from_dict(
+                body=models.TokenObtainPair.from_dict(
                     {"username": self.auth[0], "password": self.auth[1]}
                 ),
-                multipart_data=UNSET,
-                json_body=UNSET,
             )
         else:
             response = auth_token_retrieve.sync(
@@ -322,23 +312,14 @@ class Session:
         try:
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                form_data=models.TokenRefresh.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
-                multipart_data=UNSET,
-                json_body=UNSET,
+                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
             )
         except requests.HTTPError:
-
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                form_data=models.TokenRefresh.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
-                multipart_data=UNSET,
-                json_body=UNSET,
+                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
             )
 
         return response.access
@@ -454,9 +435,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 *args,
                 client=self.client(),
-                form_data=serialized_data,
-                multipart_data=UNSET,
-                json_body=UNSET,
+                body=serialized_data,
                 **kwargs,
             )
         else:
@@ -476,8 +455,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 *args,
                 client=self.client(),
-                json_body=serialized_data,
-                multipart_data=UNSET,
+                body=serialized_data,
                 **kwargs,
             )
         else:
@@ -498,9 +476,7 @@ class SessionOperationsGroup:
                 id,
                 *args,
                 client=self.client(),
-                form_data=serialized_data,
-                multipart_data=UNSET,
-                json_body=UNSET,
+                body=serialized_data,
                 **kwargs,
             )
         else:
@@ -520,8 +496,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 *args,
                 client=self.client(),
-                json_body=serialized_data,
-                multipart_data=UNSET,
+                body=serialized_data,
                 **kwargs,
             )
         else:
@@ -556,8 +531,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 *args,
                 client=self.client(),
-                json_body=serialized_data,
-                multipart_data=UNSET,
+                body=serialized_data,
                 **kwargs,
             )
         else:
@@ -623,7 +597,7 @@ class SessionOperationsGroup:
             method_module = self.__get_method_module(
                 resource_name=self.resource_name, method="list"
             )
-            async_fn = get_async_function(method_module)
+            async_fn = get_asyncio_function(method_module)
 
             kwargs.pop("offset", None)
             limit = kwargs.pop("limit", None) or DEFAULT_LIMIT

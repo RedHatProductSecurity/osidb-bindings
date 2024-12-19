@@ -1,6 +1,7 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, TypeVar, Union
 
-import attr
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
 
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
@@ -8,30 +9,37 @@ from ..types import UNSET, OSIDBModel, Unset
 T = TypeVar("T", bound="TrackerReportData")
 
 
-@attr.s(auto_attribs=True)
+@_attrs_define
 class TrackerReportData(OSIDBModel):
-    """ """
+    """
+    Attributes:
+        type_ (TrackerType):
+        external_system_id (str):
+        status (Union[Unset, str]):
+        resolution (Union[Unset, str]):
+    """
 
-    type: TrackerType
+    type_: TrackerType
     external_system_id: str
     status: Union[Unset, str] = UNSET
     resolution: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        type: str = UNSET
-        if not isinstance(self.type, Unset):
-
-            type = TrackerType(self.type).value
+    def to_dict(self) -> dict[str, Any]:
+        type_: str = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = TrackerType(self.type_).value
 
         external_system_id = self.external_system_id
+
         status = self.status
+
         resolution = self.resolution
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(type, Unset):
-            field_dict["type"] = type
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
         if not isinstance(status, Unset):
@@ -42,14 +50,15 @@ class TrackerReportData(OSIDBModel):
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        _type = d.pop("type", UNSET)
-        type: TrackerType
-        if isinstance(_type, Unset):
-            type = UNSET
+        # }
+        _type_ = d.pop("type", UNSET)
+        type_: TrackerType
+        if isinstance(_type_, Unset):
+            type_ = UNSET
         else:
-            type = TrackerType(_type)
+            type_ = TrackerType(_type_)
 
         external_system_id = d.pop("external_system_id", UNSET)
 
@@ -58,7 +67,7 @@ class TrackerReportData(OSIDBModel):
         resolution = d.pop("resolution", UNSET)
 
         tracker_report_data = cls(
-            type=type,
+            type_=type_,
             external_system_id=external_system_id,
             status=status,
             resolution=resolution,
@@ -77,7 +86,7 @@ class TrackerReportData(OSIDBModel):
         }
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
