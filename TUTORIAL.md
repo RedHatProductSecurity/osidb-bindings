@@ -424,3 +424,32 @@ There are some utility functions which can help you with common use cases of the
     all_cve_ids = osidb_bindings.cve_ids(session)
     #  ['CVE-2021-43527', 'CVE-2021-3984', 'CVE-2021-4019', ... ]
     ```
+
+### Debugging
+
+As this package serves as a client to an existing database, most of its functionality depends on communication with that database. Consequently, errors are likely to occur during this communication, and it's crucial to handle such errors appropriately.
+
+#### Exception handling
+
+Exception handling is essential to ensure that your requests are properly managed, especially when HTTP communication fails due to issues such as network failure, incorrect requests, or invalid request bodies.
+
+```python
+flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
+flaw_data = flaw_response.to_dict()
+# Invalid operation: Flaw cannot be embargoed again once unembargoed
+flaw_data.embargoed = True
+
+# Handling specific HTTPError exceptions
+from requests import HTTPError
+try:
+    session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
+except HTTPError as exc:
+    print(exc.response.content)
+    handle_exception(exc)
+
+# Handling general exceptions
+try:
+    session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
+except Exception as exc:
+    handle_exception(exc)
+```
