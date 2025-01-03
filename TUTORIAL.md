@@ -1,6 +1,5 @@
 # osidb-bindings
-Python bindings for accessing the OSIDB API endpoints in the simplest way
-without any deep knowledge about HTTP
+Python bindings for seamless access to OSIDB API endpoints, requiring no in-depth understanding of HTTP.
 
 ## Requirements
 
@@ -9,9 +8,9 @@ without any deep knowledge about HTTP
 
 ## Installation
 
-You can install the bindings via Python 3 pip:
+You can install the bindings via:
 
-* from [PyPI](https://pypi.org/project/osidb-bindings/)
+* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/)
     ```
     pip install osidb-bindings
     ```
@@ -20,13 +19,12 @@ You can install the bindings via Python 3 pip:
     dnf copr enable jazinner/osidb-bindings
     dnf install osidb_bindings
     ```
-
-* directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository (will install the version
+* Python 3 pip directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository (will install the version
     from master branch)
     ```
     pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git#egg=osidb_bindings
     ```
-* OPTIONAL - directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository with branch specification
+* OPTIONAL - Python 3 pip directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository with branch specification
     ```
     pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git@<branch_name>#egg=osidb_bindings
     ```
@@ -54,21 +52,21 @@ import osidb_bindings
 ```
 
 ### Create a session
-Session is the main part of the bindings which you will be using. You can create it using the `osidb_bindings.new_session`. Created session is then used to access the various endpoints.
+The Session is the core component of the bindings that you'll interact with. You can create a session using `osidb_bindings.new_session`. Once created, the session serves as the gateway to access various endpoints.
 
-You must always specify `osidb_server_uri` of the OSIDB instance you want to access, in this tutorial, we will be accessing local instance of OSIDB hosted on port 8000
+When initializing a session, you must specify the osidb_server_uri of the OSIDB instance you want to connect to. In this tutorial, we'll use a local OSIDB instance hosted on port 8000.
 
-OSIDB uses token (JWT) authentication on most of the endpoints. Bindings handles the token refresh for you. All you need to do is to specify which method is supposed to be used for obtaining the token. OSIDB currently supports two main authentication mechanisms on the token endpoints:
-* Basic authentication - `username` and `password` (used on the OSIDB instances without the kerberos authentication enabled)
+OSIDB relies on token-based (JWT) authentication for most endpoints. The bindings automatically handle token refreshing, so your primary task is to specify the method for obtaining the token. OSIDB currently supports two main authentication mechanisms for its token endpoints:
+* Basic authentication - `username` and `password` (used for the OSIDB instances without the kerberos authentication enabled, mostly local instances)
     ```python
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password")
     ```
-* Kerberos authentication - default (used on the OSIDB instances with kerberos authentication enabled)
+* Kerberos authentication - default (used for the OSIDB instances with kerberos authentication enabled, production/stage/UAT)
     ```python
     session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
     ```
 
-Some operations mentioned in [operations section](#session-operations) (mainly unsafe operations which creates or modify content) will require Bugzilla API key or Jira Access Token to work properly.
+Certain operations outlined in the [operations section](#session-operations) (primarily those involving creating or modifying content) will require Bugzilla API key or Jira Access Token to work properly.
 
 * Valid Bugzilla API key is provided via `BUGZILLA_API_KEY` environment variable.
 
@@ -81,7 +79,7 @@ Some operations mentioned in [operations section](#session-operations) (mainly u
     export JIRA_ACCESS_TOKEN="jira access token"
     ```
 
-The SSL verification is enabled by the default and in order to work properly you should export the `REQUESTS_CA_BUNDLE` environment variable to point to the location with the proper CA bundle. For example:
+SSL verification is enabled by default. To ensure proper functionality, you should set the `REQUESTS_CA_BUNDLE` environment variable to point to the location of the appropriate CA bundle. For example:
 
 ```bash
 export REQUESTS_CA_BUNDLE="/etc/pki/tls/certs/ca-bundle.crt"
@@ -101,17 +99,6 @@ session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", 
 
 This section describes possible session operations. See [response section](#response) to learn how to work with obtained operation responses.
 
-Operations can be performed on the following entities:
-* flaws
-    * comments
-    * references
-    * acknowledgments
-    * cvss_scores
-    * packages_versions
-* affects
-    * cvss_scores
-* trackers
-
 * #### ```status```
     Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
 
@@ -119,6 +106,22 @@ Operations can be performed on the following entities:
     ```python
     status_response = session.status()
     ```
+
+Operations can be performed on the following resources/subresources (also some of the resources/subresources do have extra operations):
+* flaws
+    * acknowledgments
+    * comments
+    * cvss_scores
+    * packages_versions
+    * references
+    * extra operations
+        * promote
+        * reject
+* affects
+    * cvss_scores
+* trackers
+    * extra operations
+        * file
 
 Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource. In case of subresources like `flaw comments`, `flaw references`, etc. you can use the dot notation like this `session.flaws.comments.retrieve(...)`.
 
@@ -155,11 +158,11 @@ Following operations are demonstrated on `flaws` resource, to work with differen
         changed_before=datetime.strptime("2021-12-24", "%Y-%m-%d"),
     )
 
-
     # comma separated list query parameters
     specified_cves_flaws_response = session.flaws.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")
 
-    multiple_criteria_flaws_response = session.flaws.retrieve_list(type="VULNERABILITY", impact="LOW", changed_after=datetime(2021,7,12))
+    # multiple query parameters specifying multiple filter conditions
+    multiple_criteria_flaws_response = session.flaws.retrieve_list(source="REDHAT", impact="LOW", changed_after=datetime(2021,7,12))
     ```
 
 * #### ```retrieve_list_iterator```
@@ -183,9 +186,9 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     Retrieve a list of Flaws. Handles the pagination and returns the generator of individual resource entities. Uses asynchronous communitation
     to speed up the data retrieval.
 
-    By default there is a limit which allows up to 10 concurrent connections. This limit can be changed by setting the `OSIDB_BINDINGS_MAX_CONCURRENCY` environmental variable. It is strongly recommended to keep this limit between 1-50 concurrent connections. Exceeding this limit may cause service overload which might by considered as the Denial-of-Service attack.
+    By default, the system allows up to 10 concurrent connections. This limit can be adjusted by setting the `OSIDB_BINDINGS_MAX_CONCURRENCY` environment variable. It is highly recommended to keep the limit between 1 and 50 concurrent connections. Exceeding this limit may lead to service overload, which could be interpreted as a Denial-of-Service attack.
 
-    ```python
+    ```bash
     export OSIDB_BINDINGS_MAX_CONCURRENCY=30
     ```
 
@@ -212,7 +215,11 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 
 * #### ```count```
 
-Retrieve the the total count number of entities which would be returned by the same `retrieve_list` call. In terms of the input arguments this operation behaves the same as `retrieve_list`.
+    Retrieve the the total count number of entities which would be returned by the same `retrieve_list` call. In terms of the input arguments this operation behaves the same as `retrieve_list`.
+
+    ```python
+    low_impact_flaw_count = session.flaw.count(impact="LOW")
+    ```
 
 * #### ```search```
     Retrieve a list of Flaws. Performs full text search filter.
@@ -228,22 +235,18 @@ Retrieve the the total count number of entities which would be returned by the s
     ```python
     from datetime import datetime
     create_data = {
-        "type": "VULNERABILITY",
         "cve_id": "CVE-1111-2222",
         "state": "NEW",
-        "resolution": "NONE",
         "impact": "LOW",
         "title": "New title",
-        "description": "New description",
-        "summary": "New summary",
+        "components": ["component1", "component2"],
+        "cve_description": "New CVE description",
+        "comment_zero": "New comment zero",
         "statement": "New statement",
         "cwe_id": "CWE-123",
         "unembargo_dt": datetime(2022,1,1),
         "source": "ADOBE",
         "reported_dt": "2022-02-10T15:27:24.131Z",
-        "mitigated_by": "SELINUX",
-        "cvss3": "8.8/CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
-        "cvss3_score": 8.8,
         "is_major_incident": False
     }
 
@@ -255,13 +258,13 @@ Retrieve the the total count number of entities which would be returned by the s
 
     See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
     ```python
-    update_data = {
-        "cve_id": "CVE-1111-3333",
-        "resolution": "ERRATA",
-        "impact": "MEDIUM",
-    }
 
-    update_flaw_response = session.flaws.update(id="CVE-1111-2222", form_data=update_data)
+    flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
+    flaw_data = flaw_response.to_dict()
+    flaw_data["cve_id"] = "CVE-1111-3333"
+    flaw_data["impact"] = "MEDIUM"
+
+    update_flaw_response = session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
     ```
 
 * #### ```delete```
@@ -272,8 +275,13 @@ Retrieve the the total count number of entities which would be returned by the s
     delete_flaw_response = session.flaws.delete(id="CVE-1111-2222")
     ```
 
-* #### ```file```
-    Special operation for Trackers for using **POST** `/trackers/api/v1/file` functionality
+* #### ```extra operations```
+
+    * Flaws
+        * `promote` - advance a flaw through workflow (**POST** `/osidb/api/v1/flaws/{flaw_id}/promote` functionality)
+        * `reject` - reject a flaw (**POST** `/osidb/api/v1/flaws/{flaw_id}/reject` functionality)
+    * Trackers
+        * `file` - Given a list of flaws, generates a list of suggested trackers to file. (**POST** `/trackers/api/v1/file` functionality)
 
 
 ### Response
@@ -281,9 +289,7 @@ Retrieve the the total count number of entities which would be returned by the s
 This section describes how to work with responses. See [operations section](#session-operations) to learn how to get these responses.
 
 #### Single response
-This response is typically retrieved from the [retrieve](#retrieve) or [status](#status) operations and you receive only one item of desired resource in the response.
-
-Retrieved data are encapsulated in respective model of the retrieved resource which is build on the bindings side.
+This response is typically retrieved from the [retrieve](#retrieve) or [status](#status) operations, where you receive a single item of the requested resource. The retrieved data is encapsulated within the corresponding model of the resource, which is constructed on the bindings side.
 
 ```python
 single_response = session.flaws.retrieve(id="CVE-1111-2222")
@@ -334,7 +340,7 @@ single_response_dict["affects"][0]
 
 #### Paginated response
 Paginated responses are typically retrieved from [retrieve_list](#retrieve_list) or [search](#search) operations.
-You can view overall count of responses, previous and next segment query (based on the `offset` and `limit` values) and content of the current segment.
+You can view overall count of responses, previous and next page of a query (based on the `offset` and `limit` values) and content of the current page.
 
 ```python
 paginated_response = session.flaws.retrieve_list(limit=5)
@@ -381,10 +387,11 @@ previous_response
 # Same as paginated_response_page_1
 ```
 
-And `.iterator` which returns iterable enabling looping through the rest of responses in for loop:
+and `.iterator` which returns iterable enabling looping through the rest of response pages in for loop:
 
 ```python
-paginated_response = session.flaws.retrieve_list()
+first_paginated_response = session.flaws.retrieve_list()
+# loop through second, third, fourth, ... page
 for page in paginated_response.iterator:
     for flaw in page:
         do_calc(flaw)

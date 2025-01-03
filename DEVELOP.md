@@ -76,13 +76,13 @@ When synchronizing multiple requirements files, it is important that every subse
 
 ```
 # requirements.in
-httpx
+requests
 ```
 
 ```
 # devel-requirements.in
 -c requirements.txt
-pytest
+openapi-python-client
 ```
 
 ```
@@ -102,6 +102,8 @@ which is capable of generating the python client from OpenAPI schema. We generat
 
 Since the client is not perfect the way it is generated we use a handy [template mechanism](https://github.com/openapi-generators/openapi-python-client#using-custom-templates) offered by the package which is based on [Jinja templating](https://jinja.palletsprojects.com/en/3.0.x/). This way, we are able to define our own Jinja templates in `osidb_bindings/templates` which
 replaces the original templates from the [openapi-python-client](https://github.com/openapi-generators/openapi-python-client) repository. There is drawback in usage of these template, because the templating API is in beta version on not yet stable and thus the version of `openapi-python-client` is precisely locked via [pip-tools](#using-pip-tools) and should not be updated unless the templates are adjusted to a new version.
+
+Currently osidb-bindings package is using [openapi-python-client version 0.22.0](https://github.com/openapi-generators/openapi-python-client/tree/v0.22.0)
 
 #### Client create/update
 
@@ -124,7 +126,7 @@ replaces the original templates from the [openapi-python-client](https://github.
 2) Check commit is clean by running
 
     ```
-    $ tox
+    $ tox -e ruff
     ```
 
 3) Run tests locally
@@ -138,9 +140,9 @@ replaces the original templates from the [openapi-python-client](https://github.
 
 5) Push to branch
 
-6) confirm branch passes checks
+6) Confirm branch passes checks
 
-7) raise PR against master ensuring good title/description and bullet point
+7) Raise PR against master ensuring good title/description and bullet point
    all significant commits
 
 ## Release
