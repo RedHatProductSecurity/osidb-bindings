@@ -39,9 +39,7 @@ osidb_status_retrieve = importlib.import_module(
     package="osidb_bindings",
 )
 
-MAX_CONCURRENCY = get_env(
-    "COMPONENT_REGISTRY_BINDINGS_MAX_CONCURRENCY", "10", is_int=True
-)
+MAX_CONCURRENCY = get_env("OSIDB_BINDINGS_MAX_CONCURRENCY", "10", is_int=True)
 
 
 def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
