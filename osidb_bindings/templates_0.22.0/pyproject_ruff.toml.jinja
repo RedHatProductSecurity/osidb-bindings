@@ -2,8 +2,11 @@
     This is a custom template derived from:
     https://github.com/openapi-generators/openapi-python-client/blob/v0.22.0/openapi_python_client/templates/pyproject_ruff.toml.jinja
 #}
+{# CHANGE START (1) - change ruff config to match osidb-bindings package ruff config #}
 [tool.ruff]
-line-length = 120
+line-length = 88
 
 [tool.ruff.lint]
-select = ["F", "I", "UP"]
+select = ["E4", "E7", "E9", "F"]
+ignore = ["F403", "UP006"]
+{# CHANGE END (1) #}
