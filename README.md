@@ -28,7 +28,7 @@ osidb_session.status()
 # Retrieve flaw
 flaw = osidb_session.flaws.retrieve(id="CVE-1111-2222")
 
-# Attributes can be accessed directly via .
+# Fields can be accessed directly via attributes
 flaw.summary
 flaw.impact
 
