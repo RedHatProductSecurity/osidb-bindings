@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.6.1] - 2025-01-17
+### Changed
+- updated openapi-python-client which generates the core of the package to 0.22.0 (OSIDB-3773)
+- switched black formatting to ruff (OSIDB-3773)
+
 ## [4.6.0] - 2024-12-10
 
 ## [4.5.0] - 2024-10-30
