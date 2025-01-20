@@ -6,7 +6,10 @@
 
 from collections.abc import MutableMapping
 from http import HTTPStatus
-from typing import BinaryIO, Generic, Optional, TypeVar, Literal
+{# CHANGE START (1) - add necessary imports for check_nested_instance function  #}
+from typing import BinaryIO, Generic, Optional, TypeVar, Literal, get_args, get_origin
+from . import models
+{# CHANGE END (1) #}
 
 from attrs import define
 
@@ -47,10 +50,21 @@ class Response(Generic[T]):
     headers: MutableMapping[str, str]
     parsed: Optional[T]
 
-{# CHANGE START (1) - add base class for OSIDB models #}
+{# CHANGE START (2) - add base class for OSIDB models #}
 class OSIDBModel:
     """ Base class for all 'non-primitive' and 'non-enum' models  """
     pass
+{# CHANGE END (2) #}
 
-__all__ = ["UNSET", "File", "FileJsonType", "OSIDBModel", "Response", "Unset"]
-{# CHANGE END (1) #}
+{# CHANGE START (3) - add function to check nested instances types #}
+def check_nested_instance(body, expected_type):
+    """ Helper function to check nested list instances"""
+    if get_origin(expected_type) is list:
+        inner_expected_type_name = get_args(expected_type)[0]
+        inner_expected_type = getattr(models, inner_expected_type_name)
+        return all(check_nested_instance(item, inner_expected_type) for item in body)
+    else:
+        return isinstance(body, expected_type)
+{# CHANGE END (3) #}
+
+__all__ = ["UNSET", "File", "FileJsonType", "OSIDBModel", "Response", "Unset", "check_nested_instance"]
