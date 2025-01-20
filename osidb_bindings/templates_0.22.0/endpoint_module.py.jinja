@@ -12,7 +12,9 @@ import requests
 
 from ...client import AuthenticatedClient, Client
 {# CHANGE START (2) - add missing Unset import #}
-from ...types import Response, UNSET, Unset
+{# CHANGE START (19) - import check_nested_instance #}
+from ...types import Response, UNSET, Unset, check_nested_instance
+{# CHANGE END (19) #}
 {# CHANGE END (2) #}
 from ... import errors
 
@@ -80,7 +82,10 @@ def _get_kwargs(
 {% for body in endpoint.bodies %}
     {# CHANGE START (9) - keep only application/json content type #}
     {% if body.content_type == "application/json" %}
-    if isinstance(body, {{body.prop.get_type_string() }}):
+    {# CHANGE START (20) - use check_nested_instance instead of raw isinstance #}
+    {# if isinstance(body, {{body.prop.get_type_string() }}): #}
+    if check_nested_instance(body, {{body.prop.get_type_string() }}):
+    {# CHANGE END (20) #}
         {% set destination = "_" + body.body_type + "_body" %}
         {{ body_to_kwarg(body, destination) | indent(8) }}
         _kwargs["{{ body.body_type.value }}"] = {{ destination }}
