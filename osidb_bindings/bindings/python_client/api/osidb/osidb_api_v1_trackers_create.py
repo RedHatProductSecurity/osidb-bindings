@@ -8,7 +8,7 @@ from ...models.osidb_api_v1_trackers_create_response_201 import (
     OsidbApiV1TrackersCreateResponse201,
 )
 from ...models.tracker_post import TrackerPost
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/trackers",
     }
 
-    if isinstance(body, TrackerPost):
+    if check_nested_instance(body, TrackerPost):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

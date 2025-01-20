@@ -8,7 +8,7 @@ from ...models.flaw_uuid_list import FlawUUIDList
 from ...models.trackers_api_v1_file_create_response_200 import (
     TrackersApiV1FileCreateResponse200,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/trackers/api/v1/file",
     }
 
-    if isinstance(body, FlawUUIDList):
+    if check_nested_instance(body, FlawUUIDList):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

@@ -2,9 +2,11 @@
 
 from collections.abc import MutableMapping
 from http import HTTPStatus
-from typing import BinaryIO, Generic, Literal, Optional, TypeVar
+from typing import BinaryIO, Generic, Literal, Optional, TypeVar, get_args, get_origin
 
 from attrs import define
+
+from . import models
 
 
 class Unset:
@@ -49,4 +51,22 @@ class OSIDBModel:
     pass
 
 
-__all__ = ["UNSET", "File", "FileJsonType", "OSIDBModel", "Response", "Unset"]
+def check_nested_instance(body, expected_type):
+    """Helper function to check nested list instances"""
+    if get_origin(expected_type) is list:
+        inner_expected_type_name = get_args(expected_type)[0]
+        inner_expected_type = getattr(models, inner_expected_type_name)
+        return all(check_nested_instance(item, inner_expected_type) for item in body)
+    else:
+        return isinstance(body, expected_type)
+
+
+__all__ = [
+    "UNSET",
+    "File",
+    "FileJsonType",
+    "OSIDBModel",
+    "Response",
+    "Unset",
+    "check_nested_instance",
+]

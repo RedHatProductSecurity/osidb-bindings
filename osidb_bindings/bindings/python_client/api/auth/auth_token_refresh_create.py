@@ -8,7 +8,7 @@ from ...models.auth_token_refresh_create_response_200 import (
     AuthTokenRefreshCreateResponse200,
 )
 from ...models.token_refresh import TokenRefresh
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/auth/token/refresh",
     }
 
-    if isinstance(body, TokenRefresh):
+    if check_nested_instance(body, TokenRefresh):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

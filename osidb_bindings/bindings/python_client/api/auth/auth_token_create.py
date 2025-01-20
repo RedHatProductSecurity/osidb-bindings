@@ -6,7 +6,7 @@ import requests
 from ...client import AuthenticatedClient, Client
 from ...models.auth_token_create_response_200 import AuthTokenCreateResponse200
 from ...models.token_obtain_pair import TokenObtainPair
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -28,7 +28,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/auth/token",
     }
 
-    if isinstance(body, TokenObtainPair):
+    if check_nested_instance(body, TokenObtainPair):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
