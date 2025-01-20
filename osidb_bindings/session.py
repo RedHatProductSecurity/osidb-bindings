@@ -150,7 +150,8 @@ def serialize_data(data, model):
     if hasattr(model, "from_dict"):
         return model.from_dict(data)
     elif get_origin(model) is list:
-        inner_model = get_args(model)[0]
+        inner_model_name = get_args(model)[0]
+        inner_model = getattr(models, inner_model_name)
         return [serialize_data(item, inner_model) for item in data]
     else:
         raise OSIDBBindingsException(f"Unserializable model '{model}'")
