@@ -8,7 +8,7 @@ from ...models.flaw import Flaw
 from ...models.osidb_api_v1_flaws_update_response_200 import (
     OsidbApiV1FlawsUpdateResponse200,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {
     "create_jira_task": bool,
@@ -43,7 +43,7 @@ def _get_kwargs(
         "params": params,
     }
 
-    if isinstance(body, Flaw):
+    if check_nested_instance(body, Flaw):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

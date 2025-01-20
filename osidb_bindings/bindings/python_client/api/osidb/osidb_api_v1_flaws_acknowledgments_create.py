@@ -9,7 +9,7 @@ from ...models.flaw_acknowledgment_post import FlawAcknowledgmentPost
 from ...models.osidb_api_v1_flaws_acknowledgments_create_response_201 import (
     OsidbApiV1FlawsAcknowledgmentsCreateResponse201,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if isinstance(body, FlawAcknowledgmentPost):
+    if check_nested_instance(body, FlawAcknowledgmentPost):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

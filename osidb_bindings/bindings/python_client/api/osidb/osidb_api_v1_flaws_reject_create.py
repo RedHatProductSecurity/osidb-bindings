@@ -8,7 +8,7 @@ from ...models.osidb_api_v1_flaws_reject_create_response_200 import (
     OsidbApiV1FlawsRejectCreateResponse200,
 )
 from ...models.reject import Reject
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -33,7 +33,7 @@ def _get_kwargs(
         ),
     }
 
-    if isinstance(body, Reject):
+    if check_nested_instance(body, Reject):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

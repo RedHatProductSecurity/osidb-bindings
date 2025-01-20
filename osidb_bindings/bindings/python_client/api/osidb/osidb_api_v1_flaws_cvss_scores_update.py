@@ -9,7 +9,7 @@ from ...models.flaw_cvss_put import FlawCVSSPut
 from ...models.osidb_api_v1_flaws_cvss_scores_update_response_200 import (
     OsidbApiV1FlawsCvssScoresUpdateResponse200,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -36,7 +36,7 @@ def _get_kwargs(
         ),
     }
 
-    if isinstance(body, FlawCVSSPut):
+    if check_nested_instance(body, FlawCVSSPut):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

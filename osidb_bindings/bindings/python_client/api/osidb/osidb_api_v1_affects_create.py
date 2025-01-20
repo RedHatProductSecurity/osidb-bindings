@@ -8,7 +8,7 @@ from ...models.affect_post import AffectPost
 from ...models.osidb_api_v1_affects_create_response_201 import (
     OsidbApiV1AffectsCreateResponse201,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/affects",
     }
 
-    if isinstance(body, AffectPost):
+    if check_nested_instance(body, AffectPost):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()

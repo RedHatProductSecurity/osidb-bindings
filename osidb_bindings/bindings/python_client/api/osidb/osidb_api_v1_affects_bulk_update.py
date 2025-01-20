@@ -8,7 +8,7 @@ from ...models.affect_bulk_put import AffectBulkPut
 from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
     OsidbApiV1AffectsBulkUpdateResponse200,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/affects/bulk",
     }
 
-    if isinstance(body, list["AffectBulkPut"]):
+    if check_nested_instance(body, list["AffectBulkPut"]):
         _json_body: list[dict[str, Any]] = UNSET
         if not isinstance(body, Unset):
             _json_body = []

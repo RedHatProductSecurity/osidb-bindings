@@ -9,7 +9,7 @@ from ...models.affect_cvss_post import AffectCVSSPost
 from ...models.osidb_api_v1_affects_cvss_scores_create_response_201 import (
     OsidbApiV1AffectsCvssScoresCreateResponse201,
 )
-from ...types import UNSET, Response, Unset
+from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if isinstance(body, AffectCVSSPost):
+    if check_nested_instance(body, AffectCVSSPost):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
