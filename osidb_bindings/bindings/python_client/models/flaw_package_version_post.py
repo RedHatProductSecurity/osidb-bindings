@@ -141,7 +141,7 @@ class FlawPackageVersionPost(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         embargoed = d.pop("embargoed", UNSET)
 

@@ -392,7 +392,7 @@ class AffectPost(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         def _parse_flaw(data: object) -> Union[None, UUID]:
             if data is None:
@@ -406,7 +406,11 @@ class AffectPost(OSIDBModel):
                 if isinstance(_flaw_type_0, Unset):
                     flaw_type_0 = UNSET
                 else:
-                    flaw_type_0 = UUID(_flaw_type_0)
+                    flaw_type_0 = (
+                        _flaw_type_0
+                        if isinstance(_flaw_type_0, UUID)
+                        else UUID(_flaw_type_0)
+                    )
 
                 return flaw_type_0
             except:  # noqa: E722

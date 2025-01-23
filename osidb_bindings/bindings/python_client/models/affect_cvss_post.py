@@ -207,7 +207,7 @@ class AffectCVSSPost(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         vector = d.pop("vector", UNSET)
 

@@ -116,7 +116,7 @@ class FlawReference(OSIDBModel):
         if isinstance(_flaw, Unset):
             flaw = UNSET
         else:
-            flaw = UUID(_flaw)
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         url = d.pop("url", UNSET)
 
@@ -126,7 +126,7 @@ class FlawReference(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         embargoed = d.pop("embargoed", UNSET)
 
