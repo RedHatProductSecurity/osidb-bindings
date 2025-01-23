@@ -47,8 +47,8 @@ update_version() {
     echo "Replacing version in setup.py to ${version}"
     sed -i 's/version="[0-9]*\.[0-9]*\.[0-9]*"/version="'${version}'"/g' setup.py
 
-    echo "Replacing version in pyproject.toml of low level bindings to ${version}"
-    sed -i 's/version = "[0-9]*\.[0-9]*\.[0-9]*"/version = "'${version}'"/g' osidb_bindings/bindings/pyproject.toml
+    echo "Replacing version in bindings_config.yml to ${version}"
+    sed -i 's/package_version_override: [0-9]*\.[0-9]*\.[0-9]*/package_version_override: '${version}'/g' osidb_bindings/bindings_config.yml
 
     echo "Replacing version in constants.py to ${version}"
     sed -i 's/OSIDB_BINDINGS_VERSION: str = "[0-9]*\.[0-9]*\.[0-9]*"/OSIDB_BINDINGS_VERSION: str = "'${version}'"/g' osidb_bindings/constants.py
