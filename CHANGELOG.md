@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.6.3] - 2025-01-24
+### Fixed
+- general handling of UUIDs
+
 ## [4.6.2] - 2025-01-21
 ### Fixed
 - fixed issue with parametrized generic types (eg. list of affects)
