@@ -178,7 +178,7 @@ class OsidbApiV1FlawsCvssScoresUpdateResponse200(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         vector = d.pop("vector", UNSET)
 
@@ -219,7 +219,7 @@ class OsidbApiV1FlawsCvssScoresUpdateResponse200(OSIDBModel):
         if isinstance(_flaw, Unset):
             flaw = UNSET
         else:
-            flaw = UUID(_flaw)
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         def _parse_comment(data: object) -> Union[None, Unset, str]:
             if data is None:

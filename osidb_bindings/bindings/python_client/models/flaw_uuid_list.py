@@ -75,7 +75,11 @@ class FlawUUIDList(OSIDBModel):
             if isinstance(_flaw_uuids_item, Unset):
                 flaw_uuids_item = UNSET
             else:
-                flaw_uuids_item = UUID(_flaw_uuids_item)
+                flaw_uuids_item = (
+                    _flaw_uuids_item
+                    if isinstance(_flaw_uuids_item, UUID)
+                    else UUID(_flaw_uuids_item)
+                )
 
             flaw_uuids.append(flaw_uuids_item)
 

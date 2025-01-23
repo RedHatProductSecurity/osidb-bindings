@@ -210,7 +210,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -252,7 +252,11 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
             if isinstance(_affects_item, Unset):
                 affects_item = UNSET
             else:
-                affects_item = UUID(_affects_item)
+                affects_item = (
+                    _affects_item
+                    if isinstance(_affects_item, UUID)
+                    else UUID(_affects_item)
+                )
 
             affects.append(affects_item)
 

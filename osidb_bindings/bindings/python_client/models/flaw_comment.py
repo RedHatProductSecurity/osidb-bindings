@@ -125,7 +125,7 @@ class FlawComment(OSIDBModel):
         if isinstance(_flaw, Unset):
             flaw = UNSET
         else:
-            flaw = UUID(_flaw)
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         text = d.pop("text", UNSET)
 
@@ -135,7 +135,7 @@ class FlawComment(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         external_system_id = d.pop("external_system_id", UNSET)
 

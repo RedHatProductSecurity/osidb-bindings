@@ -109,7 +109,7 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         name = d.pop("name", UNSET)
 
@@ -121,7 +121,9 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
         if isinstance(_parent_uuid, Unset):
             parent_uuid = UNSET
         else:
-            parent_uuid = UUID(_parent_uuid)
+            parent_uuid = (
+                _parent_uuid if isinstance(_parent_uuid, UUID) else UUID(_parent_uuid)
+            )
 
         parent_model = d.pop("parent_model", UNSET)
 

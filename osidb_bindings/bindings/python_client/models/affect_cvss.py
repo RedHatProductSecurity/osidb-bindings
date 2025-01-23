@@ -153,7 +153,7 @@ class AffectCVSS(OSIDBModel):
         if isinstance(_uuid, Unset):
             uuid = UNSET
         else:
-            uuid = UUID(_uuid)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         vector = d.pop("vector", UNSET)
 
@@ -194,7 +194,7 @@ class AffectCVSS(OSIDBModel):
         if isinstance(_affect, Unset):
             affect = UNSET
         else:
-            affect = UUID(_affect)
+            affect = _affect if isinstance(_affect, UUID) else UUID(_affect)
 
         def _parse_comment(data: object) -> Union[None, Unset, str]:
             if data is None:
