@@ -3,7 +3,9 @@
     https://github.com/openapi-generators/openapi-python-client/blob/v0.22.0/openapi_python_client/templates/property_templates/uuid_property.py.jinja
 #}
 {% macro construct_function(property, source) %}
-UUID({{ source }})
+{# CHANGE START (3) - handle both UUID and string in UUID format #}
+{{ source }} if isinstance({{source}}, UUID) else UUID({{source}})
+{# CHANGE END (3) #}
 {% endmacro %}
 
 {% from "property_templates/property_macros.py.jinja" import construct_template %}
