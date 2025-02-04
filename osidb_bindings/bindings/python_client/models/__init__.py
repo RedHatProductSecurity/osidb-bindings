@@ -94,11 +94,14 @@ from .flaw_acknowledgment_post import FlawAcknowledgmentPost
 from .flaw_acknowledgment_put import FlawAcknowledgmentPut
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
+from .flaw_collaborator import FlawCollaborator
+from .flaw_collaborator_post import FlawCollaboratorPost
 from .flaw_comment import FlawComment
 from .flaw_comment_post import FlawCommentPost
 from .flaw_cvss import FlawCVSS
 from .flaw_cvss_post import FlawCVSSPost
 from .flaw_cvss_put import FlawCVSSPut
+from .flaw_label import FlawLabel
 from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post import FlawPackageVersionPost
 from .flaw_package_version_put import FlawPackageVersionPut
@@ -216,6 +219,21 @@ from .osidb_api_v1_flaws_cvss_scores_retrieve_response_200 import (
 from .osidb_api_v1_flaws_cvss_scores_update_response_200 import (
     OsidbApiV1FlawsCvssScoresUpdateResponse200,
 )
+from .osidb_api_v1_flaws_labels_create_response_201 import (
+    OsidbApiV1FlawsLabelsCreateResponse201,
+)
+from .osidb_api_v1_flaws_labels_destroy_response_204 import (
+    OsidbApiV1FlawsLabelsDestroyResponse204,
+)
+from .osidb_api_v1_flaws_labels_list_response_200 import (
+    OsidbApiV1FlawsLabelsListResponse200,
+)
+from .osidb_api_v1_flaws_labels_retrieve_response_200 import (
+    OsidbApiV1FlawsLabelsRetrieveResponse200,
+)
+from .osidb_api_v1_flaws_labels_update_response_200 import (
+    OsidbApiV1FlawsLabelsUpdateResponse200,
+)
 from .osidb_api_v1_flaws_list_affects_affectedness import (
     OsidbApiV1FlawsListAffectsAffectedness,
 )
@@ -285,6 +303,10 @@ from .osidb_api_v1_flaws_reject_create_response_200 import (
 )
 from .osidb_api_v1_flaws_retrieve_response_200 import OsidbApiV1FlawsRetrieveResponse200
 from .osidb_api_v1_flaws_update_response_200 import OsidbApiV1FlawsUpdateResponse200
+from .osidb_api_v1_labels_list_response_200 import OsidbApiV1LabelsListResponse200
+from .osidb_api_v1_labels_retrieve_response_200 import (
+    OsidbApiV1LabelsRetrieveResponse200,
+)
 from .osidb_api_v1_manifest_retrieve_response_200 import (
     OsidbApiV1ManifestRetrieveResponse200,
 )
@@ -343,8 +365,10 @@ from .paginated_audit_list import PaginatedAuditList
 from .paginated_epss_list import PaginatedEPSSList
 from .paginated_exploit_only_report_data_list import PaginatedExploitOnlyReportDataList
 from .paginated_flaw_acknowledgment_list import PaginatedFlawAcknowledgmentList
+from .paginated_flaw_collaborator_list import PaginatedFlawCollaboratorList
 from .paginated_flaw_comment_list import PaginatedFlawCommentList
 from .paginated_flaw_cvss_list import PaginatedFlawCVSSList
+from .paginated_flaw_label_list import PaginatedFlawLabelList
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_package_version_list import PaginatedFlawPackageVersionList
 from .paginated_flaw_reference_list import PaginatedFlawReferenceList
@@ -356,6 +380,7 @@ from .reject import Reject
 from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
 from .source_be_0_enum import SourceBe0Enum
+from .state_enum import StateEnum
 from .supported_products import SupportedProducts
 from .token_obtain_pair import TokenObtainPair
 from .token_refresh import TokenRefresh
@@ -431,11 +456,14 @@ __all__ = (
     "FlawAcknowledgmentPut",
     "FlawClassification",
     "FlawClassificationState",
+    "FlawCollaborator",
+    "FlawCollaboratorPost",
     "FlawComment",
     "FlawCommentPost",
     "FlawCVSS",
     "FlawCVSSPost",
     "FlawCVSSPut",
+    "FlawLabel",
     "FlawPackageVersion",
     "FlawPackageVersionPost",
     "FlawPackageVersionPut",
@@ -499,6 +527,11 @@ __all__ = (
     "OsidbApiV1FlawsCvssScoresListResponse200",
     "OsidbApiV1FlawsCvssScoresRetrieveResponse200",
     "OsidbApiV1FlawsCvssScoresUpdateResponse200",
+    "OsidbApiV1FlawsLabelsCreateResponse201",
+    "OsidbApiV1FlawsLabelsDestroyResponse204",
+    "OsidbApiV1FlawsLabelsListResponse200",
+    "OsidbApiV1FlawsLabelsRetrieveResponse200",
+    "OsidbApiV1FlawsLabelsUpdateResponse200",
     "OsidbApiV1FlawsListAffectsAffectedness",
     "OsidbApiV1FlawsListAffectsImpact",
     "OsidbApiV1FlawsListAffectsResolution",
@@ -528,6 +561,8 @@ __all__ = (
     "OsidbApiV1FlawsRejectCreateResponse200",
     "OsidbApiV1FlawsRetrieveResponse200",
     "OsidbApiV1FlawsUpdateResponse200",
+    "OsidbApiV1LabelsListResponse200",
+    "OsidbApiV1LabelsRetrieveResponse200",
     "OsidbApiV1ManifestRetrieveResponse200",
     "OsidbApiV1SchemaRetrieveFormat",
     "OsidbApiV1SchemaRetrieveLang",
@@ -558,8 +593,10 @@ __all__ = (
     "PaginatedEPSSList",
     "PaginatedExploitOnlyReportDataList",
     "PaginatedFlawAcknowledgmentList",
+    "PaginatedFlawCollaboratorList",
     "PaginatedFlawCommentList",
     "PaginatedFlawCVSSList",
+    "PaginatedFlawLabelList",
     "PaginatedFlawList",
     "PaginatedFlawPackageVersionList",
     "PaginatedFlawReferenceList",
@@ -571,6 +608,7 @@ __all__ = (
     "RequiresCveDescriptionEnum",
     "ResolutionEnum",
     "SourceBe0Enum",
+    "StateEnum",
     "SupportedProducts",
     "TokenObtainPair",
     "TokenRefresh",

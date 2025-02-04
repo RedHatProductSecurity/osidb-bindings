@@ -30,6 +30,11 @@ from .osidb_api_v1_flaws_cvss_scores_destroy import *
 from .osidb_api_v1_flaws_cvss_scores_list import *
 from .osidb_api_v1_flaws_cvss_scores_retrieve import *
 from .osidb_api_v1_flaws_cvss_scores_update import *
+from .osidb_api_v1_flaws_labels_create import *
+from .osidb_api_v1_flaws_labels_destroy import *
+from .osidb_api_v1_flaws_labels_list import *
+from .osidb_api_v1_flaws_labels_retrieve import *
+from .osidb_api_v1_flaws_labels_update import *
 from .osidb_api_v1_flaws_list import *
 from .osidb_api_v1_flaws_package_versions_create import *
 from .osidb_api_v1_flaws_package_versions_destroy import *
@@ -45,6 +50,8 @@ from .osidb_api_v1_flaws_references_update import *
 from .osidb_api_v1_flaws_reject_create import *
 from .osidb_api_v1_flaws_retrieve import *
 from .osidb_api_v1_flaws_update import *
+from .osidb_api_v1_labels_list import *
+from .osidb_api_v1_labels_retrieve import *
 from .osidb_api_v1_manifest_retrieve import *
 from .osidb_api_v1_schema_retrieve import *
 from .osidb_api_v1_status_retrieve import *
