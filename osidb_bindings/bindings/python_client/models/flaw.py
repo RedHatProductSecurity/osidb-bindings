@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     from ..models.comment import Comment
     from ..models.flaw_acknowledgment import FlawAcknowledgment
     from ..models.flaw_classification import FlawClassification
+    from ..models.flaw_collaborator import FlawCollaborator
     from ..models.flaw_cvss import FlawCVSS
     from ..models.flaw_reference import FlawReference
     from ..models.package import Package
@@ -44,6 +45,7 @@ class Flaw(OSIDBModel):
         acknowledgments (list['FlawAcknowledgment']):
         references (list['FlawReference']):
         cvss_scores (list['FlawCVSS']):
+        labels (list['FlawCollaborator']):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         created_dt (datetime.datetime):
@@ -81,6 +83,7 @@ class Flaw(OSIDBModel):
     acknowledgments: list["FlawAcknowledgment"]
     references: list["FlawReference"]
     cvss_scores: list["FlawCVSS"]
+    labels: list["FlawCollaborator"]
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
@@ -180,6 +183,16 @@ class Flaw(OSIDBModel):
                     cvss_scores_item = cvss_scores_item_data.to_dict()
 
                 cvss_scores.append(cvss_scores_item)
+
+        labels: list[dict[str, Any]] = UNSET
+        if not isinstance(self.labels, Unset):
+            labels = []
+            for labels_item_data in self.labels:
+                labels_item: dict[str, Any] = UNSET
+                if not isinstance(labels_item_data, Unset):
+                    labels_item = labels_item_data.to_dict()
+
+                labels.append(labels_item)
 
         embargoed = self.embargoed
 
@@ -359,6 +372,8 @@ class Flaw(OSIDBModel):
             field_dict["references"] = references
         if not isinstance(cvss_scores, Unset):
             field_dict["cvss_scores"] = cvss_scores
+        if not isinstance(labels, Unset):
+            field_dict["labels"] = labels
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(created_dt, Unset):
@@ -503,6 +518,17 @@ class Flaw(OSIDBModel):
                 json.dumps(_temp_cvss_scores).encode(),
                 "application/json",
             )
+
+        labels: Union[Unset, tuple[None, bytes, str]] = UNSET
+        if not isinstance(self.labels, Unset):
+            _temp_labels = []
+            for labels_item_data in self.labels:
+                labels_item: dict[str, Any] = UNSET
+                if not isinstance(labels_item_data, Unset):
+                    labels_item = labels_item_data.to_dict()
+
+                _temp_labels.append(labels_item)
+            labels = (None, json.dumps(_temp_labels).encode(), "application/json")
 
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
 
@@ -761,6 +787,8 @@ class Flaw(OSIDBModel):
             field_dict["references"] = references
         if not isinstance(cvss_scores, Unset):
             field_dict["cvss_scores"] = cvss_scores
+        if not isinstance(labels, Unset):
+            field_dict["labels"] = labels
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(created_dt, Unset):
@@ -817,6 +845,7 @@ class Flaw(OSIDBModel):
         from ..models.comment import Comment
         from ..models.flaw_acknowledgment import FlawAcknowledgment
         from ..models.flaw_classification import FlawClassification
+        from ..models.flaw_collaborator import FlawCollaborator
         from ..models.flaw_cvss import FlawCVSS
         from ..models.flaw_reference import FlawReference
         from ..models.package import Package
@@ -915,6 +944,19 @@ class Flaw(OSIDBModel):
                 cvss_scores_item = FlawCVSS.from_dict(_cvss_scores_item)
 
             cvss_scores.append(cvss_scores_item)
+
+        labels = []
+        _labels = d.pop("labels", UNSET)
+        for labels_item_data in _labels or []:
+            # }
+            _labels_item = labels_item_data
+            labels_item: FlawCollaborator
+            if isinstance(_labels_item, Unset):
+                labels_item = UNSET
+            else:
+                labels_item = FlawCollaborator.from_dict(_labels_item)
+
+            labels.append(labels_item)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -1243,6 +1285,7 @@ class Flaw(OSIDBModel):
             acknowledgments=acknowledgments,
             references=references,
             cvss_scores=cvss_scores,
+            labels=labels,
             embargoed=embargoed,
             created_dt=created_dt,
             updated_dt=updated_dt,
@@ -1284,6 +1327,7 @@ class Flaw(OSIDBModel):
             "acknowledgments": list["FlawAcknowledgment"],
             "references": list["FlawReference"],
             "cvss_scores": list["FlawCVSS"],
+            "labels": list["FlawCollaborator"],
             "embargoed": bool,
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
