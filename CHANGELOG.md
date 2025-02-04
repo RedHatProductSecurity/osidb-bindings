@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.7.0] - 2025-02-05
+
 ## [4.6.3] - 2025-01-24
 ### Fixed
 - general handling of UUIDs
