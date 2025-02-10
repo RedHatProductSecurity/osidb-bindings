@@ -16,7 +16,7 @@ commit() {
 
     echo "Committing changes"
 
-    git add setup.py CHANGELOG.md osidb_bindings/bindings/pyproject.toml osidb_bindings/constants.py osidb_bindings.spec
+    git add setup.py CHANGELOG.md osidb_bindings/bindings/pyproject.toml osidb_bindings/constants.py osidb_bindings/bindings_config.yml osidb_bindings.spec
     git commit -m "Preparation of ${version} release"
     echo
 }
