@@ -112,6 +112,7 @@ Operations can be performed on the following resources/subresources (also some o
     * acknowledgments
     * comments
     * cvss_scores
+    * labels
     * packages_versions
     * references
     * extra operations
@@ -122,6 +123,7 @@ Operations can be performed on the following resources/subresources (also some o
 * trackers
     * extra operations
         * file
+* labels
 
 Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource. In case of subresources like `flaw comments`, `flaw references`, etc. you can use the dot notation like this `session.flaws.comments.retrieve(...)`.
 

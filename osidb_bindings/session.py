@@ -205,16 +205,6 @@ class Session:
                 "search",
             ),
             subresources={
-                "comments": {"allowed_operations": ["retrieve", "list", "create"]},
-                "references": {
-                    "allowed_operations": [
-                        "retrieve",
-                        "update",
-                        "list",
-                        "create",
-                        "destroy",
-                    ]
-                },
                 "acknowledgments": {
                     "allowed_operations": [
                         "retrieve",
@@ -224,6 +214,7 @@ class Session:
                         "destroy",
                     ]
                 },
+                "comments": {"allowed_operations": ["retrieve", "list", "create"]},
                 "cvss_scores": {
                     "allowed_operations": [
                         "retrieve",
@@ -233,7 +224,25 @@ class Session:
                         "destroy",
                     ]
                 },
+                "labels": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
                 "package_versions": {
+                    "allowed_operations": [
+                        "retrieve",
+                        "update",
+                        "list",
+                        "create",
+                        "destroy",
+                    ]
+                },
+                "references": {
                     "allowed_operations": [
                         "retrieve",
                         "update",
@@ -281,6 +290,12 @@ class Session:
                 "create",
             ),
             extra_operations=[("file", file_trackers)],
+        )
+
+        self.labels = SessionOperationsGroup(
+            self.__get_client_with_new_access_token,
+            "labels",
+            allowed_operations=("retrieve", "list"),
         )
 
         self.refresh_token = self.__get_refresh_token()
