@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Fixed
+- special fix for tracker creation to not mark not_affected_justification
+  as mandatory, this is a temporary solution until OSIDB 4.9.0 is released
 
 ## [4.8.1] - 2025-03-06
 ### Fixed
