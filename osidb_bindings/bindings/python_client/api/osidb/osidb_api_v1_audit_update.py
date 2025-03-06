@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.audit import Audit
+from ...models.audit_request import AuditRequest
 from ...models.osidb_api_v1_audit_update_response_200 import (
     OsidbApiV1AuditUpdateResponse200,
 )
@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = Audit
+REQUEST_BODY_TYPE = AuditRequest
 
 
 def _get_kwargs(
@@ -20,9 +20,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Audit,
-        Audit,
-        Audit,
+        AuditRequest,
+        AuditRequest,
+        AuditRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -33,7 +33,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, Audit):
+    if check_nested_instance(body, AuditRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -49,7 +49,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AuditUpdateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AuditUpdateResponse200
         if isinstance(_response_200, Unset):
@@ -76,18 +75,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Audit,
-        Audit,
-        Audit,
+        AuditRequest,
+        AuditRequest,
+        AuditRequest,
     ],
 ) -> Response[OsidbApiV1AuditUpdateResponse200]:
     """basic view of audit history events
 
     Args:
         pgh_slug (str): The unique identifier across all event tables.
-        body (Audit):
-        body (Audit):
-        body (Audit):
+        body (AuditRequest):
+        body (AuditRequest):
+        body (AuditRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -119,18 +118,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Audit,
-        Audit,
-        Audit,
+        AuditRequest,
+        AuditRequest,
+        AuditRequest,
     ],
 ) -> Optional[OsidbApiV1AuditUpdateResponse200]:
     """basic view of audit history events
 
     Args:
         pgh_slug (str): The unique identifier across all event tables.
-        body (Audit):
-        body (Audit):
-        body (Audit):
+        body (AuditRequest):
+        body (AuditRequest):
+        body (AuditRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -152,18 +151,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Audit,
-        Audit,
-        Audit,
+        AuditRequest,
+        AuditRequest,
+        AuditRequest,
     ],
 ) -> Response[OsidbApiV1AuditUpdateResponse200]:
     """basic view of audit history events
 
     Args:
         pgh_slug (str): The unique identifier across all event tables.
-        body (Audit):
-        body (Audit):
-        body (Audit):
+        body (AuditRequest):
+        body (AuditRequest):
+        body (AuditRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -195,18 +194,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Audit,
-        Audit,
-        Audit,
+        AuditRequest,
+        AuditRequest,
+        AuditRequest,
     ],
 ) -> Optional[OsidbApiV1AuditUpdateResponse200]:
     """basic view of audit history events
 
     Args:
         pgh_slug (str): The unique identifier across all event tables.
-        body (Audit):
-        body (Audit):
-        body (Audit):
+        body (AuditRequest):
+        body (AuditRequest):
+        body (AuditRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

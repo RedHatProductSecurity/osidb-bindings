@@ -100,7 +100,6 @@ class FlawPackageVersion(OSIDBModel):
         versions = []
         _versions = d.pop("versions", UNSET)
         for versions_item_data in _versions or []:
-            # }
             _versions_item = versions_item_data
             versions_item: FlawVersion
             if isinstance(_versions_item, Unset):
@@ -110,7 +109,6 @@ class FlawPackageVersion(OSIDBModel):
 
             versions.append(versions_item)
 
-        # }
         _flaw = d.pop("flaw", UNSET)
         flaw: UUID
         if isinstance(_flaw, Unset):
@@ -118,7 +116,6 @@ class FlawPackageVersion(OSIDBModel):
         else:
             flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -128,7 +125,6 @@ class FlawPackageVersion(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -136,7 +132,6 @@ class FlawPackageVersion(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):

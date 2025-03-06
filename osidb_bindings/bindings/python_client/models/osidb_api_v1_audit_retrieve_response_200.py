@@ -107,7 +107,6 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        # }
         _pgh_created_at = d.pop("pgh_created_at", UNSET)
         pgh_created_at: datetime.datetime
         if isinstance(_pgh_created_at, Unset):
@@ -136,7 +135,6 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
 
         pgh_context = d.pop("pgh_context", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

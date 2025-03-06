@@ -103,7 +103,6 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -115,7 +114,6 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
 
         description = d.pop("description", UNSET)
 
-        # }
         _parent_uuid = d.pop("parent_uuid", UNSET)
         parent_uuid: UUID
         if isinstance(_parent_uuid, Unset):
@@ -127,7 +125,6 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
 
         parent_model = d.pop("parent_model", UNSET)
 
-        # }
         _alert_type = d.pop("alert_type", UNSET)
         alert_type: Union[Unset, AlertTypeEnum]
         if isinstance(_alert_type, Unset):
@@ -137,7 +134,6 @@ class OsidbApiV1AlertsRetrieveResponse200(OSIDBModel):
 
         resolution_steps = d.pop("resolution_steps", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

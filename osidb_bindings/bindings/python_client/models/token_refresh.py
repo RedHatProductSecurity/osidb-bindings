@@ -13,40 +13,18 @@ class TokenRefresh(OSIDBModel):
     """
     Attributes:
         access (str):
-        refresh (str):
     """
 
     access: str
-    refresh: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         access = self.access
 
-        refresh = self.refresh
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(access, Unset):
             field_dict["access"] = access
-        if not isinstance(refresh, Unset):
-            field_dict["refresh"] = refresh
-
-        return field_dict
-
-    def to_multipart(self) -> dict[str, Any]:
-        access = (None, str(self.access).encode(), "text/plain")
-
-        refresh = (None, str(self.refresh).encode(), "text/plain")
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(access, Unset):
-            field_dict["access"] = access
-        if not isinstance(refresh, Unset):
-            field_dict["refresh"] = refresh
 
         return field_dict
 
@@ -55,11 +33,8 @@ class TokenRefresh(OSIDBModel):
         d = src_dict.copy()
         access = d.pop("access", UNSET)
 
-        refresh = d.pop("refresh", UNSET)
-
         token_refresh = cls(
             access=access,
-            refresh=refresh,
         )
 
         token_refresh.additional_properties = d
@@ -69,7 +44,6 @@ class TokenRefresh(OSIDBModel):
     def get_fields():
         return {
             "access": str,
-            "refresh": str,
         }
 
     @property

@@ -104,7 +104,6 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
         results = []
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
-            # }
             _results_item = results_item_data
             results_item: Flaw
             if isinstance(_results_item, Unset):
@@ -132,7 +131,6 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
 
         previous = _parse_previous(d.pop("previous", UNSET))
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

@@ -2,16 +2,19 @@
 
 from .affect import Affect
 from .affect_bulk_post_put_response import AffectBulkPostPutResponse
-from .affect_bulk_put import AffectBulkPut
+from .affect_bulk_put_request import AffectBulkPutRequest
 from .affect_cvss import AffectCVSS
-from .affect_cvss_post import AffectCVSSPost
-from .affect_cvss_put import AffectCVSSPut
-from .affect_post import AffectPost
+from .affect_cvss_post_request import AffectCVSSPostRequest
+from .affect_cvss_put_request import AffectCVSSPutRequest
+from .affect_cvss_request import AffectCVSSRequest
+from .affect_post_request import AffectPostRequest
 from .affect_report_data import AffectReportData
+from .affect_request import AffectRequest
 from .affectedness_enum import AffectednessEnum
 from .alert import Alert
 from .alert_type_enum import AlertTypeEnum
 from .audit import Audit
+from .audit_request import AuditRequest
 from .auth_token_create_response_200 import AuthTokenCreateResponse200
 from .auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
 from .auth_token_retrieve_response_200 import AuthTokenRetrieveResponse200
@@ -37,6 +40,7 @@ from .collectors_healthy_retrieve_response_200 import (
 )
 from .collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from .comment import Comment
+from .comment_request import CommentRequest
 from .cvss_version_enum import CvssVersionEnum
 from .epss import EPSS
 from .erratum import Erratum
@@ -90,31 +94,35 @@ from .exploits_api_v1_supported_products_list_response_200 import (
 )
 from .flaw import Flaw
 from .flaw_acknowledgment import FlawAcknowledgment
-from .flaw_acknowledgment_post import FlawAcknowledgmentPost
-from .flaw_acknowledgment_put import FlawAcknowledgmentPut
+from .flaw_acknowledgment_post_request import FlawAcknowledgmentPostRequest
+from .flaw_acknowledgment_put_request import FlawAcknowledgmentPutRequest
+from .flaw_acknowledgment_request import FlawAcknowledgmentRequest
 from .flaw_classification import FlawClassification
 from .flaw_classification_state import FlawClassificationState
 from .flaw_collaborator import FlawCollaborator
-from .flaw_collaborator_post import FlawCollaboratorPost
+from .flaw_collaborator_post_request import FlawCollaboratorPostRequest
+from .flaw_collaborator_request import FlawCollaboratorRequest
 from .flaw_comment import FlawComment
-from .flaw_comment_post import FlawCommentPost
+from .flaw_comment_post_request import FlawCommentPostRequest
 from .flaw_cvss import FlawCVSS
-from .flaw_cvss_post import FlawCVSSPost
-from .flaw_cvss_put import FlawCVSSPut
+from .flaw_cvss_post_request import FlawCVSSPostRequest
+from .flaw_cvss_put_request import FlawCVSSPutRequest
+from .flaw_cvss_request import FlawCVSSRequest
 from .flaw_label import FlawLabel
 from .flaw_package_version import FlawPackageVersion
-from .flaw_package_version_post import FlawPackageVersionPost
-from .flaw_package_version_put import FlawPackageVersionPut
-from .flaw_post import FlawPost
-from .flaw_post_classification import FlawPostClassification
-from .flaw_post_classification_state import FlawPostClassificationState
+from .flaw_package_version_post_request import FlawPackageVersionPostRequest
+from .flaw_package_version_put_request import FlawPackageVersionPutRequest
+from .flaw_post_request import FlawPostRequest
 from .flaw_reference import FlawReference
-from .flaw_reference_post import FlawReferencePost
-from .flaw_reference_put import FlawReferencePut
+from .flaw_reference_post_request import FlawReferencePostRequest
+from .flaw_reference_put_request import FlawReferencePutRequest
+from .flaw_reference_request import FlawReferenceRequest
 from .flaw_reference_type import FlawReferenceType
 from .flaw_report_data import FlawReportData
-from .flaw_uuid_list import FlawUUIDList
+from .flaw_request import FlawRequest
+from .flaw_uuid_list_request import FlawUUIDListRequest
 from .flaw_version import FlawVersion
+from .flaw_version_request import FlawVersionRequest
 from .impact_enum import ImpactEnum
 from .issuer_enum import IssuerEnum
 from .major_incident_state_enum import MajorIncidentStateEnum
@@ -358,7 +366,9 @@ from .osidb_whoami_retrieve_response_200_profile import (
     OsidbWhoamiRetrieveResponse200Profile,
 )
 from .package import Package
+from .package_request import PackageRequest
 from .package_ver import PackageVer
+from .package_ver_request import PackageVerRequest
 from .paginated_affect_cvss_list import PaginatedAffectCVSSList
 from .paginated_affect_list import PaginatedAffectList
 from .paginated_alert_list import PaginatedAlertList
@@ -377,18 +387,23 @@ from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_tracker_list import PaginatedTrackerList
 from .ps_stream_selection import PsStreamSelection
-from .reject import Reject
+from .reject_request import RejectRequest
 from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
 from .source_be_0_enum import SourceBe0Enum
+from .special_handling_enum import SpecialHandlingEnum
 from .state_enum import StateEnum
 from .supported_products import SupportedProducts
 from .token_obtain_pair import TokenObtainPair
+from .token_obtain_pair_request import TokenObtainPairRequest
 from .token_refresh import TokenRefresh
-from .token_verify import TokenVerify
+from .token_refresh_request import TokenRefreshRequest
+from .token_verify_request import TokenVerifyRequest
 from .tracker import Tracker
 from .tracker_post import TrackerPost
+from .tracker_post_request import TrackerPostRequest
 from .tracker_report_data import TrackerReportData
+from .tracker_request import TrackerRequest
 from .tracker_suggestion import TrackerSuggestion
 from .tracker_type import TrackerType
 from .trackers_api_v1_file_create_response_200 import TrackersApiV1FileCreateResponse200
@@ -407,16 +422,19 @@ from .workflows_retrieve_response_200 import WorkflowsRetrieveResponse200
 __all__ = (
     "Affect",
     "AffectBulkPostPutResponse",
-    "AffectBulkPut",
+    "AffectBulkPutRequest",
     "AffectCVSS",
-    "AffectCVSSPost",
-    "AffectCVSSPut",
+    "AffectCVSSPostRequest",
+    "AffectCVSSPutRequest",
+    "AffectCVSSRequest",
     "AffectednessEnum",
-    "AffectPost",
+    "AffectPostRequest",
     "AffectReportData",
+    "AffectRequest",
     "Alert",
     "AlertTypeEnum",
     "Audit",
+    "AuditRequest",
     "AuthTokenCreateResponse200",
     "AuthTokenRefreshCreateResponse200",
     "AuthTokenRetrieveResponse200",
@@ -430,6 +448,7 @@ __all__ = (
     "CollectorsHealthyRetrieveResponse200",
     "CollectorsRetrieveResponse200",
     "Comment",
+    "CommentRequest",
     "CvssVersionEnum",
     "EPSS",
     "Erratum",
@@ -453,31 +472,35 @@ __all__ = (
     "ExploitsApiV1SupportedProductsListResponse200",
     "Flaw",
     "FlawAcknowledgment",
-    "FlawAcknowledgmentPost",
-    "FlawAcknowledgmentPut",
+    "FlawAcknowledgmentPostRequest",
+    "FlawAcknowledgmentPutRequest",
+    "FlawAcknowledgmentRequest",
     "FlawClassification",
     "FlawClassificationState",
     "FlawCollaborator",
-    "FlawCollaboratorPost",
+    "FlawCollaboratorPostRequest",
+    "FlawCollaboratorRequest",
     "FlawComment",
-    "FlawCommentPost",
+    "FlawCommentPostRequest",
     "FlawCVSS",
-    "FlawCVSSPost",
-    "FlawCVSSPut",
+    "FlawCVSSPostRequest",
+    "FlawCVSSPutRequest",
+    "FlawCVSSRequest",
     "FlawLabel",
     "FlawPackageVersion",
-    "FlawPackageVersionPost",
-    "FlawPackageVersionPut",
-    "FlawPost",
-    "FlawPostClassification",
-    "FlawPostClassificationState",
+    "FlawPackageVersionPostRequest",
+    "FlawPackageVersionPutRequest",
+    "FlawPostRequest",
     "FlawReference",
-    "FlawReferencePost",
-    "FlawReferencePut",
+    "FlawReferencePostRequest",
+    "FlawReferencePutRequest",
+    "FlawReferenceRequest",
     "FlawReferenceType",
     "FlawReportData",
-    "FlawUUIDList",
+    "FlawRequest",
+    "FlawUUIDListRequest",
     "FlawVersion",
+    "FlawVersionRequest",
     "ImpactEnum",
     "IssuerEnum",
     "MajorIncidentStateEnum",
@@ -587,7 +610,9 @@ __all__ = (
     "OsidbWhoamiRetrieveResponse200",
     "OsidbWhoamiRetrieveResponse200Profile",
     "Package",
+    "PackageRequest",
     "PackageVer",
+    "PackageVerRequest",
     "PaginatedAffectCVSSList",
     "PaginatedAffectList",
     "PaginatedAlertList",
@@ -606,18 +631,23 @@ __all__ = (
     "PaginatedSupportedProductsList",
     "PaginatedTrackerList",
     "PsStreamSelection",
-    "Reject",
+    "RejectRequest",
     "RequiresCveDescriptionEnum",
     "ResolutionEnum",
     "SourceBe0Enum",
+    "SpecialHandlingEnum",
     "StateEnum",
     "SupportedProducts",
     "TokenObtainPair",
+    "TokenObtainPairRequest",
     "TokenRefresh",
-    "TokenVerify",
+    "TokenRefreshRequest",
+    "TokenVerifyRequest",
     "Tracker",
     "TrackerPost",
+    "TrackerPostRequest",
     "TrackerReportData",
+    "TrackerRequest",
     "TrackersApiV1FileCreateResponse200",
     "TrackerSuggestion",
     "TrackerType",

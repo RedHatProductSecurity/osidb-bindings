@@ -108,7 +108,6 @@ class Comment(OSIDBModel):
         from ..models.alert import Alert
 
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -121,7 +120,6 @@ class Comment(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -131,7 +129,6 @@ class Comment(OSIDBModel):
 
             alerts.append(alerts_item)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -139,7 +136,6 @@ class Comment(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):

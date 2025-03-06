@@ -126,7 +126,6 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         )
 
         d = src_dict.copy()
-        # }
         _data = d.pop("data", UNSET)
         data: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData]
         if isinstance(_data, Unset):
@@ -150,7 +149,6 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                # }
                 _error_type_0 = data
                 error_type_0: (
                     CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0
@@ -182,7 +180,6 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
 
         data_models = cast(list[str], d.pop("data_models", UNSET))
 
-        # }
         _state = d.pop("state", UNSET)
         state: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState]
         if isinstance(_state, Unset):
@@ -190,7 +187,6 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         else:
             state = CollectorsApiV1StatusRetrieveResponse200CollectorsItemState(_state)
 
-        # }
         _updated_until = d.pop("updated_until", UNSET)
         updated_until: Union[Unset, datetime.datetime]
         if isinstance(_updated_until, Unset):

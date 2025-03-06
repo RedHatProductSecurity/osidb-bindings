@@ -14,8 +14,6 @@ T = TypeVar("T", bound="AuthTokenCreateResponse200")
 class AuthTokenCreateResponse200(OSIDBModel):
     """
     Attributes:
-        username (str):
-        password (str):
         access (str):
         refresh (str):
         dt (Union[Unset, datetime.datetime]):
@@ -24,8 +22,6 @@ class AuthTokenCreateResponse200(OSIDBModel):
         version (Union[Unset, str]):
     """
 
-    username: str
-    password: str
     access: str
     refresh: str
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -35,10 +31,6 @@ class AuthTokenCreateResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        username = self.username
-
-        password = self.password
-
         access = self.access
 
         refresh = self.refresh
@@ -55,10 +47,6 @@ class AuthTokenCreateResponse200(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(username, Unset):
-            field_dict["username"] = username
-        if not isinstance(password, Unset):
-            field_dict["password"] = password
         if not isinstance(access, Unset):
             field_dict["access"] = access
         if not isinstance(refresh, Unset):
@@ -77,15 +65,10 @@ class AuthTokenCreateResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        username = d.pop("username", UNSET)
-
-        password = d.pop("password", UNSET)
-
         access = d.pop("access", UNSET)
 
         refresh = d.pop("refresh", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -100,8 +83,6 @@ class AuthTokenCreateResponse200(OSIDBModel):
         version = d.pop("version", UNSET)
 
         auth_token_create_response_200 = cls(
-            username=username,
-            password=password,
             access=access,
             refresh=refresh,
             dt=dt,
@@ -116,8 +97,6 @@ class AuthTokenCreateResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "username": str,
-            "password": str,
             "access": str,
             "refresh": str,
             "dt": datetime.datetime,

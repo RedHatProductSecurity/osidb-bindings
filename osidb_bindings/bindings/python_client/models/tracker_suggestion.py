@@ -64,7 +64,6 @@ class TrackerSuggestion(OSIDBModel):
         modules_components = []
         _modules_components = d.pop("modules_components", UNSET)
         for modules_components_item_data in _modules_components or []:
-            # }
             _modules_components_item = modules_components_item_data
             modules_components_item: ModuleComponent
             if isinstance(_modules_components_item, Unset):
@@ -79,7 +78,6 @@ class TrackerSuggestion(OSIDBModel):
         not_applicable = []
         _not_applicable = d.pop("not_applicable", UNSET)
         for not_applicable_item_data in _not_applicable or []:
-            # }
             _not_applicable_item = not_applicable_item_data
             not_applicable_item: Affect
             if isinstance(_not_applicable_item, Unset):

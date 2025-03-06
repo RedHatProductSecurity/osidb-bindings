@@ -106,7 +106,6 @@ class AffectReportData(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _affectedness_type_0 = data
                 affectedness_type_0: AffectednessEnum
                 if isinstance(_affectedness_type_0, Unset):
@@ -119,7 +118,6 @@ class AffectReportData(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _affectedness_type_1 = data
             affectedness_type_1: BlankEnum
             if isinstance(_affectedness_type_1, Unset):
@@ -137,7 +135,6 @@ class AffectReportData(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _resolution_type_0 = data
                 resolution_type_0: ResolutionEnum
                 if isinstance(_resolution_type_0, Unset):
@@ -150,7 +147,6 @@ class AffectReportData(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _resolution_type_1 = data
             resolution_type_1: BlankEnum
             if isinstance(_resolution_type_1, Unset):
@@ -165,7 +161,6 @@ class AffectReportData(OSIDBModel):
         trackers = []
         _trackers = d.pop("trackers", UNSET)
         for trackers_item_data in _trackers or []:
-            # }
             _trackers_item = trackers_item_data
             trackers_item: TrackerReportData
             if isinstance(_trackers_item, Unset):

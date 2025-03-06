@@ -87,7 +87,6 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
         )
 
         d = src_dict.copy()
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -97,7 +96,6 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
 
         env = d.pop("env", UNSET)
 
-        # }
         _osidb_data = d.pop("osidb_data", UNSET)
         osidb_data: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbData]
         if isinstance(_osidb_data, Unset):
@@ -107,7 +105,6 @@ class OsidbApiV1StatusRetrieveResponse200(OSIDBModel):
                 _osidb_data
             )
 
-        # }
         _osidb_service = d.pop("osidb_service", UNSET)
         osidb_service: Union[Unset, OsidbApiV1StatusRetrieveResponse200OsidbService]
         if isinstance(_osidb_service, Unset):

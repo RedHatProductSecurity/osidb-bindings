@@ -5,7 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_package_version_post import FlawPackageVersionPost
+from ...models.flaw_package_version_post_request import FlawPackageVersionPostRequest
 from ...models.osidb_api_v1_flaws_package_versions_create_response_201 import (
     OsidbApiV1FlawsPackageVersionsCreateResponse201,
 )
@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawPackageVersionPost
+REQUEST_BODY_TYPE = FlawPackageVersionPostRequest
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, FlawPackageVersionPost):
+    if check_nested_instance(body, FlawPackageVersionPostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,7 +50,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1FlawsPackageVersionsCreateResponse201]:
     if response.status_code == 201:
-        # }
         _response_201 = response.json()
         response_201: OsidbApiV1FlawsPackageVersionsCreateResponse201
         if isinstance(_response_201, Unset):
@@ -79,18 +78,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsPackageVersionsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
         bugzilla_api_key (str):
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -122,18 +121,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsPackageVersionsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
         bugzilla_api_key (str):
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,18 +154,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsPackageVersionsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
         bugzilla_api_key (str):
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -198,18 +197,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
-        FlawPackageVersionPost,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
+        FlawPackageVersionPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsPackageVersionsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
         bugzilla_api_key (str):
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
-        body (FlawPackageVersionPost): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
+        body (FlawPackageVersionPostRequest): Package model serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

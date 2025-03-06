@@ -7,21 +7,21 @@ from ...client import AuthenticatedClient, Client
 from ...models.auth_token_refresh_create_response_200 import (
     AuthTokenRefreshCreateResponse200,
 )
-from ...models.token_refresh import TokenRefresh
+from ...models.token_refresh_request import TokenRefreshRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TokenRefresh
+REQUEST_BODY_TYPE = TokenRefreshRequest
 
 
 def _get_kwargs(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenRefresh,
-        TokenRefresh,
-        TokenRefresh,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/auth/token/refresh",
     }
 
-    if check_nested_instance(body, TokenRefresh):
+    if check_nested_instance(body, TokenRefreshRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -46,7 +46,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[AuthTokenRefreshCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: AuthTokenRefreshCreateResponse200
         if isinstance(_response_200, Unset):
@@ -72,18 +71,18 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenRefresh,
-        TokenRefresh,
-        TokenRefresh,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
     ],
 ) -> Response[AuthTokenRefreshCreateResponse200]:
     """Takes a refresh type JSON web token and returns an access type JSON web
     token if the refresh token is valid.
 
     Args:
-        body (TokenRefresh):
-        body (TokenRefresh):
-        body (TokenRefresh):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,18 +112,18 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenRefresh,
-        TokenRefresh,
-        TokenRefresh,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
     ],
 ) -> Optional[AuthTokenRefreshCreateResponse200]:
     """Takes a refresh type JSON web token and returns an access type JSON web
     token if the refresh token is valid.
 
     Args:
-        body (TokenRefresh):
-        body (TokenRefresh):
-        body (TokenRefresh):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -144,18 +143,18 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenRefresh,
-        TokenRefresh,
-        TokenRefresh,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
     ],
 ) -> Response[AuthTokenRefreshCreateResponse200]:
     """Takes a refresh type JSON web token and returns an access type JSON web
     token if the refresh token is valid.
 
     Args:
-        body (TokenRefresh):
-        body (TokenRefresh):
-        body (TokenRefresh):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -185,18 +184,18 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenRefresh,
-        TokenRefresh,
-        TokenRefresh,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
+        TokenRefreshRequest,
     ],
 ) -> Optional[AuthTokenRefreshCreateResponse200]:
     """Takes a refresh type JSON web token and returns an access type JSON web
     token if the refresh token is valid.
 
     Args:
-        body (TokenRefresh):
-        body (TokenRefresh):
-        body (TokenRefresh):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
+        body (TokenRefreshRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -15,7 +15,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
     """
     Attributes:
         access (str):
-        refresh (str):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -23,7 +22,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
     """
 
     access: str
-    refresh: str
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -32,8 +30,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
 
     def to_dict(self) -> dict[str, Any]:
         access = self.access
-
-        refresh = self.refresh
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -49,8 +45,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(access, Unset):
             field_dict["access"] = access
-        if not isinstance(refresh, Unset):
-            field_dict["refresh"] = refresh
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -67,9 +61,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
         d = src_dict.copy()
         access = d.pop("access", UNSET)
 
-        refresh = d.pop("refresh", UNSET)
-
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -85,7 +76,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
 
         auth_token_refresh_create_response_200 = cls(
             access=access,
-            refresh=refresh,
             dt=dt,
             env=env,
             revision=revision,
@@ -99,7 +89,6 @@ class AuthTokenRefreshCreateResponse200(OSIDBModel):
     def get_fields():
         return {
             "access": str,
-            "refresh": str,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

@@ -8,12 +8,12 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_trackers_update_response_200 import (
     OsidbApiV1TrackersUpdateResponse200,
 )
-from ...models.tracker import Tracker
+from ...models.tracker_request import TrackerRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = Tracker
+REQUEST_BODY_TYPE = TrackerRequest
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Tracker,
-        Tracker,
-        Tracker,
+        TrackerRequest,
+        TrackerRequest,
+        TrackerRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, Tracker):
+    if check_nested_instance(body, TrackerRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,7 +50,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1TrackersUpdateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1TrackersUpdateResponse200
         if isinstance(_response_200, Unset):
@@ -77,9 +76,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Tracker,
-        Tracker,
-        Tracker,
+        TrackerRequest,
+        TrackerRequest,
+        TrackerRequest,
     ],
 ) -> Response[OsidbApiV1TrackersUpdateResponse200]:
     """
@@ -87,9 +86,9 @@ def sync_detailed(
         uuid (UUID):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -121,9 +120,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Tracker,
-        Tracker,
-        Tracker,
+        TrackerRequest,
+        TrackerRequest,
+        TrackerRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersUpdateResponse200]:
     """
@@ -131,9 +130,9 @@ def sync(
         uuid (UUID):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,9 +154,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Tracker,
-        Tracker,
-        Tracker,
+        TrackerRequest,
+        TrackerRequest,
+        TrackerRequest,
     ],
 ) -> Response[OsidbApiV1TrackersUpdateResponse200]:
     """
@@ -165,9 +164,9 @@ async def asyncio_detailed(
         uuid (UUID):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -199,9 +198,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Tracker,
-        Tracker,
-        Tracker,
+        TrackerRequest,
+        TrackerRequest,
+        TrackerRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersUpdateResponse200]:
     """
@@ -209,9 +208,9 @@ async def asyncio(
         uuid (UUID):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
-        body (Tracker): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
+        body (TrackerRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

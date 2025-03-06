@@ -7,12 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_flaws_reject_create_response_200 import (
     OsidbApiV1FlawsRejectCreateResponse200,
 )
-from ...models.reject import Reject
+from ...models.reject_request import RejectRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = Reject
+REQUEST_BODY_TYPE = RejectRequest
 
 
 def _get_kwargs(
@@ -20,9 +20,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Reject,
-        Reject,
-        Reject,
+        RejectRequest,
+        RejectRequest,
+        RejectRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -33,7 +33,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, Reject):
+    if check_nested_instance(body, RejectRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -49,7 +49,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1FlawsRejectCreateResponse200
         if isinstance(_response_200, Unset):
@@ -78,9 +77,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Reject,
-        Reject,
-        Reject,
+        RejectRequest,
+        RejectRequest,
+        RejectRequest,
     ],
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
@@ -91,9 +90,9 @@ def sync_detailed(
         flaw_id (str):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -125,9 +124,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Reject,
-        Reject,
-        Reject,
+        RejectRequest,
+        RejectRequest,
+        RejectRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
@@ -138,9 +137,9 @@ def sync(
         flaw_id (str):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -162,9 +161,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Reject,
-        Reject,
-        Reject,
+        RejectRequest,
+        RejectRequest,
+        RejectRequest,
     ],
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
@@ -175,9 +174,9 @@ async def asyncio_detailed(
         flaw_id (str):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -209,9 +208,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Reject,
-        Reject,
-        Reject,
+        RejectRequest,
+        RejectRequest,
+        RejectRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
     """workflow promotion API endpoint
@@ -222,9 +221,9 @@ async def asyncio(
         flaw_id (str):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
-        body (Reject): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
+        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -82,7 +82,6 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
         collectors = []
         _collectors = d.pop("collectors", UNSET)
         for collectors_item_data in _collectors or []:
-            # }
             _collectors_item = collectors_item_data
             collectors_item: CollectorsApiV1StatusRetrieveResponse200CollectorsItem
             if isinstance(_collectors_item, Unset):
@@ -96,7 +95,6 @@ class CollectorsApiV1StatusRetrieveResponse200(OSIDBModel):
 
             collectors.append(collectors_item)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

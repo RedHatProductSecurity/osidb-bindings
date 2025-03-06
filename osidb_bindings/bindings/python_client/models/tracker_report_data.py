@@ -52,7 +52,6 @@ class TrackerReportData(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        # }
         _type_ = d.pop("type", UNSET)
         type_: TrackerType
         if isinstance(_type_, Unset):

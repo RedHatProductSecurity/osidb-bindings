@@ -34,7 +34,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1LabelsRetrieveResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1LabelsRetrieveResponse200
         if isinstance(_response_200, Unset):

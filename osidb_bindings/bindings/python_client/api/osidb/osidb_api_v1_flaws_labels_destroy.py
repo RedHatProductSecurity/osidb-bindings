@@ -36,7 +36,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1FlawsLabelsDestroyResponse204]:
     if response.status_code == 204:
-        # }
         _response_204 = response.json()
         response_204: OsidbApiV1FlawsLabelsDestroyResponse204
         if isinstance(_response_204, Unset):

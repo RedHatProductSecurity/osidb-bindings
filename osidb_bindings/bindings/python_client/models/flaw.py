@@ -1,5 +1,4 @@
 import datetime
-import json
 from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 from uuid import UUID
 
@@ -423,421 +422,6 @@ class Flaw(OSIDBModel):
 
         return field_dict
 
-    def to_multipart(self) -> dict[str, Any]:
-        uuid: bytes = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
-        title = (None, str(self.title).encode(), "text/plain")
-
-        trackers: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.trackers, Unset):
-            _temp_trackers = self.trackers
-            trackers = (None, json.dumps(_temp_trackers).encode(), "application/json")
-
-        comment_zero = (None, str(self.comment_zero).encode(), "text/plain")
-
-        affects: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.affects, Unset):
-            _temp_affects = []
-            for affects_item_data in self.affects:
-                affects_item: dict[str, Any] = UNSET
-                if not isinstance(affects_item_data, Unset):
-                    affects_item = affects_item_data.to_dict()
-
-                _temp_affects.append(affects_item)
-            affects = (None, json.dumps(_temp_affects).encode(), "application/json")
-
-        comments: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.comments, Unset):
-            _temp_comments = []
-            for comments_item_data in self.comments:
-                comments_item: dict[str, Any] = UNSET
-                if not isinstance(comments_item_data, Unset):
-                    comments_item = comments_item_data.to_dict()
-
-                _temp_comments.append(comments_item)
-            comments = (None, json.dumps(_temp_comments).encode(), "application/json")
-
-        package_versions: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.package_versions, Unset):
-            _temp_package_versions = []
-            for package_versions_item_data in self.package_versions:
-                package_versions_item: dict[str, Any] = UNSET
-                if not isinstance(package_versions_item_data, Unset):
-                    package_versions_item = package_versions_item_data.to_dict()
-
-                _temp_package_versions.append(package_versions_item)
-            package_versions = (
-                None,
-                json.dumps(_temp_package_versions).encode(),
-                "application/json",
-            )
-
-        acknowledgments: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.acknowledgments, Unset):
-            _temp_acknowledgments = []
-            for acknowledgments_item_data in self.acknowledgments:
-                acknowledgments_item: dict[str, Any] = UNSET
-                if not isinstance(acknowledgments_item_data, Unset):
-                    acknowledgments_item = acknowledgments_item_data.to_dict()
-
-                _temp_acknowledgments.append(acknowledgments_item)
-            acknowledgments = (
-                None,
-                json.dumps(_temp_acknowledgments).encode(),
-                "application/json",
-            )
-
-        references: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.references, Unset):
-            _temp_references = []
-            for references_item_data in self.references:
-                references_item: dict[str, Any] = UNSET
-                if not isinstance(references_item_data, Unset):
-                    references_item = references_item_data.to_dict()
-
-                _temp_references.append(references_item)
-            references = (
-                None,
-                json.dumps(_temp_references).encode(),
-                "application/json",
-            )
-
-        cvss_scores: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.cvss_scores, Unset):
-            _temp_cvss_scores = []
-            for cvss_scores_item_data in self.cvss_scores:
-                cvss_scores_item: dict[str, Any] = UNSET
-                if not isinstance(cvss_scores_item_data, Unset):
-                    cvss_scores_item = cvss_scores_item_data.to_dict()
-
-                _temp_cvss_scores.append(cvss_scores_item)
-            cvss_scores = (
-                None,
-                json.dumps(_temp_cvss_scores).encode(),
-                "application/json",
-            )
-
-        labels: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.labels, Unset):
-            _temp_labels = []
-            for labels_item_data in self.labels:
-                labels_item: dict[str, Any] = UNSET
-                if not isinstance(labels_item_data, Unset):
-                    labels_item = labels_item_data.to_dict()
-
-                _temp_labels.append(labels_item)
-            labels = (None, json.dumps(_temp_labels).encode(), "application/json")
-
-        embargoed = (None, str(self.embargoed).encode(), "text/plain")
-
-        created_dt: bytes = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat().encode()
-
-        updated_dt: bytes = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat().encode()
-
-        classification: tuple[None, bytes, str] = UNSET
-        if not isinstance(self.classification, Unset):
-            classification = (
-                None,
-                json.dumps(self.classification.to_dict()).encode(),
-                "application/json",
-            )
-
-        alerts: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.alerts, Unset):
-            _temp_alerts = []
-            for alerts_item_data in self.alerts:
-                alerts_item: dict[str, Any] = UNSET
-                if not isinstance(alerts_item_data, Unset):
-                    alerts_item = alerts_item_data.to_dict()
-
-                _temp_alerts.append(alerts_item)
-            alerts = (None, json.dumps(_temp_alerts).encode(), "application/json")
-
-        cve_id: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.cve_id, Unset):
-            cve_id = UNSET
-        elif isinstance(self.cve_id, str):
-            cve_id = (None, str(self.cve_id).encode(), "text/plain")
-        else:
-            cve_id = (None, str(self.cve_id).encode(), "text/plain")
-
-        impact: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.impact, Unset):
-            impact = UNSET
-        elif isinstance(self.impact, ImpactEnum):
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-        else:
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-
-        components: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.components, Unset):
-            _temp_components = self.components
-            components = (
-                None,
-                json.dumps(_temp_components).encode(),
-                "application/json",
-            )
-
-        cve_description = (
-            self.cve_description
-            if isinstance(self.cve_description, Unset)
-            else (None, str(self.cve_description).encode(), "text/plain")
-        )
-
-        requires_cve_description: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.requires_cve_description, Unset):
-            requires_cve_description = UNSET
-        elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
-            requires_cve_description: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = (
-                    None,
-                    str(self.requires_cve_description.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-        else:
-            requires_cve_description: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = (
-                    None,
-                    str(self.requires_cve_description.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-
-        statement = (
-            self.statement
-            if isinstance(self.statement, Unset)
-            else (None, str(self.statement).encode(), "text/plain")
-        )
-
-        cwe_id = (
-            self.cwe_id
-            if isinstance(self.cwe_id, Unset)
-            else (None, str(self.cwe_id).encode(), "text/plain")
-        )
-
-        unembargo_dt: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.unembargo_dt, Unset):
-            unembargo_dt = UNSET
-        elif isinstance(self.unembargo_dt, datetime.datetime):
-            unembargo_dt: bytes = UNSET
-            if not isinstance(self.unembargo_dt, Unset):
-                unembargo_dt = self.unembargo_dt.isoformat().encode()
-        else:
-            unembargo_dt = (None, str(self.unembargo_dt).encode(), "text/plain")
-
-        source: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.source, Unset):
-            source = UNSET
-        elif isinstance(self.source, SourceBe0Enum):
-            source: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.source, Unset):
-                source = (None, str(self.source.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-        else:
-            source: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.source, Unset):
-                source = (None, str(self.source.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-
-        reported_dt: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.reported_dt, Unset):
-            reported_dt = UNSET
-        elif isinstance(self.reported_dt, datetime.datetime):
-            reported_dt: bytes = UNSET
-            if not isinstance(self.reported_dt, Unset):
-                reported_dt = self.reported_dt.isoformat().encode()
-        else:
-            reported_dt = (None, str(self.reported_dt).encode(), "text/plain")
-
-        mitigation = (
-            self.mitigation
-            if isinstance(self.mitigation, Unset)
-            else (None, str(self.mitigation).encode(), "text/plain")
-        )
-
-        major_incident_state: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.major_incident_state, Unset):
-            major_incident_state = UNSET
-        elif isinstance(self.major_incident_state, MajorIncidentStateEnum):
-            major_incident_state: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.major_incident_state, Unset):
-                major_incident_state = (
-                    None,
-                    str(self.major_incident_state.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-        else:
-            major_incident_state: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.major_incident_state, Unset):
-                major_incident_state = (
-                    None,
-                    str(self.major_incident_state.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-
-        major_incident_start_dt: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.major_incident_start_dt, Unset):
-            major_incident_start_dt = UNSET
-        elif isinstance(self.major_incident_start_dt, datetime.datetime):
-            major_incident_start_dt: bytes = UNSET
-            if not isinstance(self.major_incident_start_dt, Unset):
-                major_incident_start_dt = (
-                    self.major_incident_start_dt.isoformat().encode()
-                )
-        else:
-            major_incident_start_dt = (
-                None,
-                str(self.major_incident_start_dt).encode(),
-                "text/plain",
-            )
-
-        nist_cvss_validation: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.nist_cvss_validation, Unset):
-            nist_cvss_validation = UNSET
-        elif isinstance(self.nist_cvss_validation, NistCvssValidationEnum):
-            nist_cvss_validation: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.nist_cvss_validation, Unset):
-                nist_cvss_validation = (
-                    None,
-                    str(self.nist_cvss_validation.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-        else:
-            nist_cvss_validation: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.nist_cvss_validation, Unset):
-                nist_cvss_validation = (
-                    None,
-                    str(self.nist_cvss_validation.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-
-        group_key = (
-            self.group_key
-            if isinstance(self.group_key, Unset)
-            else (None, str(self.group_key).encode(), "text/plain")
-        )
-
-        owner = (
-            self.owner
-            if isinstance(self.owner, Unset)
-            else (None, str(self.owner).encode(), "text/plain")
-        )
-
-        task_key = (
-            self.task_key
-            if isinstance(self.task_key, Unset)
-            else (None, str(self.task_key).encode(), "text/plain")
-        )
-
-        team_id = (
-            self.team_id
-            if isinstance(self.team_id, Unset)
-            else (None, str(self.team_id).encode(), "text/plain")
-        )
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
-        if not isinstance(title, Unset):
-            field_dict["title"] = title
-        if not isinstance(trackers, Unset):
-            field_dict["trackers"] = trackers
-        if not isinstance(comment_zero, Unset):
-            field_dict["comment_zero"] = comment_zero
-        if not isinstance(affects, Unset):
-            field_dict["affects"] = affects
-        if not isinstance(comments, Unset):
-            field_dict["comments"] = comments
-        if not isinstance(package_versions, Unset):
-            field_dict["package_versions"] = package_versions
-        if not isinstance(acknowledgments, Unset):
-            field_dict["acknowledgments"] = acknowledgments
-        if not isinstance(references, Unset):
-            field_dict["references"] = references
-        if not isinstance(cvss_scores, Unset):
-            field_dict["cvss_scores"] = cvss_scores
-        if not isinstance(labels, Unset):
-            field_dict["labels"] = labels
-        if not isinstance(embargoed, Unset):
-            field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
-        if not isinstance(classification, Unset):
-            field_dict["classification"] = classification
-        if not isinstance(alerts, Unset):
-            field_dict["alerts"] = alerts
-        if not isinstance(cve_id, Unset):
-            field_dict["cve_id"] = cve_id
-        if not isinstance(impact, Unset):
-            field_dict["impact"] = impact
-        if not isinstance(components, Unset):
-            field_dict["components"] = components
-        if not isinstance(cve_description, Unset):
-            field_dict["cve_description"] = cve_description
-        if not isinstance(requires_cve_description, Unset):
-            field_dict["requires_cve_description"] = requires_cve_description
-        if not isinstance(statement, Unset):
-            field_dict["statement"] = statement
-        if not isinstance(cwe_id, Unset):
-            field_dict["cwe_id"] = cwe_id
-        if not isinstance(unembargo_dt, Unset):
-            field_dict["unembargo_dt"] = unembargo_dt
-        if not isinstance(source, Unset):
-            field_dict["source"] = source
-        if not isinstance(reported_dt, Unset):
-            field_dict["reported_dt"] = reported_dt
-        if not isinstance(mitigation, Unset):
-            field_dict["mitigation"] = mitigation
-        if not isinstance(major_incident_state, Unset):
-            field_dict["major_incident_state"] = major_incident_state
-        if not isinstance(major_incident_start_dt, Unset):
-            field_dict["major_incident_start_dt"] = major_incident_start_dt
-        if not isinstance(nist_cvss_validation, Unset):
-            field_dict["nist_cvss_validation"] = nist_cvss_validation
-        if not isinstance(group_key, Unset):
-            field_dict["group_key"] = group_key
-        if not isinstance(owner, Unset):
-            field_dict["owner"] = owner
-        if not isinstance(task_key, Unset):
-            field_dict["task_key"] = task_key
-        if not isinstance(team_id, Unset):
-            field_dict["team_id"] = team_id
-
-        return field_dict
-
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.affect import Affect
@@ -851,7 +435,6 @@ class Flaw(OSIDBModel):
         from ..models.package import Package
 
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -868,7 +451,6 @@ class Flaw(OSIDBModel):
         affects = []
         _affects = d.pop("affects", UNSET)
         for affects_item_data in _affects or []:
-            # }
             _affects_item = affects_item_data
             affects_item: Affect
             if isinstance(_affects_item, Unset):
@@ -881,7 +463,6 @@ class Flaw(OSIDBModel):
         comments = []
         _comments = d.pop("comments", UNSET)
         for comments_item_data in _comments or []:
-            # }
             _comments_item = comments_item_data
             comments_item: Comment
             if isinstance(_comments_item, Unset):
@@ -894,7 +475,6 @@ class Flaw(OSIDBModel):
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
         for package_versions_item_data in _package_versions or []:
-            # }
             _package_versions_item = package_versions_item_data
             package_versions_item: Package
             if isinstance(_package_versions_item, Unset):
@@ -907,7 +487,6 @@ class Flaw(OSIDBModel):
         acknowledgments = []
         _acknowledgments = d.pop("acknowledgments", UNSET)
         for acknowledgments_item_data in _acknowledgments or []:
-            # }
             _acknowledgments_item = acknowledgments_item_data
             acknowledgments_item: FlawAcknowledgment
             if isinstance(_acknowledgments_item, Unset):
@@ -922,7 +501,6 @@ class Flaw(OSIDBModel):
         references = []
         _references = d.pop("references", UNSET)
         for references_item_data in _references or []:
-            # }
             _references_item = references_item_data
             references_item: FlawReference
             if isinstance(_references_item, Unset):
@@ -935,7 +513,6 @@ class Flaw(OSIDBModel):
         cvss_scores = []
         _cvss_scores = d.pop("cvss_scores", UNSET)
         for cvss_scores_item_data in _cvss_scores or []:
-            # }
             _cvss_scores_item = cvss_scores_item_data
             cvss_scores_item: FlawCVSS
             if isinstance(_cvss_scores_item, Unset):
@@ -948,7 +525,6 @@ class Flaw(OSIDBModel):
         labels = []
         _labels = d.pop("labels", UNSET)
         for labels_item_data in _labels or []:
-            # }
             _labels_item = labels_item_data
             labels_item: FlawCollaborator
             if isinstance(_labels_item, Unset):
@@ -960,7 +536,6 @@ class Flaw(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -968,7 +543,6 @@ class Flaw(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -976,7 +550,6 @@ class Flaw(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        # }
         _classification = d.pop("classification", UNSET)
         classification: FlawClassification
         if isinstance(_classification, Unset):
@@ -987,7 +560,6 @@ class Flaw(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -1012,7 +584,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _impact_type_0 = data
                 impact_type_0: ImpactEnum
                 if isinstance(_impact_type_0, Unset):
@@ -1025,7 +596,6 @@ class Flaw(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _impact_type_1 = data
             impact_type_1: BlankEnum
             if isinstance(_impact_type_1, Unset):
@@ -1049,7 +619,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _requires_cve_description_type_0 = data
                 requires_cve_description_type_0: RequiresCveDescriptionEnum
                 if isinstance(_requires_cve_description_type_0, Unset):
@@ -1064,7 +633,6 @@ class Flaw(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _requires_cve_description_type_1 = data
             requires_cve_description_type_1: BlankEnum
             if isinstance(_requires_cve_description_type_1, Unset):
@@ -1092,7 +660,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _unembargo_dt_type_0 = data
                 unembargo_dt_type_0: datetime.datetime
                 if isinstance(_unembargo_dt_type_0, Unset):
@@ -1113,7 +680,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _source_type_0 = data
                 source_type_0: SourceBe0Enum
                 if isinstance(_source_type_0, Unset):
@@ -1126,7 +692,6 @@ class Flaw(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _source_type_1 = data
             source_type_1: BlankEnum
             if isinstance(_source_type_1, Unset):
@@ -1146,7 +711,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _reported_dt_type_0 = data
                 reported_dt_type_0: datetime.datetime
                 if isinstance(_reported_dt_type_0, Unset):
@@ -1171,7 +735,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _major_incident_state_type_0 = data
                 major_incident_state_type_0: MajorIncidentStateEnum
                 if isinstance(_major_incident_state_type_0, Unset):
@@ -1186,7 +749,6 @@ class Flaw(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _major_incident_state_type_1 = data
             major_incident_state_type_1: BlankEnum
             if isinstance(_major_incident_state_type_1, Unset):
@@ -1210,7 +772,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _major_incident_start_dt_type_0 = data
                 major_incident_start_dt_type_0: datetime.datetime
                 if isinstance(_major_incident_start_dt_type_0, Unset):
@@ -1237,7 +798,6 @@ class Flaw(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _nist_cvss_validation_type_0 = data
                 nist_cvss_validation_type_0: NistCvssValidationEnum
                 if isinstance(_nist_cvss_validation_type_0, Unset):
@@ -1252,7 +812,6 @@ class Flaw(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _nist_cvss_validation_type_1 = data
             nist_cvss_validation_type_1: BlankEnum
             if isinstance(_nist_cvss_validation_type_1, Unset):

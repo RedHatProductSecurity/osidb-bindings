@@ -135,7 +135,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
         from ..models.alert import Alert
 
         d = src_dict.copy()
-        # }
         _flaw = d.pop("flaw", UNSET)
         flaw: UUID
         if isinstance(_flaw, Unset):
@@ -145,7 +144,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
 
         url = d.pop("url", UNSET)
 
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -158,7 +156,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -168,7 +165,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
 
             alerts.append(alerts_item)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -176,7 +172,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -186,7 +181,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
 
         description = d.pop("description", UNSET)
 
-        # }
         _type_ = d.pop("type", UNSET)
         type_: Union[Unset, FlawReferenceType]
         if isinstance(_type_, Unset):
@@ -194,7 +188,6 @@ class OsidbApiV1FlawsReferencesRetrieveResponse200(OSIDBModel):
         else:
             type_ = FlawReferenceType(_type_)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

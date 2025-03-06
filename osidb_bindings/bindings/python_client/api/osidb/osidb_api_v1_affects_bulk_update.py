@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.affect_bulk_put import AffectBulkPut
+from ...models.affect_bulk_put_request import AffectBulkPutRequest
 from ...models.osidb_api_v1_affects_bulk_update_response_200 import (
     OsidbApiV1AffectsBulkUpdateResponse200,
 )
@@ -12,16 +12,16 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = list["AffectBulkPut"]
+REQUEST_BODY_TYPE = list["AffectBulkPutRequest"]
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/affects/bulk",
     }
 
-    if check_nested_instance(body, list["AffectBulkPut"]):
+    if check_nested_instance(body, list["AffectBulkPutRequest"]):
         _json_body: list[dict[str, Any]] = UNSET
         if not isinstance(body, Unset):
             _json_body = []
@@ -52,7 +52,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AffectsBulkUpdateResponse200
         if isinstance(_response_200, Unset):
@@ -80,9 +79,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
     ],
 ) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
     """Bulk update endpoint. Expects a list of dict Affect objects.
@@ -90,9 +89,9 @@ def sync_detailed(
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -122,9 +121,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
     ],
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
     """Bulk update endpoint. Expects a list of dict Affect objects.
@@ -132,9 +131,9 @@ def sync(
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -154,9 +153,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
     ],
 ) -> Response[OsidbApiV1AffectsBulkUpdateResponse200]:
     """Bulk update endpoint. Expects a list of dict Affect objects.
@@ -164,9 +163,9 @@ async def asyncio_detailed(
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -196,9 +195,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
-        list["AffectBulkPut"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
+        list["AffectBulkPutRequest"],
     ],
 ) -> Optional[OsidbApiV1AffectsBulkUpdateResponse200]:
     """Bulk update endpoint. Expects a list of dict Affect objects.
@@ -206,9 +205,9 @@ async def asyncio(
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
-        body (list['AffectBulkPut']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
+        body (list['AffectBulkPutRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -73,7 +73,6 @@ class Package(OSIDBModel):
         versions = []
         _versions = d.pop("versions", UNSET)
         for versions_item_data in _versions or []:
-            # }
             _versions_item = versions_item_data
             versions_item: PackageVer
             if isinstance(_versions_item, Unset):
@@ -86,7 +85,6 @@ class Package(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
