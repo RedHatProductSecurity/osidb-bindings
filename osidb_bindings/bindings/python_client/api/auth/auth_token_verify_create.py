@@ -7,21 +7,21 @@ from ...client import AuthenticatedClient, Client
 from ...models.auth_token_verify_create_response_200 import (
     AuthTokenVerifyCreateResponse200,
 )
-from ...models.token_verify import TokenVerify
+from ...models.token_verify_request import TokenVerifyRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TokenVerify
+REQUEST_BODY_TYPE = TokenVerifyRequest
 
 
 def _get_kwargs(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenVerify,
-        TokenVerify,
-        TokenVerify,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/auth/token/verify",
     }
 
-    if check_nested_instance(body, TokenVerify):
+    if check_nested_instance(body, TokenVerifyRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -46,7 +46,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[AuthTokenVerifyCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: AuthTokenVerifyCreateResponse200
         if isinstance(_response_200, Unset):
@@ -72,18 +71,18 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenVerify,
-        TokenVerify,
-        TokenVerify,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
     ],
 ) -> Response[AuthTokenVerifyCreateResponse200]:
     """Takes a token and indicates if it is valid.  This view provides no
     information about a token's fitness for a particular use.
 
     Args:
-        body (TokenVerify):
-        body (TokenVerify):
-        body (TokenVerify):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,18 +112,18 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenVerify,
-        TokenVerify,
-        TokenVerify,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
     ],
 ) -> Optional[AuthTokenVerifyCreateResponse200]:
     """Takes a token and indicates if it is valid.  This view provides no
     information about a token's fitness for a particular use.
 
     Args:
-        body (TokenVerify):
-        body (TokenVerify):
-        body (TokenVerify):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -144,18 +143,18 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenVerify,
-        TokenVerify,
-        TokenVerify,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
     ],
 ) -> Response[AuthTokenVerifyCreateResponse200]:
     """Takes a token and indicates if it is valid.  This view provides no
     information about a token's fitness for a particular use.
 
     Args:
-        body (TokenVerify):
-        body (TokenVerify):
-        body (TokenVerify):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -185,18 +184,18 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenVerify,
-        TokenVerify,
-        TokenVerify,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
+        TokenVerifyRequest,
     ],
 ) -> Optional[AuthTokenVerifyCreateResponse200]:
     """Takes a token and indicates if it is valid.  This view provides no
     information about a token's fitness for a particular use.
 
     Args:
-        body (TokenVerify):
-        body (TokenVerify):
-        body (TokenVerify):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
+        body (TokenVerifyRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

@@ -5,21 +5,21 @@ import requests
 
 from ...client import AuthenticatedClient, Client
 from ...models.auth_token_create_response_200 import AuthTokenCreateResponse200
-from ...models.token_obtain_pair import TokenObtainPair
+from ...models.token_obtain_pair_request import TokenObtainPairRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TokenObtainPair
+REQUEST_BODY_TYPE = TokenObtainPairRequest
 
 
 def _get_kwargs(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenObtainPair,
-        TokenObtainPair,
-        TokenObtainPair,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -28,7 +28,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/auth/token",
     }
 
-    if check_nested_instance(body, TokenObtainPair):
+    if check_nested_instance(body, TokenObtainPairRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -44,7 +44,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[AuthTokenCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: AuthTokenCreateResponse200
         if isinstance(_response_200, Unset):
@@ -70,18 +69,18 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenObtainPair,
-        TokenObtainPair,
-        TokenObtainPair,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
     ],
 ) -> Response[AuthTokenCreateResponse200]:
     """Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
 
     Args:
-        body (TokenObtainPair):
-        body (TokenObtainPair):
-        body (TokenObtainPair):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -111,18 +110,18 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenObtainPair,
-        TokenObtainPair,
-        TokenObtainPair,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
     ],
 ) -> Optional[AuthTokenCreateResponse200]:
     """Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
 
     Args:
-        body (TokenObtainPair):
-        body (TokenObtainPair):
-        body (TokenObtainPair):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,18 +141,18 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenObtainPair,
-        TokenObtainPair,
-        TokenObtainPair,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
     ],
 ) -> Response[AuthTokenCreateResponse200]:
     """Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
 
     Args:
-        body (TokenObtainPair):
-        body (TokenObtainPair):
-        body (TokenObtainPair):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -183,18 +182,18 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: Union[
-        TokenObtainPair,
-        TokenObtainPair,
-        TokenObtainPair,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
+        TokenObtainPairRequest,
     ],
 ) -> Optional[AuthTokenCreateResponse200]:
     """Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
 
     Args:
-        body (TokenObtainPair):
-        body (TokenObtainPair):
-        body (TokenObtainPair):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
+        body (TokenObtainPairRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

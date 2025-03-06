@@ -5,57 +5,58 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="TokenVerify")
+T = TypeVar("T", bound="RejectRequest")
 
 
 @_attrs_define
-class TokenVerify(OSIDBModel):
-    """
+class RejectRequest(OSIDBModel):
+    """Task rejection serializer
+
     Attributes:
-        token (str):
+        reason (str):
     """
 
-    token: str
+    reason: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        token = self.token
+        reason = self.reason
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(token, Unset):
-            field_dict["token"] = token
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
     def to_multipart(self) -> dict[str, Any]:
-        token = (None, str(self.token).encode(), "text/plain")
+        reason = (None, str(self.reason).encode(), "text/plain")
 
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
 
-        if not isinstance(token, Unset):
-            field_dict["token"] = token
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        token = d.pop("token", UNSET)
+        reason = d.pop("reason", UNSET)
 
-        token_verify = cls(
-            token=token,
+        reject_request = cls(
+            reason=reason,
         )
 
-        token_verify.additional_properties = d
-        return token_verify
+        reject_request.additional_properties = d
+        return reject_request
 
     @staticmethod
     def get_fields():
         return {
-            "token": str,
+            "reason": str,
         }
 
     @property

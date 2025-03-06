@@ -91,7 +91,6 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         )
 
         d = src_dict.copy()
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -105,7 +104,6 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         groups = cast(list[str], d.pop("groups", UNSET))
 
-        # }
         _profile = d.pop("profile", UNSET)
         profile: Union[Unset, OsidbWhoamiRetrieveResponse200Profile]
         if isinstance(_profile, Unset):

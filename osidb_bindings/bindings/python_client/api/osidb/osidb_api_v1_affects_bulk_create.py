@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.affect_post import AffectPost
+from ...models.affect_post_request import AffectPostRequest
 from ...models.osidb_api_v1_affects_bulk_create_response_200 import (
     OsidbApiV1AffectsBulkCreateResponse200,
 )
@@ -12,16 +12,16 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = list["AffectPost"]
+REQUEST_BODY_TYPE = list["AffectPostRequest"]
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectPost"],
-        list["AffectPost"],
-        list["AffectPost"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/affects/bulk",
     }
 
-    if check_nested_instance(body, list["AffectPost"]):
+    if check_nested_instance(body, list["AffectPostRequest"]):
         _json_body: list[dict[str, Any]] = UNSET
         if not isinstance(body, Unset):
             _json_body = []
@@ -52,7 +52,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1AffectsBulkCreateResponse200
         if isinstance(_response_200, Unset):
@@ -80,18 +79,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectPost"],
-        list["AffectPost"],
-        list["AffectPost"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
     ],
 ) -> Response[OsidbApiV1AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
         bugzilla_api_key (str):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -121,18 +120,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectPost"],
-        list["AffectPost"],
-        list["AffectPost"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
     ],
 ) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
         bugzilla_api_key (str):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -152,18 +151,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectPost"],
-        list["AffectPost"],
-        list["AffectPost"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
     ],
 ) -> Response[OsidbApiV1AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
         bugzilla_api_key (str):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -193,18 +192,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        list["AffectPost"],
-        list["AffectPost"],
-        list["AffectPost"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
+        list["AffectPostRequest"],
     ],
 ) -> Optional[OsidbApiV1AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
         bugzilla_api_key (str):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
-        body (list['AffectPost']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
+        body (list['AffectPostRequest']):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

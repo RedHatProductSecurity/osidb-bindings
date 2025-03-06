@@ -80,7 +80,6 @@ class Erratum(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _shipped_dt_type_0 = data
                 shipped_dt_type_0: datetime.datetime
                 if isinstance(_shipped_dt_type_0, Unset):
@@ -95,7 +94,6 @@ class Erratum(OSIDBModel):
 
         shipped_dt = _parse_shipped_dt(d.pop("shipped_dt", UNSET))
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -103,7 +101,6 @@ class Erratum(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):

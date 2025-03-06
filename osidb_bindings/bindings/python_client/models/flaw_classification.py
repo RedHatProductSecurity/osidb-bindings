@@ -42,7 +42,6 @@ class FlawClassification(OSIDBModel):
         d = src_dict.copy()
         workflow = d.pop("workflow", UNSET)
 
-        # }
         _state = d.pop("state", UNSET)
         state: Union[Unset, FlawClassificationState]
         if isinstance(_state, Unset):

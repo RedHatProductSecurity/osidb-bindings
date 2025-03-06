@@ -69,7 +69,6 @@ class OsidbApiV1LabelsRetrieveResponse200(OSIDBModel):
 
         type_ = d.pop("type", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

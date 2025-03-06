@@ -129,7 +129,6 @@ class FlawCVSS(OSIDBModel):
         from ..models.alert import Alert
 
         d = src_dict.copy()
-        # }
         _cvss_version = d.pop("cvss_version", UNSET)
         cvss_version: CvssVersionEnum
         if isinstance(_cvss_version, Unset):
@@ -137,7 +136,6 @@ class FlawCVSS(OSIDBModel):
         else:
             cvss_version = CvssVersionEnum(_cvss_version)
 
-        # }
         _issuer = d.pop("issuer", UNSET)
         issuer: IssuerEnum
         if isinstance(_issuer, Unset):
@@ -147,7 +145,6 @@ class FlawCVSS(OSIDBModel):
 
         score = d.pop("score", UNSET)
 
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -162,7 +159,6 @@ class FlawCVSS(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -172,7 +168,6 @@ class FlawCVSS(OSIDBModel):
 
             alerts.append(alerts_item)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -180,7 +175,6 @@ class FlawCVSS(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -188,7 +182,6 @@ class FlawCVSS(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        # }
         _flaw = d.pop("flaw", UNSET)
         flaw: Union[Unset, UUID]
         if isinstance(_flaw, Unset):

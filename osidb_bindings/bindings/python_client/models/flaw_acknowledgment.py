@@ -113,7 +113,6 @@ class FlawAcknowledgment(OSIDBModel):
 
         from_upstream = d.pop("from_upstream", UNSET)
 
-        # }
         _flaw = d.pop("flaw", UNSET)
         flaw: UUID
         if isinstance(_flaw, Unset):
@@ -121,7 +120,6 @@ class FlawAcknowledgment(OSIDBModel):
         else:
             flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -134,7 +132,6 @@ class FlawAcknowledgment(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -144,7 +141,6 @@ class FlawAcknowledgment(OSIDBModel):
 
             alerts.append(alerts_item)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -152,7 +148,6 @@ class FlawAcknowledgment(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):

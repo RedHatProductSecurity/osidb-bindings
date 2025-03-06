@@ -5,7 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_collaborator_post import FlawCollaboratorPost
+from ...models.flaw_collaborator_post_request import FlawCollaboratorPostRequest
 from ...models.osidb_api_v1_flaws_labels_create_response_201 import (
     OsidbApiV1FlawsLabelsCreateResponse201,
 )
@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawCollaboratorPost
+REQUEST_BODY_TYPE = FlawCollaboratorPostRequest
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, FlawCollaboratorPost):
+    if check_nested_instance(body, FlawCollaboratorPostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,7 +50,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1FlawsLabelsCreateResponse201]:
     if response.status_code == 201:
-        # }
         _response_201 = response.json()
         response_201: OsidbApiV1FlawsLabelsCreateResponse201
         if isinstance(_response_201, Unset):
@@ -79,17 +78,17 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsLabelsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -121,17 +120,17 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsLabelsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -153,17 +152,17 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsLabelsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -195,17 +194,17 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
-        FlawCollaboratorPost,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
+        FlawCollaboratorPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsLabelsCreateResponse201]:
     """
     Args:
         flaw_id (UUID):
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
-        body (FlawCollaboratorPost): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

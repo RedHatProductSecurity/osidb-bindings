@@ -460,7 +460,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         from ..models.package import Package
 
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -477,7 +476,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         affects = []
         _affects = d.pop("affects", UNSET)
         for affects_item_data in _affects or []:
-            # }
             _affects_item = affects_item_data
             affects_item: Affect
             if isinstance(_affects_item, Unset):
@@ -490,7 +488,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         comments = []
         _comments = d.pop("comments", UNSET)
         for comments_item_data in _comments or []:
-            # }
             _comments_item = comments_item_data
             comments_item: Comment
             if isinstance(_comments_item, Unset):
@@ -503,7 +500,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
         for package_versions_item_data in _package_versions or []:
-            # }
             _package_versions_item = package_versions_item_data
             package_versions_item: Package
             if isinstance(_package_versions_item, Unset):
@@ -516,7 +512,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         acknowledgments = []
         _acknowledgments = d.pop("acknowledgments", UNSET)
         for acknowledgments_item_data in _acknowledgments or []:
-            # }
             _acknowledgments_item = acknowledgments_item_data
             acknowledgments_item: FlawAcknowledgment
             if isinstance(_acknowledgments_item, Unset):
@@ -531,7 +526,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         references = []
         _references = d.pop("references", UNSET)
         for references_item_data in _references or []:
-            # }
             _references_item = references_item_data
             references_item: FlawReference
             if isinstance(_references_item, Unset):
@@ -544,7 +538,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         cvss_scores = []
         _cvss_scores = d.pop("cvss_scores", UNSET)
         for cvss_scores_item_data in _cvss_scores or []:
-            # }
             _cvss_scores_item = cvss_scores_item_data
             cvss_scores_item: FlawCVSS
             if isinstance(_cvss_scores_item, Unset):
@@ -557,7 +550,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         labels = []
         _labels = d.pop("labels", UNSET)
         for labels_item_data in _labels or []:
-            # }
             _labels_item = labels_item_data
             labels_item: FlawCollaborator
             if isinstance(_labels_item, Unset):
@@ -569,7 +561,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -577,7 +568,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -585,7 +575,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        # }
         _classification = d.pop("classification", UNSET)
         classification: FlawClassification
         if isinstance(_classification, Unset):
@@ -596,7 +585,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -621,7 +609,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _impact_type_0 = data
                 impact_type_0: ImpactEnum
                 if isinstance(_impact_type_0, Unset):
@@ -634,7 +621,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _impact_type_1 = data
             impact_type_1: BlankEnum
             if isinstance(_impact_type_1, Unset):
@@ -658,7 +644,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _requires_cve_description_type_0 = data
                 requires_cve_description_type_0: RequiresCveDescriptionEnum
                 if isinstance(_requires_cve_description_type_0, Unset):
@@ -673,7 +658,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _requires_cve_description_type_1 = data
             requires_cve_description_type_1: BlankEnum
             if isinstance(_requires_cve_description_type_1, Unset):
@@ -701,7 +685,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _unembargo_dt_type_0 = data
                 unembargo_dt_type_0: datetime.datetime
                 if isinstance(_unembargo_dt_type_0, Unset):
@@ -722,7 +705,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _source_type_0 = data
                 source_type_0: SourceBe0Enum
                 if isinstance(_source_type_0, Unset):
@@ -735,7 +717,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _source_type_1 = data
             source_type_1: BlankEnum
             if isinstance(_source_type_1, Unset):
@@ -755,7 +736,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _reported_dt_type_0 = data
                 reported_dt_type_0: datetime.datetime
                 if isinstance(_reported_dt_type_0, Unset):
@@ -780,7 +760,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _major_incident_state_type_0 = data
                 major_incident_state_type_0: MajorIncidentStateEnum
                 if isinstance(_major_incident_state_type_0, Unset):
@@ -795,7 +774,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _major_incident_state_type_1 = data
             major_incident_state_type_1: BlankEnum
             if isinstance(_major_incident_state_type_1, Unset):
@@ -819,7 +797,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _major_incident_start_dt_type_0 = data
                 major_incident_start_dt_type_0: datetime.datetime
                 if isinstance(_major_incident_start_dt_type_0, Unset):
@@ -846,7 +823,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _nist_cvss_validation_type_0 = data
                 nist_cvss_validation_type_0: NistCvssValidationEnum
                 if isinstance(_nist_cvss_validation_type_0, Unset):
@@ -861,7 +837,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _nist_cvss_validation_type_1 = data
             nist_cvss_validation_type_1: BlankEnum
             if isinstance(_nist_cvss_validation_type_1, Unset):
@@ -883,7 +858,6 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         team_id = d.pop("team_id", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

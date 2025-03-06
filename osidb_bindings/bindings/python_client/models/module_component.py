@@ -80,7 +80,6 @@ class ModuleComponent(OSIDBModel):
         streams = []
         _streams = d.pop("streams", UNSET)
         for streams_item_data in _streams or []:
-            # }
             _streams_item = streams_item_data
             streams_item: PsStreamSelection
             if isinstance(_streams_item, Unset):
@@ -92,7 +91,6 @@ class ModuleComponent(OSIDBModel):
 
         selected = d.pop("selected", UNSET)
 
-        # }
         _affect = d.pop("affect", UNSET)
         affect: Affect
         if isinstance(_affect, Unset):

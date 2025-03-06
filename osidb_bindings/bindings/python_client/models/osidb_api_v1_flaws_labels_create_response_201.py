@@ -17,7 +17,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
     """
     Attributes:
         uuid (UUID):
-        flaw (UUID):
         label (str):
         type_ (str):
         state (Union[Unset, StateEnum]):
@@ -30,7 +29,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
     """
 
     uuid: UUID
-    flaw: UUID
     label: str
     type_: str
     state: Union[Unset, StateEnum] = UNSET
@@ -46,10 +44,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
         uuid: str = UNSET
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
-
-        flaw: str = UNSET
-        if not isinstance(self.flaw, Unset):
-            flaw = str(self.flaw)
 
         label = self.label
 
@@ -77,8 +71,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
         if not isinstance(label, Unset):
             field_dict["label"] = label
         if not isinstance(type_, Unset):
@@ -103,7 +95,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -111,19 +102,10 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
         else:
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
-        # }
-        _flaw = d.pop("flaw", UNSET)
-        flaw: UUID
-        if isinstance(_flaw, Unset):
-            flaw = UNSET
-        else:
-            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
-
         label = d.pop("label", UNSET)
 
         type_ = d.pop("type", UNSET)
 
-        # }
         _state = d.pop("state", UNSET)
         state: Union[Unset, StateEnum]
         if isinstance(_state, Unset):
@@ -135,7 +117,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -151,7 +132,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
 
         osidb_api_v1_flaws_labels_create_response_201 = cls(
             uuid=uuid,
-            flaw=flaw,
             label=label,
             type_=type_,
             state=state,
@@ -170,7 +150,6 @@ class OsidbApiV1FlawsLabelsCreateResponse201(OSIDBModel):
     def get_fields():
         return {
             "uuid": UUID,
-            "flaw": UUID,
             "label": str,
             "type": str,
             "state": StateEnum,

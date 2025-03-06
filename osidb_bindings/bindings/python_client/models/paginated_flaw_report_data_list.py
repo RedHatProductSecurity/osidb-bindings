@@ -76,7 +76,6 @@ class PaginatedFlawReportDataList(OSIDBModel):
         results = []
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
-            # }
             _results_item = results_item_data
             results_item: FlawReportData
             if isinstance(_results_item, Unset):

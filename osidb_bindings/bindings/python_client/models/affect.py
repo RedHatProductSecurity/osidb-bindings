@@ -1,5 +1,4 @@
 import datetime
-import json
 from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 from uuid import UUID
 
@@ -258,233 +257,6 @@ class Affect(OSIDBModel):
 
         return field_dict
 
-    def to_multipart(self) -> dict[str, Any]:
-        uuid: bytes = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
-        flaw: tuple[None, bytes, str]
-
-        if isinstance(self.flaw, UUID):
-            flaw: bytes = UNSET
-            if not isinstance(self.flaw, Unset):
-                flaw = str(self.flaw)
-        else:
-            flaw = (None, str(self.flaw).encode(), "text/plain")
-
-        ps_module = (None, str(self.ps_module).encode(), "text/plain")
-
-        ps_product = (None, str(self.ps_product).encode(), "text/plain")
-
-        trackers: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.trackers, Unset):
-            _temp_trackers = []
-            for trackers_item_data in self.trackers:
-                trackers_item: dict[str, Any] = UNSET
-                if not isinstance(trackers_item_data, Unset):
-                    trackers_item = trackers_item_data.to_dict()
-
-                _temp_trackers.append(trackers_item)
-            trackers = (None, json.dumps(_temp_trackers).encode(), "application/json")
-
-        delegated_resolution = (
-            None,
-            str(self.delegated_resolution).encode(),
-            "text/plain",
-        )
-
-        cvss_scores: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.cvss_scores, Unset):
-            _temp_cvss_scores = []
-            for cvss_scores_item_data in self.cvss_scores:
-                cvss_scores_item: dict[str, Any] = UNSET
-                if not isinstance(cvss_scores_item_data, Unset):
-                    cvss_scores_item = cvss_scores_item_data.to_dict()
-
-                _temp_cvss_scores.append(cvss_scores_item)
-            cvss_scores = (
-                None,
-                json.dumps(_temp_cvss_scores).encode(),
-                "application/json",
-            )
-
-        delegated_not_affected_justification = (
-            None,
-            str(self.delegated_not_affected_justification).encode(),
-            "text/plain",
-        )
-
-        resolved_dt: tuple[None, bytes, str]
-
-        if isinstance(self.resolved_dt, datetime.datetime):
-            resolved_dt: bytes = UNSET
-            if not isinstance(self.resolved_dt, Unset):
-                resolved_dt = self.resolved_dt.isoformat().encode()
-        else:
-            resolved_dt = (None, str(self.resolved_dt).encode(), "text/plain")
-
-        embargoed = (None, str(self.embargoed).encode(), "text/plain")
-
-        alerts: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.alerts, Unset):
-            _temp_alerts = []
-            for alerts_item_data in self.alerts:
-                alerts_item: dict[str, Any] = UNSET
-                if not isinstance(alerts_item_data, Unset):
-                    alerts_item = alerts_item_data.to_dict()
-
-                _temp_alerts.append(alerts_item)
-            alerts = (None, json.dumps(_temp_alerts).encode(), "application/json")
-
-        created_dt: bytes = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat().encode()
-
-        updated_dt: bytes = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat().encode()
-
-        affectedness: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.affectedness, Unset):
-            affectedness = UNSET
-        elif isinstance(self.affectedness, AffectednessEnum):
-            affectedness: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.affectedness, Unset):
-                affectedness = (
-                    None,
-                    str(self.affectedness.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-        else:
-            affectedness: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.affectedness, Unset):
-                affectedness = (
-                    None,
-                    str(self.affectedness.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-
-        resolution: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.resolution, Unset):
-            resolution = UNSET
-        elif isinstance(self.resolution, ResolutionEnum):
-            resolution: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.resolution, Unset):
-                resolution = (None, str(self.resolution.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-        else:
-            resolution: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.resolution, Unset):
-                resolution = (None, str(self.resolution.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-
-        ps_component: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.ps_component, Unset):
-            ps_component = UNSET
-        elif isinstance(self.ps_component, str):
-            ps_component = (None, str(self.ps_component).encode(), "text/plain")
-        else:
-            ps_component = (None, str(self.ps_component).encode(), "text/plain")
-
-        impact: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.impact, Unset):
-            impact = UNSET
-        elif isinstance(self.impact, ImpactEnum):
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-        else:
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-            # CHANGE END (3) #}
-
-        purl: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.purl, Unset):
-            purl = UNSET
-        elif isinstance(self.purl, str):
-            purl = (None, str(self.purl).encode(), "text/plain")
-        else:
-            purl = (None, str(self.purl).encode(), "text/plain")
-
-        not_affected_justification: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.not_affected_justification, Unset):
-            not_affected_justification = UNSET
-        elif isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
-            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.not_affected_justification, Unset):
-                not_affected_justification = (
-                    None,
-                    str(self.not_affected_justification.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-        else:
-            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.not_affected_justification, Unset):
-                not_affected_justification = (
-                    None,
-                    str(self.not_affected_justification.value).encode(),
-                    "text/plain",
-                )
-            # CHANGE END (3) #}
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
-        if not isinstance(ps_product, Unset):
-            field_dict["ps_product"] = ps_product
-        if not isinstance(trackers, Unset):
-            field_dict["trackers"] = trackers
-        if not isinstance(delegated_resolution, Unset):
-            field_dict["delegated_resolution"] = delegated_resolution
-        if not isinstance(cvss_scores, Unset):
-            field_dict["cvss_scores"] = cvss_scores
-        if not isinstance(delegated_not_affected_justification, Unset):
-            field_dict["delegated_not_affected_justification"] = (
-                delegated_not_affected_justification
-            )
-        if not isinstance(resolved_dt, Unset):
-            field_dict["resolved_dt"] = resolved_dt
-        if not isinstance(embargoed, Unset):
-            field_dict["embargoed"] = embargoed
-        if not isinstance(alerts, Unset):
-            field_dict["alerts"] = alerts
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
-        if not isinstance(affectedness, Unset):
-            field_dict["affectedness"] = affectedness
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
-        if not isinstance(ps_component, Unset):
-            field_dict["ps_component"] = ps_component
-        if not isinstance(impact, Unset):
-            field_dict["impact"] = impact
-        if not isinstance(purl, Unset):
-            field_dict["purl"] = purl
-        if not isinstance(not_affected_justification, Unset):
-            field_dict["not_affected_justification"] = not_affected_justification
-
-        return field_dict
-
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.affect_cvss import AffectCVSS
@@ -492,7 +264,6 @@ class Affect(OSIDBModel):
         from ..models.tracker import Tracker
 
         d = src_dict.copy()
-        # }
         _uuid = d.pop("uuid", UNSET)
         uuid: UUID
         if isinstance(_uuid, Unset):
@@ -506,7 +277,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _flaw_type_0 = data
                 flaw_type_0: UUID
                 if isinstance(_flaw_type_0, Unset):
@@ -532,7 +302,6 @@ class Affect(OSIDBModel):
         trackers = []
         _trackers = d.pop("trackers", UNSET)
         for trackers_item_data in _trackers or []:
-            # }
             _trackers_item = trackers_item_data
             trackers_item: Tracker
             if isinstance(_trackers_item, Unset):
@@ -547,7 +316,6 @@ class Affect(OSIDBModel):
         cvss_scores = []
         _cvss_scores = d.pop("cvss_scores", UNSET)
         for cvss_scores_item_data in _cvss_scores or []:
-            # }
             _cvss_scores_item = cvss_scores_item_data
             cvss_scores_item: AffectCVSS
             if isinstance(_cvss_scores_item, Unset):
@@ -567,7 +335,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _resolved_dt_type_0 = data
                 resolved_dt_type_0: datetime.datetime
                 if isinstance(_resolved_dt_type_0, Unset):
@@ -587,7 +354,6 @@ class Affect(OSIDBModel):
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
-            # }
             _alerts_item = alerts_item_data
             alerts_item: Alert
             if isinstance(_alerts_item, Unset):
@@ -597,7 +363,6 @@ class Affect(OSIDBModel):
 
             alerts.append(alerts_item)
 
-        # }
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -605,7 +370,6 @@ class Affect(OSIDBModel):
         else:
             created_dt = isoparse(_created_dt)
 
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -621,7 +385,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _affectedness_type_0 = data
                 affectedness_type_0: AffectednessEnum
                 if isinstance(_affectedness_type_0, Unset):
@@ -634,7 +397,6 @@ class Affect(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _affectedness_type_1 = data
             affectedness_type_1: BlankEnum
             if isinstance(_affectedness_type_1, Unset):
@@ -652,7 +414,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _resolution_type_0 = data
                 resolution_type_0: ResolutionEnum
                 if isinstance(_resolution_type_0, Unset):
@@ -665,7 +426,6 @@ class Affect(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _resolution_type_1 = data
             resolution_type_1: BlankEnum
             if isinstance(_resolution_type_1, Unset):
@@ -692,7 +452,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _impact_type_0 = data
                 impact_type_0: ImpactEnum
                 if isinstance(_impact_type_0, Unset):
@@ -705,7 +464,6 @@ class Affect(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _impact_type_1 = data
             impact_type_1: BlankEnum
             if isinstance(_impact_type_1, Unset):
@@ -734,7 +492,6 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, str):
                     raise TypeError()
-                # }
                 _not_affected_justification_type_0 = data
                 not_affected_justification_type_0: NotAffectedJustificationEnum
                 if isinstance(_not_affected_justification_type_0, Unset):
@@ -749,7 +506,6 @@ class Affect(OSIDBModel):
                 pass
             if not isinstance(data, str):
                 raise TypeError()
-            # }
             _not_affected_justification_type_1 = data
             not_affected_justification_type_1: BlankEnum
             if isinstance(_not_affected_justification_type_1, Unset):

@@ -68,7 +68,6 @@ class FlawReportData(OSIDBModel):
         affects = []
         _affects = d.pop("affects", UNSET)
         for affects_item_data in _affects or []:
-            # }
             _affects_item = affects_item_data
             affects_item: AffectReportData
             if isinstance(_affects_item, Unset):

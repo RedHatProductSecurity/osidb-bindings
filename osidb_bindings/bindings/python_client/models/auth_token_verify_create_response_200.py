@@ -14,14 +14,12 @@ T = TypeVar("T", bound="AuthTokenVerifyCreateResponse200")
 class AuthTokenVerifyCreateResponse200(OSIDBModel):
     """
     Attributes:
-        token (str):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
         version (Union[Unset, str]):
     """
 
-    token: str
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -29,8 +27,6 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        token = self.token
-
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -43,8 +39,6 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(token, Unset):
-            field_dict["token"] = token
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -59,9 +53,6 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        token = d.pop("token", UNSET)
-
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -76,7 +67,6 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
         version = d.pop("version", UNSET)
 
         auth_token_verify_create_response_200 = cls(
-            token=token,
             dt=dt,
             env=env,
             revision=revision,
@@ -89,7 +79,6 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
-            "token": str,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

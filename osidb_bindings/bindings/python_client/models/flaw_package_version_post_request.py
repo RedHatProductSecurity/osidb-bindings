@@ -1,42 +1,32 @@
-import datetime
 import json
 from typing import TYPE_CHECKING, Any, TypeVar, Union
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
-    from ..models.flaw_version import FlawVersion
+    from ..models.flaw_version_request import FlawVersionRequest
 
 
-T = TypeVar("T", bound="FlawPackageVersionPut")
+T = TypeVar("T", bound="FlawPackageVersionPostRequest")
 
 
 @_attrs_define
-class FlawPackageVersionPut(OSIDBModel):
+class FlawPackageVersionPostRequest(OSIDBModel):
     """Package model serializer
 
     Attributes:
         package (str):
-        versions (list['FlawVersion']):
-        uuid (UUID):
+        versions (list['FlawVersionRequest']):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
-        created_dt (datetime.datetime):
-        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
-            detect mit-air collisions.
     """
 
     package: str
-    versions: list["FlawVersion"]
-    uuid: UUID
+    versions: list["FlawVersionRequest"]
     embargoed: bool
-    created_dt: datetime.datetime
-    updated_dt: datetime.datetime
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -52,19 +42,7 @@ class FlawPackageVersionPut(OSIDBModel):
 
                 versions.append(versions_item)
 
-        uuid: str = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
         embargoed = self.embargoed
-
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
-
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -72,14 +50,8 @@ class FlawPackageVersionPut(OSIDBModel):
             field_dict["package"] = package
         if not isinstance(versions, Unset):
             field_dict["versions"] = versions
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
 
         return field_dict
 
@@ -97,19 +69,7 @@ class FlawPackageVersionPut(OSIDBModel):
                 _temp_versions.append(versions_item)
             versions = (None, json.dumps(_temp_versions).encode(), "application/json")
 
-        uuid: bytes = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
-
-        created_dt: bytes = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat().encode()
-
-        updated_dt: bytes = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat().encode()
 
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
@@ -119,20 +79,14 @@ class FlawPackageVersionPut(OSIDBModel):
             field_dict["package"] = package
         if not isinstance(versions, Unset):
             field_dict["versions"] = versions
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.flaw_version import FlawVersion
+        from ..models.flaw_version_request import FlawVersionRequest
 
         d = src_dict.copy()
         package = d.pop("package", UNSET)
@@ -140,63 +94,32 @@ class FlawPackageVersionPut(OSIDBModel):
         versions = []
         _versions = d.pop("versions", UNSET)
         for versions_item_data in _versions or []:
-            # }
             _versions_item = versions_item_data
-            versions_item: FlawVersion
+            versions_item: FlawVersionRequest
             if isinstance(_versions_item, Unset):
                 versions_item = UNSET
             else:
-                versions_item = FlawVersion.from_dict(_versions_item)
+                versions_item = FlawVersionRequest.from_dict(_versions_item)
 
             versions.append(versions_item)
 
-        # }
-        _uuid = d.pop("uuid", UNSET)
-        uuid: UUID
-        if isinstance(_uuid, Unset):
-            uuid = UNSET
-        else:
-            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
-
         embargoed = d.pop("embargoed", UNSET)
 
-        # }
-        _created_dt = d.pop("created_dt", UNSET)
-        created_dt: datetime.datetime
-        if isinstance(_created_dt, Unset):
-            created_dt = UNSET
-        else:
-            created_dt = isoparse(_created_dt)
-
-        # }
-        _updated_dt = d.pop("updated_dt", UNSET)
-        updated_dt: datetime.datetime
-        if isinstance(_updated_dt, Unset):
-            updated_dt = UNSET
-        else:
-            updated_dt = isoparse(_updated_dt)
-
-        flaw_package_version_put = cls(
+        flaw_package_version_post_request = cls(
             package=package,
             versions=versions,
-            uuid=uuid,
             embargoed=embargoed,
-            created_dt=created_dt,
-            updated_dt=updated_dt,
         )
 
-        flaw_package_version_put.additional_properties = d
-        return flaw_package_version_put
+        flaw_package_version_post_request.additional_properties = d
+        return flaw_package_version_post_request
 
     @staticmethod
     def get_fields():
         return {
             "package": str,
-            "versions": list["FlawVersion"],
-            "uuid": UUID,
+            "versions": list["FlawVersionRequest"],
             "embargoed": bool,
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
         }
 
     @property

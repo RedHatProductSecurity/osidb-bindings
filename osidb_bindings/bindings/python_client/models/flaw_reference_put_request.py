@@ -1,7 +1,5 @@
 import datetime
-import json
-from typing import TYPE_CHECKING, Any, TypeVar, Union
-from uuid import UUID
+from typing import Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -10,24 +8,17 @@ from dateutil.parser import isoparse
 from ..models.flaw_reference_type import FlawReferenceType
 from ..types import UNSET, OSIDBModel, Unset
 
-if TYPE_CHECKING:
-    from ..models.alert import Alert
-
-
-T = TypeVar("T", bound="FlawReferencePut")
+T = TypeVar("T", bound="FlawReferencePutRequest")
 
 
 @_attrs_define
-class FlawReferencePut(OSIDBModel):
+class FlawReferencePutRequest(OSIDBModel):
     """FlawReference serializer
 
     Attributes:
         url (str):
-        uuid (UUID):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
-        alerts (list['Alert']):
-        created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         description (Union[Unset, str]):
@@ -35,10 +26,7 @@ class FlawReferencePut(OSIDBModel):
     """
 
     url: str
-    uuid: UUID
     embargoed: bool
-    alerts: list["Alert"]
-    created_dt: datetime.datetime
     updated_dt: datetime.datetime
     description: Union[Unset, str] = UNSET
     type_: Union[Unset, FlawReferenceType] = UNSET
@@ -47,25 +35,7 @@ class FlawReferencePut(OSIDBModel):
     def to_dict(self) -> dict[str, Any]:
         url = self.url
 
-        uuid: str = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
         embargoed = self.embargoed
-
-        alerts: list[dict[str, Any]] = UNSET
-        if not isinstance(self.alerts, Unset):
-            alerts = []
-            for alerts_item_data in self.alerts:
-                alerts_item: dict[str, Any] = UNSET
-                if not isinstance(alerts_item_data, Unset):
-                    alerts_item = alerts_item_data.to_dict()
-
-                alerts.append(alerts_item)
-
-        created_dt: str = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat()
 
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
@@ -81,14 +51,8 @@ class FlawReferencePut(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(url, Unset):
             field_dict["url"] = url
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(alerts, Unset):
-            field_dict["alerts"] = alerts
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(description, Unset):
@@ -101,26 +65,7 @@ class FlawReferencePut(OSIDBModel):
     def to_multipart(self) -> dict[str, Any]:
         url = (None, str(self.url).encode(), "text/plain")
 
-        uuid: bytes = UNSET
-        if not isinstance(self.uuid, Unset):
-            uuid = str(self.uuid)
-
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
-
-        alerts: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.alerts, Unset):
-            _temp_alerts = []
-            for alerts_item_data in self.alerts:
-                alerts_item: dict[str, Any] = UNSET
-                if not isinstance(alerts_item_data, Unset):
-                    alerts_item = alerts_item_data.to_dict()
-
-                _temp_alerts.append(alerts_item)
-            alerts = (None, json.dumps(_temp_alerts).encode(), "application/json")
-
-        created_dt: bytes = UNSET
-        if not isinstance(self.created_dt, Unset):
-            created_dt = self.created_dt.isoformat().encode()
 
         updated_dt: bytes = UNSET
         if not isinstance(self.updated_dt, Unset):
@@ -135,7 +80,6 @@ class FlawReferencePut(OSIDBModel):
         type_: Union[Unset, tuple[None, bytes, str]] = UNSET
         if not isinstance(self.type_, Unset):
             type_ = (None, str(self.type_.value).encode(), "text/plain")
-        # CHANGE END (3) #}
 
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
@@ -143,14 +87,8 @@ class FlawReferencePut(OSIDBModel):
 
         if not isinstance(url, Unset):
             field_dict["url"] = url
-        if not isinstance(uuid, Unset):
-            field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(alerts, Unset):
-            field_dict["alerts"] = alerts
-        if not isinstance(created_dt, Unset):
-            field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(description, Unset):
@@ -162,43 +100,11 @@ class FlawReferencePut(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.alert import Alert
-
         d = src_dict.copy()
         url = d.pop("url", UNSET)
 
-        # }
-        _uuid = d.pop("uuid", UNSET)
-        uuid: UUID
-        if isinstance(_uuid, Unset):
-            uuid = UNSET
-        else:
-            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
-
         embargoed = d.pop("embargoed", UNSET)
 
-        alerts = []
-        _alerts = d.pop("alerts", UNSET)
-        for alerts_item_data in _alerts or []:
-            # }
-            _alerts_item = alerts_item_data
-            alerts_item: Alert
-            if isinstance(_alerts_item, Unset):
-                alerts_item = UNSET
-            else:
-                alerts_item = Alert.from_dict(_alerts_item)
-
-            alerts.append(alerts_item)
-
-        # }
-        _created_dt = d.pop("created_dt", UNSET)
-        created_dt: datetime.datetime
-        if isinstance(_created_dt, Unset):
-            created_dt = UNSET
-        else:
-            created_dt = isoparse(_created_dt)
-
-        # }
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
         if isinstance(_updated_dt, Unset):
@@ -208,7 +114,6 @@ class FlawReferencePut(OSIDBModel):
 
         description = d.pop("description", UNSET)
 
-        # }
         _type_ = d.pop("type", UNSET)
         type_: Union[Unset, FlawReferenceType]
         if isinstance(_type_, Unset):
@@ -216,28 +121,22 @@ class FlawReferencePut(OSIDBModel):
         else:
             type_ = FlawReferenceType(_type_)
 
-        flaw_reference_put = cls(
+        flaw_reference_put_request = cls(
             url=url,
-            uuid=uuid,
             embargoed=embargoed,
-            alerts=alerts,
-            created_dt=created_dt,
             updated_dt=updated_dt,
             description=description,
             type_=type_,
         )
 
-        flaw_reference_put.additional_properties = d
-        return flaw_reference_put
+        flaw_reference_put_request.additional_properties = d
+        return flaw_reference_put_request
 
     @staticmethod
     def get_fields():
         return {
             "url": str,
-            "uuid": UUID,
             "embargoed": bool,
-            "alerts": list["Alert"],
-            "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "description": str,
             "type": FlawReferenceType,

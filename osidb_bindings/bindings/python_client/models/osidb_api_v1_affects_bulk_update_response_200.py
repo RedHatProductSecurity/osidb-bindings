@@ -76,7 +76,6 @@ class OsidbApiV1AffectsBulkUpdateResponse200(OSIDBModel):
         results = []
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
-            # }
             _results_item = results_item_data
             results_item: Affect
             if isinstance(_results_item, Unset):
@@ -86,7 +85,6 @@ class OsidbApiV1AffectsBulkUpdateResponse200(OSIDBModel):
 
             results.append(results_item)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

@@ -67,7 +67,6 @@ class AuthTokenRetrieveResponse200(OSIDBModel):
         d = src_dict.copy()
         access = d.pop("access", UNSET)
 
-        # }
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):

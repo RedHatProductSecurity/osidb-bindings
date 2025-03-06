@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw import Flaw
+from ...models.flaw_request import FlawRequest
 from ...models.osidb_api_v1_flaws_update_response_200 import (
     OsidbApiV1FlawsUpdateResponse200,
 )
@@ -14,7 +14,7 @@ QUERY_PARAMS = {
     "create_jira_task": bool,
 }
 
-REQUEST_BODY_TYPE = Flaw
+REQUEST_BODY_TYPE = FlawRequest
 
 
 def _get_kwargs(
@@ -22,9 +22,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Flaw,
-        Flaw,
-        Flaw,
+        FlawRequest,
+        FlawRequest,
+        FlawRequest,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> dict[str, Any]:
@@ -43,7 +43,7 @@ def _get_kwargs(
         "params": params,
     }
 
-    if check_nested_instance(body, Flaw):
+    if check_nested_instance(body, FlawRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -59,7 +59,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: OsidbApiV1FlawsUpdateResponse200
         if isinstance(_response_200, Unset):
@@ -86,9 +85,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Flaw,
-        Flaw,
-        Flaw,
+        FlawRequest,
+        FlawRequest,
+        FlawRequest,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
@@ -98,9 +97,9 @@ def sync_detailed(
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -133,9 +132,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Flaw,
-        Flaw,
-        Flaw,
+        FlawRequest,
+        FlawRequest,
+        FlawRequest,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
@@ -145,9 +144,9 @@ def sync(
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -170,9 +169,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Flaw,
-        Flaw,
-        Flaw,
+        FlawRequest,
+        FlawRequest,
+        FlawRequest,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
@@ -182,9 +181,9 @@ async def asyncio_detailed(
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -217,9 +216,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        Flaw,
-        Flaw,
-        Flaw,
+        FlawRequest,
+        FlawRequest,
+        FlawRequest,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
@@ -229,9 +228,9 @@ async def asyncio(
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
-        body (Flaw): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
+        body (FlawRequest): serialize flaw model
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

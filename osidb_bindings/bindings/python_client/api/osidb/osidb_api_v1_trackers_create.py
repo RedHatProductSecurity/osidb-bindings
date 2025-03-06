@@ -7,21 +7,21 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_trackers_create_response_201 import (
     OsidbApiV1TrackersCreateResponse201,
 )
-from ...models.tracker_post import TrackerPost
+from ...models.tracker_post_request import TrackerPostRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TrackerPost
+REQUEST_BODY_TYPE = TrackerPostRequest
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerPost,
-        TrackerPost,
-        TrackerPost,
+        TrackerPostRequest,
+        TrackerPostRequest,
+        TrackerPostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/osidb/api/v1/trackers",
     }
 
-    if check_nested_instance(body, TrackerPost):
+    if check_nested_instance(body, TrackerPostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -46,7 +46,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     if response.status_code == 201:
-        # }
         _response_201 = response.json()
         response_201: OsidbApiV1TrackersCreateResponse201
         if isinstance(_response_201, Unset):
@@ -72,18 +71,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerPost,
-        TrackerPost,
-        TrackerPost,
+        TrackerPostRequest,
+        TrackerPostRequest,
+        TrackerPostRequest,
     ],
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
     """
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -113,18 +112,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerPost,
-        TrackerPost,
-        TrackerPost,
+        TrackerPostRequest,
+        TrackerPostRequest,
+        TrackerPostRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     """
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -144,18 +143,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerPost,
-        TrackerPost,
-        TrackerPost,
+        TrackerPostRequest,
+        TrackerPostRequest,
+        TrackerPostRequest,
     ],
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
     """
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -185,18 +184,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerPost,
-        TrackerPost,
-        TrackerPost,
+        TrackerPostRequest,
+        TrackerPostRequest,
+        TrackerPostRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
     """
     Args:
         bugzilla_api_key (str):
         jira_api_key (str):
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
-        body (TrackerPost): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
+        body (TrackerPostRequest): Tracker serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

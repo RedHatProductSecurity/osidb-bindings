@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_uuid_list import FlawUUIDList
+from ...models.flaw_uuid_list_request import FlawUUIDListRequest
 from ...models.trackers_api_v1_file_create_response_200 import (
     TrackersApiV1FileCreateResponse200,
 )
@@ -12,16 +12,16 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawUUIDList
+REQUEST_BODY_TYPE = FlawUUIDListRequest
 
 
 def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawUUIDList,
-        FlawUUIDList,
-        FlawUUIDList,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": f"{client.base_url}/trackers/api/v1/file",
     }
 
-    if check_nested_instance(body, FlawUUIDList):
+    if check_nested_instance(body, FlawUUIDListRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -46,7 +46,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[TrackersApiV1FileCreateResponse200]:
     if response.status_code == 200:
-        # }
         _response_200 = response.json()
         response_200: TrackersApiV1FileCreateResponse200
         if isinstance(_response_200, Unset):
@@ -72,17 +71,17 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawUUIDList,
-        FlawUUIDList,
-        FlawUUIDList,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
     ],
 ) -> Response[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
-        body (FlawUUIDList):
-        body (FlawUUIDList):
-        body (FlawUUIDList):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -112,17 +111,17 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawUUIDList,
-        FlawUUIDList,
-        FlawUUIDList,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
     ],
 ) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
-        body (FlawUUIDList):
-        body (FlawUUIDList):
-        body (FlawUUIDList):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,17 +141,17 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawUUIDList,
-        FlawUUIDList,
-        FlawUUIDList,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
     ],
 ) -> Response[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
-        body (FlawUUIDList):
-        body (FlawUUIDList):
-        body (FlawUUIDList):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -182,17 +181,17 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawUUIDList,
-        FlawUUIDList,
-        FlawUUIDList,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
+        FlawUUIDListRequest,
     ],
 ) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
-        body (FlawUUIDList):
-        body (FlawUUIDList):
-        body (FlawUUIDList):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
+        body (FlawUUIDListRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

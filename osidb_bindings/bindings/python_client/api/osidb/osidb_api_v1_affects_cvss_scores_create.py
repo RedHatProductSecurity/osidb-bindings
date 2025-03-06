@@ -5,7 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.affect_cvss_post import AffectCVSSPost
+from ...models.affect_cvss_post_request import AffectCVSSPostRequest
 from ...models.osidb_api_v1_affects_cvss_scores_create_response_201 import (
     OsidbApiV1AffectsCvssScoresCreateResponse201,
 )
@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = AffectCVSSPost
+REQUEST_BODY_TYPE = AffectCVSSPostRequest
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectCVSSPost,
-        AffectCVSSPost,
-        AffectCVSSPost,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, AffectCVSSPost):
+    if check_nested_instance(body, AffectCVSSPostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,7 +50,6 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[OsidbApiV1AffectsCvssScoresCreateResponse201]:
     if response.status_code == 201:
-        # }
         _response_201 = response.json()
         response_201: OsidbApiV1AffectsCvssScoresCreateResponse201
         if isinstance(_response_201, Unset):
@@ -79,18 +78,18 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectCVSSPost,
-        AffectCVSSPost,
-        AffectCVSSPost,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
     ],
 ) -> Response[OsidbApiV1AffectsCvssScoresCreateResponse201]:
     """
     Args:
         affect_id (UUID):
         bugzilla_api_key (str):
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -122,18 +121,18 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectCVSSPost,
-        AffectCVSSPost,
-        AffectCVSSPost,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
     ],
 ) -> Optional[OsidbApiV1AffectsCvssScoresCreateResponse201]:
     """
     Args:
         affect_id (UUID):
         bugzilla_api_key (str):
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,18 +154,18 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectCVSSPost,
-        AffectCVSSPost,
-        AffectCVSSPost,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
     ],
 ) -> Response[OsidbApiV1AffectsCvssScoresCreateResponse201]:
     """
     Args:
         affect_id (UUID):
         bugzilla_api_key (str):
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -198,18 +197,18 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectCVSSPost,
-        AffectCVSSPost,
-        AffectCVSSPost,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
+        AffectCVSSPostRequest,
     ],
 ) -> Optional[OsidbApiV1AffectsCvssScoresCreateResponse201]:
     """
     Args:
         affect_id (UUID):
         bugzilla_api_key (str):
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
-        body (AffectCVSSPost): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
+        body (AffectCVSSPostRequest): AffectCVSS serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

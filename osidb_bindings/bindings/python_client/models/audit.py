@@ -78,63 +78,9 @@ class Audit(OSIDBModel):
 
         return field_dict
 
-    def to_multipart(self) -> dict[str, Any]:
-        pgh_created_at: bytes = UNSET
-        if not isinstance(self.pgh_created_at, Unset):
-            pgh_created_at = self.pgh_created_at.isoformat().encode()
-
-        pgh_slug = (None, str(self.pgh_slug).encode(), "text/plain")
-
-        pgh_obj_model = (None, str(self.pgh_obj_model).encode(), "text/plain")
-
-        pgh_label = (None, str(self.pgh_label).encode(), "text/plain")
-
-        pgh_diff = (None, str(self.pgh_diff).encode(), "text/plain")
-
-        pgh_data = (None, str(self.pgh_data).encode(), "text/plain")
-
-        pgh_obj_id: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.pgh_obj_id, Unset):
-            pgh_obj_id = UNSET
-        elif isinstance(self.pgh_obj_id, str):
-            pgh_obj_id = (None, str(self.pgh_obj_id).encode(), "text/plain")
-        else:
-            pgh_obj_id = (None, str(self.pgh_obj_id).encode(), "text/plain")
-
-        pgh_context = (
-            self.pgh_context
-            if isinstance(self.pgh_context, Unset)
-            else (None, str(self.pgh_context).encode(), "text/plain")
-        )
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(pgh_created_at, Unset):
-            field_dict["pgh_created_at"] = pgh_created_at
-        if not isinstance(pgh_slug, Unset):
-            field_dict["pgh_slug"] = pgh_slug
-        if not isinstance(pgh_obj_model, Unset):
-            field_dict["pgh_obj_model"] = pgh_obj_model
-        if not isinstance(pgh_label, Unset):
-            field_dict["pgh_label"] = pgh_label
-        if not isinstance(pgh_diff, Unset):
-            field_dict["pgh_diff"] = pgh_diff
-        if not isinstance(pgh_data, Unset):
-            field_dict["pgh_data"] = pgh_data
-        if not isinstance(pgh_obj_id, Unset):
-            field_dict["pgh_obj_id"] = pgh_obj_id
-        if not isinstance(pgh_context, Unset):
-            field_dict["pgh_context"] = pgh_context
-
-        return field_dict
-
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        # }
         _pgh_created_at = d.pop("pgh_created_at", UNSET)
         pgh_created_at: datetime.datetime
         if isinstance(_pgh_created_at, Unset):

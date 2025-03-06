@@ -7,11 +7,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawUUIDList")
+T = TypeVar("T", bound="FlawUUIDListRequest")
 
 
 @_attrs_define
-class FlawUUIDList(OSIDBModel):
+class FlawUUIDListRequest(OSIDBModel):
     """
     Attributes:
         flaw_uuids (list[UUID]):
@@ -69,7 +69,6 @@ class FlawUUIDList(OSIDBModel):
         flaw_uuids = []
         _flaw_uuids = d.pop("flaw_uuids", UNSET)
         for flaw_uuids_item_data in _flaw_uuids or []:
-            # }
             _flaw_uuids_item = flaw_uuids_item_data
             flaw_uuids_item: UUID
             if isinstance(_flaw_uuids_item, Unset):
@@ -83,12 +82,12 @@ class FlawUUIDList(OSIDBModel):
 
             flaw_uuids.append(flaw_uuids_item)
 
-        flaw_uuid_list = cls(
+        flaw_uuid_list_request = cls(
             flaw_uuids=flaw_uuids,
         )
 
-        flaw_uuid_list.additional_properties = d
-        return flaw_uuid_list
+        flaw_uuid_list_request.additional_properties = d
+        return flaw_uuid_list_request
 
     @staticmethod
     def get_fields():
