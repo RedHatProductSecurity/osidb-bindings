@@ -1,6 +1,6 @@
 project_name_override: bindings
 package_name_override: python_client
-package_version_override: 4.8.0
+package_version_override: 4.8.1
 post_hooks:
    - "ruff check . --fix --extend-select I --config ../../ruff.toml"
    - "ruff format . --config ../../ruff.toml"
