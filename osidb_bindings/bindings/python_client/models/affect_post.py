@@ -36,7 +36,7 @@ class AffectPost(OSIDBModel):
         delegated_resolution (str):
         cvss_scores (list['AffectCVSS']):
         delegated_not_affected_justification (str):
-        resolved_dt (datetime.datetime):
+        resolved_dt (Union[None, datetime.datetime]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         alerts (list['Alert']):
@@ -57,7 +57,7 @@ class AffectPost(OSIDBModel):
     delegated_resolution: str
     cvss_scores: list["AffectCVSS"]
     delegated_not_affected_justification: str
-    resolved_dt: datetime.datetime
+    resolved_dt: Union[None, datetime.datetime]
     embargoed: bool
     alerts: list["Alert"]
     created_dt: datetime.datetime
@@ -113,9 +113,14 @@ class AffectPost(OSIDBModel):
 
         delegated_not_affected_justification = self.delegated_not_affected_justification
 
-        resolved_dt: str = UNSET
-        if not isinstance(self.resolved_dt, Unset):
-            resolved_dt = self.resolved_dt.isoformat()
+        resolved_dt: Union[None, str]
+        if isinstance(self.resolved_dt, datetime.datetime):
+            resolved_dt = UNSET
+            if not isinstance(self.resolved_dt, Unset):
+                resolved_dt = self.resolved_dt.isoformat()
+
+        else:
+            resolved_dt = self.resolved_dt
 
         embargoed = self.embargoed
 
@@ -300,9 +305,14 @@ class AffectPost(OSIDBModel):
             "text/plain",
         )
 
-        resolved_dt: bytes = UNSET
-        if not isinstance(self.resolved_dt, Unset):
-            resolved_dt = self.resolved_dt.isoformat().encode()
+        resolved_dt: tuple[None, bytes, str]
+
+        if isinstance(self.resolved_dt, datetime.datetime):
+            resolved_dt: bytes = UNSET
+            if not isinstance(self.resolved_dt, Unset):
+                resolved_dt = self.resolved_dt.isoformat().encode()
+        else:
+            resolved_dt = (None, str(self.resolved_dt).encode(), "text/plain")
 
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
 
@@ -536,13 +546,26 @@ class AffectPost(OSIDBModel):
             "delegated_not_affected_justification", UNSET
         )
 
-        # }
-        _resolved_dt = d.pop("resolved_dt", UNSET)
-        resolved_dt: datetime.datetime
-        if isinstance(_resolved_dt, Unset):
-            resolved_dt = UNSET
-        else:
-            resolved_dt = isoparse(_resolved_dt)
+        def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _resolved_dt_type_0 = data
+                resolved_dt_type_0: datetime.datetime
+                if isinstance(_resolved_dt_type_0, Unset):
+                    resolved_dt_type_0 = UNSET
+                else:
+                    resolved_dt_type_0 = isoparse(_resolved_dt_type_0)
+
+                return resolved_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -754,7 +777,7 @@ class AffectPost(OSIDBModel):
             "delegated_resolution": str,
             "cvss_scores": list["AffectCVSS"],
             "delegated_not_affected_justification": str,
-            "resolved_dt": datetime.datetime,
+            "resolved_dt": Union[None, datetime.datetime],
             "embargoed": bool,
             "alerts": list["Alert"],
             "created_dt": datetime.datetime,
