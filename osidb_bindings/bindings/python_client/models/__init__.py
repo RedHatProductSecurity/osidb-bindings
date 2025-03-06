@@ -121,6 +121,7 @@ from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .module_component import ModuleComponent
 from .nist_cvss_validation_enum import NistCvssValidationEnum
+from .not_affected_justification_enum import NotAffectedJustificationEnum
 from .osidb_api_v1_affects_bulk_create_response_200 import (
     OsidbApiV1AffectsBulkCreateResponse200,
 )
@@ -483,6 +484,7 @@ __all__ = (
     "MaturityPreliminaryEnum",
     "ModuleComponent",
     "NistCvssValidationEnum",
+    "NotAffectedJustificationEnum",
     "OsidbApiV1AffectsBulkCreateResponse200",
     "OsidbApiV1AffectsBulkDestroyResponse200",
     "OsidbApiV1AffectsBulkUpdateResponse200",

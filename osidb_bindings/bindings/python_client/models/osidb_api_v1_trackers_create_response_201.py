@@ -6,6 +6,8 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from dateutil.parser import isoparse
 
+from ..models.blank_enum import BlankEnum
+from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -25,6 +27,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         ps_update_stream (str):
         status (str):
         resolution (str):
+        not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum]):
         type_ (TrackerType):
         uuid (UUID):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
@@ -47,6 +50,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     ps_update_stream: str
     status: str
     resolution: str
+    not_affected_justification: Union[BlankEnum, NotAffectedJustificationEnum]
     type_: TrackerType
     uuid: UUID
     embargoed: bool
@@ -77,6 +81,21 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         status = self.status
 
         resolution = self.resolution
+
+        not_affected_justification: str
+        if isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
+            not_affected_justification = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = NotAffectedJustificationEnum(
+                    self.not_affected_justification
+                ).value
+
+        else:
+            not_affected_justification = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = BlankEnum(
+                    self.not_affected_justification
+                ).value
 
         type_: str = UNSET
         if not isinstance(self.type_, Unset):
@@ -138,6 +157,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             field_dict["status"] = status
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(not_affected_justification, Unset):
+            field_dict["not_affected_justification"] = not_affected_justification
         if not isinstance(type_, Unset):
             field_dict["type"] = type_
         if not isinstance(uuid, Unset):
@@ -189,6 +210,43 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         status = d.pop("status", UNSET)
 
         resolution = d.pop("resolution", UNSET)
+
+        def _parse_not_affected_justification(
+            data: object,
+        ) -> Union[BlankEnum, NotAffectedJustificationEnum]:
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _not_affected_justification_type_0 = data
+                not_affected_justification_type_0: NotAffectedJustificationEnum
+                if isinstance(_not_affected_justification_type_0, Unset):
+                    not_affected_justification_type_0 = UNSET
+                else:
+                    not_affected_justification_type_0 = NotAffectedJustificationEnum(
+                        _not_affected_justification_type_0
+                    )
+
+                return not_affected_justification_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            # }
+            _not_affected_justification_type_1 = data
+            not_affected_justification_type_1: BlankEnum
+            if isinstance(_not_affected_justification_type_1, Unset):
+                not_affected_justification_type_1 = UNSET
+            else:
+                not_affected_justification_type_1 = BlankEnum(
+                    _not_affected_justification_type_1
+                )
+
+            return not_affected_justification_type_1
+
+        not_affected_justification = _parse_not_affected_justification(
+            d.pop("not_affected_justification", UNSET)
+        )
 
         # }
         _type_ = d.pop("type", UNSET)
@@ -275,6 +333,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             ps_update_stream=ps_update_stream,
             status=status,
             resolution=resolution,
+            not_affected_justification=not_affected_justification,
             type_=type_,
             uuid=uuid,
             embargoed=embargoed,
@@ -299,6 +358,9 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             "ps_update_stream": str,
             "status": str,
             "resolution": str,
+            "not_affected_justification": Union[
+                BlankEnum, NotAffectedJustificationEnum
+            ],
             "type": TrackerType,
             "uuid": UUID,
             "embargoed": bool,

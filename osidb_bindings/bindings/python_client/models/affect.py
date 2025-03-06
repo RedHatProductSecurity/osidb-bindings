@@ -10,6 +10,7 @@ from dateutil.parser import isoparse
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
+from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.resolution_enum import ResolutionEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -34,6 +35,8 @@ class Affect(OSIDBModel):
         trackers (list['Tracker']):
         delegated_resolution (str):
         cvss_scores (list['AffectCVSS']):
+        delegated_not_affected_justification (str):
+        resolved_dt (datetime.datetime):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         alerts (list['Alert']):
@@ -45,6 +48,7 @@ class Affect(OSIDBModel):
         ps_component (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         purl (Union[None, Unset, str]):
+        not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
     """
 
     uuid: UUID
@@ -54,6 +58,8 @@ class Affect(OSIDBModel):
     trackers: list["Tracker"]
     delegated_resolution: str
     cvss_scores: list["AffectCVSS"]
+    delegated_not_affected_justification: str
+    resolved_dt: datetime.datetime
     embargoed: bool
     alerts: list["Alert"]
     created_dt: datetime.datetime
@@ -63,6 +69,9 @@ class Affect(OSIDBModel):
     ps_component: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     purl: Union[None, Unset, str] = UNSET
+    not_affected_justification: Union[
+        BlankEnum, NotAffectedJustificationEnum, Unset
+    ] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -104,6 +113,12 @@ class Affect(OSIDBModel):
                     cvss_scores_item = cvss_scores_item_data.to_dict()
 
                 cvss_scores.append(cvss_scores_item)
+
+        delegated_not_affected_justification = self.delegated_not_affected_justification
+
+        resolved_dt: str = UNSET
+        if not isinstance(self.resolved_dt, Unset):
+            resolved_dt = self.resolved_dt.isoformat()
 
         embargoed = self.embargoed
 
@@ -176,6 +191,23 @@ class Affect(OSIDBModel):
         else:
             purl = self.purl
 
+        not_affected_justification: Union[Unset, str]
+        if isinstance(self.not_affected_justification, Unset):
+            not_affected_justification = UNSET
+        elif isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
+            not_affected_justification = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = NotAffectedJustificationEnum(
+                    self.not_affected_justification
+                ).value
+
+        else:
+            not_affected_justification = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = BlankEnum(
+                    self.not_affected_justification
+                ).value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
@@ -192,6 +224,12 @@ class Affect(OSIDBModel):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
             field_dict["cvss_scores"] = cvss_scores
+        if not isinstance(delegated_not_affected_justification, Unset):
+            field_dict["delegated_not_affected_justification"] = (
+                delegated_not_affected_justification
+            )
+        if not isinstance(resolved_dt, Unset):
+            field_dict["resolved_dt"] = resolved_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(alerts, Unset):
@@ -210,6 +248,8 @@ class Affect(OSIDBModel):
             field_dict["impact"] = impact
         if not isinstance(purl, Unset):
             field_dict["purl"] = purl
+        if not isinstance(not_affected_justification, Unset):
+            field_dict["not_affected_justification"] = not_affected_justification
 
         return field_dict
 
@@ -262,6 +302,16 @@ class Affect(OSIDBModel):
                 json.dumps(_temp_cvss_scores).encode(),
                 "application/json",
             )
+
+        delegated_not_affected_justification = (
+            None,
+            str(self.delegated_not_affected_justification).encode(),
+            "text/plain",
+        )
+
+        resolved_dt: bytes = UNSET
+        if not isinstance(self.resolved_dt, Unset):
+            resolved_dt = self.resolved_dt.isoformat().encode()
 
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
 
@@ -355,6 +405,29 @@ class Affect(OSIDBModel):
         else:
             purl = (None, str(self.purl).encode(), "text/plain")
 
+        not_affected_justification: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.not_affected_justification, Unset):
+            not_affected_justification = UNSET
+        elif isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
+            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = (
+                    None,
+                    str(self.not_affected_justification.value).encode(),
+                    "text/plain",
+                )
+            # CHANGE END (3) #}
+        else:
+            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
+            if not isinstance(self.not_affected_justification, Unset):
+                not_affected_justification = (
+                    None,
+                    str(self.not_affected_justification.value).encode(),
+                    "text/plain",
+                )
+            # CHANGE END (3) #}
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -373,6 +446,12 @@ class Affect(OSIDBModel):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
             field_dict["cvss_scores"] = cvss_scores
+        if not isinstance(delegated_not_affected_justification, Unset):
+            field_dict["delegated_not_affected_justification"] = (
+                delegated_not_affected_justification
+            )
+        if not isinstance(resolved_dt, Unset):
+            field_dict["resolved_dt"] = resolved_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(alerts, Unset):
@@ -391,6 +470,8 @@ class Affect(OSIDBModel):
             field_dict["impact"] = impact
         if not isinstance(purl, Unset):
             field_dict["purl"] = purl
+        if not isinstance(not_affected_justification, Unset):
+            field_dict["not_affected_justification"] = not_affected_justification
 
         return field_dict
 
@@ -465,6 +546,18 @@ class Affect(OSIDBModel):
                 cvss_scores_item = AffectCVSS.from_dict(_cvss_scores_item)
 
             cvss_scores.append(cvss_scores_item)
+
+        delegated_not_affected_justification = d.pop(
+            "delegated_not_affected_justification", UNSET
+        )
+
+        # }
+        _resolved_dt = d.pop("resolved_dt", UNSET)
+        resolved_dt: datetime.datetime
+        if isinstance(_resolved_dt, Unset):
+            resolved_dt = UNSET
+        else:
+            resolved_dt = isoparse(_resolved_dt)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -610,6 +703,45 @@ class Affect(OSIDBModel):
 
         purl = _parse_purl(d.pop("purl", UNSET))
 
+        def _parse_not_affected_justification(
+            data: object,
+        ) -> Union[BlankEnum, NotAffectedJustificationEnum, Unset]:
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                # }
+                _not_affected_justification_type_0 = data
+                not_affected_justification_type_0: NotAffectedJustificationEnum
+                if isinstance(_not_affected_justification_type_0, Unset):
+                    not_affected_justification_type_0 = UNSET
+                else:
+                    not_affected_justification_type_0 = NotAffectedJustificationEnum(
+                        _not_affected_justification_type_0
+                    )
+
+                return not_affected_justification_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            # }
+            _not_affected_justification_type_1 = data
+            not_affected_justification_type_1: BlankEnum
+            if isinstance(_not_affected_justification_type_1, Unset):
+                not_affected_justification_type_1 = UNSET
+            else:
+                not_affected_justification_type_1 = BlankEnum(
+                    _not_affected_justification_type_1
+                )
+
+            return not_affected_justification_type_1
+
+        not_affected_justification = _parse_not_affected_justification(
+            d.pop("not_affected_justification", UNSET)
+        )
+
         affect = cls(
             uuid=uuid,
             flaw=flaw,
@@ -618,6 +750,8 @@ class Affect(OSIDBModel):
             trackers=trackers,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
+            delegated_not_affected_justification=delegated_not_affected_justification,
+            resolved_dt=resolved_dt,
             embargoed=embargoed,
             alerts=alerts,
             created_dt=created_dt,
@@ -627,6 +761,7 @@ class Affect(OSIDBModel):
             ps_component=ps_component,
             impact=impact,
             purl=purl,
+            not_affected_justification=not_affected_justification,
         )
 
         affect.additional_properties = d
@@ -642,6 +777,8 @@ class Affect(OSIDBModel):
             "trackers": list["Tracker"],
             "delegated_resolution": str,
             "cvss_scores": list["AffectCVSS"],
+            "delegated_not_affected_justification": str,
+            "resolved_dt": datetime.datetime,
             "embargoed": bool,
             "alerts": list["Alert"],
             "created_dt": datetime.datetime,
@@ -651,6 +788,9 @@ class Affect(OSIDBModel):
             "ps_component": Union[None, str],
             "impact": Union[BlankEnum, ImpactEnum],
             "purl": Union[None, str],
+            "not_affected_justification": Union[
+                BlankEnum, NotAffectedJustificationEnum
+            ],
         }
 
     @property
