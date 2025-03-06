@@ -310,7 +310,7 @@ class Session:
         if isinstance(self.auth, tuple):
             response = auth_token_create.sync(
                 client=self.__client,
-                body=models.TokenObtainPair.from_dict(
+                body=models.TokenObtainPairRequest.from_dict(
                     {"username": self.auth[0], "password": self.auth[1]}
                 ),
             )
@@ -326,14 +326,14 @@ class Session:
         try:
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
+                body=models.TokenRefreshRequest.from_dict({"refresh": self.refresh_token}),
             )
         except requests.HTTPError:
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefresh.from_dict({"refresh": self.refresh_token}),
+                body=models.TokenRefreshRequest.from_dict({"refresh": self.refresh_token}),
             )
 
         return response.access
