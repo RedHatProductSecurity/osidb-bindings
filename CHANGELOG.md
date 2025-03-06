@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.8.1] - 2025-03-06
+### Fixed
+- special fix for affect resolved_dt field to account for None/NULL values,
+  this is a temporary solution until OSIDB 4.9.0 is released
+
 ## [4.8.0] - 2025-03-06
 
 ## [4.7.1] - 2025-02-13
