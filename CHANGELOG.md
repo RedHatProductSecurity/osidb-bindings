@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [4.9.0] - 2025-03-13
+
 ## [4.8.2] - 2025-03-07
 ### Fixed
 - special fix for tracker creation to not mark not_affected_justification
