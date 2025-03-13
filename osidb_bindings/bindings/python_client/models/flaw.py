@@ -51,6 +51,7 @@ class Flaw(OSIDBModel):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         classification (FlawClassification):
+        task_key (Union[None, str]):
         alerts (list['Alert']):
         cve_id (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
@@ -68,7 +69,6 @@ class Flaw(OSIDBModel):
         nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
         group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
-        task_key (Union[Unset, str]):
         team_id (Union[Unset, str]):
     """
 
@@ -87,6 +87,7 @@ class Flaw(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: "FlawClassification"
+    task_key: Union[None, str]
     alerts: list["Alert"]
     cve_id: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
@@ -106,7 +107,6 @@ class Flaw(OSIDBModel):
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
-    task_key: Union[Unset, str] = UNSET
     team_id: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -206,6 +206,9 @@ class Flaw(OSIDBModel):
         classification: dict[str, Any] = UNSET
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
+
+        task_key: Union[None, str]
+        task_key = self.task_key
 
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
@@ -345,8 +348,6 @@ class Flaw(OSIDBModel):
 
         owner = self.owner
 
-        task_key = self.task_key
-
         team_id = self.team_id
 
         field_dict: dict[str, Any] = {}
@@ -381,6 +382,8 @@ class Flaw(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(classification, Unset):
             field_dict["classification"] = classification
+        if not isinstance(task_key, Unset):
+            field_dict["task_key"] = task_key
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(cve_id, Unset):
@@ -415,8 +418,6 @@ class Flaw(OSIDBModel):
             field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(task_key, Unset):
-            field_dict["task_key"] = task_key
         if not isinstance(team_id, Unset):
             field_dict["team_id"] = team_id
 
@@ -556,6 +557,13 @@ class Flaw(OSIDBModel):
             classification = UNSET
         else:
             classification = FlawClassification.from_dict(_classification)
+
+        def _parse_task_key(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            return cast(Union[None, str], data)
+
+        task_key = _parse_task_key(d.pop("task_key", UNSET))
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
@@ -829,8 +837,6 @@ class Flaw(OSIDBModel):
 
         owner = d.pop("owner", UNSET)
 
-        task_key = d.pop("task_key", UNSET)
-
         team_id = d.pop("team_id", UNSET)
 
         flaw = cls(
@@ -849,6 +855,7 @@ class Flaw(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             classification=classification,
+            task_key=task_key,
             alerts=alerts,
             cve_id=cve_id,
             impact=impact,
@@ -866,7 +873,6 @@ class Flaw(OSIDBModel):
             nist_cvss_validation=nist_cvss_validation,
             group_key=group_key,
             owner=owner,
-            task_key=task_key,
             team_id=team_id,
         )
 
@@ -891,6 +897,7 @@ class Flaw(OSIDBModel):
             "created_dt": datetime.datetime,
             "updated_dt": datetime.datetime,
             "classification": FlawClassification,
+            "task_key": Union[None, str],
             "alerts": list["Alert"],
             "cve_id": Union[None, str],
             "impact": Union[BlankEnum, ImpactEnum],
@@ -908,7 +915,6 @@ class Flaw(OSIDBModel):
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
             "group_key": str,
             "owner": str,
-            "task_key": str,
             "team_id": str,
         }
 

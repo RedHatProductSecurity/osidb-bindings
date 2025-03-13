@@ -44,7 +44,6 @@ class FlawRequest(OSIDBModel):
         nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
         group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
-        task_key (Union[Unset, str]):
         team_id (Union[Unset, str]):
     """
 
@@ -70,7 +69,6 @@ class FlawRequest(OSIDBModel):
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
-    task_key: Union[Unset, str] = UNSET
     team_id: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -213,8 +211,6 @@ class FlawRequest(OSIDBModel):
 
         owner = self.owner
 
-        task_key = self.task_key
-
         team_id = self.team_id
 
         field_dict: dict[str, Any] = {}
@@ -259,8 +255,6 @@ class FlawRequest(OSIDBModel):
             field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(task_key, Unset):
-            field_dict["task_key"] = task_key
         if not isinstance(team_id, Unset):
             field_dict["team_id"] = team_id
 
@@ -459,12 +453,6 @@ class FlawRequest(OSIDBModel):
             else (None, str(self.owner).encode(), "text/plain")
         )
 
-        task_key = (
-            self.task_key
-            if isinstance(self.task_key, Unset)
-            else (None, str(self.task_key).encode(), "text/plain")
-        )
-
         team_id = (
             self.team_id
             if isinstance(self.team_id, Unset)
@@ -515,8 +503,6 @@ class FlawRequest(OSIDBModel):
             field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(task_key, Unset):
-            field_dict["task_key"] = task_key
         if not isinstance(team_id, Unset):
             field_dict["team_id"] = team_id
 
@@ -798,8 +784,6 @@ class FlawRequest(OSIDBModel):
 
         owner = d.pop("owner", UNSET)
 
-        task_key = d.pop("task_key", UNSET)
-
         team_id = d.pop("team_id", UNSET)
 
         flaw_request = cls(
@@ -823,7 +807,6 @@ class FlawRequest(OSIDBModel):
             nist_cvss_validation=nist_cvss_validation,
             group_key=group_key,
             owner=owner,
-            task_key=task_key,
             team_id=team_id,
         )
 
@@ -853,7 +836,6 @@ class FlawRequest(OSIDBModel):
             "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
             "group_key": str,
             "owner": str,
-            "task_key": str,
             "team_id": str,
         }
 
