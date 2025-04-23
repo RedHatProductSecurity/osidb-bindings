@@ -4,14 +4,16 @@
 #}
 {% macro construct(property, source) %}
 def _parse_{{ property.python_name }}(data: object) -> {{ property.get_type_string() }}:
-    {% if "None" in property.get_type_strings_in_union(json=True, multipart=False) %}
+{# CHANGE START (1) - make all the fields treated as non-required #}
+{#    {% if "None" in property.get_type_strings_in_union(json=True, multipart=False) %}#}
     if data is None:
         return data
-    {% endif %}
-    {% if "Unset" in property.get_type_strings_in_union(json=True, multipart=False) %}
+{#    {% endif %}#}
+{#    {% if "Unset" in property.get_type_strings_in_union(json=True, multipart=False) %}#}
     if isinstance(data, Unset):
         return data
-    {% endif %}
+{#    {% endif %}#}
+{# CHANGE END (1) #}
     {% set ns = namespace(contains_unmodified_properties = false) %}
     {% for inner_property in property.inner_properties %}
     {% import "property_templates/" + inner_property.template as inner_template %}
@@ -47,11 +49,13 @@ def _parse_{{ property.python_name }}(data: object) -> {{ property.get_type_stri
 {% set ns = namespace(contains_properties_without_transform = false, contains_modified_properties = not property.required, has_if = false) %}
 {% if declare_type %}{{ destination }}: {{ property.get_type_string(json=True, multipart=False) }}{% endif %}
 
-{% if not property.required %}
+{# CHANGE START (2) - make all the fields treated as non-required #}
+{#{% if not property.required %}#}
 if isinstance({{ source }}, Unset):
     {{ destination }} = UNSET
     {% set ns.has_if = true %}
-{% endif %}
+{#{% endif %}#}
+{# CHANGE END (2) #}
 {% for inner_property in property.inner_properties %}
     {% import "property_templates/" + inner_property.template as inner_template %}
     {% if not inner_template.transform %}

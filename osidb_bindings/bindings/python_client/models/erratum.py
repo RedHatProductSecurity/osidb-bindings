@@ -36,7 +36,9 @@ class Erratum(OSIDBModel):
         advisory_name = self.advisory_name
 
         shipped_dt: Union[None, str]
-        if isinstance(self.shipped_dt, datetime.datetime):
+        if isinstance(self.shipped_dt, Unset):
+            shipped_dt = UNSET
+        elif isinstance(self.shipped_dt, datetime.datetime):
             shipped_dt = UNSET
             if not isinstance(self.shipped_dt, Unset):
                 shipped_dt = self.shipped_dt.isoformat()
@@ -76,6 +78,8 @@ class Erratum(OSIDBModel):
 
         def _parse_shipped_dt(data: object) -> Union[None, datetime.datetime]:
             if data is None:
+                return data
+            if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):

@@ -101,6 +101,8 @@ class AffectReportData(OSIDBModel):
         def _parse_affectedness(
             data: object,
         ) -> Union[AffectednessEnum, BlankEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -130,6 +132,8 @@ class AffectReportData(OSIDBModel):
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
         def _parse_resolution(data: object) -> Union[BlankEnum, ResolutionEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:

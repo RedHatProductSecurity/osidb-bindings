@@ -86,7 +86,9 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
             uuid = str(self.uuid)
 
         flaw: Union[None, str]
-        if isinstance(self.flaw, UUID):
+        if isinstance(self.flaw, Unset):
+            flaw = UNSET
+        elif isinstance(self.flaw, UUID):
             flaw = UNSET
             if not isinstance(self.flaw, Unset):
                 flaw = str(self.flaw)
@@ -123,7 +125,9 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         delegated_not_affected_justification = self.delegated_not_affected_justification
 
         resolved_dt: Union[None, str]
-        if isinstance(self.resolved_dt, datetime.datetime):
+        if isinstance(self.resolved_dt, Unset):
+            resolved_dt = UNSET
+        elif isinstance(self.resolved_dt, datetime.datetime):
             resolved_dt = UNSET
             if not isinstance(self.resolved_dt, Unset):
                 resolved_dt = self.resolved_dt.isoformat()
@@ -299,6 +303,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         def _parse_flaw(data: object) -> Union[None, UUID]:
             if data is None:
                 return data
+            if isinstance(data, Unset):
+                return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
@@ -357,6 +363,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
             if data is None:
                 return data
+            if isinstance(data, Unset):
+                return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
@@ -405,6 +413,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         def _parse_affectedness(
             data: object,
         ) -> Union[AffectednessEnum, BlankEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -434,6 +444,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
         def _parse_resolution(data: object) -> Union[BlankEnum, ResolutionEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -472,6 +484,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         ps_component = _parse_ps_component(d.pop("ps_component", UNSET))
 
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -512,6 +526,8 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         def _parse_not_affected_justification(
             data: object,
         ) -> Union[BlankEnum, NotAffectedJustificationEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
