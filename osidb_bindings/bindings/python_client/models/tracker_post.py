@@ -77,7 +77,9 @@ class TrackerPost(OSIDBModel):
         resolution = self.resolution
 
         not_affected_justification: str
-        if isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
+        if isinstance(self.not_affected_justification, Unset):
+            not_affected_justification = UNSET
+        elif isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
             not_affected_justification = UNSET
             if not isinstance(self.not_affected_justification, Unset):
                 not_affected_justification = NotAffectedJustificationEnum(
@@ -112,7 +114,9 @@ class TrackerPost(OSIDBModel):
                 special_handling.append(special_handling_item)
 
         resolved_dt: Union[None, str]
-        if isinstance(self.resolved_dt, datetime.datetime):
+        if isinstance(self.resolved_dt, Unset):
+            resolved_dt = UNSET
+        elif isinstance(self.resolved_dt, datetime.datetime):
             resolved_dt = UNSET
             if not isinstance(self.resolved_dt, Unset):
                 resolved_dt = self.resolved_dt.isoformat()
@@ -210,6 +214,10 @@ class TrackerPost(OSIDBModel):
         def _parse_not_affected_justification(
             data: object,
         ) -> Union[BlankEnum, NotAffectedJustificationEnum]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
@@ -270,6 +278,8 @@ class TrackerPost(OSIDBModel):
 
         def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
             if data is None:
+                return data
+            if isinstance(data, Unset):
                 return data
             try:
                 if not isinstance(data, str):

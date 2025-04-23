@@ -208,6 +208,8 @@ class Flaw(OSIDBModel):
             classification = self.classification.to_dict()
 
         task_key: Union[None, str]
+        if isinstance(self.task_key, Unset):
+            task_key = UNSET
         task_key = self.task_key
 
         alerts: list[dict[str, Any]] = UNSET
@@ -561,6 +563,8 @@ class Flaw(OSIDBModel):
         def _parse_task_key(data: object) -> Union[None, str]:
             if data is None:
                 return data
+            if isinstance(data, Unset):
+                return data
             return cast(Union[None, str], data)
 
         task_key = _parse_task_key(d.pop("task_key", UNSET))
@@ -587,6 +591,8 @@ class Flaw(OSIDBModel):
         cve_id = _parse_cve_id(d.pop("cve_id", UNSET))
 
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -622,6 +628,8 @@ class Flaw(OSIDBModel):
         def _parse_requires_cve_description(
             data: object,
         ) -> Union[BlankEnum, RequiresCveDescriptionEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -683,6 +691,8 @@ class Flaw(OSIDBModel):
         unembargo_dt = _parse_unembargo_dt(d.pop("unembargo_dt", UNSET))
 
         def _parse_source(data: object) -> Union[BlankEnum, SourceBe0Enum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -738,6 +748,8 @@ class Flaw(OSIDBModel):
         def _parse_major_incident_state(
             data: object,
         ) -> Union[BlankEnum, MajorIncidentStateEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -801,6 +813,8 @@ class Flaw(OSIDBModel):
         def _parse_nist_cvss_validation(
             data: object,
         ) -> Union[BlankEnum, NistCvssValidationEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:

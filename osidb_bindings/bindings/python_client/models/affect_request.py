@@ -51,7 +51,9 @@ class AffectRequest(OSIDBModel):
 
     def to_dict(self) -> dict[str, Any]:
         flaw: Union[None, str]
-        if isinstance(self.flaw, UUID):
+        if isinstance(self.flaw, Unset):
+            flaw = UNSET
+        elif isinstance(self.flaw, UUID):
             flaw = UNSET
             if not isinstance(self.flaw, Unset):
                 flaw = str(self.flaw)
@@ -298,6 +300,8 @@ class AffectRequest(OSIDBModel):
         def _parse_flaw(data: object) -> Union[None, UUID]:
             if data is None:
                 return data
+            if isinstance(data, Unset):
+                return data
             try:
                 if not isinstance(data, str):
                     raise TypeError()
@@ -333,6 +337,8 @@ class AffectRequest(OSIDBModel):
         def _parse_affectedness(
             data: object,
         ) -> Union[AffectednessEnum, BlankEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -362,6 +368,8 @@ class AffectRequest(OSIDBModel):
         affectedness = _parse_affectedness(d.pop("affectedness", UNSET))
 
         def _parse_resolution(data: object) -> Union[BlankEnum, ResolutionEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -400,6 +408,8 @@ class AffectRequest(OSIDBModel):
         ps_component = _parse_ps_component(d.pop("ps_component", UNSET))
 
         def _parse_impact(data: object) -> Union[BlankEnum, ImpactEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
@@ -440,6 +450,8 @@ class AffectRequest(OSIDBModel):
         def _parse_not_affected_justification(
             data: object,
         ) -> Union[BlankEnum, NotAffectedJustificationEnum, Unset]:
+            if data is None:
+                return data
             if isinstance(data, Unset):
                 return data
             try:
