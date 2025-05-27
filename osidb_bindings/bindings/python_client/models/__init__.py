@@ -108,6 +108,9 @@ from .flaw_cvss import FlawCVSS
 from .flaw_cvss_post_request import FlawCVSSPostRequest
 from .flaw_cvss_put_request import FlawCVSSPutRequest
 from .flaw_cvss_request import FlawCVSSRequest
+from .flaw_cvssv2 import FlawCVSSV2
+from .flaw_cvssv2_post_request import FlawCVSSV2PostRequest
+from .flaw_cvssv2_put_request import FlawCVSSV2PutRequest
 from .flaw_label import FlawLabel
 from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post_request import FlawPackageVersionPostRequest
@@ -360,6 +363,24 @@ from .osidb_api_v1_trackers_retrieve_response_200 import (
 from .osidb_api_v1_trackers_update_response_200 import (
     OsidbApiV1TrackersUpdateResponse200,
 )
+from .osidb_api_v2_beta_flaws_cvss_scores_create_response_201 import (
+    OsidbApiV2BetaFlawsCvssScoresCreateResponse201,
+)
+from .osidb_api_v2_beta_flaws_cvss_scores_destroy_response_204 import (
+    OsidbApiV2BetaFlawsCvssScoresDestroyResponse204,
+)
+from .osidb_api_v2_beta_flaws_cvss_scores_list_issuer import (
+    OsidbApiV2BetaFlawsCvssScoresListIssuer,
+)
+from .osidb_api_v2_beta_flaws_cvss_scores_list_response_200 import (
+    OsidbApiV2BetaFlawsCvssScoresListResponse200,
+)
+from .osidb_api_v2_beta_flaws_cvss_scores_retrieve_response_200 import (
+    OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200,
+)
+from .osidb_api_v2_beta_flaws_cvss_scores_update_response_200 import (
+    OsidbApiV2BetaFlawsCvssScoresUpdateResponse200,
+)
 from .osidb_healthy_retrieve_response_200 import OsidbHealthyRetrieveResponse200
 from .osidb_whoami_retrieve_response_200 import OsidbWhoamiRetrieveResponse200
 from .osidb_whoami_retrieve_response_200_profile import (
@@ -379,6 +400,7 @@ from .paginated_flaw_acknowledgment_list import PaginatedFlawAcknowledgmentList
 from .paginated_flaw_collaborator_list import PaginatedFlawCollaboratorList
 from .paginated_flaw_comment_list import PaginatedFlawCommentList
 from .paginated_flaw_cvss_list import PaginatedFlawCVSSList
+from .paginated_flaw_cvssv2_list import PaginatedFlawCVSSV2List
 from .paginated_flaw_label_list import PaginatedFlawLabelList
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_package_version_list import PaginatedFlawPackageVersionList
@@ -486,6 +508,9 @@ __all__ = (
     "FlawCVSSPostRequest",
     "FlawCVSSPutRequest",
     "FlawCVSSRequest",
+    "FlawCVSSV2",
+    "FlawCVSSV2PostRequest",
+    "FlawCVSSV2PutRequest",
     "FlawLabel",
     "FlawPackageVersion",
     "FlawPackageVersionPostRequest",
@@ -606,6 +631,12 @@ __all__ = (
     "OsidbApiV1TrackersListType",
     "OsidbApiV1TrackersRetrieveResponse200",
     "OsidbApiV1TrackersUpdateResponse200",
+    "OsidbApiV2BetaFlawsCvssScoresCreateResponse201",
+    "OsidbApiV2BetaFlawsCvssScoresDestroyResponse204",
+    "OsidbApiV2BetaFlawsCvssScoresListIssuer",
+    "OsidbApiV2BetaFlawsCvssScoresListResponse200",
+    "OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200",
+    "OsidbApiV2BetaFlawsCvssScoresUpdateResponse200",
     "OsidbHealthyRetrieveResponse200",
     "OsidbWhoamiRetrieveResponse200",
     "OsidbWhoamiRetrieveResponse200Profile",
@@ -623,6 +654,7 @@ __all__ = (
     "PaginatedFlawCollaboratorList",
     "PaginatedFlawCommentList",
     "PaginatedFlawCVSSList",
+    "PaginatedFlawCVSSV2List",
     "PaginatedFlawLabelList",
     "PaginatedFlawList",
     "PaginatedFlawPackageVersionList",

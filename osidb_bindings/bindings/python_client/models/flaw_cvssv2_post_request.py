@@ -1,38 +1,30 @@
-import datetime
 from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..models.cvss_version_enum import CvssVersionEnum
-from ..models.issuer_enum import IssuerEnum
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawCVSSPutRequest")
+T = TypeVar("T", bound="FlawCVSSV2PostRequest")
 
 
 @_attrs_define
-class FlawCVSSPutRequest(OSIDBModel):
-    """FlawCVSS serializer
+class FlawCVSSV2PostRequest(OSIDBModel):
+    """Abstract serializer for FlawCVSS and AffectCVSS serializer
 
     Attributes:
         cvss_version (CvssVersionEnum):
         vector (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
-        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
-            detect mit-air collisions.
         comment (Union[None, Unset, str]):
-        issuer (Union[Unset, IssuerEnum]):  Default: IssuerEnum.RH.
     """
 
     cvss_version: CvssVersionEnum
     vector: str
     embargoed: bool
-    updated_dt: datetime.datetime
     comment: Union[None, Unset, str] = UNSET
-    issuer: Union[Unset, IssuerEnum] = IssuerEnum.RH
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -44,19 +36,11 @@ class FlawCVSSPutRequest(OSIDBModel):
 
         embargoed = self.embargoed
 
-        updated_dt: str = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat()
-
         comment: Union[None, Unset, str]
         if isinstance(self.comment, Unset):
             comment = UNSET
         else:
             comment = self.comment
-
-        issuer: Union[Unset, str] = UNSET
-        if not isinstance(self.issuer, Unset):
-            issuer = IssuerEnum(self.issuer).value
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -66,12 +50,8 @@ class FlawCVSSPutRequest(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
-        if not isinstance(issuer, Unset):
-            field_dict["issuer"] = issuer
 
         return field_dict
 
@@ -84,10 +64,6 @@ class FlawCVSSPutRequest(OSIDBModel):
 
         embargoed = (None, str(self.embargoed).encode(), "text/plain")
 
-        updated_dt: bytes = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat().encode()
-
         comment: Union[Unset, tuple[None, bytes, str]]
 
         if isinstance(self.comment, Unset):
@@ -96,10 +72,6 @@ class FlawCVSSPutRequest(OSIDBModel):
             comment = (None, str(self.comment).encode(), "text/plain")
         else:
             comment = (None, str(self.comment).encode(), "text/plain")
-
-        issuer: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.issuer, Unset):
-            issuer = (None, str(self.issuer.value).encode(), "text/plain")
 
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
@@ -111,12 +83,8 @@ class FlawCVSSPutRequest(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
-        if not isinstance(issuer, Unset):
-            field_dict["issuer"] = issuer
 
         return field_dict
 
@@ -134,13 +102,6 @@ class FlawCVSSPutRequest(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        _updated_dt = d.pop("updated_dt", UNSET)
-        updated_dt: datetime.datetime
-        if isinstance(_updated_dt, Unset):
-            updated_dt = UNSET
-        else:
-            updated_dt = isoparse(_updated_dt)
-
         def _parse_comment(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -150,24 +111,15 @@ class FlawCVSSPutRequest(OSIDBModel):
 
         comment = _parse_comment(d.pop("comment", UNSET))
 
-        _issuer = d.pop("issuer", UNSET)
-        issuer: Union[Unset, IssuerEnum]
-        if isinstance(_issuer, Unset):
-            issuer = UNSET
-        else:
-            issuer = IssuerEnum(_issuer)
-
-        flaw_cvss_put_request = cls(
+        flaw_cvssv2_post_request = cls(
             cvss_version=cvss_version,
             vector=vector,
             embargoed=embargoed,
-            updated_dt=updated_dt,
             comment=comment,
-            issuer=issuer,
         )
 
-        flaw_cvss_put_request.additional_properties = d
-        return flaw_cvss_put_request
+        flaw_cvssv2_post_request.additional_properties = d
+        return flaw_cvssv2_post_request
 
     @staticmethod
     def get_fields():
@@ -175,9 +127,7 @@ class FlawCVSSPutRequest(OSIDBModel):
             "cvss_version": CvssVersionEnum,
             "vector": str,
             "embargoed": bool,
-            "updated_dt": datetime.datetime,
             "comment": Union[None, str],
-            "issuer": IssuerEnum,
         }
 
     @property

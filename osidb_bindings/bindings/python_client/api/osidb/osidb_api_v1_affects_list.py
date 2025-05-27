@@ -101,6 +101,7 @@ QUERY_PARAMS = {
     "flaw__uuid": UUID,
     "impact": OsidbApiV1AffectsListImpact,
     "include_fields": list[str],
+    "include_history": bool,
     "include_meta_attr": list[str],
     "limit": int,
     "offset": int,
@@ -213,6 +214,7 @@ def _get_kwargs(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -637,6 +639,8 @@ def _get_kwargs(
 
     params["include_fields"] = json_include_fields
 
+    params["include_history"] = include_history
+
     json_include_meta_attr: Union[Unset, list[str]] = UNSET
     if not isinstance(include_meta_attr, Unset):
         json_include_meta_attr = include_meta_attr
@@ -947,6 +951,7 @@ def sync_detailed(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -1056,6 +1061,7 @@ def sync_detailed(
         flaw_uuid (Union[Unset, UUID]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -1173,6 +1179,7 @@ def sync_detailed(
         flaw_uuid=flaw_uuid,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
@@ -1295,6 +1302,7 @@ def sync(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -1404,6 +1412,7 @@ def sync(
         flaw_uuid (Union[Unset, UUID]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -1521,6 +1530,7 @@ def sync(
         flaw_uuid=flaw_uuid,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
@@ -1633,6 +1643,7 @@ async def asyncio_detailed(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -1742,6 +1753,7 @@ async def asyncio_detailed(
         flaw_uuid (Union[Unset, UUID]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -1859,6 +1871,7 @@ async def asyncio_detailed(
         flaw_uuid=flaw_uuid,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
@@ -1981,6 +1994,7 @@ async def asyncio(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
@@ -2090,6 +2104,7 @@ async def asyncio(
         flaw_uuid (Union[Unset, UUID]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
@@ -2208,6 +2223,7 @@ async def asyncio(
             flaw_uuid=flaw_uuid,
             impact=impact,
             include_fields=include_fields,
+            include_history=include_history,
             include_meta_attr=include_meta_attr,
             limit=limit,
             offset=offset,

@@ -22,7 +22,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
     """
     Attributes:
         cvss_version (CvssVersionEnum):
-        issuer (IssuerEnum):
         score (float):
         uuid (UUID):
         vector (str):
@@ -34,6 +33,7 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
             detect mit-air collisions.
         flaw (Union[Unset, UUID]):
         comment (Union[None, Unset, str]):
+        issuer (Union[Unset, IssuerEnum]):  Default: IssuerEnum.RH.
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -41,7 +41,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
     """
 
     cvss_version: CvssVersionEnum
-    issuer: IssuerEnum
     score: float
     uuid: UUID
     vector: str
@@ -51,6 +50,7 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
     updated_dt: datetime.datetime
     flaw: Union[Unset, UUID] = UNSET
     comment: Union[None, Unset, str] = UNSET
+    issuer: Union[Unset, IssuerEnum] = IssuerEnum.RH
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -61,10 +61,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
         cvss_version: str = UNSET
         if not isinstance(self.cvss_version, Unset):
             cvss_version = CvssVersionEnum(self.cvss_version).value
-
-        issuer: str = UNSET
-        if not isinstance(self.issuer, Unset):
-            issuer = IssuerEnum(self.issuer).value
 
         score = self.score
 
@@ -104,6 +100,10 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
         else:
             comment = self.comment
 
+        issuer: Union[Unset, str] = UNSET
+        if not isinstance(self.issuer, Unset):
+            issuer = IssuerEnum(self.issuer).value
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -118,8 +118,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(cvss_version, Unset):
             field_dict["cvss_version"] = cvss_version
-        if not isinstance(issuer, Unset):
-            field_dict["issuer"] = issuer
         if not isinstance(score, Unset):
             field_dict["score"] = score
         if not isinstance(uuid, Unset):
@@ -138,6 +136,8 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
             field_dict["flaw"] = flaw
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
+        if not isinstance(issuer, Unset):
+            field_dict["issuer"] = issuer
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -160,13 +160,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
             cvss_version = UNSET
         else:
             cvss_version = CvssVersionEnum(_cvss_version)
-
-        _issuer = d.pop("issuer", UNSET)
-        issuer: IssuerEnum
-        if isinstance(_issuer, Unset):
-            issuer = UNSET
-        else:
-            issuer = IssuerEnum(_issuer)
 
         score = d.pop("score", UNSET)
 
@@ -223,6 +216,13 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
 
         comment = _parse_comment(d.pop("comment", UNSET))
 
+        _issuer = d.pop("issuer", UNSET)
+        issuer: Union[Unset, IssuerEnum]
+        if isinstance(_issuer, Unset):
+            issuer = UNSET
+        else:
+            issuer = IssuerEnum(_issuer)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -238,7 +238,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
 
         osidb_api_v1_flaws_cvss_scores_retrieve_response_200 = cls(
             cvss_version=cvss_version,
-            issuer=issuer,
             score=score,
             uuid=uuid,
             vector=vector,
@@ -248,6 +247,7 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
             updated_dt=updated_dt,
             flaw=flaw,
             comment=comment,
+            issuer=issuer,
             dt=dt,
             env=env,
             revision=revision,
@@ -261,7 +261,6 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
     def get_fields():
         return {
             "cvss_version": CvssVersionEnum,
-            "issuer": IssuerEnum,
             "score": float,
             "uuid": UUID,
             "vector": str,
@@ -271,6 +270,7 @@ class OsidbApiV1FlawsCvssScoresRetrieveResponse200(OSIDBModel):
             "updated_dt": datetime.datetime,
             "flaw": UUID,
             "comment": Union[None, str],
+            "issuer": IssuerEnum,
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

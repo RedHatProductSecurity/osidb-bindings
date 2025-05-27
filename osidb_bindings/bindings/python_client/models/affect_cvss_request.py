@@ -19,7 +19,6 @@ class AffectCVSSRequest(OSIDBModel):
 
     Attributes:
         cvss_version (CvssVersionEnum):
-        issuer (IssuerEnum):
         vector (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
@@ -27,25 +26,22 @@ class AffectCVSSRequest(OSIDBModel):
             detect mit-air collisions.
         affect (Union[Unset, UUID]):
         comment (Union[None, Unset, str]):
+        issuer (Union[Unset, IssuerEnum]):  Default: IssuerEnum.RH.
     """
 
     cvss_version: CvssVersionEnum
-    issuer: IssuerEnum
     vector: str
     embargoed: bool
     updated_dt: datetime.datetime
     affect: Union[Unset, UUID] = UNSET
     comment: Union[None, Unset, str] = UNSET
+    issuer: Union[Unset, IssuerEnum] = IssuerEnum.RH
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         cvss_version: str = UNSET
         if not isinstance(self.cvss_version, Unset):
             cvss_version = CvssVersionEnum(self.cvss_version).value
-
-        issuer: str = UNSET
-        if not isinstance(self.issuer, Unset):
-            issuer = IssuerEnum(self.issuer).value
 
         vector = self.vector
 
@@ -65,12 +61,14 @@ class AffectCVSSRequest(OSIDBModel):
         else:
             comment = self.comment
 
+        issuer: Union[Unset, str] = UNSET
+        if not isinstance(self.issuer, Unset):
+            issuer = IssuerEnum(self.issuer).value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(cvss_version, Unset):
             field_dict["cvss_version"] = cvss_version
-        if not isinstance(issuer, Unset):
-            field_dict["issuer"] = issuer
         if not isinstance(vector, Unset):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
@@ -81,6 +79,8 @@ class AffectCVSSRequest(OSIDBModel):
             field_dict["affect"] = affect
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
+        if not isinstance(issuer, Unset):
+            field_dict["issuer"] = issuer
 
         return field_dict
 
@@ -93,13 +93,6 @@ class AffectCVSSRequest(OSIDBModel):
             cvss_version = UNSET
         else:
             cvss_version = CvssVersionEnum(_cvss_version)
-
-        _issuer = d.pop("issuer", UNSET)
-        issuer: IssuerEnum
-        if isinstance(_issuer, Unset):
-            issuer = UNSET
-        else:
-            issuer = IssuerEnum(_issuer)
 
         vector = d.pop("vector", UNSET)
 
@@ -128,14 +121,21 @@ class AffectCVSSRequest(OSIDBModel):
 
         comment = _parse_comment(d.pop("comment", UNSET))
 
+        _issuer = d.pop("issuer", UNSET)
+        issuer: Union[Unset, IssuerEnum]
+        if isinstance(_issuer, Unset):
+            issuer = UNSET
+        else:
+            issuer = IssuerEnum(_issuer)
+
         affect_cvss_request = cls(
             cvss_version=cvss_version,
-            issuer=issuer,
             vector=vector,
             embargoed=embargoed,
             updated_dt=updated_dt,
             affect=affect,
             comment=comment,
+            issuer=issuer,
         )
 
         affect_cvss_request.additional_properties = d
@@ -145,12 +145,12 @@ class AffectCVSSRequest(OSIDBModel):
     def get_fields():
         return {
             "cvss_version": CvssVersionEnum,
-            "issuer": IssuerEnum,
             "vector": str,
             "embargoed": bool,
             "updated_dt": datetime.datetime,
             "affect": UUID,
             "comment": Union[None, str],
+            "issuer": IssuerEnum,
         }
 
     @property

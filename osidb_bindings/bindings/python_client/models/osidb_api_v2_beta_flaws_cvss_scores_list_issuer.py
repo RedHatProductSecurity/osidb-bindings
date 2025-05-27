@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class OsidbApiV1AffectsListCvssScoresIssuer(str, Enum):
+class OsidbApiV2BetaFlawsCvssScoresListIssuer(str, Enum):
     CISA = "CISA"
     CVEORG = "CVEORG"
     NIST = "NIST"

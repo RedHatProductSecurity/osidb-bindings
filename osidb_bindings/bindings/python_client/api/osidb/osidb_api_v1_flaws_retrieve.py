@@ -12,6 +12,7 @@ from ...types import UNSET, Response, Unset
 QUERY_PARAMS = {
     "exclude_fields": list[str],
     "include_fields": list[str],
+    "include_history": bool,
     "include_meta_attr": list[str],
     "query": str,
     "tracker_ids": list[str],
@@ -24,6 +25,7 @@ def _get_kwargs(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
@@ -43,6 +45,8 @@ def _get_kwargs(
         json_include_fields = include_fields
 
     params["include_fields"] = json_include_fields
+
+    params["include_history"] = include_history
 
     json_include_meta_attr: Union[Unset, list[str]] = UNSET
     if not isinstance(include_meta_attr, Unset):
@@ -102,6 +106,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
@@ -111,6 +116,7 @@ def sync_detailed(
         id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         query (Union[Unset, str]):
         tracker_ids (Union[Unset, list[str]]):
@@ -128,6 +134,7 @@ def sync_detailed(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         query=query,
         tracker_ids=tracker_ids,
@@ -150,6 +157,7 @@ def sync(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
@@ -159,6 +167,7 @@ def sync(
         id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         query (Union[Unset, str]):
         tracker_ids (Union[Unset, list[str]]):
@@ -176,6 +185,7 @@ def sync(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         query=query,
         tracker_ids=tracker_ids,
@@ -188,6 +198,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
@@ -197,6 +208,7 @@ async def asyncio_detailed(
         id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         query (Union[Unset, str]):
         tracker_ids (Union[Unset, list[str]]):
@@ -214,6 +226,7 @@ async def asyncio_detailed(
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         query=query,
         tracker_ids=tracker_ids,
@@ -236,6 +249,7 @@ async def asyncio(
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
@@ -245,6 +259,7 @@ async def asyncio(
         id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         query (Union[Unset, str]):
         tracker_ids (Union[Unset, list[str]]):
@@ -263,6 +278,7 @@ async def asyncio(
             client=client,
             exclude_fields=exclude_fields,
             include_fields=include_fields,
+            include_history=include_history,
             include_meta_attr=include_meta_attr,
             query=query,
             tracker_ids=tracker_ids,
