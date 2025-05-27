@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class OsidbApiV1AffectsCvssScoresListIssuer(str, Enum):
+    CISA = "CISA"
     CVEORG = "CVEORG"
     NIST = "NIST"
     OSV = "OSV"

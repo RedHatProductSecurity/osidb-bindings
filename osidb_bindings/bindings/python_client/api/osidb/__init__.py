@@ -59,5 +59,10 @@ from .osidb_api_v1_trackers_create import *
 from .osidb_api_v1_trackers_list import *
 from .osidb_api_v1_trackers_retrieve import *
 from .osidb_api_v1_trackers_update import *
+from .osidb_api_v2beta_flaws_cvss_scores_create import *
+from .osidb_api_v2beta_flaws_cvss_scores_destroy import *
+from .osidb_api_v2beta_flaws_cvss_scores_list import *
+from .osidb_api_v2beta_flaws_cvss_scores_retrieve import *
+from .osidb_api_v2beta_flaws_cvss_scores_update import *
 from .osidb_healthy_retrieve import *
 from .osidb_whoami_retrieve import *

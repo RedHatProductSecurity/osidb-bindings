@@ -5,27 +5,24 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v1_affects_retrieve_response_200 import (
-    OsidbApiV1AffectsRetrieveResponse200,
+from ...models.osidb_api_v2_beta_flaws_cvss_scores_retrieve_response_200 import (
+    OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200,
 )
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
     "exclude_fields": list[str],
     "include_fields": list[str],
-    "include_history": bool,
-    "include_meta_attr": list[str],
 }
 
 
 def _get_kwargs(
-    uuid: UUID,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
-    include_history: Union[Unset, bool] = UNSET,
-    include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -43,19 +40,12 @@ def _get_kwargs(
 
     params["include_fields"] = json_include_fields
 
-    params["include_history"] = include_history
-
-    json_include_meta_attr: Union[Unset, list[str]] = UNSET
-    if not isinstance(include_meta_attr, Unset):
-        json_include_meta_attr = include_meta_attr
-
-    params["include_meta_attr"] = json_include_meta_attr
-
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/affects/{uuid}".format(
-            uuid=uuid,
+        "url": f"{client.base_url}/osidb/api/v2beta/flaws/{flaw_id}/cvss-scores/{id}".format(
+            flaw_id=flaw_id,
+            id=id,
         ),
         "params": params,
     }
@@ -66,21 +56,23 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Optional[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1AffectsRetrieveResponse200
+        response_200: OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1AffectsRetrieveResponse200.from_dict(_response_200)
+            response_200 = OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200.from_dict(
+                _response_200
+            )
 
         return response_200
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Response[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -90,37 +82,34 @@ def _build_response(
 
 
 def sync_detailed(
-    uuid: UUID,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
-    include_history: Union[Unset, bool] = UNSET,
-    include_meta_attr: Union[Unset, list[str]] = UNSET,
-) -> Response[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Response[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     """
     Args:
-        uuid (UUID):
+        flaw_id (UUID):
+        id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
-        include_history (Union[Unset, bool]):
-        include_meta_attr (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1AffectsRetrieveResponse200]
+        Response[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
-        uuid=uuid,
+        flaw_id=flaw_id,
+        id=id,
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_history=include_history,
-        include_meta_attr=include_meta_attr,
     )
 
     response = requests.get(
@@ -135,72 +124,66 @@ def sync_detailed(
 
 
 def sync(
-    uuid: UUID,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
-    include_history: Union[Unset, bool] = UNSET,
-    include_meta_attr: Union[Unset, list[str]] = UNSET,
-) -> Optional[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Optional[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     """
     Args:
-        uuid (UUID):
+        flaw_id (UUID):
+        id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
-        include_history (Union[Unset, bool]):
-        include_meta_attr (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1AffectsRetrieveResponse200
+        OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200
     """
 
     return sync_detailed(
-        uuid=uuid,
+        flaw_id=flaw_id,
+        id=id,
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_history=include_history,
-        include_meta_attr=include_meta_attr,
     ).parsed
 
 
 async def asyncio_detailed(
-    uuid: UUID,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
-    include_history: Union[Unset, bool] = UNSET,
-    include_meta_attr: Union[Unset, list[str]] = UNSET,
-) -> Response[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Response[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     """
     Args:
-        uuid (UUID):
+        flaw_id (UUID):
+        id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
-        include_history (Union[Unset, bool]):
-        include_meta_attr (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1AffectsRetrieveResponse200]
+        Response[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
-        uuid=uuid,
+        flaw_id=flaw_id,
+        id=id,
         client=client,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
-        include_history=include_history,
-        include_meta_attr=include_meta_attr,
     )
 
     async with client.get_async_session().get(
@@ -215,37 +198,34 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    uuid: UUID,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
-    include_history: Union[Unset, bool] = UNSET,
-    include_meta_attr: Union[Unset, list[str]] = UNSET,
-) -> Optional[OsidbApiV1AffectsRetrieveResponse200]:
+) -> Optional[OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200]:
     """
     Args:
-        uuid (UUID):
+        flaw_id (UUID):
+        id (str):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
-        include_history (Union[Unset, bool]):
-        include_meta_attr (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1AffectsRetrieveResponse200
+        OsidbApiV2BetaFlawsCvssScoresRetrieveResponse200
     """
 
     return (
         await asyncio_detailed(
-            uuid=uuid,
+            flaw_id=flaw_id,
+            id=id,
             client=client,
             exclude_fields=exclude_fields,
             include_fields=include_fields,
-            include_history=include_history,
-            include_meta_attr=include_meta_attr,
         )
     ).parsed

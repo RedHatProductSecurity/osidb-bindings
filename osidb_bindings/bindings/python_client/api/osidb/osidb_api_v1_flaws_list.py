@@ -172,6 +172,7 @@ QUERY_PARAMS = {
     "exclude_fields": list[str],
     "impact": OsidbApiV1FlawsListImpact,
     "include_fields": list[str],
+    "include_history": bool,
     "include_meta_attr": list[str],
     "limit": int,
     "major_incident_start_dt": datetime.datetime,
@@ -370,6 +371,7 @@ def _get_kwargs(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     major_incident_start_dt: Union[Unset, datetime.datetime] = UNSET,
@@ -1184,6 +1186,8 @@ def _get_kwargs(
 
     params["include_fields"] = json_include_fields
 
+    params["include_history"] = include_history
+
     json_include_meta_attr: Union[Unset, list[str]] = UNSET
     if not isinstance(include_meta_attr, Unset):
         json_include_meta_attr = include_meta_attr
@@ -1712,6 +1716,7 @@ def sync_detailed(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     major_incident_start_dt: Union[Unset, datetime.datetime] = UNSET,
@@ -1909,6 +1914,7 @@ def sync_detailed(
         exclude_fields (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1FlawsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         major_incident_start_dt (Union[Unset, datetime.datetime]):
@@ -2112,6 +2118,7 @@ def sync_detailed(
         exclude_fields=exclude_fields,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         major_incident_start_dt=major_incident_start_dt,
@@ -2320,6 +2327,7 @@ def sync(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     major_incident_start_dt: Union[Unset, datetime.datetime] = UNSET,
@@ -2517,6 +2525,7 @@ def sync(
         exclude_fields (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1FlawsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         major_incident_start_dt (Union[Unset, datetime.datetime]):
@@ -2720,6 +2729,7 @@ def sync(
         exclude_fields=exclude_fields,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         major_incident_start_dt=major_incident_start_dt,
@@ -2918,6 +2928,7 @@ async def asyncio_detailed(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     major_incident_start_dt: Union[Unset, datetime.datetime] = UNSET,
@@ -3115,6 +3126,7 @@ async def asyncio_detailed(
         exclude_fields (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1FlawsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         major_incident_start_dt (Union[Unset, datetime.datetime]):
@@ -3318,6 +3330,7 @@ async def asyncio_detailed(
         exclude_fields=exclude_fields,
         impact=impact,
         include_fields=include_fields,
+        include_history=include_history,
         include_meta_attr=include_meta_attr,
         limit=limit,
         major_incident_start_dt=major_incident_start_dt,
@@ -3526,6 +3539,7 @@ async def asyncio(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1FlawsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
+    include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     major_incident_start_dt: Union[Unset, datetime.datetime] = UNSET,
@@ -3723,6 +3737,7 @@ async def asyncio(
         exclude_fields (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1FlawsListImpact]):
         include_fields (Union[Unset, list[str]]):
+        include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         major_incident_start_dt (Union[Unset, datetime.datetime]):
@@ -3927,6 +3942,7 @@ async def asyncio(
             exclude_fields=exclude_fields,
             impact=impact,
             include_fields=include_fields,
+            include_history=include_history,
             include_meta_attr=include_meta_attr,
             limit=limit,
             major_incident_start_dt=major_incident_start_dt,
