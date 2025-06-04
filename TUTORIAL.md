@@ -3,14 +3,17 @@ Python bindings for seamless access to OSIDB API endpoints, requiring no in-dept
 
 ## Requirements
 
-* Python 3
+* gcc
+* krb5-devel
 * pip
+* python3
+* python3-devel
 
 ## Installation
 
 You can install the bindings via:
 
-* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/)
+* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/) - it is higly recommended to install the package within [virtual environment](https://docs.python.org/3/library/venv.html)
     ```
     pip install osidb-bindings
     ```
@@ -102,7 +105,7 @@ This section describes possible session operations. See [response section](#resp
 * #### ```status```
     Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
 
-    See `/GET /osidb/api/{api_version}/status` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/status` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     status_response = session.status()
     ```
@@ -131,7 +134,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     Retrieve a single resource with specified `id`.
 
 
-    See `/GET /osidb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws/{id}` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     # CVE ID
     flaw1_response = session.flaws.retrieve(id="CVE-1111-2222")
@@ -143,7 +146,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 * #### ```retrieve_list```
     Retrieve a list of Flaws. You can filter the flaws using the query parameters. Results are paginated, see [paginated response section](#paginated-response).
 
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
     ```python
     all_flaws_response = session.flaws.retrieve_list()
 
@@ -170,7 +173,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 * #### ```retrieve_list_iterator```
     Retrieve a list of Flaws. You can filter the flaws using the query parameters. Handles the pagination and returns the generator of individual resource entities.
 
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
 
     ```python
     all_flaws = session.flaws.retrieve_list_iterator()
@@ -197,7 +200,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
     Using the argument `max_results` you can limit the number of results returned.
 
 
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, response format, etc.)
+    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
 
     ```python
     all_flaws = session.flaws.retrieve_list_iterator_async()
@@ -233,7 +236,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 * #### ```create```
     Create a new Flaw from given data.
 
-    See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    See `/POST /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
     ```python
     from datetime import datetime
     create_data = {
@@ -258,7 +261,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 * #### ```update```
     Update an existing Flaw with given data.
 
-    See `/POST /osidb/api/{api_version}/flaws` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    See `/POST /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
     ```python
 
     flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
@@ -272,7 +275,7 @@ Following operations are demonstrated on `flaws` resource, to work with differen
 * #### ```delete```
     Delete an existing Flaw
 
-    See `/DELETE /osidb/api/{api_version}/flaws/{id}` in [API docs](openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
+    See `/DELETE /osidb/api/{api_version}/flaws/{id}` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
     ```python
     delete_flaw_response = session.flaws.delete(id="CVE-1111-2222")
     ```
