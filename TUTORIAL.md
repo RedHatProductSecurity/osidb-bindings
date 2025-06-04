@@ -3,14 +3,17 @@ Python bindings for seamless access to OSIDB API endpoints, requiring no in-dept
 
 ## Requirements
 
-* Python 3
+* gcc
+* krb5-devel
 * pip
+* python3
+* python3-devel
 
 ## Installation
 
 You can install the bindings via:
 
-* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/)
+* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/) - it is higly recommended to install the package within [virtual environment](https://docs.python.org/3/library/venv.html)
     ```
     pip install osidb-bindings
     ```
