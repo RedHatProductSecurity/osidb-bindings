@@ -1,10 +1,17 @@
 # osidb-bindings
 A client library for accessing OSIDB API
 
+## Requirements
+* gcc
+* krb5-devel
+* pip
+* python3
+* python3-devel
+
 ## Installation
 
 ```
-pip install osidb_bindings
+pip install osidb-bindings
 ```
 
 ## Usage
