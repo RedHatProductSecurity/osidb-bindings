@@ -174,6 +174,9 @@ from .osidb_api_v1_affects_list_cvss_scores_issuer import (
 )
 from .osidb_api_v1_affects_list_flaw_impact import OsidbApiV1AffectsListFlawImpact
 from .osidb_api_v1_affects_list_flaw_source import OsidbApiV1AffectsListFlawSource
+from .osidb_api_v1_affects_list_flaw_workflow_state_item import (
+    OsidbApiV1AffectsListFlawWorkflowStateItem,
+)
 from .osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from .osidb_api_v1_affects_list_order_item import OsidbApiV1AffectsListOrderItem
 from .osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
@@ -560,6 +563,7 @@ __all__ = (
     "OsidbApiV1AffectsListCvssScoresIssuer",
     "OsidbApiV1AffectsListFlawImpact",
     "OsidbApiV1AffectsListFlawSource",
+    "OsidbApiV1AffectsListFlawWorkflowStateItem",
     "OsidbApiV1AffectsListImpact",
     "OsidbApiV1AffectsListOrderItem",
     "OsidbApiV1AffectsListResolution",
