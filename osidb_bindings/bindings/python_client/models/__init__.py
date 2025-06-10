@@ -17,6 +17,9 @@ from .audit import Audit
 from .audit_request import AuditRequest
 from .auth_token_create_response_200 import AuthTokenCreateResponse200
 from .auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
+from .auth_token_refresh_retrieve_response_200 import (
+    AuthTokenRefreshRetrieveResponse200,
+)
 from .auth_token_retrieve_response_200 import AuthTokenRetrieveResponse200
 from .auth_token_verify_create_response_200 import AuthTokenVerifyCreateResponse200
 from .blank_enum import BlankEnum
@@ -170,6 +173,9 @@ from .osidb_api_v1_affects_list_cvss_scores_issuer import (
 )
 from .osidb_api_v1_affects_list_flaw_impact import OsidbApiV1AffectsListFlawImpact
 from .osidb_api_v1_affects_list_flaw_source import OsidbApiV1AffectsListFlawSource
+from .osidb_api_v1_affects_list_flaw_workflow_state_item import (
+    OsidbApiV1AffectsListFlawWorkflowStateItem,
+)
 from .osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from .osidb_api_v1_affects_list_order_item import OsidbApiV1AffectsListOrderItem
 from .osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
@@ -459,6 +465,7 @@ __all__ = (
     "AuditRequest",
     "AuthTokenCreateResponse200",
     "AuthTokenRefreshCreateResponse200",
+    "AuthTokenRefreshRetrieveResponse200",
     "AuthTokenRetrieveResponse200",
     "AuthTokenVerifyCreateResponse200",
     "BlankEnum",
@@ -548,6 +555,7 @@ __all__ = (
     "OsidbApiV1AffectsListCvssScoresIssuer",
     "OsidbApiV1AffectsListFlawImpact",
     "OsidbApiV1AffectsListFlawSource",
+    "OsidbApiV1AffectsListFlawWorkflowStateItem",
     "OsidbApiV1AffectsListImpact",
     "OsidbApiV1AffectsListOrderItem",
     "OsidbApiV1AffectsListResolution",
