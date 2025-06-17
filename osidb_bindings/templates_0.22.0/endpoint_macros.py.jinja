@@ -61,7 +61,14 @@ params["{{ property.name }}"] = {{ destination }}
 
 {% endfor %}
 
-params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+{# CHANGE START (4) - convert list params from python list into csv string#}
+params = {
+    k: (",".join(v) if isinstance(v, list) else v)
+    for k, v in params.items()
+    if v is not UNSET and v is not None
+}
+{# CHANGE END (4) #}
+
 {% endif %}
 {% endmacro %}
 

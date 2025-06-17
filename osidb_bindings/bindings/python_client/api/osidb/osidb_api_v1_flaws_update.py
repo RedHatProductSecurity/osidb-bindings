@@ -34,7 +34,11 @@ def _get_kwargs(
 
     params["create_jira_task"] = create_jira_task
 
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    params = {
+        k: (",".join(v) if isinstance(v, list) else v)
+        for k, v in params.items()
+        if v is not UNSET and v is not None
+    }
 
     _kwargs: dict[str, Any] = {
         "url": f"{client.base_url}/osidb/api/v1/flaws/{id}".format(
