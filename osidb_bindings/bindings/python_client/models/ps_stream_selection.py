@@ -86,6 +86,10 @@ class PsStreamSelection(OSIDBModel):
             "aus": bool,
         }
 
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
