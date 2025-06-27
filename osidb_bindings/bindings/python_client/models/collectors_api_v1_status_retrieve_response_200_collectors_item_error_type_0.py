@@ -38,6 +38,10 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0(OSIDBMode
     def get_fields():
         return {}
 
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

@@ -205,6 +205,10 @@ return field_dict
         }
     {# CHANGE END (3) #}
 
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
     {% if model.additional_properties %}
     @property
     def additional_keys(self) -> list[str]:
