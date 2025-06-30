@@ -36,16 +36,16 @@ osidb_session.status()
 flaw = osidb_session.flaws.retrieve(id="CVE-1111-2222")
 
 # Fields can be accessed directly via attributes
-flaw.summary
+flaw.title
 flaw.impact
 
 # or the flaw can be converted into dict
 flaw_dict = flaw.to_dict()
-flaw_dict["summary"]
+flaw_dict["title"]
 flaw_dict["impact"]
 
 # Retrieving multiple flaws
-all_flaws = osidb_session.flaw.retrieve_list()
+all_flaws = osidb_session.flaws.retrieve_list()
 
 # All query params listed in OpenAPI schema can be passed as well
 filtered_flaws = osidb_session.flaws.retrieve_list(impact="IMPORTANT", tracker_ids=["111111", "222222"])
