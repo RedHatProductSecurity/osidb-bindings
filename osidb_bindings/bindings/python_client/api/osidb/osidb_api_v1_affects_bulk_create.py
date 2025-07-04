@@ -87,7 +87,7 @@ def sync_detailed(
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
@@ -128,7 +128,7 @@ def sync(
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
@@ -159,7 +159,7 @@ async def asyncio_detailed(
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
@@ -200,7 +200,7 @@ async def asyncio(
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):
         body (list['AffectPostRequest']):

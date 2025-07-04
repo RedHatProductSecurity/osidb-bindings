@@ -78,8 +78,8 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
@@ -119,8 +119,8 @@ def sync(
 ) -> Optional[OsidbApiV1FlawsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
@@ -150,8 +150,8 @@ async def asyncio_detailed(
 ) -> Response[OsidbApiV1FlawsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
@@ -191,8 +191,8 @@ async def asyncio(
 ) -> Optional[OsidbApiV1FlawsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model
         body (FlawPostRequest): serialize flaw model

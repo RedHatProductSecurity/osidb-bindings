@@ -87,7 +87,7 @@ def sync_detailed(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
@@ -132,7 +132,7 @@ def sync(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
@@ -167,7 +167,7 @@ async def asyncio_detailed(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
@@ -212,7 +212,7 @@ async def asyncio(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint
         body (FlawCommentPostRequest): FlawComment serializer for use by flaw_comments endpoint

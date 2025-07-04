@@ -84,8 +84,8 @@ def sync_detailed(
     """
     Args:
         uuid (UUID):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
@@ -128,8 +128,8 @@ def sync(
     """
     Args:
         uuid (UUID):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
@@ -162,8 +162,8 @@ async def asyncio_detailed(
     """
     Args:
         uuid (UUID):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
@@ -206,8 +206,8 @@ async def asyncio(
     """
     Args:
         uuid (UUID):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer
         body (TrackerRequest): Tracker serializer

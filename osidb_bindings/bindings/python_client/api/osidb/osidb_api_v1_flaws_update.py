@@ -95,8 +95,8 @@ def sync_detailed(
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
@@ -142,8 +142,8 @@ def sync(
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
@@ -179,8 +179,8 @@ async def asyncio_detailed(
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
@@ -226,8 +226,8 @@ async def asyncio(
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model
         body (FlawRequest): serialize flaw model

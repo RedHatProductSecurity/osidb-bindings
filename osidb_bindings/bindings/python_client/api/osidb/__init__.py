@@ -65,4 +65,6 @@ from .osidb_api_v2beta_flaws_cvss_scores_list import *
 from .osidb_api_v2beta_flaws_cvss_scores_retrieve import *
 from .osidb_api_v2beta_flaws_cvss_scores_update import *
 from .osidb_healthy_retrieve import *
+from .osidb_integrations_partial_update import *
+from .osidb_integrations_retrieve import *
 from .osidb_whoami_retrieve import *
