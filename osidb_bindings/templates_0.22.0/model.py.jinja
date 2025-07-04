@@ -205,6 +205,13 @@ return field_dict
         }
     {# CHANGE END (3) #}
 
+    {# CHANGE START (4) - add new classmethod for initializing empty model with Unset values  #}
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
+    {# CHANGE END (4) #}
+
     {% if model.additional_properties %}
     @property
     def additional_keys(self) -> list[str]:
