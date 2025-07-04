@@ -90,7 +90,7 @@ def sync_detailed(
     Args:
         affect_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
@@ -136,7 +136,7 @@ def sync(
     Args:
         affect_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
@@ -172,7 +172,7 @@ async def asyncio_detailed(
     Args:
         affect_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
@@ -218,7 +218,7 @@ async def asyncio(
     Args:
         affect_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer
         body (AffectCVSSPutRequest): AffectCVSS serializer

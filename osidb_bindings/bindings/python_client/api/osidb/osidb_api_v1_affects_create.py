@@ -78,8 +78,8 @@ def sync_detailed(
 ) -> Response[OsidbApiV1AffectsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
@@ -119,8 +119,8 @@ def sync(
 ) -> Optional[OsidbApiV1AffectsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
@@ -150,8 +150,8 @@ async def asyncio_detailed(
 ) -> Response[OsidbApiV1AffectsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
@@ -191,8 +191,8 @@ async def asyncio(
 ) -> Optional[OsidbApiV1AffectsCreateResponse201]:
     """
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer
         body (AffectPostRequest): Affect serializer

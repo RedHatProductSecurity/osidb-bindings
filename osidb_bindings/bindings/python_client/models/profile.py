@@ -5,11 +5,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200Profile")
+T = TypeVar("T", bound="Profile")
 
 
 @_attrs_define
-class OsidbWhoamiRetrieveResponse200Profile(OSIDBModel):
+class Profile(OSIDBModel):
     """
     Attributes:
         bz_user_id (Union[Unset, str]):
@@ -41,13 +41,13 @@ class OsidbWhoamiRetrieveResponse200Profile(OSIDBModel):
 
         jira_user_id = d.pop("jira_user_id", UNSET)
 
-        osidb_whoami_retrieve_response_200_profile = cls(
+        profile = cls(
             bz_user_id=bz_user_id,
             jira_user_id=jira_user_id,
         )
 
-        osidb_whoami_retrieve_response_200_profile.additional_properties = d
-        return osidb_whoami_retrieve_response_200_profile
+        profile.additional_properties = d
+        return profile
 
     @staticmethod
     def get_fields():

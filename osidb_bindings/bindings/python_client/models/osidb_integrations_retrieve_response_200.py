@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -7,31 +7,23 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-if TYPE_CHECKING:
-    from ..models.profile import Profile
-
-
-T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200")
+T = TypeVar("T", bound="OsidbIntegrationsRetrieveResponse200")
 
 
 @_attrs_define
-class OsidbWhoamiRetrieveResponse200(OSIDBModel):
+class OsidbIntegrationsRetrieveResponse200(OSIDBModel):
     """
     Attributes:
-        username (str): Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-        groups (list[str]):
-        profile (Profile):
-        email (Union[Unset, str]):
+        jira (Union[None, str]):
+        bugzilla (Union[None, str]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
         version (Union[Unset, str]):
     """
 
-    username: str
-    groups: list[str]
-    profile: "Profile"
-    email: Union[Unset, str] = UNSET
+    jira: Union[None, str]
+    bugzilla: Union[None, str]
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -39,17 +31,15 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        username = self.username
+        jira: Union[None, str]
+        if isinstance(self.jira, Unset):
+            jira = UNSET
+        jira = self.jira
 
-        groups: list[str] = UNSET
-        if not isinstance(self.groups, Unset):
-            groups = self.groups
-
-        profile: dict[str, Any] = UNSET
-        if not isinstance(self.profile, Unset):
-            profile = self.profile.to_dict()
-
-        email = self.email
+        bugzilla: Union[None, str]
+        if isinstance(self.bugzilla, Unset):
+            bugzilla = UNSET
+        bugzilla = self.bugzilla
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -63,14 +53,10 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(username, Unset):
-            field_dict["username"] = username
-        if not isinstance(groups, Unset):
-            field_dict["groups"] = groups
-        if not isinstance(profile, Unset):
-            field_dict["profile"] = profile
-        if not isinstance(email, Unset):
-            field_dict["email"] = email
+        if not isinstance(jira, Unset):
+            field_dict["jira"] = jira
+        if not isinstance(bugzilla, Unset):
+            field_dict["bugzilla"] = bugzilla
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -84,21 +70,25 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.profile import Profile
-
         d = src_dict.copy()
-        username = d.pop("username", UNSET)
 
-        groups = cast(list[str], d.pop("groups", UNSET))
+        def _parse_jira(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, str], data)
 
-        _profile = d.pop("profile", UNSET)
-        profile: Profile
-        if isinstance(_profile, Unset):
-            profile = UNSET
-        else:
-            profile = Profile.from_dict(_profile)
+        jira = _parse_jira(d.pop("jira", UNSET))
 
-        email = d.pop("email", UNSET)
+        def _parse_bugzilla(data: object) -> Union[None, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, str], data)
+
+        bugzilla = _parse_bugzilla(d.pop("bugzilla", UNSET))
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -113,27 +103,23 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        osidb_whoami_retrieve_response_200 = cls(
-            username=username,
-            groups=groups,
-            profile=profile,
-            email=email,
+        osidb_integrations_retrieve_response_200 = cls(
+            jira=jira,
+            bugzilla=bugzilla,
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        osidb_whoami_retrieve_response_200.additional_properties = d
-        return osidb_whoami_retrieve_response_200
+        osidb_integrations_retrieve_response_200.additional_properties = d
+        return osidb_integrations_retrieve_response_200
 
     @staticmethod
     def get_fields():
         return {
-            "username": str,
-            "groups": list[str],
-            "profile": Profile,
-            "email": str,
+            "jira": Union[None, str],
+            "bugzilla": Union[None, str],
             "dt": datetime.datetime,
             "env": str,
             "revision": str,

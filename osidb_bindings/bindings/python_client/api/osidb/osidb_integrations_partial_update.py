@@ -4,33 +4,35 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.auth_token_refresh_create_response_200 import (
-    AuthTokenRefreshCreateResponse200,
+from ...models.osidb_integrations_partial_update_response_204 import (
+    OsidbIntegrationsPartialUpdateResponse204,
 )
-from ...models.token_refresh_request import TokenRefreshRequest
+from ...models.patched_integration_token_patch_request import (
+    PatchedIntegrationTokenPatchRequest,
+)
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TokenRefreshRequest
+REQUEST_BODY_TYPE = PatchedIntegrationTokenPatchRequest
 
 
 def _get_kwargs(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     body: Union[
-        TokenRefreshRequest,
-        TokenRefreshRequest,
-        TokenRefreshRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/auth/token/refresh",
+        "url": f"{client.base_url}/osidb/integrations",
     }
 
-    if check_nested_instance(body, TokenRefreshRequest):
+    if check_nested_instance(body, PatchedIntegrationTokenPatchRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -44,21 +46,23 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[AuthTokenRefreshCreateResponse200]:
-    if response.status_code == 200:
-        _response_200 = response.json()
-        response_200: AuthTokenRefreshCreateResponse200
-        if isinstance(_response_200, Unset):
-            response_200 = UNSET
+) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+    if response.status_code == 204:
+        _response_204 = response.json()
+        response_204: OsidbIntegrationsPartialUpdateResponse204
+        if isinstance(_response_204, Unset):
+            response_204 = UNSET
         else:
-            response_200 = AuthTokenRefreshCreateResponse200.from_dict(_response_200)
+            response_204 = OsidbIntegrationsPartialUpdateResponse204.from_dict(
+                _response_204
+            )
 
-        return response_200
+        return response_204
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[AuthTokenRefreshCreateResponse200]:
+) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -69,27 +73,26 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     body: Union[
-        TokenRefreshRequest,
-        TokenRefreshRequest,
-        TokenRefreshRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
     ],
-) -> Response[AuthTokenRefreshCreateResponse200]:
-    """Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token
-    is valid.
+) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
+    """Set third-party integration tokens for the current user.
 
     Args:
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AuthTokenRefreshCreateResponse200]
+        Response[OsidbIntegrationsPartialUpdateResponse204]
     """
 
     kwargs = _get_kwargs(
@@ -97,7 +100,7 @@ def sync_detailed(
         body=body,
     )
 
-    response = requests.post(
+    response = requests.patch(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -110,27 +113,26 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     body: Union[
-        TokenRefreshRequest,
-        TokenRefreshRequest,
-        TokenRefreshRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
     ],
-) -> Optional[AuthTokenRefreshCreateResponse200]:
-    """Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token
-    is valid.
+) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+    """Set third-party integration tokens for the current user.
 
     Args:
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AuthTokenRefreshCreateResponse200
+        OsidbIntegrationsPartialUpdateResponse204
     """
 
     return sync_detailed(
@@ -141,27 +143,26 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     body: Union[
-        TokenRefreshRequest,
-        TokenRefreshRequest,
-        TokenRefreshRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
     ],
-) -> Response[AuthTokenRefreshCreateResponse200]:
-    """Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token
-    is valid.
+) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
+    """Set third-party integration tokens for the current user.
 
     Args:
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[AuthTokenRefreshCreateResponse200]
+        Response[OsidbIntegrationsPartialUpdateResponse204]
     """
 
     kwargs = _get_kwargs(
@@ -169,7 +170,7 @@ async def asyncio_detailed(
         body=body,
     )
 
-    async with client.get_async_session().post(
+    async with client.get_async_session().patch(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -182,27 +183,26 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     body: Union[
-        TokenRefreshRequest,
-        TokenRefreshRequest,
-        TokenRefreshRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
+        PatchedIntegrationTokenPatchRequest,
     ],
-) -> Optional[AuthTokenRefreshCreateResponse200]:
-    """Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token
-    is valid.
+) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+    """Set third-party integration tokens for the current user.
 
     Args:
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
-        body (TokenRefreshRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
+        body (PatchedIntegrationTokenPatchRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        AuthTokenRefreshCreateResponse200
+        OsidbIntegrationsPartialUpdateResponse204
     """
 
     return (

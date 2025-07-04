@@ -87,8 +87,8 @@ def sync_detailed(
     """Bulk update endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
@@ -129,8 +129,8 @@ def sync(
     """Bulk update endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
@@ -161,8 +161,8 @@ async def asyncio_detailed(
     """Bulk update endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
@@ -203,8 +203,8 @@ async def asyncio(
     """Bulk update endpoint. Expects a list of dict Affect objects.
 
     Args:
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):
         body (list['AffectBulkPutRequest']):

@@ -60,7 +60,7 @@ def sync_detailed(
     """Bulk delete endpoint. Expects a list of Affect uuids.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -92,7 +92,7 @@ def sync(
     """Bulk delete endpoint. Expects a list of Affect uuids.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -114,7 +114,7 @@ async def asyncio_detailed(
     """Bulk delete endpoint. Expects a list of Affect uuids.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -146,7 +146,7 @@ async def asyncio(
     """Bulk delete endpoint. Expects a list of Affect uuids.
 
     Args:
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

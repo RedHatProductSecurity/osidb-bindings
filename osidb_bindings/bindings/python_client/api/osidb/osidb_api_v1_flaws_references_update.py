@@ -90,7 +90,7 @@ def sync_detailed(
     Args:
         flaw_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
@@ -136,7 +136,7 @@ def sync(
     Args:
         flaw_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
@@ -172,7 +172,7 @@ async def asyncio_detailed(
     Args:
         flaw_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
@@ -218,7 +218,7 @@ async def asyncio(
     Args:
         flaw_id (UUID):
         id (str):
-        bugzilla_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer
         body (FlawReferencePutRequest): FlawReference serializer

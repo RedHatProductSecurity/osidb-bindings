@@ -1,12 +1,11 @@
 from http import HTTPStatus
 from typing import Any, Optional, Union
-from uuid import UUID
 
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v1_flaws_package_versions_destroy_response_200 import (
-    OsidbApiV1FlawsPackageVersionsDestroyResponse200,
+from ...models.osidb_integrations_retrieve_response_200 import (
+    OsidbIntegrationsRetrieveResponse200,
 )
 from ...types import UNSET, Response, Unset
 
@@ -14,18 +13,13 @@ QUERY_PARAMS = {}
 
 
 def _get_kwargs(
-    flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/flaws/{flaw_id}/package_versions/{id}".format(
-            flaw_id=flaw_id,
-            id=id,
-        ),
+        "url": f"{client.base_url}/osidb/integrations",
     }
 
     _kwargs["headers"] = headers
@@ -34,23 +28,21 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
+) -> Optional[OsidbIntegrationsRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1FlawsPackageVersionsDestroyResponse200
+        response_200: OsidbIntegrationsRetrieveResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1FlawsPackageVersionsDestroyResponse200.from_dict(
-                _response_200
-            )
+            response_200 = OsidbIntegrationsRetrieveResponse200.from_dict(_response_200)
 
         return response_200
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
+) -> Response[OsidbIntegrationsRetrieveResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -60,33 +52,24 @@ def _build_response(
 
 
 def sync_detailed(
-    flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
-    """Destroy the instance and proxy the delete to Bugzilla
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-        bugzilla_api_key (Union[Unset, str]):
+) -> Response[OsidbIntegrationsRetrieveResponse200]:
+    """Set third-party integration tokens for the current user.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsPackageVersionsDestroyResponse200]
+        Response[OsidbIntegrationsRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
-        flaw_id=flaw_id,
-        id=id,
         client=client,
     )
 
-    response = requests.delete(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -98,61 +81,43 @@ def sync_detailed(
 
 
 def sync(
-    flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
-    """Destroy the instance and proxy the delete to Bugzilla
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-        bugzilla_api_key (Union[Unset, str]):
+) -> Optional[OsidbIntegrationsRetrieveResponse200]:
+    """Set third-party integration tokens for the current user.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsPackageVersionsDestroyResponse200
+        OsidbIntegrationsRetrieveResponse200
     """
 
     return sync_detailed(
-        flaw_id=flaw_id,
-        id=id,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
-    """Destroy the instance and proxy the delete to Bugzilla
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-        bugzilla_api_key (Union[Unset, str]):
+) -> Response[OsidbIntegrationsRetrieveResponse200]:
+    """Set third-party integration tokens for the current user.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsPackageVersionsDestroyResponse200]
+        Response[OsidbIntegrationsRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
-        flaw_id=flaw_id,
-        id=id,
         client=client,
     )
 
-    async with client.get_async_session().delete(
+    async with client.get_async_session().get(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -164,30 +129,21 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsPackageVersionsDestroyResponse200]:
-    """Destroy the instance and proxy the delete to Bugzilla
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-        bugzilla_api_key (Union[Unset, str]):
+) -> Optional[OsidbIntegrationsRetrieveResponse200]:
+    """Set third-party integration tokens for the current user.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsPackageVersionsDestroyResponse200
+        OsidbIntegrationsRetrieveResponse200
     """
 
     return (
         await asyncio_detailed(
-            flaw_id=flaw_id,
-            id=id,
             client=client,
         )
     ).parsed

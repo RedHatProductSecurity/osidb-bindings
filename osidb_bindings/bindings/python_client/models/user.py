@@ -1,9 +1,7 @@
-import datetime
 from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -11,31 +9,23 @@ if TYPE_CHECKING:
     from ..models.profile import Profile
 
 
-T = TypeVar("T", bound="OsidbWhoamiRetrieveResponse200")
+T = TypeVar("T", bound="User")
 
 
 @_attrs_define
-class OsidbWhoamiRetrieveResponse200(OSIDBModel):
+class User(OSIDBModel):
     """
     Attributes:
         username (str): Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
         groups (list[str]):
         profile (Profile):
         email (Union[Unset, str]):
-        dt (Union[Unset, datetime.datetime]):
-        env (Union[Unset, str]):
-        revision (Union[Unset, str]):
-        version (Union[Unset, str]):
     """
 
     username: str
     groups: list[str]
     profile: "Profile"
     email: Union[Unset, str] = UNSET
-    dt: Union[Unset, datetime.datetime] = UNSET
-    env: Union[Unset, str] = UNSET
-    revision: Union[Unset, str] = UNSET
-    version: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -51,16 +41,6 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         email = self.email
 
-        dt: Union[Unset, str] = UNSET
-        if not isinstance(self.dt, Unset):
-            dt = self.dt.isoformat()
-
-        env = self.env
-
-        revision = self.revision
-
-        version = self.version
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(username, Unset):
@@ -71,14 +51,6 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
             field_dict["profile"] = profile
         if not isinstance(email, Unset):
             field_dict["email"] = email
-        if not isinstance(dt, Unset):
-            field_dict["dt"] = dt
-        if not isinstance(env, Unset):
-            field_dict["env"] = env
-        if not isinstance(revision, Unset):
-            field_dict["revision"] = revision
-        if not isinstance(version, Unset):
-            field_dict["version"] = version
 
         return field_dict
 
@@ -100,32 +72,15 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
 
         email = d.pop("email", UNSET)
 
-        _dt = d.pop("dt", UNSET)
-        dt: Union[Unset, datetime.datetime]
-        if isinstance(_dt, Unset):
-            dt = UNSET
-        else:
-            dt = isoparse(_dt)
-
-        env = d.pop("env", UNSET)
-
-        revision = d.pop("revision", UNSET)
-
-        version = d.pop("version", UNSET)
-
-        osidb_whoami_retrieve_response_200 = cls(
+        user = cls(
             username=username,
             groups=groups,
             profile=profile,
             email=email,
-            dt=dt,
-            env=env,
-            revision=revision,
-            version=version,
         )
 
-        osidb_whoami_retrieve_response_200.additional_properties = d
-        return osidb_whoami_retrieve_response_200
+        user.additional_properties = d
+        return user
 
     @staticmethod
     def get_fields():
@@ -134,10 +89,6 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
             "groups": list[str],
             "profile": Profile,
             "email": str,
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
         }
 
     @property
