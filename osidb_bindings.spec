@@ -8,9 +8,9 @@ Release:        %{release}
 Summary:        OSIDB Python Bindings
 
 URL:            https://github.com/RedHatProductSecurity/osdib-bindings
-Source0:        %{name}-%{version}.tar.gz
+Source0:        {{{ git_dir_pack }}}
+VCS:            {{{ git_dir_vcs }}}
 License: MIT
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 BuildArch:      noarch
 AutoReqProv: no
@@ -29,7 +29,7 @@ Requires:       python3-requests-gssapi
 Python Client bindings for OSIDB
 
 %prep
-%autosetup -n %{name}-%{version} -p1
+{{{ git_dir_setup_macro }}}
 
 %generate_buildrequires
 
