@@ -29,6 +29,7 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
         uuid (UUID):
         flaw (Union[None, UUID]):
         ps_module (str):
+        cve_id (str):
         ps_product (str):
         trackers (list['Tracker']):
         delegated_resolution (str):
@@ -56,6 +57,7 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
     uuid: UUID
     flaw: Union[None, UUID]
     ps_module: str
+    cve_id: str
     ps_product: str
     trackers: list["Tracker"]
     delegated_resolution: str
@@ -97,6 +99,8 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             flaw = self.flaw
 
         ps_module = self.ps_module
+
+        cve_id = self.cve_id
 
         ps_product = self.ps_product
 
@@ -241,6 +245,8 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             field_dict["flaw"] = flaw
         if not isinstance(ps_module, Unset):
             field_dict["ps_module"] = ps_module
+        if not isinstance(cve_id, Unset):
+            field_dict["cve_id"] = cve_id
         if not isinstance(ps_product, Unset):
             field_dict["ps_product"] = ps_product
         if not isinstance(trackers, Unset):
@@ -327,6 +333,8 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
         flaw = _parse_flaw(d.pop("flaw", UNSET))
 
         ps_module = d.pop("ps_module", UNSET)
+
+        cve_id = d.pop("cve_id", UNSET)
 
         ps_product = d.pop("ps_product", UNSET)
 
@@ -579,6 +587,7 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             uuid=uuid,
             flaw=flaw,
             ps_module=ps_module,
+            cve_id=cve_id,
             ps_product=ps_product,
             trackers=trackers,
             delegated_resolution=delegated_resolution,
@@ -610,6 +619,7 @@ class OsidbApiV1AffectsUpdateResponse200(OSIDBModel):
             "uuid": UUID,
             "flaw": Union[None, UUID],
             "ps_module": str,
+            "cve_id": str,
             "ps_product": str,
             "trackers": list["Tracker"],
             "delegated_resolution": str,

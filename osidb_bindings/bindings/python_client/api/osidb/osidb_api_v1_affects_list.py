@@ -18,6 +18,9 @@ from ...models.osidb_api_v1_affects_list_flaw_impact import (
 from ...models.osidb_api_v1_affects_list_flaw_source import (
     OsidbApiV1AffectsListFlawSource,
 )
+from ...models.osidb_api_v1_affects_list_flaw_workflow_state_item import (
+    OsidbApiV1AffectsListFlawWorkflowStateItem,
+)
 from ...models.osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from ...models.osidb_api_v1_affects_list_order_item import (
     OsidbApiV1AffectsListOrderItem,
@@ -43,6 +46,7 @@ QUERY_PARAMS = {
     "created_dt__gte": datetime.datetime,
     "created_dt__lt": datetime.datetime,
     "created_dt__lte": datetime.datetime,
+    "cve_id": str,
     "cvss_scores__comment": str,
     "cvss_scores__created_dt": datetime.datetime,
     "cvss_scores__created_dt__date": datetime.date,
@@ -99,6 +103,7 @@ QUERY_PARAMS = {
     "flaw__updated_dt__lt": datetime.datetime,
     "flaw__updated_dt__lte": datetime.datetime,
     "flaw__uuid": UUID,
+    "flaw__workflow_state": list[OsidbApiV1AffectsListFlawWorkflowStateItem],
     "impact": OsidbApiV1AffectsListImpact,
     "include_fields": list[str],
     "include_history": bool,
@@ -119,6 +124,7 @@ QUERY_PARAMS = {
     "trackers__created_dt__lte": datetime.datetime,
     "trackers__embargoed": bool,
     "trackers__external_system_id": str,
+    "trackers__isempty": bool,
     "trackers__ps_update_stream": str,
     "trackers__resolution": str,
     "trackers__status": str,
@@ -156,6 +162,7 @@ def _get_kwargs(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     cvss_scores_comment: Union[Unset, str] = UNSET,
     cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
     cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -212,6 +219,9 @@ def _get_kwargs(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
+    flaw_workflow_state: Union[
+        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
+    ] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -232,6 +242,7 @@ def _get_kwargs(
     trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     trackers_embargoed: Union[Unset, bool] = UNSET,
     trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_isempty: Union[Unset, bool] = UNSET,
     trackers_ps_update_stream: Union[Unset, str] = UNSET,
     trackers_resolution: Union[Unset, str] = UNSET,
     trackers_status: Union[Unset, str] = UNSET,
@@ -312,6 +323,8 @@ def _get_kwargs(
         json_created_dt_lte = created_dt_lte.isoformat()
 
     params["created_dt__lte"] = json_created_dt_lte
+
+    params["cve_id"] = cve_id
 
     params["cvss_scores__comment"] = cvss_scores_comment
 
@@ -627,6 +640,20 @@ def _get_kwargs(
 
     params["flaw__uuid"] = json_flaw_uuid
 
+    json_flaw_workflow_state: Union[Unset, list[str]] = UNSET
+    if not isinstance(flaw_workflow_state, Unset):
+        json_flaw_workflow_state = []
+        for flaw_workflow_state_item_data in flaw_workflow_state:
+            flaw_workflow_state_item: str = UNSET
+            if not isinstance(flaw_workflow_state_item_data, Unset):
+                flaw_workflow_state_item = OsidbApiV1AffectsListFlawWorkflowStateItem(
+                    flaw_workflow_state_item_data
+                ).value
+
+            json_flaw_workflow_state.append(flaw_workflow_state_item)
+
+    params["flaw__workflow_state"] = json_flaw_workflow_state
+
     json_impact: Union[Unset, str] = UNSET
     if not isinstance(impact, Unset):
         json_impact = OsidbApiV1AffectsListImpact(impact).value
@@ -724,6 +751,8 @@ def _get_kwargs(
     params["trackers__embargoed"] = trackers_embargoed
 
     params["trackers__external_system_id"] = trackers_external_system_id
+
+    params["trackers__isempty"] = trackers_isempty
 
     params["trackers__ps_update_stream"] = trackers_ps_update_stream
 
@@ -897,6 +926,7 @@ def sync_detailed(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     cvss_scores_comment: Union[Unset, str] = UNSET,
     cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
     cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -953,6 +983,9 @@ def sync_detailed(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
+    flaw_workflow_state: Union[
+        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
+    ] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -973,6 +1006,7 @@ def sync_detailed(
     trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     trackers_embargoed: Union[Unset, bool] = UNSET,
     trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_isempty: Union[Unset, bool] = UNSET,
     trackers_ps_update_stream: Union[Unset, str] = UNSET,
     trackers_resolution: Union[Unset, str] = UNSET,
     trackers_status: Union[Unset, str] = UNSET,
@@ -1007,6 +1041,7 @@ def sync_detailed(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         cvss_scores_comment (Union[Unset, str]):
         cvss_scores_created_dt (Union[Unset, datetime.datetime]):
         cvss_scores_created_dt_date (Union[Unset, datetime.date]):
@@ -1063,6 +1098,7 @@ def sync_detailed(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
+        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1083,6 +1119,7 @@ def sync_detailed(
         trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         trackers_embargoed (Union[Unset, bool]):
         trackers_external_system_id (Union[Unset, str]):
+        trackers_isempty (Union[Unset, bool]):
         trackers_ps_update_stream (Union[Unset, str]):
         trackers_resolution (Union[Unset, str]):
         trackers_status (Union[Unset, str]):
@@ -1125,6 +1162,7 @@ def sync_detailed(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         cvss_scores_comment=cvss_scores_comment,
         cvss_scores_created_dt=cvss_scores_created_dt,
         cvss_scores_created_dt_date=cvss_scores_created_dt_date,
@@ -1181,6 +1219,7 @@ def sync_detailed(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
         include_history=include_history,
@@ -1201,6 +1240,7 @@ def sync_detailed(
         trackers_created_dt_lte=trackers_created_dt_lte,
         trackers_embargoed=trackers_embargoed,
         trackers_external_system_id=trackers_external_system_id,
+        trackers_isempty=trackers_isempty,
         trackers_ps_update_stream=trackers_ps_update_stream,
         trackers_resolution=trackers_resolution,
         trackers_status=trackers_status,
@@ -1248,6 +1288,7 @@ def sync(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     cvss_scores_comment: Union[Unset, str] = UNSET,
     cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
     cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1304,6 +1345,9 @@ def sync(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
+    flaw_workflow_state: Union[
+        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
+    ] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -1324,6 +1368,7 @@ def sync(
     trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     trackers_embargoed: Union[Unset, bool] = UNSET,
     trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_isempty: Union[Unset, bool] = UNSET,
     trackers_ps_update_stream: Union[Unset, str] = UNSET,
     trackers_resolution: Union[Unset, str] = UNSET,
     trackers_status: Union[Unset, str] = UNSET,
@@ -1358,6 +1403,7 @@ def sync(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         cvss_scores_comment (Union[Unset, str]):
         cvss_scores_created_dt (Union[Unset, datetime.datetime]):
         cvss_scores_created_dt_date (Union[Unset, datetime.date]):
@@ -1414,6 +1460,7 @@ def sync(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
+        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1434,6 +1481,7 @@ def sync(
         trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         trackers_embargoed (Union[Unset, bool]):
         trackers_external_system_id (Union[Unset, str]):
+        trackers_isempty (Union[Unset, bool]):
         trackers_ps_update_stream (Union[Unset, str]):
         trackers_resolution (Union[Unset, str]):
         trackers_status (Union[Unset, str]):
@@ -1476,6 +1524,7 @@ def sync(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         cvss_scores_comment=cvss_scores_comment,
         cvss_scores_created_dt=cvss_scores_created_dt,
         cvss_scores_created_dt_date=cvss_scores_created_dt_date,
@@ -1532,6 +1581,7 @@ def sync(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
         include_history=include_history,
@@ -1552,6 +1602,7 @@ def sync(
         trackers_created_dt_lte=trackers_created_dt_lte,
         trackers_embargoed=trackers_embargoed,
         trackers_external_system_id=trackers_external_system_id,
+        trackers_isempty=trackers_isempty,
         trackers_ps_update_stream=trackers_ps_update_stream,
         trackers_resolution=trackers_resolution,
         trackers_status=trackers_status,
@@ -1589,6 +1640,7 @@ async def asyncio_detailed(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     cvss_scores_comment: Union[Unset, str] = UNSET,
     cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
     cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1645,6 +1697,9 @@ async def asyncio_detailed(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
+    flaw_workflow_state: Union[
+        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
+    ] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -1665,6 +1720,7 @@ async def asyncio_detailed(
     trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     trackers_embargoed: Union[Unset, bool] = UNSET,
     trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_isempty: Union[Unset, bool] = UNSET,
     trackers_ps_update_stream: Union[Unset, str] = UNSET,
     trackers_resolution: Union[Unset, str] = UNSET,
     trackers_status: Union[Unset, str] = UNSET,
@@ -1699,6 +1755,7 @@ async def asyncio_detailed(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         cvss_scores_comment (Union[Unset, str]):
         cvss_scores_created_dt (Union[Unset, datetime.datetime]):
         cvss_scores_created_dt_date (Union[Unset, datetime.date]):
@@ -1755,6 +1812,7 @@ async def asyncio_detailed(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
+        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1775,6 +1833,7 @@ async def asyncio_detailed(
         trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         trackers_embargoed (Union[Unset, bool]):
         trackers_external_system_id (Union[Unset, str]):
+        trackers_isempty (Union[Unset, bool]):
         trackers_ps_update_stream (Union[Unset, str]):
         trackers_resolution (Union[Unset, str]):
         trackers_status (Union[Unset, str]):
@@ -1817,6 +1876,7 @@ async def asyncio_detailed(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         cvss_scores_comment=cvss_scores_comment,
         cvss_scores_created_dt=cvss_scores_created_dt,
         cvss_scores_created_dt_date=cvss_scores_created_dt_date,
@@ -1873,6 +1933,7 @@ async def asyncio_detailed(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
         include_history=include_history,
@@ -1893,6 +1954,7 @@ async def asyncio_detailed(
         trackers_created_dt_lte=trackers_created_dt_lte,
         trackers_embargoed=trackers_embargoed,
         trackers_external_system_id=trackers_external_system_id,
+        trackers_isempty=trackers_isempty,
         trackers_ps_update_stream=trackers_ps_update_stream,
         trackers_resolution=trackers_resolution,
         trackers_status=trackers_status,
@@ -1940,6 +2002,7 @@ async def asyncio(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     cvss_scores_comment: Union[Unset, str] = UNSET,
     cvss_scores_created_dt: Union[Unset, datetime.datetime] = UNSET,
     cvss_scores_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1996,6 +2059,9 @@ async def asyncio(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
+    flaw_workflow_state: Union[
+        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
+    ] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -2016,6 +2082,7 @@ async def asyncio(
     trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     trackers_embargoed: Union[Unset, bool] = UNSET,
     trackers_external_system_id: Union[Unset, str] = UNSET,
+    trackers_isempty: Union[Unset, bool] = UNSET,
     trackers_ps_update_stream: Union[Unset, str] = UNSET,
     trackers_resolution: Union[Unset, str] = UNSET,
     trackers_status: Union[Unset, str] = UNSET,
@@ -2050,6 +2117,7 @@ async def asyncio(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         cvss_scores_comment (Union[Unset, str]):
         cvss_scores_created_dt (Union[Unset, datetime.datetime]):
         cvss_scores_created_dt_date (Union[Unset, datetime.date]):
@@ -2106,6 +2174,7 @@ async def asyncio(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
+        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -2126,6 +2195,7 @@ async def asyncio(
         trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         trackers_embargoed (Union[Unset, bool]):
         trackers_external_system_id (Union[Unset, str]):
+        trackers_isempty (Union[Unset, bool]):
         trackers_ps_update_stream (Union[Unset, str]):
         trackers_resolution (Union[Unset, str]):
         trackers_status (Union[Unset, str]):
@@ -2169,6 +2239,7 @@ async def asyncio(
             created_dt_gte=created_dt_gte,
             created_dt_lt=created_dt_lt,
             created_dt_lte=created_dt_lte,
+            cve_id=cve_id,
             cvss_scores_comment=cvss_scores_comment,
             cvss_scores_created_dt=cvss_scores_created_dt,
             cvss_scores_created_dt_date=cvss_scores_created_dt_date,
@@ -2225,6 +2296,7 @@ async def asyncio(
             flaw_updated_dt_lt=flaw_updated_dt_lt,
             flaw_updated_dt_lte=flaw_updated_dt_lte,
             flaw_uuid=flaw_uuid,
+            flaw_workflow_state=flaw_workflow_state,
             impact=impact,
             include_fields=include_fields,
             include_history=include_history,
@@ -2245,6 +2317,7 @@ async def asyncio(
             trackers_created_dt_lte=trackers_created_dt_lte,
             trackers_embargoed=trackers_embargoed,
             trackers_external_system_id=trackers_external_system_id,
+            trackers_isempty=trackers_isempty,
             trackers_ps_update_stream=trackers_ps_update_stream,
             trackers_resolution=trackers_resolution,
             trackers_status=trackers_status,

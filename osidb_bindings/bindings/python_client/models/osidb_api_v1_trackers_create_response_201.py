@@ -24,6 +24,7 @@ T = TypeVar("T", bound="OsidbApiV1TrackersCreateResponse201")
 class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     """
     Attributes:
+        cve_id (str):
         errata (list['Erratum']):
         ps_update_stream (str):
         status (str):
@@ -46,6 +47,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         version (Union[Unset, str]):
     """
 
+    cve_id: str
     errata: list["Erratum"]
     ps_update_stream: str
     status: str
@@ -67,6 +69,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        cve_id = self.cve_id
+
         errata: list[dict[str, Any]] = UNSET
         if not isinstance(self.errata, Unset):
             errata = []
@@ -173,6 +177,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(cve_id, Unset):
+            field_dict["cve_id"] = cve_id
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
         if not isinstance(ps_update_stream, Unset):
@@ -218,6 +224,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         from ..models.erratum import Erratum
 
         d = src_dict.copy()
+        cve_id = d.pop("cve_id", UNSET)
+
         errata = []
         _errata = d.pop("errata", UNSET)
         for errata_item_data in _errata or []:
@@ -381,6 +389,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         version = d.pop("version", UNSET)
 
         osidb_api_v1_trackers_create_response_201 = cls(
+            cve_id=cve_id,
             errata=errata,
             ps_update_stream=ps_update_stream,
             status=status,
@@ -407,6 +416,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
+            "cve_id": str,
             "errata": list["Erratum"],
             "ps_update_stream": str,
             "status": str,
