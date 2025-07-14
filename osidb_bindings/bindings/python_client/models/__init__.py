@@ -7,6 +7,9 @@ from .affect_cvss import AffectCVSS
 from .affect_cvss_post_request import AffectCVSSPostRequest
 from .affect_cvss_put_request import AffectCVSSPutRequest
 from .affect_cvss_request import AffectCVSSRequest
+from .affect_cvssv2 import AffectCVSSV2
+from .affect_cvssv2_post_request import AffectCVSSV2PostRequest
+from .affect_cvssv2_put_request import AffectCVSSV2PutRequest
 from .affect_post_request import AffectPostRequest
 from .affect_report_data import AffectReportData
 from .affect_request import AffectRequest
@@ -174,6 +177,9 @@ from .osidb_api_v1_affects_list_cvss_scores_issuer import (
 )
 from .osidb_api_v1_affects_list_flaw_impact import OsidbApiV1AffectsListFlawImpact
 from .osidb_api_v1_affects_list_flaw_source import OsidbApiV1AffectsListFlawSource
+from .osidb_api_v1_affects_list_flaw_workflow_state_item import (
+    OsidbApiV1AffectsListFlawWorkflowStateItem,
+)
 from .osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from .osidb_api_v1_affects_list_order_item import OsidbApiV1AffectsListOrderItem
 from .osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
@@ -367,6 +373,24 @@ from .osidb_api_v1_trackers_retrieve_response_200 import (
 from .osidb_api_v1_trackers_update_response_200 import (
     OsidbApiV1TrackersUpdateResponse200,
 )
+from .osidb_api_v2_beta_affects_cvss_scores_create_response_201 import (
+    OsidbApiV2BetaAffectsCvssScoresCreateResponse201,
+)
+from .osidb_api_v2_beta_affects_cvss_scores_destroy_response_204 import (
+    OsidbApiV2BetaAffectsCvssScoresDestroyResponse204,
+)
+from .osidb_api_v2_beta_affects_cvss_scores_list_issuer import (
+    OsidbApiV2BetaAffectsCvssScoresListIssuer,
+)
+from .osidb_api_v2_beta_affects_cvss_scores_list_response_200 import (
+    OsidbApiV2BetaAffectsCvssScoresListResponse200,
+)
+from .osidb_api_v2_beta_affects_cvss_scores_retrieve_response_200 import (
+    OsidbApiV2BetaAffectsCvssScoresRetrieveResponse200,
+)
+from .osidb_api_v2_beta_affects_cvss_scores_update_response_200 import (
+    OsidbApiV2BetaAffectsCvssScoresUpdateResponse200,
+)
 from .osidb_api_v2_beta_flaws_cvss_scores_create_response_201 import (
     OsidbApiV2BetaFlawsCvssScoresCreateResponse201,
 )
@@ -398,6 +422,7 @@ from .package_request import PackageRequest
 from .package_ver import PackageVer
 from .package_ver_request import PackageVerRequest
 from .paginated_affect_cvss_list import PaginatedAffectCVSSList
+from .paginated_affect_cvssv2_list import PaginatedAffectCVSSV2List
 from .paginated_affect_list import PaginatedAffectList
 from .paginated_alert_list import PaginatedAlertList
 from .paginated_audit_list import PaginatedAuditList
@@ -459,6 +484,9 @@ __all__ = (
     "AffectCVSSPostRequest",
     "AffectCVSSPutRequest",
     "AffectCVSSRequest",
+    "AffectCVSSV2",
+    "AffectCVSSV2PostRequest",
+    "AffectCVSSV2PutRequest",
     "AffectednessEnum",
     "AffectPostRequest",
     "AffectReportData",
@@ -560,6 +588,7 @@ __all__ = (
     "OsidbApiV1AffectsListCvssScoresIssuer",
     "OsidbApiV1AffectsListFlawImpact",
     "OsidbApiV1AffectsListFlawSource",
+    "OsidbApiV1AffectsListFlawWorkflowStateItem",
     "OsidbApiV1AffectsListImpact",
     "OsidbApiV1AffectsListOrderItem",
     "OsidbApiV1AffectsListResolution",
@@ -643,6 +672,12 @@ __all__ = (
     "OsidbApiV1TrackersListType",
     "OsidbApiV1TrackersRetrieveResponse200",
     "OsidbApiV1TrackersUpdateResponse200",
+    "OsidbApiV2BetaAffectsCvssScoresCreateResponse201",
+    "OsidbApiV2BetaAffectsCvssScoresDestroyResponse204",
+    "OsidbApiV2BetaAffectsCvssScoresListIssuer",
+    "OsidbApiV2BetaAffectsCvssScoresListResponse200",
+    "OsidbApiV2BetaAffectsCvssScoresRetrieveResponse200",
+    "OsidbApiV2BetaAffectsCvssScoresUpdateResponse200",
     "OsidbApiV2BetaFlawsCvssScoresCreateResponse201",
     "OsidbApiV2BetaFlawsCvssScoresDestroyResponse204",
     "OsidbApiV2BetaFlawsCvssScoresListIssuer",
@@ -658,6 +693,7 @@ __all__ = (
     "PackageVer",
     "PackageVerRequest",
     "PaginatedAffectCVSSList",
+    "PaginatedAffectCVSSV2List",
     "PaginatedAffectList",
     "PaginatedAlertList",
     "PaginatedAuditList",

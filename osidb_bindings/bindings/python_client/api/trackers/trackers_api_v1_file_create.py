@@ -10,7 +10,9 @@ from ...models.trackers_api_v1_file_create_response_200 import (
 )
 from ...types import UNSET, Response, Unset, check_nested_instance
 
-QUERY_PARAMS = {}
+QUERY_PARAMS = {
+    "exclude_existing_trackers": bool,
+}
 
 REQUEST_BODY_TYPE = FlawUUIDListRequest
 
@@ -23,11 +25,23 @@ def _get_kwargs(
         FlawUUIDListRequest,
         FlawUUIDListRequest,
     ],
+    exclude_existing_trackers: Union[Unset, bool] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
+    params: dict[str, Any] = {}
+
+    params["exclude_existing_trackers"] = exclude_existing_trackers
+
+    params = {
+        k: (",".join(v) if isinstance(v, list) else v)
+        for k, v in params.items()
+        if v is not UNSET and v is not None
+    }
+
     _kwargs: dict[str, Any] = {
         "url": f"{client.base_url}/trackers/api/v1/file",
+        "params": params,
     }
 
     if check_nested_instance(body, FlawUUIDListRequest):
@@ -75,10 +89,12 @@ def sync_detailed(
         FlawUUIDListRequest,
         FlawUUIDListRequest,
     ],
+    exclude_existing_trackers: Union[Unset, bool] = UNSET,
 ) -> Response[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
+        exclude_existing_trackers (Union[Unset, bool]):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
@@ -94,6 +110,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         client=client,
         body=body,
+        exclude_existing_trackers=exclude_existing_trackers,
     )
 
     response = requests.post(
@@ -115,10 +132,12 @@ def sync(
         FlawUUIDListRequest,
         FlawUUIDListRequest,
     ],
+    exclude_existing_trackers: Union[Unset, bool] = UNSET,
 ) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
+        exclude_existing_trackers (Union[Unset, bool]):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
@@ -134,6 +153,7 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
+        exclude_existing_trackers=exclude_existing_trackers,
     ).parsed
 
 
@@ -145,10 +165,12 @@ async def asyncio_detailed(
         FlawUUIDListRequest,
         FlawUUIDListRequest,
     ],
+    exclude_existing_trackers: Union[Unset, bool] = UNSET,
 ) -> Response[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
+        exclude_existing_trackers (Union[Unset, bool]):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
@@ -164,6 +186,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         client=client,
         body=body,
+        exclude_existing_trackers=exclude_existing_trackers,
     )
 
     async with client.get_async_session().post(
@@ -185,10 +208,12 @@ async def asyncio(
         FlawUUIDListRequest,
         FlawUUIDListRequest,
     ],
+    exclude_existing_trackers: Union[Unset, bool] = UNSET,
 ) -> Optional[TrackersApiV1FileCreateResponse200]:
     """Given a list of flaws, generates a list of suggested trackers to file.
 
     Args:
+        exclude_existing_trackers (Union[Unset, bool]):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
         body (FlawUUIDListRequest):
@@ -205,5 +230,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
+            exclude_existing_trackers=exclude_existing_trackers,
         )
     ).parsed

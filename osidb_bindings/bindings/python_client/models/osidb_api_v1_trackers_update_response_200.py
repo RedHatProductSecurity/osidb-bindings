@@ -24,6 +24,7 @@ T = TypeVar("T", bound="OsidbApiV1TrackersUpdateResponse200")
 class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
     """
     Attributes:
+        cve_id (str):
         errata (list['Erratum']):
         external_system_id (str):
         status (str):
@@ -47,6 +48,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
         version (Union[Unset, str]):
     """
 
+    cve_id: str
     errata: list["Erratum"]
     external_system_id: str
     status: str
@@ -69,6 +71,8 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        cve_id = self.cve_id
+
         errata: list[dict[str, Any]] = UNSET
         if not isinstance(self.errata, Unset):
             errata = []
@@ -177,6 +181,8 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(cve_id, Unset):
+            field_dict["cve_id"] = cve_id
         if not isinstance(errata, Unset):
             field_dict["errata"] = errata
         if not isinstance(external_system_id, Unset):
@@ -224,6 +230,8 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
         from ..models.erratum import Erratum
 
         d = src_dict.copy()
+        cve_id = d.pop("cve_id", UNSET)
+
         errata = []
         _errata = d.pop("errata", UNSET)
         for errata_item_data in _errata or []:
@@ -389,6 +397,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
         version = d.pop("version", UNSET)
 
         osidb_api_v1_trackers_update_response_200 = cls(
+            cve_id=cve_id,
             errata=errata,
             external_system_id=external_system_id,
             status=status,
@@ -416,6 +425,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
     @staticmethod
     def get_fields():
         return {
+            "cve_id": str,
             "errata": list["Erratum"],
             "external_system_id": str,
             "status": str,

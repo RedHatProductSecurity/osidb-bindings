@@ -94,6 +94,7 @@ QUERY_PARAMS = {
     "created_dt__gte": datetime.datetime,
     "created_dt__lt": datetime.datetime,
     "created_dt__lte": datetime.datetime,
+    "cve_id": str,
     "embargoed": bool,
     "exclude_fields": list[str],
     "external_system_id": str,
@@ -186,6 +187,7 @@ def _get_kwargs(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
@@ -598,6 +600,8 @@ def _get_kwargs(
 
     params["created_dt__lte"] = json_created_dt_lte
 
+    params["cve_id"] = cve_id
+
     params["embargoed"] = embargoed
 
     json_exclude_fields: Union[Unset, list[str]] = UNSET
@@ -810,6 +814,7 @@ def sync_detailed(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
@@ -897,6 +902,7 @@ def sync_detailed(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
@@ -992,6 +998,7 @@ def sync_detailed(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
@@ -1094,6 +1101,7 @@ def sync(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
@@ -1181,6 +1189,7 @@ def sync(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
@@ -1276,6 +1285,7 @@ def sync(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
@@ -1368,6 +1378,7 @@ async def asyncio_detailed(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
@@ -1455,6 +1466,7 @@ async def asyncio_detailed(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
@@ -1550,6 +1562,7 @@ async def asyncio_detailed(
         created_dt_gte=created_dt_gte,
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
+        cve_id=cve_id,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
@@ -1652,6 +1665,7 @@ async def asyncio(
     created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    cve_id: Union[Unset, str] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
@@ -1739,6 +1753,7 @@ async def asyncio(
         created_dt_gte (Union[Unset, datetime.datetime]):
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
+        cve_id (Union[Unset, str]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
@@ -1835,6 +1850,7 @@ async def asyncio(
             created_dt_gte=created_dt_gte,
             created_dt_lt=created_dt_lt,
             created_dt_lte=created_dt_lte,
+            cve_id=cve_id,
             embargoed=embargoed,
             exclude_fields=exclude_fields,
             external_system_id=external_system_id,
