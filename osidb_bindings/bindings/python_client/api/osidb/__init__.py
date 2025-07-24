@@ -16,6 +16,7 @@ from .osidb_api_v1_alerts_retrieve import *
 from .osidb_api_v1_audit_list import *
 from .osidb_api_v1_audit_retrieve import *
 from .osidb_api_v1_audit_update import *
+from .osidb_api_v1_available_flaws_retrieve import *
 from .osidb_api_v1_flaws_acknowledgments_create import *
 from .osidb_api_v1_flaws_acknowledgments_destroy import *
 from .osidb_api_v1_flaws_acknowledgments_list import *
