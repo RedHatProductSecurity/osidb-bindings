@@ -198,6 +198,15 @@ from .osidb_api_v1_alerts_retrieve_response_200 import (
 from .osidb_api_v1_audit_list_response_200 import OsidbApiV1AuditListResponse200
 from .osidb_api_v1_audit_retrieve_response_200 import OsidbApiV1AuditRetrieveResponse200
 from .osidb_api_v1_audit_update_response_200 import OsidbApiV1AuditUpdateResponse200
+from .osidb_api_v1_available_flaws_retrieve_response_204 import (
+    OsidbApiV1AvailableFlawsRetrieveResponse204,
+)
+from .osidb_api_v1_available_flaws_retrieve_response_400 import (
+    OsidbApiV1AvailableFlawsRetrieveResponse400,
+)
+from .osidb_api_v1_available_flaws_retrieve_response_404 import (
+    OsidbApiV1AvailableFlawsRetrieveResponse404,
+)
 from .osidb_api_v1_flaws_acknowledgments_create_response_201 import (
     OsidbApiV1FlawsAcknowledgmentsCreateResponse201,
 )
@@ -603,6 +612,9 @@ __all__ = (
     "OsidbApiV1AuditListResponse200",
     "OsidbApiV1AuditRetrieveResponse200",
     "OsidbApiV1AuditUpdateResponse200",
+    "OsidbApiV1AvailableFlawsRetrieveResponse204",
+    "OsidbApiV1AvailableFlawsRetrieveResponse400",
+    "OsidbApiV1AvailableFlawsRetrieveResponse404",
     "OsidbApiV1FlawsAcknowledgmentsCreateResponse201",
     "OsidbApiV1FlawsAcknowledgmentsDestroyResponse200",
     "OsidbApiV1FlawsAcknowledgmentsListResponse200",
