@@ -59,6 +59,9 @@ update_version() {
     echo "Updating the osidb_bindings.spec to ${version}"
     sed -i 's/^%define version [0-9]*\.[0-9]*\.[0-9]*/%define version '${version}'/g' osidb_bindings.spec
 
+    echo "Updating the osidb_bindings/bindings/pyproject.toml to ${version}"
+    sed -i 's/version = "[0-9]*\.[0-9]*\.[0-9]*"/version = "'${version}'"/g' osidb_bindings/bindings/pyproject.toml
+
     echo
 }
 
