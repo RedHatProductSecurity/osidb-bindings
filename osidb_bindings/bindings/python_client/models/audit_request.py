@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -139,16 +140,9 @@ class AuditRequest(OSIDBModel):
         audit_request.additional_properties = d
         return audit_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "pgh_slug": str,
-            "pgh_obj_model": str,
-            "pgh_label": str,
-            "pgh_diff": Any,
-            "pgh_obj_id": Union[None, str],
-            "pgh_context": Any,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

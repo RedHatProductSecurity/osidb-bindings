@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -109,15 +110,9 @@ class ModuleComponent(OSIDBModel):
         module_component.additional_properties = d
         return module_component
 
-    @staticmethod
-    def get_fields():
-        return {
-            "ps_module": str,
-            "ps_component": str,
-            "streams": list["PsStreamSelection"],
-            "selected": bool,
-            "affect": Affect,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

@@ -5,6 +5,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -161,15 +162,9 @@ class TrackerRequest(OSIDBModel):
         tracker_request.additional_properties = d
         return tracker_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-            "affects": list[UUID],
-            "ps_update_stream": str,
-            "sync_to_bz": bool,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

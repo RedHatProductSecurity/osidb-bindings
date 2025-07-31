@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -127,18 +128,9 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         osidb_whoami_retrieve_response_200.additional_properties = d
         return osidb_whoami_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "username": str,
-            "groups": list[str],
-            "profile": Profile,
-            "email": str,
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

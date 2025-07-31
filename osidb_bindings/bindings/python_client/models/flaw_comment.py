@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -188,21 +189,9 @@ class FlawComment(OSIDBModel):
         flaw_comment.additional_properties = d
         return flaw_comment
 
-    @staticmethod
-    def get_fields():
-        return {
-            "flaw": UUID,
-            "text": str,
-            "uuid": UUID,
-            "external_system_id": str,
-            "alerts": list["Alert"],
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
-            "embargoed": bool,
-            "order": int,
-            "creator": str,
-            "is_private": bool,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

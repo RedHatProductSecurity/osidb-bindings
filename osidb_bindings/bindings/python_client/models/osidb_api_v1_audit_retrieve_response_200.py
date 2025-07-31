@@ -3,6 +3,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -166,22 +167,9 @@ class OsidbApiV1AuditRetrieveResponse200(OSIDBModel):
         osidb_api_v1_audit_retrieve_response_200.additional_properties = d
         return osidb_api_v1_audit_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "pgh_created_at": datetime.datetime,
-            "pgh_slug": str,
-            "pgh_obj_model": str,
-            "pgh_label": str,
-            "pgh_diff": Any,
-            "pgh_data": str,
-            "pgh_obj_id": Union[None, str],
-            "pgh_context": Any,
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

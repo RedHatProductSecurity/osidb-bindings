@@ -3,6 +3,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.cvss_version_enum import CvssVersionEnum
@@ -146,15 +147,9 @@ class AffectCVSSV2PutRequest(OSIDBModel):
         affect_cvssv2_put_request.additional_properties = d
         return affect_cvssv2_put_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "cvss_version": CvssVersionEnum,
-            "vector": str,
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-            "comment": Union[None, str],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

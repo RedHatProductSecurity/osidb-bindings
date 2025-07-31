@@ -6,6 +6,7 @@ from typing import Any, TypeVar, Optional, BinaryIO, TextIO, TYPE_CHECKING, Unio
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 {% if model.is_multipart_body %}
 import json
 {% endif %}
@@ -195,14 +196,10 @@ return field_dict
 {% endif %}
         return {{ module_name }}
 
-    {# CHANGE START (3) - add new static method for fields obtain #}
-    @staticmethod
-    def get_fields():
-        return {
-            {% for property in model.required_properties + model.optional_properties %}
-            "{{ property.name }}": {{ property.get_type_string(no_optional=True) }},
-            {% endfor %}
-        }
+    {# CHANGE START (3) - add new class method for fields obtain #}
+    @classmethod
+    def get_fields(cls):
+        return {f.name : f.type for f in _attrs_fields(cls)}
     {# CHANGE END (3) #}
 
     {# CHANGE START (4) - add new classmethod for initializing empty model with Unset values  #}

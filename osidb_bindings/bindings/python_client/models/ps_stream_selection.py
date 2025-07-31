@@ -2,6 +2,7 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -76,15 +77,9 @@ class PsStreamSelection(OSIDBModel):
         ps_stream_selection.additional_properties = d
         return ps_stream_selection
 
-    @staticmethod
-    def get_fields():
-        return {
-            "ps_update_stream": str,
-            "selected": bool,
-            "acked": bool,
-            "eus": bool,
-            "aus": bool,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

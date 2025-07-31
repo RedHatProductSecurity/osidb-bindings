@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.tracker_type import TrackerType
 from ..types import UNSET, OSIDBModel, Unset
@@ -75,14 +76,9 @@ class TrackerReportData(OSIDBModel):
         tracker_report_data.additional_properties = d
         return tracker_report_data
 
-    @staticmethod
-    def get_fields():
-        return {
-            "type": TrackerType,
-            "external_system_id": str,
-            "status": str,
-            "resolution": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

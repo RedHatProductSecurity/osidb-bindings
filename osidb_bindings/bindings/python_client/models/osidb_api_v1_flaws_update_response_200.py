@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.blank_enum import BlankEnum
@@ -935,48 +936,9 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         osidb_api_v1_flaws_update_response_200.additional_properties = d
         return osidb_api_v1_flaws_update_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "uuid": UUID,
-            "title": str,
-            "trackers": list[str],
-            "comment_zero": str,
-            "affects": list["Affect"],
-            "comments": list["Comment"],
-            "package_versions": list["Package"],
-            "acknowledgments": list["FlawAcknowledgment"],
-            "references": list["FlawReference"],
-            "cvss_scores": list["FlawCVSS"],
-            "labels": list["FlawCollaborator"],
-            "embargoed": bool,
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
-            "classification": FlawClassification,
-            "task_key": Union[None, str],
-            "alerts": list["Alert"],
-            "cve_id": Union[None, str],
-            "impact": Union[BlankEnum, ImpactEnum],
-            "components": list[str],
-            "cve_description": str,
-            "requires_cve_description": Union[BlankEnum, RequiresCveDescriptionEnum],
-            "statement": str,
-            "cwe_id": str,
-            "unembargo_dt": Union[None, datetime.datetime],
-            "source": Union[BlankEnum, SourceBe0Enum],
-            "reported_dt": Union[None, datetime.datetime],
-            "mitigation": str,
-            "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
-            "major_incident_start_dt": Union[None, datetime.datetime],
-            "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
-            "group_key": str,
-            "owner": str,
-            "team_id": str,
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

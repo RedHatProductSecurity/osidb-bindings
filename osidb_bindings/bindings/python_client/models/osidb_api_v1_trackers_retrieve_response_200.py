@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.blank_enum import BlankEnum
@@ -422,32 +423,9 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         osidb_api_v1_trackers_retrieve_response_200.additional_properties = d
         return osidb_api_v1_trackers_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "cve_id": str,
-            "errata": list["Erratum"],
-            "external_system_id": str,
-            "status": str,
-            "resolution": str,
-            "not_affected_justification": Union[
-                BlankEnum, NotAffectedJustificationEnum
-            ],
-            "type": TrackerType,
-            "uuid": UUID,
-            "special_handling": list[SpecialHandlingEnum],
-            "resolved_dt": Union[None, datetime.datetime],
-            "embargoed": bool,
-            "alerts": list["Alert"],
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
-            "affects": list[UUID],
-            "ps_update_stream": str,
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

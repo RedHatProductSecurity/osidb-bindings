@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.affectedness_enum import AffectednessEnum
@@ -613,36 +614,9 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
         osidb_api_v1_affects_retrieve_response_200.additional_properties = d
         return osidb_api_v1_affects_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "uuid": UUID,
-            "flaw": Union[None, UUID],
-            "ps_module": str,
-            "cve_id": str,
-            "ps_product": str,
-            "trackers": list["Tracker"],
-            "delegated_resolution": str,
-            "cvss_scores": list["AffectCVSS"],
-            "delegated_not_affected_justification": str,
-            "resolved_dt": Union[None, datetime.datetime],
-            "embargoed": bool,
-            "alerts": list["Alert"],
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
-            "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[BlankEnum, ResolutionEnum],
-            "ps_component": Union[None, str],
-            "impact": Union[BlankEnum, ImpactEnum],
-            "purl": Union[None, str],
-            "not_affected_justification": Union[
-                BlankEnum, NotAffectedJustificationEnum
-            ],
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

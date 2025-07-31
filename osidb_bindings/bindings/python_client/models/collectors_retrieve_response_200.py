@@ -3,6 +3,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -87,15 +88,9 @@ class CollectorsRetrieveResponse200(OSIDBModel):
         collectors_retrieve_response_200.additional_properties = d
         return collectors_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {
-            "dt": datetime.datetime,
-            "env": str,
-            "index": list[str],
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

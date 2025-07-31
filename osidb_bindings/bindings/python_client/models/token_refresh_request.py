@@ -2,6 +2,7 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -52,11 +53,9 @@ class TokenRefreshRequest(OSIDBModel):
         token_refresh_request.additional_properties = d
         return token_refresh_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "refresh": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):
