@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -121,14 +122,9 @@ class AffectCVSSV2PostRequest(OSIDBModel):
         affect_cvssv2_post_request.additional_properties = d
         return affect_cvssv2_post_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "cvss_version": CvssVersionEnum,
-            "vector": str,
-            "embargoed": bool,
-            "comment": Union[None, str],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

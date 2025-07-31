@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.collectors_api_v1_status_retrieve_response_200_collectors_item_data import (
@@ -208,20 +209,9 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = d
         return collectors_api_v1_status_retrieve_response_200_collectors_item
 
-    @staticmethod
-    def get_fields():
-        return {
-            "data": CollectorsApiV1StatusRetrieveResponse200CollectorsItemData,
-            "depends_on": list[str],
-            "error": Union[
-                "CollectorsApiV1StatusRetrieveResponse200CollectorsItemErrorType0", None
-            ],
-            "is_complete": bool,
-            "is_up2date": bool,
-            "data_models": list[str],
-            "state": CollectorsApiV1StatusRetrieveResponse200CollectorsItemState,
-            "updated_until": datetime.datetime,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

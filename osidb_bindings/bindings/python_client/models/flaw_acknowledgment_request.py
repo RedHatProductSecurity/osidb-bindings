@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -105,16 +106,9 @@ class FlawAcknowledgmentRequest(OSIDBModel):
         flaw_acknowledgment_request.additional_properties = d
         return flaw_acknowledgment_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "name": str,
-            "affiliation": str,
-            "from_upstream": bool,
-            "flaw": UUID,
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.cvss_version_enum import CvssVersionEnum
@@ -141,17 +142,9 @@ class AffectCVSSRequest(OSIDBModel):
         affect_cvss_request.additional_properties = d
         return affect_cvss_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "cvss_version": CvssVersionEnum,
-            "vector": str,
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-            "affect": UUID,
-            "comment": Union[None, str],
-            "issuer": IssuerEnum,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

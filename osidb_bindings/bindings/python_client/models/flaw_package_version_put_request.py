@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -139,14 +140,9 @@ class FlawPackageVersionPutRequest(OSIDBModel):
         flaw_package_version_put_request.additional_properties = d
         return flaw_package_version_put_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "package": str,
-            "versions": list["FlawVersionRequest"],
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

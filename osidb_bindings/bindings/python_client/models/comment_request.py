@@ -3,6 +3,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -107,16 +108,9 @@ class CommentRequest(OSIDBModel):
         comment_request.additional_properties = d
         return comment_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "text": str,
-            "updated_dt": datetime.datetime,
-            "external_system_id": str,
-            "order": Union[None, int],
-            "creator": str,
-            "is_private": bool,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

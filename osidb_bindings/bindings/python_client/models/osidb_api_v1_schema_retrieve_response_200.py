@@ -2,6 +2,7 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import OSIDBModel
 
@@ -28,9 +29,9 @@ class OsidbApiV1SchemaRetrieveResponse200(OSIDBModel):
         osidb_api_v1_schema_retrieve_response_200.additional_properties = d
         return osidb_api_v1_schema_retrieve_response_200
 
-    @staticmethod
-    def get_fields():
-        return {}
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

@@ -2,6 +2,7 @@ from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -49,12 +50,9 @@ class TokenObtainPair(OSIDBModel):
         token_obtain_pair.additional_properties = d
         return token_obtain_pair
 
-    @staticmethod
-    def get_fields():
-        return {
-            "access": str,
-            "refresh": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

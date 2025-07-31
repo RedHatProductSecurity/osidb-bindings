@@ -3,6 +3,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.alert_type_enum import AlertTypeEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -120,17 +121,9 @@ class Alert(OSIDBModel):
         alert.additional_properties = d
         return alert
 
-    @staticmethod
-    def get_fields():
-        return {
-            "uuid": UUID,
-            "name": str,
-            "description": str,
-            "parent_uuid": UUID,
-            "parent_model": str,
-            "alert_type": AlertTypeEnum,
-            "resolution_steps": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

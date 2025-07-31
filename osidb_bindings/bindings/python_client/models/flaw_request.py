@@ -4,6 +4,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.blank_enum import BlankEnum
@@ -823,31 +824,9 @@ class FlawRequest(OSIDBModel):
         flaw_request.additional_properties = d
         return flaw_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "title": str,
-            "comment_zero": str,
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-            "cve_id": Union[None, str],
-            "impact": Union[BlankEnum, ImpactEnum],
-            "components": list[str],
-            "cve_description": str,
-            "requires_cve_description": Union[BlankEnum, RequiresCveDescriptionEnum],
-            "statement": str,
-            "cwe_id": str,
-            "unembargo_dt": Union[None, datetime.datetime],
-            "source": Union[BlankEnum, SourceBe0Enum],
-            "reported_dt": Union[None, datetime.datetime],
-            "mitigation": str,
-            "major_incident_state": Union[BlankEnum, MajorIncidentStateEnum],
-            "major_incident_start_dt": Union[None, datetime.datetime],
-            "nist_cvss_validation": Union[BlankEnum, NistCvssValidationEnum],
-            "group_key": str,
-            "owner": str,
-            "team_id": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

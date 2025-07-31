@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.affectedness_enum import AffectednessEnum
@@ -386,23 +387,9 @@ class AffectBulkPutRequest(OSIDBModel):
         affect_bulk_put_request.additional_properties = d
         return affect_bulk_put_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "uuid": UUID,
-            "flaw": Union[None, UUID],
-            "ps_module": str,
-            "embargoed": bool,
-            "updated_dt": datetime.datetime,
-            "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[BlankEnum, ResolutionEnum],
-            "ps_component": Union[None, str],
-            "impact": Union[BlankEnum, ImpactEnum],
-            "purl": Union[None, str],
-            "not_affected_justification": Union[
-                BlankEnum, NotAffectedJustificationEnum
-            ],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

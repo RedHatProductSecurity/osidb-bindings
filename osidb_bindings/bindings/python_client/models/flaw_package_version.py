@@ -4,6 +4,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -152,17 +153,9 @@ class FlawPackageVersion(OSIDBModel):
         flaw_package_version.additional_properties = d
         return flaw_package_version
 
-    @staticmethod
-    def get_fields():
-        return {
-            "package": str,
-            "versions": list["FlawVersion"],
-            "flaw": UUID,
-            "uuid": UUID,
-            "embargoed": bool,
-            "created_dt": datetime.datetime,
-            "updated_dt": datetime.datetime,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

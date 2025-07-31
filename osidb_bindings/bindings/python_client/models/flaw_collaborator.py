@@ -3,6 +3,7 @@ from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
@@ -102,16 +103,9 @@ class FlawCollaborator(OSIDBModel):
         flaw_collaborator.additional_properties = d
         return flaw_collaborator
 
-    @staticmethod
-    def get_fields():
-        return {
-            "uuid": UUID,
-            "label": str,
-            "type": str,
-            "state": StateEnum,
-            "contributor": str,
-            "relevant": bool,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

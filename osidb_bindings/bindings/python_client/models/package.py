@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -103,13 +104,9 @@ class Package(OSIDBModel):
         package.additional_properties = d
         return package
 
-    @staticmethod
-    def get_fields():
-        return {
-            "package": str,
-            "versions": list["PackageVer"],
-            "alerts": list["Alert"],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -49,12 +50,9 @@ class Profile(OSIDBModel):
         profile.additional_properties = d
         return profile
 
-    @staticmethod
-    def get_fields():
-        return {
-            "bz_user_id": str,
-            "jira_user_id": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

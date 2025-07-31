@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -40,11 +41,9 @@ class OsidbApiV1StatusRetrieveResponse200OsidbData(OSIDBModel):
         osidb_api_v1_status_retrieve_response_200_osidb_data.additional_properties = d
         return osidb_api_v1_status_retrieve_response_200_osidb_data
 
-    @staticmethod
-    def get_fields():
-        return {
-            "flaw_count": int,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

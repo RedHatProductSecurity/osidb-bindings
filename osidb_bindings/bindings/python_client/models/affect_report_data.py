@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
@@ -185,15 +186,9 @@ class AffectReportData(OSIDBModel):
         affect_report_data.additional_properties = d
         return affect_report_data
 
-    @staticmethod
-    def get_fields():
-        return {
-            "ps_module": str,
-            "ps_component": str,
-            "affectedness": Union[AffectednessEnum, BlankEnum],
-            "resolution": Union[BlankEnum, ResolutionEnum],
-            "trackers": list["TrackerReportData"],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

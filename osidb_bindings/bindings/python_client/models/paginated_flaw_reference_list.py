@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -113,14 +114,9 @@ class PaginatedFlawReferenceList(OSIDBModel):
         paginated_flaw_reference_list.additional_properties = d
         return paginated_flaw_reference_list
 
-    @staticmethod
-    def get_fields():
-        return {
-            "count": int,
-            "results": list["FlawReference"],
-            "next": Union[None, str],
-            "previous": Union[None, str],
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

@@ -2,6 +2,7 @@ from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
@@ -144,15 +145,9 @@ class FlawCVSSPostRequest(OSIDBModel):
         flaw_cvss_post_request.additional_properties = d
         return flaw_cvss_post_request
 
-    @staticmethod
-    def get_fields():
-        return {
-            "cvss_version": CvssVersionEnum,
-            "vector": str,
-            "embargoed": bool,
-            "comment": Union[None, str],
-            "issuer": IssuerEnum,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):

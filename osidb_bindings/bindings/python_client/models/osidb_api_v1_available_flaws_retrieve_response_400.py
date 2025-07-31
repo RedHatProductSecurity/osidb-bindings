@@ -3,6 +3,7 @@ from typing import Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
@@ -76,14 +77,9 @@ class OsidbApiV1AvailableFlawsRetrieveResponse400(OSIDBModel):
         osidb_api_v1_available_flaws_retrieve_response_400.additional_properties = d
         return osidb_api_v1_available_flaws_retrieve_response_400
 
-    @staticmethod
-    def get_fields():
-        return {
-            "dt": datetime.datetime,
-            "env": str,
-            "revision": str,
-            "version": str,
-        }
+    @classmethod
+    def get_fields_new(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
     def new(cls):
