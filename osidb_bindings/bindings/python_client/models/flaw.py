@@ -895,7 +895,7 @@ class Flaw(OSIDBModel):
         return flaw
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

@@ -148,7 +148,7 @@ class AffectCVSSV2PutRequest(OSIDBModel):
         return affect_cvssv2_put_request
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

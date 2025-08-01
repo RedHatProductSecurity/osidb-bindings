@@ -44,7 +44,7 @@ class PackageVerRequest(OSIDBModel):
         return package_ver_request
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
