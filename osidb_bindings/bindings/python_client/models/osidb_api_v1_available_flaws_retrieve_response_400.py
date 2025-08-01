@@ -78,7 +78,7 @@ class OsidbApiV1AvailableFlawsRetrieveResponse400(OSIDBModel):
         return osidb_api_v1_available_flaws_retrieve_response_400
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

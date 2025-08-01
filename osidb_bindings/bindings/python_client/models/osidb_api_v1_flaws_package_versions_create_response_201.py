@@ -196,7 +196,7 @@ class OsidbApiV1FlawsPackageVersionsCreateResponse201(OSIDBModel):
         return osidb_api_v1_flaws_package_versions_create_response_201
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

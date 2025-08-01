@@ -210,7 +210,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         return collectors_api_v1_status_retrieve_response_200_collectors_item
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

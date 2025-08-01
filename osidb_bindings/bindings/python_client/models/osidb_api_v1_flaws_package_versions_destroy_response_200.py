@@ -78,7 +78,7 @@ class OsidbApiV1FlawsPackageVersionsDestroyResponse200(OSIDBModel):
         return osidb_api_v1_flaws_package_versions_destroy_response_200
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

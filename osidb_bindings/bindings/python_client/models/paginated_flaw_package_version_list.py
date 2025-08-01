@@ -115,7 +115,7 @@ class PaginatedFlawPackageVersionList(OSIDBModel):
         return paginated_flaw_package_version_list
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

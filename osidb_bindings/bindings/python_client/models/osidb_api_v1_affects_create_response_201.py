@@ -615,7 +615,7 @@ class OsidbApiV1AffectsCreateResponse201(OSIDBModel):
         return osidb_api_v1_affects_create_response_201
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

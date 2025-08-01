@@ -424,7 +424,7 @@ class OsidbApiV1TrackersUpdateResponse200(OSIDBModel):
         return osidb_api_v1_trackers_update_response_200
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod

@@ -78,7 +78,7 @@ class AuthTokenVerifyCreateResponse200(OSIDBModel):
         return auth_token_verify_create_response_200
 
     @classmethod
-    def get_fields_new(cls):
+    def get_fields(cls):
         return {f.name: f.type for f in _attrs_fields(cls)}
 
     @classmethod
