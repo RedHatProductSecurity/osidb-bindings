@@ -9,6 +9,9 @@ The following dependencies are required for development and deployment:
 * python3 dependencies (see [pip-tools](#using-pip-tools))
 * tox
 
+### Optional Dependencies
+* `GITHUB_API_TOKEN` environment variable - Optional GitHub API token to prevent rate limiting when the release scripts access GitHub API for fetching branch and tag information. If not set, the scripts will still work but may encounter rate limits during frequent usage. See [GitHub documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for creating personal access tokens.
+
 ## Development
 
 ### Using pip-tools
@@ -226,6 +229,8 @@ When new major/minor OSIDB version is released, major/minor release of the osidb
     ```
     $ make release
     ```
+    
+    Note: To avoid GitHub API rate limits, you can optionally set the `GITHUB_API_TOKEN` environment variable before running the script.
 
     This will:
     * compare latest version of OSIDB and bindings (safe check before release)
@@ -262,6 +267,8 @@ When new major/minor OSIDB version is being released, we can do a pre-release of
     ```
     $ make pre-release
     ```
+    
+    Note: To avoid GitHub API rate limits, you can optionally set the `GITHUB_API_TOKEN` environment variable before running the script.
 
     This will:
     * compare latest OSIDB release branch version (release-x.x.x) and bindings version (safe check before release)
