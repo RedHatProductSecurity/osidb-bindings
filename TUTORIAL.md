@@ -82,10 +82,21 @@ Certain operations outlined in the [operations section](#session-operations) (pr
     export JIRA_ACCESS_TOKEN="jira access token"
     ```
 
-SSL verification is enabled by default. To ensure proper functionality, you should set the `REQUESTS_CA_BUNDLE` environment variable to point to the location of the appropriate CA bundle. For example:
+SSL verification is enabled by default. To ensure proper functionality, you should set the `REQUESTS_CA_BUNDLE` environment variable to point to the location of the appropriate CA bundle. The path varies by operating system:
 
 ```bash
+# Fedora/RHEL/CentOS systems
 export REQUESTS_CA_BUNDLE="/etc/pki/tls/certs/ca-bundle.crt"
+
+# Ubuntu/Debian systems
+export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+```
+
+For other systems (like macOS) where the CA bundle might not be present or located elsewhere, you may need to download the required certificate authority bundle from your organization or a trusted source and use the path to it:
+
+```bash
+# Use custom CA bundle path
+export REQUESTS_CA_BUNDLE="/path/to/your/ca-bundle.crt"
 ```
 
 You can also pass the path to the CA bundle directly when creating the new session or you can disable the SSL verification:
