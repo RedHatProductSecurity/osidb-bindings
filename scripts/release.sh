@@ -8,8 +8,11 @@ get_new_version() {
     osidb_github_base_link="https://api.github.com/repos/RedHatProductSecurity/osidb"
 
     # Get latest tagged OSIDB version
-    local response=$(curl -s -f "${osidb_github_base_link}/tags" \
-    -f -w 'HTTPSTATUS:%{http_code}\n')
+    local curl_args=(-s -f "${osidb_github_base_link}/tags" -f -w 'HTTPSTATUS:%{http_code}\n')
+    if [ -n "${GITHUB_API_TOKEN}" ]; then
+        curl_args+=(-H "Authorization: Bearer ${GITHUB_API_TOKEN}")
+    fi
+    local response=$(curl "${curl_args[@]}")
 
     local body=$(echo ${response} | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
     local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
