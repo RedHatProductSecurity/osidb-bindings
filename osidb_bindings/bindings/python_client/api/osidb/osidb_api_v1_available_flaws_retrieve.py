@@ -109,9 +109,9 @@ def sync_detailed(
 ]:
     r"""Report whether a flaw is available for public consumption purposes
     based on the following criteria:
-    1) The work on the flaw is done, or the flaw is public:
+    1) The work on the flaw is done, or the flaw is public, or the flaw doesn't exist in the DB:
         - 204 status (yes, flaw is available for public consumption)
-    2) The work on the flaw is not done yet, or the flaw doesn't exist in the DB:
+    2) The work on the flaw is not done yet:
         - 404 status (no, flaw is unavailable for public consumption)
     3) Invalid CVE ID:
         - 400 status
@@ -125,6 +125,18 @@ def sync_detailed(
     page, or not?\") most likely doesn't change. So this is to prevent public confusion
     during the early stages of security analysis where the preliminary analysis might
     switch between \"this CVE affects our products\" and \"this CVE doesn't affect our products\".
+
+    Also an important point is that the client processes CVEs that never get saved to OSIDB's
+    DB (because of internal function `should_create_snippet`), yet the client must
+    publish information about all CVEs. By returning 204 when the flaw doesn't exist in OSIDB's
+    DB, it allows the client to take the output of this API endpoint as actionable advice:
+    When 204, publish the CVE page (either using OSIDB data or using other data), when
+    404, do not publish the CVE page (because the Vulnerability Management team still works
+    on the CVE).
+
+    That also means the client that uses this API endpoint must implement a grace period
+    to allow OSIDB to ingest the CVE and decide whether to save it to the DB, to prevent
+    the client publishing a CVE sooner than OSIDB processes it and potentially returns 404 for it.
 
     Args:
         cve_id (str):
@@ -166,9 +178,9 @@ def sync(
 ]:
     r"""Report whether a flaw is available for public consumption purposes
     based on the following criteria:
-    1) The work on the flaw is done, or the flaw is public:
+    1) The work on the flaw is done, or the flaw is public, or the flaw doesn't exist in the DB:
         - 204 status (yes, flaw is available for public consumption)
-    2) The work on the flaw is not done yet, or the flaw doesn't exist in the DB:
+    2) The work on the flaw is not done yet:
         - 404 status (no, flaw is unavailable for public consumption)
     3) Invalid CVE ID:
         - 400 status
@@ -182,6 +194,18 @@ def sync(
     page, or not?\") most likely doesn't change. So this is to prevent public confusion
     during the early stages of security analysis where the preliminary analysis might
     switch between \"this CVE affects our products\" and \"this CVE doesn't affect our products\".
+
+    Also an important point is that the client processes CVEs that never get saved to OSIDB's
+    DB (because of internal function `should_create_snippet`), yet the client must
+    publish information about all CVEs. By returning 204 when the flaw doesn't exist in OSIDB's
+    DB, it allows the client to take the output of this API endpoint as actionable advice:
+    When 204, publish the CVE page (either using OSIDB data or using other data), when
+    404, do not publish the CVE page (because the Vulnerability Management team still works
+    on the CVE).
+
+    That also means the client that uses this API endpoint must implement a grace period
+    to allow OSIDB to ingest the CVE and decide whether to save it to the DB, to prevent
+    the client publishing a CVE sooner than OSIDB processes it and potentially returns 404 for it.
 
     Args:
         cve_id (str):
@@ -213,9 +237,9 @@ async def asyncio_detailed(
 ]:
     r"""Report whether a flaw is available for public consumption purposes
     based on the following criteria:
-    1) The work on the flaw is done, or the flaw is public:
+    1) The work on the flaw is done, or the flaw is public, or the flaw doesn't exist in the DB:
         - 204 status (yes, flaw is available for public consumption)
-    2) The work on the flaw is not done yet, or the flaw doesn't exist in the DB:
+    2) The work on the flaw is not done yet:
         - 404 status (no, flaw is unavailable for public consumption)
     3) Invalid CVE ID:
         - 400 status
@@ -229,6 +253,18 @@ async def asyncio_detailed(
     page, or not?\") most likely doesn't change. So this is to prevent public confusion
     during the early stages of security analysis where the preliminary analysis might
     switch between \"this CVE affects our products\" and \"this CVE doesn't affect our products\".
+
+    Also an important point is that the client processes CVEs that never get saved to OSIDB's
+    DB (because of internal function `should_create_snippet`), yet the client must
+    publish information about all CVEs. By returning 204 when the flaw doesn't exist in OSIDB's
+    DB, it allows the client to take the output of this API endpoint as actionable advice:
+    When 204, publish the CVE page (either using OSIDB data or using other data), when
+    404, do not publish the CVE page (because the Vulnerability Management team still works
+    on the CVE).
+
+    That also means the client that uses this API endpoint must implement a grace period
+    to allow OSIDB to ingest the CVE and decide whether to save it to the DB, to prevent
+    the client publishing a CVE sooner than OSIDB processes it and potentially returns 404 for it.
 
     Args:
         cve_id (str):
@@ -270,9 +306,9 @@ async def asyncio(
 ]:
     r"""Report whether a flaw is available for public consumption purposes
     based on the following criteria:
-    1) The work on the flaw is done, or the flaw is public:
+    1) The work on the flaw is done, or the flaw is public, or the flaw doesn't exist in the DB:
         - 204 status (yes, flaw is available for public consumption)
-    2) The work on the flaw is not done yet, or the flaw doesn't exist in the DB:
+    2) The work on the flaw is not done yet:
         - 404 status (no, flaw is unavailable for public consumption)
     3) Invalid CVE ID:
         - 400 status
@@ -286,6 +322,18 @@ async def asyncio(
     page, or not?\") most likely doesn't change. So this is to prevent public confusion
     during the early stages of security analysis where the preliminary analysis might
     switch between \"this CVE affects our products\" and \"this CVE doesn't affect our products\".
+
+    Also an important point is that the client processes CVEs that never get saved to OSIDB's
+    DB (because of internal function `should_create_snippet`), yet the client must
+    publish information about all CVEs. By returning 204 when the flaw doesn't exist in OSIDB's
+    DB, it allows the client to take the output of this API endpoint as actionable advice:
+    When 204, publish the CVE page (either using OSIDB data or using other data), when
+    404, do not publish the CVE page (because the Vulnerability Management team still works
+    on the CVE).
+
+    That also means the client that uses this API endpoint must implement a grace period
+    to allow OSIDB to ingest the CVE and decide whether to save it to the DB, to prevent
+    the client publishing a CVE sooner than OSIDB processes it and potentially returns 404 for it.
 
     Args:
         cve_id (str):

@@ -8,11 +8,11 @@ from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
 from ..models.blank_enum import BlankEnum
+from ..models.flaw_source import FlawSource
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
 from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
-from ..models.source_be_0_enum import SourceBe0Enum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -61,7 +61,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         statement (Union[Unset, str]):
         cwe_id (Union[Unset, str]):
         unembargo_dt (Union[None, Unset, datetime.datetime]):
-        source (Union[BlankEnum, SourceBe0Enum, Unset]):
+        source (Union[BlankEnum, FlawSource, Unset]):
         reported_dt (Union[None, Unset, datetime.datetime]):
         mitigation (Union[Unset, str]):
         major_incident_state (Union[BlankEnum, MajorIncidentStateEnum, Unset]):
@@ -103,7 +103,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[None, Unset, datetime.datetime] = UNSET
-    source: Union[BlankEnum, SourceBe0Enum, Unset] = UNSET
+    source: Union[BlankEnum, FlawSource, Unset] = UNSET
     reported_dt: Union[None, Unset, datetime.datetime] = UNSET
     mitigation: Union[Unset, str] = UNSET
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
@@ -290,10 +290,10 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         source: Union[Unset, str]
         if isinstance(self.source, Unset):
             source = UNSET
-        elif isinstance(self.source, SourceBe0Enum):
+        elif isinstance(self.source, FlawSource):
             source = UNSET
             if not isinstance(self.source, Unset):
-                source = SourceBe0Enum(self.source).value
+                source = FlawSource(self.source).value
 
         else:
             source = UNSET
@@ -716,7 +716,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
 
         unembargo_dt = _parse_unembargo_dt(d.pop("unembargo_dt", UNSET))
 
-        def _parse_source(data: object) -> Union[BlankEnum, SourceBe0Enum, Unset]:
+        def _parse_source(data: object) -> Union[BlankEnum, FlawSource, Unset]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -725,11 +725,11 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
                 if not isinstance(data, str):
                     raise TypeError()
                 _source_type_0 = data
-                source_type_0: SourceBe0Enum
+                source_type_0: FlawSource
                 if isinstance(_source_type_0, Unset):
                     source_type_0 = UNSET
                 else:
-                    source_type_0 = SourceBe0Enum(_source_type_0)
+                    source_type_0 = FlawSource(_source_type_0)
 
                 return source_type_0
             except:  # noqa: E722
