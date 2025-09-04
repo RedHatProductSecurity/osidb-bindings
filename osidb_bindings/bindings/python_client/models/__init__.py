@@ -129,6 +129,7 @@ from .flaw_reference_request import FlawReferenceRequest
 from .flaw_reference_type import FlawReferenceType
 from .flaw_report_data import FlawReportData
 from .flaw_request import FlawRequest
+from .flaw_source import FlawSource
 from .flaw_uuid_list_request import FlawUUIDListRequest
 from .flaw_version import FlawVersion
 from .flaw_version_request import FlawVersionRequest
@@ -455,7 +456,6 @@ from .ps_stream_selection import PsStreamSelection
 from .reject_request import RejectRequest
 from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
-from .source_be_0_enum import SourceBe0Enum
 from .special_handling_enum import SpecialHandlingEnum
 from .state_enum import StateEnum
 from .supported_products import SupportedProducts
@@ -571,6 +571,7 @@ __all__ = (
     "FlawReferenceType",
     "FlawReportData",
     "FlawRequest",
+    "FlawSource",
     "FlawUUIDListRequest",
     "FlawVersion",
     "FlawVersionRequest",
@@ -729,7 +730,6 @@ __all__ = (
     "RejectRequest",
     "RequiresCveDescriptionEnum",
     "ResolutionEnum",
-    "SourceBe0Enum",
     "SpecialHandlingEnum",
     "StateEnum",
     "SupportedProducts",
