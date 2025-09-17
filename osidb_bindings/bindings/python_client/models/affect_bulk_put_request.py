@@ -23,7 +23,7 @@ class AffectBulkPutRequest(OSIDBModel):
 
     Attributes:
         uuid (UUID):
-        flaw (Union[None, UUID]):
+        flaw (UUID):
         ps_module (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
@@ -38,7 +38,7 @@ class AffectBulkPutRequest(OSIDBModel):
     """
 
     uuid: UUID
-    flaw: Union[None, UUID]
+    flaw: UUID
     ps_module: str
     embargoed: bool
     updated_dt: datetime.datetime
@@ -57,16 +57,9 @@ class AffectBulkPutRequest(OSIDBModel):
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
 
-        flaw: Union[None, str]
-        if isinstance(self.flaw, Unset):
-            flaw = UNSET
-        elif isinstance(self.flaw, UUID):
-            flaw = UNSET
-            if not isinstance(self.flaw, Unset):
-                flaw = str(self.flaw)
-
-        else:
-            flaw = self.flaw
+        flaw: str = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         ps_module = self.ps_module
 
@@ -181,31 +174,12 @@ class AffectBulkPutRequest(OSIDBModel):
         else:
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
-        def _parse_flaw(data: object) -> Union[None, UUID]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _flaw_type_0 = data
-                flaw_type_0: UUID
-                if isinstance(_flaw_type_0, Unset):
-                    flaw_type_0 = UNSET
-                else:
-                    flaw_type_0 = (
-                        _flaw_type_0
-                        if isinstance(_flaw_type_0, UUID)
-                        else UUID(_flaw_type_0)
-                    )
-
-                return flaw_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, UUID], data)
-
-        flaw = _parse_flaw(d.pop("flaw", UNSET))
+        _flaw = d.pop("flaw", UNSET)
+        flaw: UUID
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         ps_module = d.pop("ps_module", UNSET)
 
