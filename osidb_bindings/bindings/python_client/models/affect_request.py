@@ -22,7 +22,7 @@ class AffectRequest(OSIDBModel):
     """Affect serializer
 
     Attributes:
-        flaw (Union[None, UUID]):
+        flaw (UUID):
         ps_module (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
@@ -36,7 +36,7 @@ class AffectRequest(OSIDBModel):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
     """
 
-    flaw: Union[None, UUID]
+    flaw: UUID
     ps_module: str
     embargoed: bool
     updated_dt: datetime.datetime
@@ -51,16 +51,9 @@ class AffectRequest(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        flaw: Union[None, str]
-        if isinstance(self.flaw, Unset):
-            flaw = UNSET
-        elif isinstance(self.flaw, UUID):
-            flaw = UNSET
-            if not isinstance(self.flaw, Unset):
-                flaw = str(self.flaw)
-
-        else:
-            flaw = self.flaw
+        flaw: str = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         ps_module = self.ps_module
 
@@ -164,14 +157,9 @@ class AffectRequest(OSIDBModel):
         return field_dict
 
     def to_multipart(self) -> dict[str, Any]:
-        flaw: tuple[None, bytes, str]
-
-        if isinstance(self.flaw, UUID):
-            flaw: bytes = UNSET
-            if not isinstance(self.flaw, Unset):
-                flaw = str(self.flaw)
-        else:
-            flaw = (None, str(self.flaw).encode(), "text/plain")
+        flaw: bytes = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         ps_module = (None, str(self.ps_module).encode(), "text/plain")
 
@@ -297,32 +285,12 @@ class AffectRequest(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-
-        def _parse_flaw(data: object) -> Union[None, UUID]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _flaw_type_0 = data
-                flaw_type_0: UUID
-                if isinstance(_flaw_type_0, Unset):
-                    flaw_type_0 = UNSET
-                else:
-                    flaw_type_0 = (
-                        _flaw_type_0
-                        if isinstance(_flaw_type_0, UUID)
-                        else UUID(_flaw_type_0)
-                    )
-
-                return flaw_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, UUID], data)
-
-        flaw = _parse_flaw(d.pop("flaw", UNSET))
+        _flaw = d.pop("flaw", UNSET)
+        flaw: UUID
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         ps_module = d.pop("ps_module", UNSET)
 

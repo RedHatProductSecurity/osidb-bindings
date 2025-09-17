@@ -28,7 +28,7 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
     """
     Attributes:
         uuid (UUID):
-        flaw (Union[None, UUID]):
+        flaw (UUID):
         ps_module (str):
         cve_id (str):
         ps_product (str):
@@ -56,7 +56,7 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
     """
 
     uuid: UUID
-    flaw: Union[None, UUID]
+    flaw: UUID
     ps_module: str
     cve_id: str
     ps_product: str
@@ -88,16 +88,9 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
 
-        flaw: Union[None, str]
-        if isinstance(self.flaw, Unset):
-            flaw = UNSET
-        elif isinstance(self.flaw, UUID):
-            flaw = UNSET
-            if not isinstance(self.flaw, Unset):
-                flaw = str(self.flaw)
-
-        else:
-            flaw = self.flaw
+        flaw: str = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         ps_module = self.ps_module
 
@@ -307,31 +300,12 @@ class OsidbApiV1AffectsRetrieveResponse200(OSIDBModel):
         else:
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
-        def _parse_flaw(data: object) -> Union[None, UUID]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _flaw_type_0 = data
-                flaw_type_0: UUID
-                if isinstance(_flaw_type_0, Unset):
-                    flaw_type_0 = UNSET
-                else:
-                    flaw_type_0 = (
-                        _flaw_type_0
-                        if isinstance(_flaw_type_0, UUID)
-                        else UUID(_flaw_type_0)
-                    )
-
-                return flaw_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, UUID], data)
-
-        flaw = _parse_flaw(d.pop("flaw", UNSET))
+        _flaw = d.pop("flaw", UNSET)
+        flaw: UUID
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         ps_module = d.pop("ps_module", UNSET)
 
