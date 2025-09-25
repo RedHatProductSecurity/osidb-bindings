@@ -113,6 +113,40 @@ session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", 
 
 This section describes possible session operations. See [response section](#response) to learn how to work with obtained operation responses.
 
+#### API Version Control
+
+All session operations support an optional `api_version` parameter that allows you to specify which API version to use for the request. If not specified, the bindings will automatically use the latest available API version for that endpoint.
+
+```python
+# Uses the latest API version (default behavior)
+flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
+
+# Explicitly specify an API version
+flaw_response = session.flaws.retrieve(id="CVE-1111-2222", api_version="v1")
+```
+
+When using a non-latest API version, the bindings will emit a warning:
+
+```
+WARNING: A non-latest API version (v1) was used for flaws::retrieve. Please consider upgrading to the latest version: v2.
+```
+
+You may want to explicitly specify a version to lock your scripts to a specific API version, or you may prefer to always use the latest version by omitting the parameter.
+
+You can discover available API versions and endpoints using the `session.endpoints` attribute:
+
+```python
+# View available endpoints and their versions
+print(session.endpoints)
+# Output: {'osidb_api': defaultdict(<class 'set'>, {'flaws_list': {'v1', 'v2'}, 'flaws_retrieve': {'v1', 'v2'}, ...})}
+
+# Check which versions are available for a specific operation
+available_versions = session.endpoints['osidb_api']['flaws_list']
+print(available_versions)  # {'v1', 'v2'}
+```
+
+You can also view the complete API schema with version information by visiting the Swagger UI on your OSIDB instance: `https://<your-osidb-instance>/osidb/api/v1/schema/swagger-ui/`
+
 * #### ```status```
     Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
 

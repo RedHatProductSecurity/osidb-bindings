@@ -1,5 +1,5 @@
 """
-osidb-registry-bindings helpers
+osidb-bindings helpers
 """
 
 import json
@@ -59,3 +59,19 @@ def get_env(
         value = json.loads(value)
 
     return value
+
+
+def parse_version_key(version_str: str) -> tuple[int, int]:
+    """
+    A helper function to create a sortable key from version string
+    """
+
+    if version_str.endswith("beta"):
+        is_final = 0  # Beta release
+        number_part = version_str[1:-4]
+    else:
+        is_final = 1  # Final release
+        number_part = version_str[1:]
+
+    major_num = int(number_part)
+    return major_num, is_final
