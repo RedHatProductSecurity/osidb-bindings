@@ -8,7 +8,7 @@ import re
 import types
 from collections import defaultdict
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional, Tuple, get_args, get_origin
+from typing import Any, Callable, get_args, get_origin
 
 import aiohttp
 import requests
@@ -46,7 +46,7 @@ osidb_status_retrieve = importlib.import_module(
 MAX_CONCURRENCY = get_env("OSIDB_BINDINGS_MAX_CONCURRENCY", "10", is_int=True)
 
 
-def file_trackers(self, form_data: Dict[str, Any], *args, **kwargs):
+def file_trackers(self, form_data: dict[str, Any], *args, **kwargs):
     """Shortcut for POST /trackers/api/v1/file"""
 
     method_module = importlib.import_module(
@@ -84,7 +84,7 @@ def promote_flaw(self, id, *args, **kwargs):
     )
 
 
-def reject_flaw(self, id: str, form_data: Dict[str, Any], *args, **kwargs):
+def reject_flaw(self, id: str, form_data: dict[str, Any], *args, **kwargs):
     method_module = importlib.import_module(
         f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_reject_create",
         package="osidb_bindings",
@@ -398,9 +398,9 @@ class SessionOperationsGroup:
         self,
         session: Session,
         resource_name: str,
-        allowed_operations: List[str] = ALL_SESSION_OPERATIONS,
-        extra_operations: List[Tuple[str, Callable]] = None,
-        subresources: Dict[str, dict] = None,
+        allowed_operations: list[str] = ALL_SESSION_OPERATIONS,
+        extra_operations: list[tuple[str, Callable]] = None,
+        subresources: dict[str, dict] = None,
     ):
         self.session = session
         self.resource_name = resource_name
@@ -514,7 +514,7 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("retrieve_list")
 
     def create(
-        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+        self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "create" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -538,7 +538,7 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("create")
 
     def bulk_create(
-        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+        self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_create" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -564,7 +564,7 @@ class SessionOperationsGroup:
     def update(
         self,
         id,
-        form_data: Dict[str, Any],
+        form_data: dict[str, Any],
         *args,
         api_version: str | None = None,
         **kwargs,
@@ -592,7 +592,7 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("update")
 
     def bulk_update(
-        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+        self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_update" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -633,7 +633,7 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("delete")
 
     def bulk_delete(
-        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+        self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_delete" in self.allowed_operations:
             method_module = self.__get_method_module(
@@ -706,7 +706,7 @@ class SessionOperationsGroup:
     def retrieve_list_iterator_async(
         self,
         *args,
-        max_results: Optional[int] = None,
+        max_results: int | None = None,
         api_version: str | None = None,
         **kwargs,
     ):
@@ -724,7 +724,7 @@ class SessionOperationsGroup:
     async def __retrieve_list_async(
         self,
         *args,
-        max_results: Optional[int] = None,
+        max_results: int | None = None,
         api_version: str | None = None,
         **kwargs,
     ):

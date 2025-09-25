@@ -2,12 +2,10 @@
 osidb-bindings user utilities
 """
 
-from typing import List
-
 from .session import Session
 
 
-def cve_ids(session: Session) -> List[str]:
+def cve_ids(session: Session) -> list[str]:
     """Retrieve list of all CVE IDs"""
     limit = 100
     offset = 0

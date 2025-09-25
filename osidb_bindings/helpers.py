@@ -4,7 +4,7 @@ osidb-bindings helpers
 
 import json
 from os import getenv
-from typing import Any, Union
+from typing import Any
 
 from .exceptions import OSIDBBindingsException
 
@@ -24,7 +24,7 @@ _MAP = {
 }
 
 
-def strtobool(value):
+def strtobool(value: str) -> bool:
     try:
         return _MAP[str(value).lower()]
     except KeyError:
@@ -33,7 +33,7 @@ def strtobool(value):
 
 def get_env(
     key: str,
-    default: Union[None, str] = None,
+    default: str | None = None,
     is_bool: bool = False,
     is_int: bool = False,
     is_json: bool = False,
