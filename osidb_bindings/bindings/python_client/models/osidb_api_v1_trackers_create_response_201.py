@@ -25,6 +25,7 @@ T = TypeVar("T", bound="OsidbApiV1TrackersCreateResponse201")
 class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     """
     Attributes:
+        affects (list[UUID]):
         cve_id (str):
         errata (list['Erratum']):
         ps_update_stream (str):
@@ -41,13 +42,13 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        affects (Union[Unset, list[UUID]]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
         version (Union[Unset, str]):
     """
 
+    affects: list[UUID]
     cve_id: str
     errata: list["Erratum"]
     ps_update_stream: str
@@ -62,7 +63,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    affects: Union[Unset, list[UUID]] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -70,6 +70,16 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        affects: list[str] = UNSET
+        if not isinstance(self.affects, Unset):
+            affects = []
+            for affects_item_data in self.affects:
+                affects_item: str = UNSET
+                if not isinstance(affects_item_data, Unset):
+                    affects_item = str(affects_item_data)
+
+                affects.append(affects_item)
+
         cve_id = self.cve_id
 
         errata: list[dict[str, Any]] = UNSET
@@ -156,16 +166,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        affects: Union[Unset, list[str]] = UNSET
-        if not isinstance(self.affects, Unset):
-            affects = []
-            for affects_item_data in self.affects:
-                affects_item: str = UNSET
-                if not isinstance(affects_item_data, Unset):
-                    affects_item = str(affects_item_data)
-
-                affects.append(affects_item)
-
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -178,6 +178,8 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(affects, Unset):
+            field_dict["affects"] = affects
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(errata, Unset):
@@ -206,8 +208,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(affects, Unset):
-            field_dict["affects"] = affects
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -225,6 +225,22 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         from ..models.erratum import Erratum
 
         d = src_dict.copy()
+        affects = []
+        _affects = d.pop("affects", UNSET)
+        for affects_item_data in _affects or []:
+            _affects_item = affects_item_data
+            affects_item: UUID
+            if isinstance(_affects_item, Unset):
+                affects_item = UNSET
+            else:
+                affects_item = (
+                    _affects_item
+                    if isinstance(_affects_item, UUID)
+                    else UUID(_affects_item)
+                )
+
+            affects.append(affects_item)
+
         cve_id = d.pop("cve_id", UNSET)
 
         errata = []
@@ -360,22 +376,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        affects = []
-        _affects = d.pop("affects", UNSET)
-        for affects_item_data in _affects or []:
-            _affects_item = affects_item_data
-            affects_item: UUID
-            if isinstance(_affects_item, Unset):
-                affects_item = UNSET
-            else:
-                affects_item = (
-                    _affects_item
-                    if isinstance(_affects_item, UUID)
-                    else UUID(_affects_item)
-                )
-
-            affects.append(affects_item)
-
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -390,6 +390,7 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
         version = d.pop("version", UNSET)
 
         osidb_api_v1_trackers_create_response_201 = cls(
+            affects=affects,
             cve_id=cve_id,
             errata=errata,
             ps_update_stream=ps_update_stream,
@@ -404,7 +405,6 @@ class OsidbApiV1TrackersCreateResponse201(OSIDBModel):
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            affects=affects,
             dt=dt,
             env=env,
             revision=revision,

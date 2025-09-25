@@ -8,12 +8,12 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_trackers_update_response_200 import (
     OsidbApiV1TrackersUpdateResponse200,
 )
-from ...models.tracker_request import TrackerRequest
+from ...models.tracker_v1_request import TrackerV1Request
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = TrackerRequest
+REQUEST_BODY_TYPE = TrackerV1Request
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerRequest,
-        TrackerRequest,
-        TrackerRequest,
+        TrackerV1Request,
+        TrackerV1Request,
+        TrackerV1Request,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, TrackerRequest):
+    if check_nested_instance(body, TrackerV1Request):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -76,19 +76,20 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerRequest,
-        TrackerRequest,
-        TrackerRequest,
+        TrackerV1Request,
+        TrackerV1Request,
+        TrackerV1Request,
     ],
 ) -> Response[OsidbApiV1TrackersUpdateResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -120,19 +121,20 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerRequest,
-        TrackerRequest,
-        TrackerRequest,
+        TrackerV1Request,
+        TrackerV1Request,
+        TrackerV1Request,
     ],
 ) -> Optional[OsidbApiV1TrackersUpdateResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -154,19 +156,20 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerRequest,
-        TrackerRequest,
-        TrackerRequest,
+        TrackerV1Request,
+        TrackerV1Request,
+        TrackerV1Request,
     ],
 ) -> Response[OsidbApiV1TrackersUpdateResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -198,19 +201,20 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        TrackerRequest,
-        TrackerRequest,
-        TrackerRequest,
+        TrackerV1Request,
+        TrackerV1Request,
+        TrackerV1Request,
     ],
 ) -> Optional[OsidbApiV1TrackersUpdateResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
-        body (TrackerRequest): Tracker serializer
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
+        body (TrackerV1Request): Serializer for the tracker model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

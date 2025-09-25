@@ -9,7 +9,7 @@ from dateutil.parser import isoparse
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
-    from ..models.flaw import Flaw
+    from ..models.flaw_v1 import FlawV1
 
 
 T = TypeVar("T", bound="OsidbApiV1FlawsListResponse200")
@@ -20,7 +20,7 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
     """
     Attributes:
         count (int):  Example: 123.
-        results (list['Flaw']):
+        results (list['FlawV1']):
         next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
         dt (Union[Unset, datetime.datetime]):
@@ -30,7 +30,7 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
     """
 
     count: int
-    results: list["Flaw"]
+    results: list["FlawV1"]
     next_: Union[None, Unset, str] = UNSET
     previous: Union[None, Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -97,7 +97,7 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.flaw import Flaw
+        from ..models.flaw_v1 import FlawV1
 
         d = src_dict.copy()
         count = d.pop("count", UNSET)
@@ -106,11 +106,11 @@ class OsidbApiV1FlawsListResponse200(OSIDBModel):
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
             _results_item = results_item_data
-            results_item: Flaw
+            results_item: FlawV1
             if isinstance(_results_item, Unset):
                 results_item = UNSET
             else:
-                results_item = Flaw.from_dict(_results_item)
+                results_item = FlawV1.from_dict(_results_item)
 
             results.append(results_item)
 

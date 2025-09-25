@@ -16,14 +16,14 @@ from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
-    from ..models.affect import Affect
+    from ..models.affect_v1 import AffectV1
     from ..models.alert import Alert
     from ..models.comment import Comment
     from ..models.flaw_acknowledgment import FlawAcknowledgment
-    from ..models.flaw_classification import FlawClassification
     from ..models.flaw_collaborator import FlawCollaborator
     from ..models.flaw_cvss import FlawCVSS
     from ..models.flaw_reference import FlawReference
+    from ..models.flaw_v1_classification import FlawV1Classification
     from ..models.package import Package
 
 
@@ -38,7 +38,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         title (str):
         trackers (list[str]):
         comment_zero (str):
-        affects (list['Affect']):
+        affects (list['AffectV1']):
         comments (list['Comment']):
         package_versions (list['Package']):
         acknowledgments (list['FlawAcknowledgment']):
@@ -50,7 +50,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        classification (FlawClassification):
+        classification (FlawV1Classification):
         task_key (Union[None, str]):
         alerts (list['Alert']):
         cve_id (Union[None, Unset, str]):
@@ -80,7 +80,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
     title: str
     trackers: list[str]
     comment_zero: str
-    affects: list["Affect"]
+    affects: list["AffectV1"]
     comments: list["Comment"]
     package_versions: list["Package"]
     acknowledgments: list["FlawAcknowledgment"]
@@ -90,7 +90,7 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    classification: "FlawClassification"
+    classification: "FlawV1Classification"
     task_key: Union[None, str]
     alerts: list["Alert"]
     cve_id: Union[None, Unset, str] = UNSET
@@ -453,14 +453,14 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.affect import Affect
+        from ..models.affect_v1 import AffectV1
         from ..models.alert import Alert
         from ..models.comment import Comment
         from ..models.flaw_acknowledgment import FlawAcknowledgment
-        from ..models.flaw_classification import FlawClassification
         from ..models.flaw_collaborator import FlawCollaborator
         from ..models.flaw_cvss import FlawCVSS
         from ..models.flaw_reference import FlawReference
+        from ..models.flaw_v1_classification import FlawV1Classification
         from ..models.package import Package
 
         d = src_dict.copy()
@@ -481,11 +481,11 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
         _affects = d.pop("affects", UNSET)
         for affects_item_data in _affects or []:
             _affects_item = affects_item_data
-            affects_item: Affect
+            affects_item: AffectV1
             if isinstance(_affects_item, Unset):
                 affects_item = UNSET
             else:
-                affects_item = Affect.from_dict(_affects_item)
+                affects_item = AffectV1.from_dict(_affects_item)
 
             affects.append(affects_item)
 
@@ -580,11 +580,11 @@ class OsidbApiV1FlawsCreateResponse201(OSIDBModel):
             updated_dt = isoparse(_updated_dt)
 
         _classification = d.pop("classification", UNSET)
-        classification: FlawClassification
+        classification: FlawV1Classification
         if isinstance(_classification, Unset):
             classification = UNSET
         else:
-            classification = FlawClassification.from_dict(_classification)
+            classification = FlawV1Classification.from_dict(_classification)
 
         def _parse_task_key(data: object) -> Union[None, str]:
             if data is None:

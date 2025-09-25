@@ -76,7 +76,8 @@ def sync_detailed(
         TrackerPostRequest,
     ],
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -117,7 +118,8 @@ def sync(
         TrackerPostRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -148,7 +150,8 @@ async def asyncio_detailed(
         TrackerPostRequest,
     ],
 ) -> Response[OsidbApiV1TrackersCreateResponse201]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -189,7 +192,8 @@ async def asyncio(
         TrackerPostRequest,
     ],
 ) -> Optional[OsidbApiV1TrackersCreateResponse201]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):

@@ -6,17 +6,8 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v1_flaws_list_affects_affectedness import (
-    OsidbApiV1FlawsListAffectsAffectedness,
-)
-from ...models.osidb_api_v1_flaws_list_affects_impact import (
-    OsidbApiV1FlawsListAffectsImpact,
-)
-from ...models.osidb_api_v1_flaws_list_affects_resolution import (
-    OsidbApiV1FlawsListAffectsResolution,
-)
-from ...models.osidb_api_v1_flaws_list_affects_trackers_type import (
-    OsidbApiV1FlawsListAffectsTrackersType,
+from ...models.osidb_api_v1_flaws_list_affects_tracker_type import (
+    OsidbApiV1FlawsListAffectsTrackerType,
 )
 from ...models.osidb_api_v1_flaws_list_cvss_scores_issuer import (
     OsidbApiV1FlawsListCvssScoresIssuer,
@@ -65,7 +56,7 @@ QUERY_PARAMS = {
     "acknowledgments__updated_dt__lt": datetime.datetime,
     "acknowledgments__updated_dt__lte": datetime.datetime,
     "acknowledgments__uuid": UUID,
-    "affects__affectedness": OsidbApiV1FlawsListAffectsAffectedness,
+    "affects__affectedness": str,
     "affects__created_dt": datetime.datetime,
     "affects__created_dt__date": datetime.date,
     "affects__created_dt__date__gte": datetime.date,
@@ -75,43 +66,55 @@ QUERY_PARAMS = {
     "affects__created_dt__lt": datetime.datetime,
     "affects__created_dt__lte": datetime.datetime,
     "affects__embargoed": bool,
-    "affects__impact": OsidbApiV1FlawsListAffectsImpact,
+    "affects__impact": str,
     "affects__ps_component": str,
     "affects__ps_module": str,
-    "affects__resolution": OsidbApiV1FlawsListAffectsResolution,
+    "affects__resolution": str,
+    "affects__tracker__created_dt": datetime.datetime,
+    "affects__tracker__created_dt__date": datetime.date,
+    "affects__tracker__created_dt__date__gte": datetime.date,
+    "affects__tracker__created_dt__date__lte": datetime.date,
+    "affects__tracker__created_dt__gt": datetime.datetime,
+    "affects__tracker__created_dt__gte": datetime.datetime,
+    "affects__tracker__created_dt__lt": datetime.datetime,
+    "affects__tracker__created_dt__lte": datetime.datetime,
+    "affects__tracker__embargoed": bool,
+    "affects__tracker__errata__advisory_name": str,
+    "affects__tracker__errata__et_id": int,
+    "affects__tracker__errata__shipped_dt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__date": datetime.date,
+    "affects__tracker__errata__shipped_dt__date__gte": datetime.date,
+    "affects__tracker__errata__shipped_dt__date__lte": datetime.date,
+    "affects__tracker__errata__shipped_dt__gt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__gte": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__lt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__lte": datetime.datetime,
+    "affects__tracker__external_system_id": str,
+    "affects__tracker__ps_update_stream": str,
+    "affects__tracker__resolution": str,
+    "affects__tracker__status": str,
+    "affects__tracker__type": OsidbApiV1FlawsListAffectsTrackerType,
+    "affects__tracker__updated_dt": datetime.datetime,
+    "affects__tracker__updated_dt__date": datetime.date,
+    "affects__tracker__updated_dt__date__gte": datetime.date,
+    "affects__tracker__updated_dt__date__lte": datetime.date,
+    "affects__tracker__updated_dt__gt": datetime.datetime,
+    "affects__tracker__updated_dt__gte": datetime.datetime,
+    "affects__tracker__updated_dt__lt": datetime.datetime,
+    "affects__tracker__updated_dt__lte": datetime.datetime,
+    "affects__tracker__uuid": UUID,
     "affects__trackers__created_dt": datetime.datetime,
-    "affects__trackers__created_dt__date": datetime.date,
-    "affects__trackers__created_dt__date__gte": datetime.date,
-    "affects__trackers__created_dt__date__lte": datetime.date,
-    "affects__trackers__created_dt__gt": datetime.datetime,
-    "affects__trackers__created_dt__gte": datetime.datetime,
-    "affects__trackers__created_dt__lt": datetime.datetime,
-    "affects__trackers__created_dt__lte": datetime.datetime,
     "affects__trackers__embargoed": bool,
     "affects__trackers__errata__advisory_name": str,
-    "affects__trackers__errata__et_id": int,
+    "affects__trackers__errata__et_id": str,
     "affects__trackers__errata__shipped_dt": datetime.datetime,
-    "affects__trackers__errata__shipped_dt__date": datetime.date,
-    "affects__trackers__errata__shipped_dt__date__gte": datetime.date,
-    "affects__trackers__errata__shipped_dt__date__lte": datetime.date,
-    "affects__trackers__errata__shipped_dt__gt": datetime.datetime,
-    "affects__trackers__errata__shipped_dt__gte": datetime.datetime,
-    "affects__trackers__errata__shipped_dt__lt": datetime.datetime,
-    "affects__trackers__errata__shipped_dt__lte": datetime.datetime,
     "affects__trackers__external_system_id": str,
     "affects__trackers__ps_update_stream": str,
     "affects__trackers__resolution": str,
     "affects__trackers__status": str,
-    "affects__trackers__type": OsidbApiV1FlawsListAffectsTrackersType,
+    "affects__trackers__type": str,
     "affects__trackers__updated_dt": datetime.datetime,
-    "affects__trackers__updated_dt__date": datetime.date,
-    "affects__trackers__updated_dt__date__gte": datetime.date,
-    "affects__trackers__updated_dt__date__lte": datetime.date,
-    "affects__trackers__updated_dt__gt": datetime.datetime,
-    "affects__trackers__updated_dt__gte": datetime.datetime,
-    "affects__trackers__updated_dt__lt": datetime.datetime,
-    "affects__trackers__updated_dt__lte": datetime.datetime,
-    "affects__trackers__uuid": UUID,
+    "affects__trackers__uuid": str,
     "affects__updated_dt": datetime.datetime,
     "affects__updated_dt__date": datetime.date,
     "affects__updated_dt__date__gte": datetime.date,
@@ -120,7 +123,7 @@ QUERY_PARAMS = {
     "affects__updated_dt__gte": datetime.datetime,
     "affects__updated_dt__lt": datetime.datetime,
     "affects__updated_dt__lte": datetime.datetime,
-    "affects__uuid": UUID,
+    "affects__uuid": str,
     "bz_id": float,
     "changed_after": datetime.datetime,
     "changed_before": datetime.datetime,
@@ -264,7 +267,7 @@ def _get_kwargs(
     acknowledgments_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
-    affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
+    affects_affectedness: Union[Unset, str] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -274,43 +277,55 @@ def _get_kwargs(
     affects_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
-    affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_impact: Union[Unset, str] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
-    affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_embargoed: Union[Unset, bool] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_external_system_id: Union[Unset, str] = UNSET,
+    affects_tracker_ps_update_stream: Union[Unset, str] = UNSET,
+    affects_tracker_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_status: Union[Unset, str] = UNSET,
+    affects_tracker_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackerType] = UNSET,
+    affects_tracker_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_uuid: Union[Unset, UUID] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, str] = UNSET,
-    affects_trackers_errata_et_id: Union[Unset, int] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, str] = UNSET,
     affects_trackers_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_external_system_id: Union[Unset, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, str] = UNSET,
     affects_trackers_resolution: Union[Unset, str] = UNSET,
     affects_trackers_status: Union[Unset, str] = UNSET,
-    affects_trackers_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackersType] = UNSET,
+    affects_trackers_type: Union[Unset, str] = UNSET,
     affects_trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_uuid: Union[Unset, UUID] = UNSET,
+    affects_trackers_uuid: Union[Unset, str] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -319,7 +334,7 @@ def _get_kwargs(
     affects_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_uuid: Union[Unset, str] = UNSET,
     bz_id: Union[Unset, float] = UNSET,
     changed_after: Union[Unset, datetime.datetime] = UNSET,
     changed_before: Union[Unset, datetime.datetime] = UNSET,
@@ -572,13 +587,7 @@ def _get_kwargs(
 
     params["acknowledgments__uuid"] = json_acknowledgments_uuid
 
-    json_affects_affectedness: Union[Unset, str] = UNSET
-    if not isinstance(affects_affectedness, Unset):
-        json_affects_affectedness = OsidbApiV1FlawsListAffectsAffectedness(
-            affects_affectedness
-        ).value
-
-    params["affects__affectedness"] = json_affects_affectedness
+    params["affects__affectedness"] = affects_affectedness
 
     json_affects_created_dt: Union[Unset, str] = UNSET
     if not isinstance(affects_created_dt, Unset):
@@ -630,87 +639,245 @@ def _get_kwargs(
 
     params["affects__embargoed"] = affects_embargoed
 
-    json_affects_impact: Union[Unset, str] = UNSET
-    if not isinstance(affects_impact, Unset):
-        json_affects_impact = OsidbApiV1FlawsListAffectsImpact(affects_impact).value
-
-    params["affects__impact"] = json_affects_impact
+    params["affects__impact"] = affects_impact
 
     params["affects__ps_component"] = affects_ps_component
 
     params["affects__ps_module"] = affects_ps_module
 
-    json_affects_resolution: Union[Unset, str] = UNSET
-    if not isinstance(affects_resolution, Unset):
-        json_affects_resolution = OsidbApiV1FlawsListAffectsResolution(
-            affects_resolution
+    params["affects__resolution"] = affects_resolution
+
+    json_affects_tracker_created_dt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt, Unset):
+        json_affects_tracker_created_dt = affects_tracker_created_dt.isoformat()
+
+    params["affects__tracker__created_dt"] = json_affects_tracker_created_dt
+
+    json_affects_tracker_created_dt_date: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_date, Unset):
+        json_affects_tracker_created_dt_date = (
+            affects_tracker_created_dt_date.isoformat()
+        )
+
+    params["affects__tracker__created_dt__date"] = json_affects_tracker_created_dt_date
+
+    json_affects_tracker_created_dt_date_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_date_gte, Unset):
+        json_affects_tracker_created_dt_date_gte = (
+            affects_tracker_created_dt_date_gte.isoformat()
+        )
+
+    params["affects__tracker__created_dt__date__gte"] = (
+        json_affects_tracker_created_dt_date_gte
+    )
+
+    json_affects_tracker_created_dt_date_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_date_lte, Unset):
+        json_affects_tracker_created_dt_date_lte = (
+            affects_tracker_created_dt_date_lte.isoformat()
+        )
+
+    params["affects__tracker__created_dt__date__lte"] = (
+        json_affects_tracker_created_dt_date_lte
+    )
+
+    json_affects_tracker_created_dt_gt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_gt, Unset):
+        json_affects_tracker_created_dt_gt = affects_tracker_created_dt_gt.isoformat()
+
+    params["affects__tracker__created_dt__gt"] = json_affects_tracker_created_dt_gt
+
+    json_affects_tracker_created_dt_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_gte, Unset):
+        json_affects_tracker_created_dt_gte = affects_tracker_created_dt_gte.isoformat()
+
+    params["affects__tracker__created_dt__gte"] = json_affects_tracker_created_dt_gte
+
+    json_affects_tracker_created_dt_lt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_lt, Unset):
+        json_affects_tracker_created_dt_lt = affects_tracker_created_dt_lt.isoformat()
+
+    params["affects__tracker__created_dt__lt"] = json_affects_tracker_created_dt_lt
+
+    json_affects_tracker_created_dt_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_created_dt_lte, Unset):
+        json_affects_tracker_created_dt_lte = affects_tracker_created_dt_lte.isoformat()
+
+    params["affects__tracker__created_dt__lte"] = json_affects_tracker_created_dt_lte
+
+    params["affects__tracker__embargoed"] = affects_tracker_embargoed
+
+    params["affects__tracker__errata__advisory_name"] = (
+        affects_tracker_errata_advisory_name
+    )
+
+    params["affects__tracker__errata__et_id"] = affects_tracker_errata_et_id
+
+    json_affects_tracker_errata_shipped_dt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt, Unset):
+        json_affects_tracker_errata_shipped_dt = (
+            affects_tracker_errata_shipped_dt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt"] = (
+        json_affects_tracker_errata_shipped_dt
+    )
+
+    json_affects_tracker_errata_shipped_dt_date: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date, Unset):
+        json_affects_tracker_errata_shipped_dt_date = (
+            affects_tracker_errata_shipped_dt_date.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date"] = (
+        json_affects_tracker_errata_shipped_dt_date
+    )
+
+    json_affects_tracker_errata_shipped_dt_date_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date_gte, Unset):
+        json_affects_tracker_errata_shipped_dt_date_gte = (
+            affects_tracker_errata_shipped_dt_date_gte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date__gte"] = (
+        json_affects_tracker_errata_shipped_dt_date_gte
+    )
+
+    json_affects_tracker_errata_shipped_dt_date_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date_lte, Unset):
+        json_affects_tracker_errata_shipped_dt_date_lte = (
+            affects_tracker_errata_shipped_dt_date_lte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date__lte"] = (
+        json_affects_tracker_errata_shipped_dt_date_lte
+    )
+
+    json_affects_tracker_errata_shipped_dt_gt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_gt, Unset):
+        json_affects_tracker_errata_shipped_dt_gt = (
+            affects_tracker_errata_shipped_dt_gt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__gt"] = (
+        json_affects_tracker_errata_shipped_dt_gt
+    )
+
+    json_affects_tracker_errata_shipped_dt_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_gte, Unset):
+        json_affects_tracker_errata_shipped_dt_gte = (
+            affects_tracker_errata_shipped_dt_gte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__gte"] = (
+        json_affects_tracker_errata_shipped_dt_gte
+    )
+
+    json_affects_tracker_errata_shipped_dt_lt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_lt, Unset):
+        json_affects_tracker_errata_shipped_dt_lt = (
+            affects_tracker_errata_shipped_dt_lt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__lt"] = (
+        json_affects_tracker_errata_shipped_dt_lt
+    )
+
+    json_affects_tracker_errata_shipped_dt_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_lte, Unset):
+        json_affects_tracker_errata_shipped_dt_lte = (
+            affects_tracker_errata_shipped_dt_lte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__lte"] = (
+        json_affects_tracker_errata_shipped_dt_lte
+    )
+
+    params["affects__tracker__external_system_id"] = affects_tracker_external_system_id
+
+    params["affects__tracker__ps_update_stream"] = affects_tracker_ps_update_stream
+
+    params["affects__tracker__resolution"] = affects_tracker_resolution
+
+    params["affects__tracker__status"] = affects_tracker_status
+
+    json_affects_tracker_type: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_type, Unset):
+        json_affects_tracker_type = OsidbApiV1FlawsListAffectsTrackerType(
+            affects_tracker_type
         ).value
 
-    params["affects__resolution"] = json_affects_resolution
+    params["affects__tracker__type"] = json_affects_tracker_type
+
+    json_affects_tracker_updated_dt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt, Unset):
+        json_affects_tracker_updated_dt = affects_tracker_updated_dt.isoformat()
+
+    params["affects__tracker__updated_dt"] = json_affects_tracker_updated_dt
+
+    json_affects_tracker_updated_dt_date: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_date, Unset):
+        json_affects_tracker_updated_dt_date = (
+            affects_tracker_updated_dt_date.isoformat()
+        )
+
+    params["affects__tracker__updated_dt__date"] = json_affects_tracker_updated_dt_date
+
+    json_affects_tracker_updated_dt_date_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_date_gte, Unset):
+        json_affects_tracker_updated_dt_date_gte = (
+            affects_tracker_updated_dt_date_gte.isoformat()
+        )
+
+    params["affects__tracker__updated_dt__date__gte"] = (
+        json_affects_tracker_updated_dt_date_gte
+    )
+
+    json_affects_tracker_updated_dt_date_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_date_lte, Unset):
+        json_affects_tracker_updated_dt_date_lte = (
+            affects_tracker_updated_dt_date_lte.isoformat()
+        )
+
+    params["affects__tracker__updated_dt__date__lte"] = (
+        json_affects_tracker_updated_dt_date_lte
+    )
+
+    json_affects_tracker_updated_dt_gt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_gt, Unset):
+        json_affects_tracker_updated_dt_gt = affects_tracker_updated_dt_gt.isoformat()
+
+    params["affects__tracker__updated_dt__gt"] = json_affects_tracker_updated_dt_gt
+
+    json_affects_tracker_updated_dt_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_gte, Unset):
+        json_affects_tracker_updated_dt_gte = affects_tracker_updated_dt_gte.isoformat()
+
+    params["affects__tracker__updated_dt__gte"] = json_affects_tracker_updated_dt_gte
+
+    json_affects_tracker_updated_dt_lt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_lt, Unset):
+        json_affects_tracker_updated_dt_lt = affects_tracker_updated_dt_lt.isoformat()
+
+    params["affects__tracker__updated_dt__lt"] = json_affects_tracker_updated_dt_lt
+
+    json_affects_tracker_updated_dt_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_updated_dt_lte, Unset):
+        json_affects_tracker_updated_dt_lte = affects_tracker_updated_dt_lte.isoformat()
+
+    params["affects__tracker__updated_dt__lte"] = json_affects_tracker_updated_dt_lte
+
+    json_affects_tracker_uuid: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_uuid, Unset):
+        json_affects_tracker_uuid = str(affects_tracker_uuid)
+
+    params["affects__tracker__uuid"] = json_affects_tracker_uuid
 
     json_affects_trackers_created_dt: Union[Unset, str] = UNSET
     if not isinstance(affects_trackers_created_dt, Unset):
         json_affects_trackers_created_dt = affects_trackers_created_dt.isoformat()
 
     params["affects__trackers__created_dt"] = json_affects_trackers_created_dt
-
-    json_affects_trackers_created_dt_date: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_date, Unset):
-        json_affects_trackers_created_dt_date = (
-            affects_trackers_created_dt_date.isoformat()
-        )
-
-    params["affects__trackers__created_dt__date"] = (
-        json_affects_trackers_created_dt_date
-    )
-
-    json_affects_trackers_created_dt_date_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_date_gte, Unset):
-        json_affects_trackers_created_dt_date_gte = (
-            affects_trackers_created_dt_date_gte.isoformat()
-        )
-
-    params["affects__trackers__created_dt__date__gte"] = (
-        json_affects_trackers_created_dt_date_gte
-    )
-
-    json_affects_trackers_created_dt_date_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_date_lte, Unset):
-        json_affects_trackers_created_dt_date_lte = (
-            affects_trackers_created_dt_date_lte.isoformat()
-        )
-
-    params["affects__trackers__created_dt__date__lte"] = (
-        json_affects_trackers_created_dt_date_lte
-    )
-
-    json_affects_trackers_created_dt_gt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_gt, Unset):
-        json_affects_trackers_created_dt_gt = affects_trackers_created_dt_gt.isoformat()
-
-    params["affects__trackers__created_dt__gt"] = json_affects_trackers_created_dt_gt
-
-    json_affects_trackers_created_dt_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_gte, Unset):
-        json_affects_trackers_created_dt_gte = (
-            affects_trackers_created_dt_gte.isoformat()
-        )
-
-    params["affects__trackers__created_dt__gte"] = json_affects_trackers_created_dt_gte
-
-    json_affects_trackers_created_dt_lt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_lt, Unset):
-        json_affects_trackers_created_dt_lt = affects_trackers_created_dt_lt.isoformat()
-
-    params["affects__trackers__created_dt__lt"] = json_affects_trackers_created_dt_lt
-
-    json_affects_trackers_created_dt_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_created_dt_lte, Unset):
-        json_affects_trackers_created_dt_lte = (
-            affects_trackers_created_dt_lte.isoformat()
-        )
-
-    params["affects__trackers__created_dt__lte"] = json_affects_trackers_created_dt_lte
 
     params["affects__trackers__embargoed"] = affects_trackers_embargoed
 
@@ -730,76 +897,6 @@ def _get_kwargs(
         json_affects_trackers_errata_shipped_dt
     )
 
-    json_affects_trackers_errata_shipped_dt_date: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_date, Unset):
-        json_affects_trackers_errata_shipped_dt_date = (
-            affects_trackers_errata_shipped_dt_date.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__date"] = (
-        json_affects_trackers_errata_shipped_dt_date
-    )
-
-    json_affects_trackers_errata_shipped_dt_date_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_date_gte, Unset):
-        json_affects_trackers_errata_shipped_dt_date_gte = (
-            affects_trackers_errata_shipped_dt_date_gte.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__date__gte"] = (
-        json_affects_trackers_errata_shipped_dt_date_gte
-    )
-
-    json_affects_trackers_errata_shipped_dt_date_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_date_lte, Unset):
-        json_affects_trackers_errata_shipped_dt_date_lte = (
-            affects_trackers_errata_shipped_dt_date_lte.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__date__lte"] = (
-        json_affects_trackers_errata_shipped_dt_date_lte
-    )
-
-    json_affects_trackers_errata_shipped_dt_gt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_gt, Unset):
-        json_affects_trackers_errata_shipped_dt_gt = (
-            affects_trackers_errata_shipped_dt_gt.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__gt"] = (
-        json_affects_trackers_errata_shipped_dt_gt
-    )
-
-    json_affects_trackers_errata_shipped_dt_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_gte, Unset):
-        json_affects_trackers_errata_shipped_dt_gte = (
-            affects_trackers_errata_shipped_dt_gte.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__gte"] = (
-        json_affects_trackers_errata_shipped_dt_gte
-    )
-
-    json_affects_trackers_errata_shipped_dt_lt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_lt, Unset):
-        json_affects_trackers_errata_shipped_dt_lt = (
-            affects_trackers_errata_shipped_dt_lt.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__lt"] = (
-        json_affects_trackers_errata_shipped_dt_lt
-    )
-
-    json_affects_trackers_errata_shipped_dt_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_errata_shipped_dt_lte, Unset):
-        json_affects_trackers_errata_shipped_dt_lte = (
-            affects_trackers_errata_shipped_dt_lte.isoformat()
-        )
-
-    params["affects__trackers__errata__shipped_dt__lte"] = (
-        json_affects_trackers_errata_shipped_dt_lte
-    )
-
     params["affects__trackers__external_system_id"] = (
         affects_trackers_external_system_id
     )
@@ -810,13 +907,7 @@ def _get_kwargs(
 
     params["affects__trackers__status"] = affects_trackers_status
 
-    json_affects_trackers_type: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_type, Unset):
-        json_affects_trackers_type = OsidbApiV1FlawsListAffectsTrackersType(
-            affects_trackers_type
-        ).value
-
-    params["affects__trackers__type"] = json_affects_trackers_type
+    params["affects__trackers__type"] = affects_trackers_type
 
     json_affects_trackers_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(affects_trackers_updated_dt, Unset):
@@ -824,69 +915,7 @@ def _get_kwargs(
 
     params["affects__trackers__updated_dt"] = json_affects_trackers_updated_dt
 
-    json_affects_trackers_updated_dt_date: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_date, Unset):
-        json_affects_trackers_updated_dt_date = (
-            affects_trackers_updated_dt_date.isoformat()
-        )
-
-    params["affects__trackers__updated_dt__date"] = (
-        json_affects_trackers_updated_dt_date
-    )
-
-    json_affects_trackers_updated_dt_date_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_date_gte, Unset):
-        json_affects_trackers_updated_dt_date_gte = (
-            affects_trackers_updated_dt_date_gte.isoformat()
-        )
-
-    params["affects__trackers__updated_dt__date__gte"] = (
-        json_affects_trackers_updated_dt_date_gte
-    )
-
-    json_affects_trackers_updated_dt_date_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_date_lte, Unset):
-        json_affects_trackers_updated_dt_date_lte = (
-            affects_trackers_updated_dt_date_lte.isoformat()
-        )
-
-    params["affects__trackers__updated_dt__date__lte"] = (
-        json_affects_trackers_updated_dt_date_lte
-    )
-
-    json_affects_trackers_updated_dt_gt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_gt, Unset):
-        json_affects_trackers_updated_dt_gt = affects_trackers_updated_dt_gt.isoformat()
-
-    params["affects__trackers__updated_dt__gt"] = json_affects_trackers_updated_dt_gt
-
-    json_affects_trackers_updated_dt_gte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_gte, Unset):
-        json_affects_trackers_updated_dt_gte = (
-            affects_trackers_updated_dt_gte.isoformat()
-        )
-
-    params["affects__trackers__updated_dt__gte"] = json_affects_trackers_updated_dt_gte
-
-    json_affects_trackers_updated_dt_lt: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_lt, Unset):
-        json_affects_trackers_updated_dt_lt = affects_trackers_updated_dt_lt.isoformat()
-
-    params["affects__trackers__updated_dt__lt"] = json_affects_trackers_updated_dt_lt
-
-    json_affects_trackers_updated_dt_lte: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_updated_dt_lte, Unset):
-        json_affects_trackers_updated_dt_lte = (
-            affects_trackers_updated_dt_lte.isoformat()
-        )
-
-    params["affects__trackers__updated_dt__lte"] = json_affects_trackers_updated_dt_lte
-
-    json_affects_trackers_uuid: Union[Unset, str] = UNSET
-    if not isinstance(affects_trackers_uuid, Unset):
-        json_affects_trackers_uuid = str(affects_trackers_uuid)
-
-    params["affects__trackers__uuid"] = json_affects_trackers_uuid
+    params["affects__trackers__uuid"] = affects_trackers_uuid
 
     json_affects_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(affects_updated_dt, Unset):
@@ -936,11 +965,7 @@ def _get_kwargs(
 
     params["affects__updated_dt__lte"] = json_affects_updated_dt_lte
 
-    json_affects_uuid: Union[Unset, str] = UNSET
-    if not isinstance(affects_uuid, Unset):
-        json_affects_uuid = str(affects_uuid)
-
-    params["affects__uuid"] = json_affects_uuid
+    params["affects__uuid"] = affects_uuid
 
     params["bz_id"] = bz_id
 
@@ -1613,7 +1638,7 @@ def sync_detailed(
     acknowledgments_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
-    affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
+    affects_affectedness: Union[Unset, str] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1623,43 +1648,55 @@ def sync_detailed(
     affects_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
-    affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_impact: Union[Unset, str] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
-    affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_embargoed: Union[Unset, bool] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_external_system_id: Union[Unset, str] = UNSET,
+    affects_tracker_ps_update_stream: Union[Unset, str] = UNSET,
+    affects_tracker_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_status: Union[Unset, str] = UNSET,
+    affects_tracker_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackerType] = UNSET,
+    affects_tracker_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_uuid: Union[Unset, UUID] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, str] = UNSET,
-    affects_trackers_errata_et_id: Union[Unset, int] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, str] = UNSET,
     affects_trackers_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_external_system_id: Union[Unset, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, str] = UNSET,
     affects_trackers_resolution: Union[Unset, str] = UNSET,
     affects_trackers_status: Union[Unset, str] = UNSET,
-    affects_trackers_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackersType] = UNSET,
+    affects_trackers_type: Union[Unset, str] = UNSET,
     affects_trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_uuid: Union[Unset, UUID] = UNSET,
+    affects_trackers_uuid: Union[Unset, str] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1668,7 +1705,7 @@ def sync_detailed(
     affects_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_uuid: Union[Unset, str] = UNSET,
     bz_id: Union[Unset, float] = UNSET,
     changed_after: Union[Unset, datetime.datetime] = UNSET,
     changed_before: Union[Unset, datetime.datetime] = UNSET,
@@ -1789,7 +1826,8 @@ def sync_detailed(
     uuid: Union[Unset, UUID] = UNSET,
     workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         acknowledgments_affiliation (Union[Unset, str]):
         acknowledgments_created_dt (Union[Unset, datetime.datetime]):
@@ -1811,7 +1849,7 @@ def sync_detailed(
         acknowledgments_updated_dt_lt (Union[Unset, datetime.datetime]):
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
-        affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
+        affects_affectedness (Union[Unset, str]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
         affects_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1821,43 +1859,55 @@ def sync_detailed(
         affects_created_dt_lt (Union[Unset, datetime.datetime]):
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
-        affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_impact (Union[Unset, str]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
-        affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_resolution (Union[Unset, str]):
+        affects_tracker_created_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_embargoed (Union[Unset, bool]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_external_system_id (Union[Unset, str]):
+        affects_tracker_ps_update_stream (Union[Unset, str]):
+        affects_tracker_resolution (Union[Unset, str]):
+        affects_tracker_status (Union[Unset, str]):
+        affects_tracker_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackerType]):
+        affects_tracker_updated_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_uuid (Union[Unset, UUID]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_embargoed (Union[Unset, bool]):
         affects_trackers_errata_advisory_name (Union[Unset, str]):
-        affects_trackers_errata_et_id (Union[Unset, int]):
+        affects_trackers_errata_et_id (Union[Unset, str]):
         affects_trackers_errata_shipped_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_external_system_id (Union[Unset, str]):
         affects_trackers_ps_update_stream (Union[Unset, str]):
         affects_trackers_resolution (Union[Unset, str]):
         affects_trackers_status (Union[Unset, str]):
-        affects_trackers_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackersType]):
+        affects_trackers_type (Union[Unset, str]):
         affects_trackers_updated_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_trackers_uuid (Union[Unset, UUID]):
+        affects_trackers_uuid (Union[Unset, str]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
         affects_updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -1866,7 +1916,7 @@ def sync_detailed(
         affects_updated_dt_gte (Union[Unset, datetime.datetime]):
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_uuid (Union[Unset, UUID]):
+        affects_uuid (Union[Unset, str]):
         bz_id (Union[Unset, float]):
         changed_after (Union[Unset, datetime.datetime]):
         changed_before (Union[Unset, datetime.datetime]):
@@ -2029,38 +2079,50 @@ def sync_detailed(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_created_dt=affects_tracker_created_dt,
+        affects_tracker_created_dt_date=affects_tracker_created_dt_date,
+        affects_tracker_created_dt_date_gte=affects_tracker_created_dt_date_gte,
+        affects_tracker_created_dt_date_lte=affects_tracker_created_dt_date_lte,
+        affects_tracker_created_dt_gt=affects_tracker_created_dt_gt,
+        affects_tracker_created_dt_gte=affects_tracker_created_dt_gte,
+        affects_tracker_created_dt_lt=affects_tracker_created_dt_lt,
+        affects_tracker_created_dt_lte=affects_tracker_created_dt_lte,
+        affects_tracker_embargoed=affects_tracker_embargoed,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
+        affects_tracker_external_system_id=affects_tracker_external_system_id,
+        affects_tracker_ps_update_stream=affects_tracker_ps_update_stream,
+        affects_tracker_resolution=affects_tracker_resolution,
+        affects_tracker_status=affects_tracker_status,
+        affects_tracker_type=affects_tracker_type,
+        affects_tracker_updated_dt=affects_tracker_updated_dt,
+        affects_tracker_updated_dt_date=affects_tracker_updated_dt_date,
+        affects_tracker_updated_dt_date_gte=affects_tracker_updated_dt_date_gte,
+        affects_tracker_updated_dt_date_lte=affects_tracker_updated_dt_date_lte,
+        affects_tracker_updated_dt_gt=affects_tracker_updated_dt_gt,
+        affects_tracker_updated_dt_gte=affects_tracker_updated_dt_gte,
+        affects_tracker_updated_dt_lt=affects_tracker_updated_dt_lt,
+        affects_tracker_updated_dt_lte=affects_tracker_updated_dt_lte,
+        affects_tracker_uuid=affects_tracker_uuid,
         affects_trackers_created_dt=affects_trackers_created_dt,
-        affects_trackers_created_dt_date=affects_trackers_created_dt_date,
-        affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
-        affects_trackers_created_dt_date_lte=affects_trackers_created_dt_date_lte,
-        affects_trackers_created_dt_gt=affects_trackers_created_dt_gt,
-        affects_trackers_created_dt_gte=affects_trackers_created_dt_gte,
-        affects_trackers_created_dt_lt=affects_trackers_created_dt_lt,
-        affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
         affects_trackers_errata_et_id=affects_trackers_errata_et_id,
         affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
-        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
-        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
-        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
-        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
-        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
-        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
-        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
         affects_trackers_status=affects_trackers_status,
         affects_trackers_type=affects_trackers_type,
         affects_trackers_updated_dt=affects_trackers_updated_dt,
-        affects_trackers_updated_dt_date=affects_trackers_updated_dt_date,
-        affects_trackers_updated_dt_date_gte=affects_trackers_updated_dt_date_gte,
-        affects_trackers_updated_dt_date_lte=affects_trackers_updated_dt_date_lte,
-        affects_trackers_updated_dt_gt=affects_trackers_updated_dt_gt,
-        affects_trackers_updated_dt_gte=affects_trackers_updated_dt_gte,
-        affects_trackers_updated_dt_lt=affects_trackers_updated_dt_lt,
-        affects_trackers_updated_dt_lte=affects_trackers_updated_dt_lte,
         affects_trackers_uuid=affects_trackers_uuid,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -2224,7 +2286,7 @@ def sync(
     acknowledgments_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
-    affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
+    affects_affectedness: Union[Unset, str] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2234,43 +2296,55 @@ def sync(
     affects_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
-    affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_impact: Union[Unset, str] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
-    affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_embargoed: Union[Unset, bool] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_external_system_id: Union[Unset, str] = UNSET,
+    affects_tracker_ps_update_stream: Union[Unset, str] = UNSET,
+    affects_tracker_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_status: Union[Unset, str] = UNSET,
+    affects_tracker_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackerType] = UNSET,
+    affects_tracker_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_uuid: Union[Unset, UUID] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, str] = UNSET,
-    affects_trackers_errata_et_id: Union[Unset, int] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, str] = UNSET,
     affects_trackers_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_external_system_id: Union[Unset, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, str] = UNSET,
     affects_trackers_resolution: Union[Unset, str] = UNSET,
     affects_trackers_status: Union[Unset, str] = UNSET,
-    affects_trackers_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackersType] = UNSET,
+    affects_trackers_type: Union[Unset, str] = UNSET,
     affects_trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_uuid: Union[Unset, UUID] = UNSET,
+    affects_trackers_uuid: Union[Unset, str] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2279,7 +2353,7 @@ def sync(
     affects_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_uuid: Union[Unset, str] = UNSET,
     bz_id: Union[Unset, float] = UNSET,
     changed_after: Union[Unset, datetime.datetime] = UNSET,
     changed_before: Union[Unset, datetime.datetime] = UNSET,
@@ -2400,7 +2474,8 @@ def sync(
     uuid: Union[Unset, UUID] = UNSET,
     workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         acknowledgments_affiliation (Union[Unset, str]):
         acknowledgments_created_dt (Union[Unset, datetime.datetime]):
@@ -2422,7 +2497,7 @@ def sync(
         acknowledgments_updated_dt_lt (Union[Unset, datetime.datetime]):
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
-        affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
+        affects_affectedness (Union[Unset, str]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
         affects_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -2432,43 +2507,55 @@ def sync(
         affects_created_dt_lt (Union[Unset, datetime.datetime]):
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
-        affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_impact (Union[Unset, str]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
-        affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_resolution (Union[Unset, str]):
+        affects_tracker_created_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_embargoed (Union[Unset, bool]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_external_system_id (Union[Unset, str]):
+        affects_tracker_ps_update_stream (Union[Unset, str]):
+        affects_tracker_resolution (Union[Unset, str]):
+        affects_tracker_status (Union[Unset, str]):
+        affects_tracker_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackerType]):
+        affects_tracker_updated_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_uuid (Union[Unset, UUID]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_embargoed (Union[Unset, bool]):
         affects_trackers_errata_advisory_name (Union[Unset, str]):
-        affects_trackers_errata_et_id (Union[Unset, int]):
+        affects_trackers_errata_et_id (Union[Unset, str]):
         affects_trackers_errata_shipped_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_external_system_id (Union[Unset, str]):
         affects_trackers_ps_update_stream (Union[Unset, str]):
         affects_trackers_resolution (Union[Unset, str]):
         affects_trackers_status (Union[Unset, str]):
-        affects_trackers_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackersType]):
+        affects_trackers_type (Union[Unset, str]):
         affects_trackers_updated_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_trackers_uuid (Union[Unset, UUID]):
+        affects_trackers_uuid (Union[Unset, str]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
         affects_updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -2477,7 +2564,7 @@ def sync(
         affects_updated_dt_gte (Union[Unset, datetime.datetime]):
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_uuid (Union[Unset, UUID]):
+        affects_uuid (Union[Unset, str]):
         bz_id (Union[Unset, float]):
         changed_after (Union[Unset, datetime.datetime]):
         changed_before (Union[Unset, datetime.datetime]):
@@ -2640,38 +2727,50 @@ def sync(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_created_dt=affects_tracker_created_dt,
+        affects_tracker_created_dt_date=affects_tracker_created_dt_date,
+        affects_tracker_created_dt_date_gte=affects_tracker_created_dt_date_gte,
+        affects_tracker_created_dt_date_lte=affects_tracker_created_dt_date_lte,
+        affects_tracker_created_dt_gt=affects_tracker_created_dt_gt,
+        affects_tracker_created_dt_gte=affects_tracker_created_dt_gte,
+        affects_tracker_created_dt_lt=affects_tracker_created_dt_lt,
+        affects_tracker_created_dt_lte=affects_tracker_created_dt_lte,
+        affects_tracker_embargoed=affects_tracker_embargoed,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
+        affects_tracker_external_system_id=affects_tracker_external_system_id,
+        affects_tracker_ps_update_stream=affects_tracker_ps_update_stream,
+        affects_tracker_resolution=affects_tracker_resolution,
+        affects_tracker_status=affects_tracker_status,
+        affects_tracker_type=affects_tracker_type,
+        affects_tracker_updated_dt=affects_tracker_updated_dt,
+        affects_tracker_updated_dt_date=affects_tracker_updated_dt_date,
+        affects_tracker_updated_dt_date_gte=affects_tracker_updated_dt_date_gte,
+        affects_tracker_updated_dt_date_lte=affects_tracker_updated_dt_date_lte,
+        affects_tracker_updated_dt_gt=affects_tracker_updated_dt_gt,
+        affects_tracker_updated_dt_gte=affects_tracker_updated_dt_gte,
+        affects_tracker_updated_dt_lt=affects_tracker_updated_dt_lt,
+        affects_tracker_updated_dt_lte=affects_tracker_updated_dt_lte,
+        affects_tracker_uuid=affects_tracker_uuid,
         affects_trackers_created_dt=affects_trackers_created_dt,
-        affects_trackers_created_dt_date=affects_trackers_created_dt_date,
-        affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
-        affects_trackers_created_dt_date_lte=affects_trackers_created_dt_date_lte,
-        affects_trackers_created_dt_gt=affects_trackers_created_dt_gt,
-        affects_trackers_created_dt_gte=affects_trackers_created_dt_gte,
-        affects_trackers_created_dt_lt=affects_trackers_created_dt_lt,
-        affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
         affects_trackers_errata_et_id=affects_trackers_errata_et_id,
         affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
-        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
-        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
-        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
-        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
-        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
-        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
-        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
         affects_trackers_status=affects_trackers_status,
         affects_trackers_type=affects_trackers_type,
         affects_trackers_updated_dt=affects_trackers_updated_dt,
-        affects_trackers_updated_dt_date=affects_trackers_updated_dt_date,
-        affects_trackers_updated_dt_date_gte=affects_trackers_updated_dt_date_gte,
-        affects_trackers_updated_dt_date_lte=affects_trackers_updated_dt_date_lte,
-        affects_trackers_updated_dt_gt=affects_trackers_updated_dt_gt,
-        affects_trackers_updated_dt_gte=affects_trackers_updated_dt_gte,
-        affects_trackers_updated_dt_lt=affects_trackers_updated_dt_lt,
-        affects_trackers_updated_dt_lte=affects_trackers_updated_dt_lte,
         affects_trackers_uuid=affects_trackers_uuid,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -2825,7 +2924,7 @@ async def asyncio_detailed(
     acknowledgments_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
-    affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
+    affects_affectedness: Union[Unset, str] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2835,43 +2934,55 @@ async def asyncio_detailed(
     affects_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
-    affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_impact: Union[Unset, str] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
-    affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_embargoed: Union[Unset, bool] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_external_system_id: Union[Unset, str] = UNSET,
+    affects_tracker_ps_update_stream: Union[Unset, str] = UNSET,
+    affects_tracker_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_status: Union[Unset, str] = UNSET,
+    affects_tracker_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackerType] = UNSET,
+    affects_tracker_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_uuid: Union[Unset, UUID] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, str] = UNSET,
-    affects_trackers_errata_et_id: Union[Unset, int] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, str] = UNSET,
     affects_trackers_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_external_system_id: Union[Unset, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, str] = UNSET,
     affects_trackers_resolution: Union[Unset, str] = UNSET,
     affects_trackers_status: Union[Unset, str] = UNSET,
-    affects_trackers_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackersType] = UNSET,
+    affects_trackers_type: Union[Unset, str] = UNSET,
     affects_trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_uuid: Union[Unset, UUID] = UNSET,
+    affects_trackers_uuid: Union[Unset, str] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2880,7 +2991,7 @@ async def asyncio_detailed(
     affects_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_uuid: Union[Unset, str] = UNSET,
     bz_id: Union[Unset, float] = UNSET,
     changed_after: Union[Unset, datetime.datetime] = UNSET,
     changed_before: Union[Unset, datetime.datetime] = UNSET,
@@ -3001,7 +3112,8 @@ async def asyncio_detailed(
     uuid: Union[Unset, UUID] = UNSET,
     workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         acknowledgments_affiliation (Union[Unset, str]):
         acknowledgments_created_dt (Union[Unset, datetime.datetime]):
@@ -3023,7 +3135,7 @@ async def asyncio_detailed(
         acknowledgments_updated_dt_lt (Union[Unset, datetime.datetime]):
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
-        affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
+        affects_affectedness (Union[Unset, str]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
         affects_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -3033,43 +3145,55 @@ async def asyncio_detailed(
         affects_created_dt_lt (Union[Unset, datetime.datetime]):
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
-        affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_impact (Union[Unset, str]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
-        affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_resolution (Union[Unset, str]):
+        affects_tracker_created_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_embargoed (Union[Unset, bool]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_external_system_id (Union[Unset, str]):
+        affects_tracker_ps_update_stream (Union[Unset, str]):
+        affects_tracker_resolution (Union[Unset, str]):
+        affects_tracker_status (Union[Unset, str]):
+        affects_tracker_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackerType]):
+        affects_tracker_updated_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_uuid (Union[Unset, UUID]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_embargoed (Union[Unset, bool]):
         affects_trackers_errata_advisory_name (Union[Unset, str]):
-        affects_trackers_errata_et_id (Union[Unset, int]):
+        affects_trackers_errata_et_id (Union[Unset, str]):
         affects_trackers_errata_shipped_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_external_system_id (Union[Unset, str]):
         affects_trackers_ps_update_stream (Union[Unset, str]):
         affects_trackers_resolution (Union[Unset, str]):
         affects_trackers_status (Union[Unset, str]):
-        affects_trackers_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackersType]):
+        affects_trackers_type (Union[Unset, str]):
         affects_trackers_updated_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_trackers_uuid (Union[Unset, UUID]):
+        affects_trackers_uuid (Union[Unset, str]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
         affects_updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -3078,7 +3202,7 @@ async def asyncio_detailed(
         affects_updated_dt_gte (Union[Unset, datetime.datetime]):
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_uuid (Union[Unset, UUID]):
+        affects_uuid (Union[Unset, str]):
         bz_id (Union[Unset, float]):
         changed_after (Union[Unset, datetime.datetime]):
         changed_before (Union[Unset, datetime.datetime]):
@@ -3241,38 +3365,50 @@ async def asyncio_detailed(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_created_dt=affects_tracker_created_dt,
+        affects_tracker_created_dt_date=affects_tracker_created_dt_date,
+        affects_tracker_created_dt_date_gte=affects_tracker_created_dt_date_gte,
+        affects_tracker_created_dt_date_lte=affects_tracker_created_dt_date_lte,
+        affects_tracker_created_dt_gt=affects_tracker_created_dt_gt,
+        affects_tracker_created_dt_gte=affects_tracker_created_dt_gte,
+        affects_tracker_created_dt_lt=affects_tracker_created_dt_lt,
+        affects_tracker_created_dt_lte=affects_tracker_created_dt_lte,
+        affects_tracker_embargoed=affects_tracker_embargoed,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
+        affects_tracker_external_system_id=affects_tracker_external_system_id,
+        affects_tracker_ps_update_stream=affects_tracker_ps_update_stream,
+        affects_tracker_resolution=affects_tracker_resolution,
+        affects_tracker_status=affects_tracker_status,
+        affects_tracker_type=affects_tracker_type,
+        affects_tracker_updated_dt=affects_tracker_updated_dt,
+        affects_tracker_updated_dt_date=affects_tracker_updated_dt_date,
+        affects_tracker_updated_dt_date_gte=affects_tracker_updated_dt_date_gte,
+        affects_tracker_updated_dt_date_lte=affects_tracker_updated_dt_date_lte,
+        affects_tracker_updated_dt_gt=affects_tracker_updated_dt_gt,
+        affects_tracker_updated_dt_gte=affects_tracker_updated_dt_gte,
+        affects_tracker_updated_dt_lt=affects_tracker_updated_dt_lt,
+        affects_tracker_updated_dt_lte=affects_tracker_updated_dt_lte,
+        affects_tracker_uuid=affects_tracker_uuid,
         affects_trackers_created_dt=affects_trackers_created_dt,
-        affects_trackers_created_dt_date=affects_trackers_created_dt_date,
-        affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
-        affects_trackers_created_dt_date_lte=affects_trackers_created_dt_date_lte,
-        affects_trackers_created_dt_gt=affects_trackers_created_dt_gt,
-        affects_trackers_created_dt_gte=affects_trackers_created_dt_gte,
-        affects_trackers_created_dt_lt=affects_trackers_created_dt_lt,
-        affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
         affects_trackers_embargoed=affects_trackers_embargoed,
         affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
         affects_trackers_errata_et_id=affects_trackers_errata_et_id,
         affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
-        affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
-        affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
-        affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
-        affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
-        affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
-        affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
-        affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
         affects_trackers_external_system_id=affects_trackers_external_system_id,
         affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
         affects_trackers_resolution=affects_trackers_resolution,
         affects_trackers_status=affects_trackers_status,
         affects_trackers_type=affects_trackers_type,
         affects_trackers_updated_dt=affects_trackers_updated_dt,
-        affects_trackers_updated_dt_date=affects_trackers_updated_dt_date,
-        affects_trackers_updated_dt_date_gte=affects_trackers_updated_dt_date_gte,
-        affects_trackers_updated_dt_date_lte=affects_trackers_updated_dt_date_lte,
-        affects_trackers_updated_dt_gt=affects_trackers_updated_dt_gt,
-        affects_trackers_updated_dt_gte=affects_trackers_updated_dt_gte,
-        affects_trackers_updated_dt_lt=affects_trackers_updated_dt_lt,
-        affects_trackers_updated_dt_lte=affects_trackers_updated_dt_lte,
         affects_trackers_uuid=affects_trackers_uuid,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -3436,7 +3572,7 @@ async def asyncio(
     acknowledgments_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
-    affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
+    affects_affectedness: Union[Unset, str] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -3446,43 +3582,55 @@ async def asyncio(
     affects_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
-    affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_impact: Union[Unset, str] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
-    affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_created_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_embargoed: Union[Unset, bool] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_external_system_id: Union[Unset, str] = UNSET,
+    affects_tracker_ps_update_stream: Union[Unset, str] = UNSET,
+    affects_tracker_resolution: Union[Unset, str] = UNSET,
+    affects_tracker_status: Union[Unset, str] = UNSET,
+    affects_tracker_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackerType] = UNSET,
+    affects_tracker_updated_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_uuid: Union[Unset, UUID] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_created_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_embargoed: Union[Unset, bool] = UNSET,
     affects_trackers_errata_advisory_name: Union[Unset, str] = UNSET,
-    affects_trackers_errata_et_id: Union[Unset, int] = UNSET,
+    affects_trackers_errata_et_id: Union[Unset, str] = UNSET,
     affects_trackers_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_external_system_id: Union[Unset, str] = UNSET,
     affects_trackers_ps_update_stream: Union[Unset, str] = UNSET,
     affects_trackers_resolution: Union[Unset, str] = UNSET,
     affects_trackers_status: Union[Unset, str] = UNSET,
-    affects_trackers_type: Union[Unset, OsidbApiV1FlawsListAffectsTrackersType] = UNSET,
+    affects_trackers_type: Union[Unset, str] = UNSET,
     affects_trackers_updated_dt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_date: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_date_lte: Union[Unset, datetime.date] = UNSET,
-    affects_trackers_updated_dt_gt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_trackers_uuid: Union[Unset, UUID] = UNSET,
+    affects_trackers_uuid: Union[Unset, str] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -3491,7 +3639,7 @@ async def asyncio(
     affects_updated_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_uuid: Union[Unset, str] = UNSET,
     bz_id: Union[Unset, float] = UNSET,
     changed_after: Union[Unset, datetime.datetime] = UNSET,
     changed_before: Union[Unset, datetime.datetime] = UNSET,
@@ -3612,7 +3760,8 @@ async def asyncio(
     uuid: Union[Unset, UUID] = UNSET,
     workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         acknowledgments_affiliation (Union[Unset, str]):
         acknowledgments_created_dt (Union[Unset, datetime.datetime]):
@@ -3634,7 +3783,7 @@ async def asyncio(
         acknowledgments_updated_dt_lt (Union[Unset, datetime.datetime]):
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
-        affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
+        affects_affectedness (Union[Unset, str]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
         affects_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -3644,43 +3793,55 @@ async def asyncio(
         affects_created_dt_lt (Union[Unset, datetime.datetime]):
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
-        affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_impact (Union[Unset, str]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
-        affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_resolution (Union[Unset, str]):
+        affects_tracker_created_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_created_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_created_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_embargoed (Union[Unset, bool]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_external_system_id (Union[Unset, str]):
+        affects_tracker_ps_update_stream (Union[Unset, str]):
+        affects_tracker_resolution (Union[Unset, str]):
+        affects_tracker_status (Union[Unset, str]):
+        affects_tracker_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackerType]):
+        affects_tracker_updated_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_updated_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_updated_dt_lte (Union[Unset, datetime.datetime]):
+        affects_tracker_uuid (Union[Unset, UUID]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_created_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_embargoed (Union[Unset, bool]):
         affects_trackers_errata_advisory_name (Union[Unset, str]):
-        affects_trackers_errata_et_id (Union[Unset, int]):
+        affects_trackers_errata_et_id (Union[Unset, str]):
         affects_trackers_errata_shipped_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_external_system_id (Union[Unset, str]):
         affects_trackers_ps_update_stream (Union[Unset, str]):
         affects_trackers_resolution (Union[Unset, str]):
         affects_trackers_status (Union[Unset, str]):
-        affects_trackers_type (Union[Unset, OsidbApiV1FlawsListAffectsTrackersType]):
+        affects_trackers_type (Union[Unset, str]):
         affects_trackers_updated_dt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_date (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_gte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_date_lte (Union[Unset, datetime.date]):
-        affects_trackers_updated_dt_gt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_gte (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lt (Union[Unset, datetime.datetime]):
-        affects_trackers_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_trackers_uuid (Union[Unset, UUID]):
+        affects_trackers_uuid (Union[Unset, str]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
         affects_updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -3689,7 +3850,7 @@ async def asyncio(
         affects_updated_dt_gte (Union[Unset, datetime.datetime]):
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
-        affects_uuid (Union[Unset, UUID]):
+        affects_uuid (Union[Unset, str]):
         bz_id (Union[Unset, float]):
         changed_after (Union[Unset, datetime.datetime]):
         changed_before (Union[Unset, datetime.datetime]):
@@ -3853,38 +4014,50 @@ async def asyncio(
             affects_ps_component=affects_ps_component,
             affects_ps_module=affects_ps_module,
             affects_resolution=affects_resolution,
+            affects_tracker_created_dt=affects_tracker_created_dt,
+            affects_tracker_created_dt_date=affects_tracker_created_dt_date,
+            affects_tracker_created_dt_date_gte=affects_tracker_created_dt_date_gte,
+            affects_tracker_created_dt_date_lte=affects_tracker_created_dt_date_lte,
+            affects_tracker_created_dt_gt=affects_tracker_created_dt_gt,
+            affects_tracker_created_dt_gte=affects_tracker_created_dt_gte,
+            affects_tracker_created_dt_lt=affects_tracker_created_dt_lt,
+            affects_tracker_created_dt_lte=affects_tracker_created_dt_lte,
+            affects_tracker_embargoed=affects_tracker_embargoed,
+            affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+            affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+            affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+            affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+            affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+            affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+            affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+            affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+            affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+            affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
+            affects_tracker_external_system_id=affects_tracker_external_system_id,
+            affects_tracker_ps_update_stream=affects_tracker_ps_update_stream,
+            affects_tracker_resolution=affects_tracker_resolution,
+            affects_tracker_status=affects_tracker_status,
+            affects_tracker_type=affects_tracker_type,
+            affects_tracker_updated_dt=affects_tracker_updated_dt,
+            affects_tracker_updated_dt_date=affects_tracker_updated_dt_date,
+            affects_tracker_updated_dt_date_gte=affects_tracker_updated_dt_date_gte,
+            affects_tracker_updated_dt_date_lte=affects_tracker_updated_dt_date_lte,
+            affects_tracker_updated_dt_gt=affects_tracker_updated_dt_gt,
+            affects_tracker_updated_dt_gte=affects_tracker_updated_dt_gte,
+            affects_tracker_updated_dt_lt=affects_tracker_updated_dt_lt,
+            affects_tracker_updated_dt_lte=affects_tracker_updated_dt_lte,
+            affects_tracker_uuid=affects_tracker_uuid,
             affects_trackers_created_dt=affects_trackers_created_dt,
-            affects_trackers_created_dt_date=affects_trackers_created_dt_date,
-            affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
-            affects_trackers_created_dt_date_lte=affects_trackers_created_dt_date_lte,
-            affects_trackers_created_dt_gt=affects_trackers_created_dt_gt,
-            affects_trackers_created_dt_gte=affects_trackers_created_dt_gte,
-            affects_trackers_created_dt_lt=affects_trackers_created_dt_lt,
-            affects_trackers_created_dt_lte=affects_trackers_created_dt_lte,
             affects_trackers_embargoed=affects_trackers_embargoed,
             affects_trackers_errata_advisory_name=affects_trackers_errata_advisory_name,
             affects_trackers_errata_et_id=affects_trackers_errata_et_id,
             affects_trackers_errata_shipped_dt=affects_trackers_errata_shipped_dt,
-            affects_trackers_errata_shipped_dt_date=affects_trackers_errata_shipped_dt_date,
-            affects_trackers_errata_shipped_dt_date_gte=affects_trackers_errata_shipped_dt_date_gte,
-            affects_trackers_errata_shipped_dt_date_lte=affects_trackers_errata_shipped_dt_date_lte,
-            affects_trackers_errata_shipped_dt_gt=affects_trackers_errata_shipped_dt_gt,
-            affects_trackers_errata_shipped_dt_gte=affects_trackers_errata_shipped_dt_gte,
-            affects_trackers_errata_shipped_dt_lt=affects_trackers_errata_shipped_dt_lt,
-            affects_trackers_errata_shipped_dt_lte=affects_trackers_errata_shipped_dt_lte,
             affects_trackers_external_system_id=affects_trackers_external_system_id,
             affects_trackers_ps_update_stream=affects_trackers_ps_update_stream,
             affects_trackers_resolution=affects_trackers_resolution,
             affects_trackers_status=affects_trackers_status,
             affects_trackers_type=affects_trackers_type,
             affects_trackers_updated_dt=affects_trackers_updated_dt,
-            affects_trackers_updated_dt_date=affects_trackers_updated_dt_date,
-            affects_trackers_updated_dt_date_gte=affects_trackers_updated_dt_date_gte,
-            affects_trackers_updated_dt_date_lte=affects_trackers_updated_dt_date_lte,
-            affects_trackers_updated_dt_gt=affects_trackers_updated_dt_gt,
-            affects_trackers_updated_dt_gte=affects_trackers_updated_dt_gte,
-            affects_trackers_updated_dt_lt=affects_trackers_updated_dt_lt,
-            affects_trackers_updated_dt_lte=affects_trackers_updated_dt_lte,
             affects_trackers_uuid=affects_trackers_uuid,
             affects_updated_dt=affects_updated_dt,
             affects_updated_dt_date=affects_updated_dt_date,

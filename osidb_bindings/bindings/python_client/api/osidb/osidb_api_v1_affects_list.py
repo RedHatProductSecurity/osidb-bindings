@@ -1030,7 +1030,8 @@ def sync_detailed(
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
 ) -> Response[OsidbApiV1AffectsListResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
         created_dt (Union[Unset, datetime.datetime]):
@@ -1392,7 +1393,8 @@ def sync(
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
 ) -> Optional[OsidbApiV1AffectsListResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
         created_dt (Union[Unset, datetime.datetime]):
@@ -1744,7 +1746,8 @@ async def asyncio_detailed(
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
 ) -> Response[OsidbApiV1AffectsListResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
         created_dt (Union[Unset, datetime.datetime]):
@@ -2106,7 +2109,8 @@ async def asyncio(
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
 ) -> Optional[OsidbApiV1AffectsListResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         affectedness (Union[Unset, OsidbApiV1AffectsListAffectedness]):
         created_dt (Union[Unset, datetime.datetime]):

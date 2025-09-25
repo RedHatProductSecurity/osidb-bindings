@@ -20,22 +20,22 @@ T = TypeVar("T", bound="AffectReportData")
 class AffectReportData(OSIDBModel):
     """
     Attributes:
-        ps_module (str):
+        ps_update_stream (str):
         ps_component (str):
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
-        trackers (Union[Unset, list['TrackerReportData']]):
+        tracker (Union[Unset, TrackerReportData]):
     """
 
-    ps_module: str
+    ps_update_stream: str
     ps_component: str
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
-    trackers: Union[Unset, list["TrackerReportData"]] = UNSET
+    tracker: Union[Unset, "TrackerReportData"] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        ps_module = self.ps_module
+        ps_update_stream = self.ps_update_stream
 
         ps_component = self.ps_component
 
@@ -65,28 +65,22 @@ class AffectReportData(OSIDBModel):
             if not isinstance(self.resolution, Unset):
                 resolution = BlankEnum(self.resolution).value
 
-        trackers: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.trackers, Unset):
-            trackers = []
-            for trackers_item_data in self.trackers:
-                trackers_item: dict[str, Any] = UNSET
-                if not isinstance(trackers_item_data, Unset):
-                    trackers_item = trackers_item_data.to_dict()
-
-                trackers.append(trackers_item)
+        tracker: Union[Unset, dict[str, Any]] = UNSET
+        if not isinstance(self.tracker, Unset):
+            tracker = self.tracker.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if not isinstance(trackers, Unset):
-            field_dict["trackers"] = trackers
+        if not isinstance(tracker, Unset):
+            field_dict["tracker"] = tracker
 
         return field_dict
 
@@ -95,7 +89,7 @@ class AffectReportData(OSIDBModel):
         from ..models.tracker_report_data import TrackerReportData
 
         d = src_dict.copy()
-        ps_module = d.pop("ps_module", UNSET)
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         ps_component = d.pop("ps_component", UNSET)
 
@@ -163,24 +157,19 @@ class AffectReportData(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
-        trackers = []
-        _trackers = d.pop("trackers", UNSET)
-        for trackers_item_data in _trackers or []:
-            _trackers_item = trackers_item_data
-            trackers_item: TrackerReportData
-            if isinstance(_trackers_item, Unset):
-                trackers_item = UNSET
-            else:
-                trackers_item = TrackerReportData.from_dict(_trackers_item)
-
-            trackers.append(trackers_item)
+        _tracker = d.pop("tracker", UNSET)
+        tracker: Union[Unset, TrackerReportData]
+        if isinstance(_tracker, Unset):
+            tracker = UNSET
+        else:
+            tracker = TrackerReportData.from_dict(_tracker)
 
         affect_report_data = cls(
-            ps_module=ps_module,
+            ps_update_stream=ps_update_stream,
             ps_component=ps_component,
             affectedness=affectedness,
             resolution=resolution,
-            trackers=trackers,
+            tracker=tracker,
         )
 
         affect_report_data.additional_properties = d

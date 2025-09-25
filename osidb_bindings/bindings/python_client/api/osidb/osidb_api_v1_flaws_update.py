@@ -4,7 +4,7 @@ from typing import Any, Optional, Union
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_request import FlawRequest
+from ...models.flaw_v1_request import FlawV1Request
 from ...models.osidb_api_v1_flaws_update_response_200 import (
     OsidbApiV1FlawsUpdateResponse200,
 )
@@ -14,7 +14,7 @@ QUERY_PARAMS = {
     "create_jira_task": bool,
 }
 
-REQUEST_BODY_TYPE = FlawRequest
+REQUEST_BODY_TYPE = FlawV1Request
 
 
 def _get_kwargs(
@@ -22,9 +22,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawRequest,
-        FlawRequest,
-        FlawRequest,
+        FlawV1Request,
+        FlawV1Request,
+        FlawV1Request,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> dict[str, Any]:
@@ -47,7 +47,7 @@ def _get_kwargs(
         "params": params,
     }
 
-    if check_nested_instance(body, FlawRequest):
+    if check_nested_instance(body, FlawV1Request):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -89,21 +89,22 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawRequest,
-        FlawRequest,
-        FlawRequest,
+        FlawV1Request,
+        FlawV1Request,
+        FlawV1Request,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -136,21 +137,22 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawRequest,
-        FlawRequest,
-        FlawRequest,
+        FlawV1Request,
+        FlawV1Request,
+        FlawV1Request,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -173,21 +175,22 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawRequest,
-        FlawRequest,
-        FlawRequest,
+        FlawV1Request,
+        FlawV1Request,
+        FlawV1Request,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Response[OsidbApiV1FlawsUpdateResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -220,21 +223,22 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawRequest,
-        FlawRequest,
-        FlawRequest,
+        FlawV1Request,
+        FlawV1Request,
+        FlawV1Request,
     ],
     create_jira_task: Union[Unset, bool] = UNSET,
 ) -> Optional[OsidbApiV1FlawsUpdateResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         create_jira_task (Union[Unset, bool]):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
-        body (FlawRequest): serialize flaw model
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
+        body (FlawV1Request): Serializer for the flaw model adapted to affects v1
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

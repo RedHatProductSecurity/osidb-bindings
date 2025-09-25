@@ -8,7 +8,7 @@ from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
     from ..models.affect import Affect
-    from ..models.module_component import ModuleComponent
+    from ..models.stream_component import StreamComponent
 
 
 T = TypeVar("T", bound="TrackerSuggestion")
@@ -18,24 +18,24 @@ T = TypeVar("T", bound="TrackerSuggestion")
 class TrackerSuggestion(OSIDBModel):
     """
     Attributes:
-        modules_components (list['ModuleComponent']):
+        streams_components (list['StreamComponent']):
         not_applicable (list['Affect']):
     """
 
-    modules_components: list["ModuleComponent"]
+    streams_components: list["StreamComponent"]
     not_applicable: list["Affect"]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        modules_components: list[dict[str, Any]] = UNSET
-        if not isinstance(self.modules_components, Unset):
-            modules_components = []
-            for modules_components_item_data in self.modules_components:
-                modules_components_item: dict[str, Any] = UNSET
-                if not isinstance(modules_components_item_data, Unset):
-                    modules_components_item = modules_components_item_data.to_dict()
+        streams_components: list[dict[str, Any]] = UNSET
+        if not isinstance(self.streams_components, Unset):
+            streams_components = []
+            for streams_components_item_data in self.streams_components:
+                streams_components_item: dict[str, Any] = UNSET
+                if not isinstance(streams_components_item_data, Unset):
+                    streams_components_item = streams_components_item_data.to_dict()
 
-                modules_components.append(modules_components_item)
+                streams_components.append(streams_components_item)
 
         not_applicable: list[dict[str, Any]] = UNSET
         if not isinstance(self.not_applicable, Unset):
@@ -49,8 +49,8 @@ class TrackerSuggestion(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(modules_components, Unset):
-            field_dict["modules_components"] = modules_components
+        if not isinstance(streams_components, Unset):
+            field_dict["streams_components"] = streams_components
         if not isinstance(not_applicable, Unset):
             field_dict["not_applicable"] = not_applicable
 
@@ -59,22 +59,22 @@ class TrackerSuggestion(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.affect import Affect
-        from ..models.module_component import ModuleComponent
+        from ..models.stream_component import StreamComponent
 
         d = src_dict.copy()
-        modules_components = []
-        _modules_components = d.pop("modules_components", UNSET)
-        for modules_components_item_data in _modules_components or []:
-            _modules_components_item = modules_components_item_data
-            modules_components_item: ModuleComponent
-            if isinstance(_modules_components_item, Unset):
-                modules_components_item = UNSET
+        streams_components = []
+        _streams_components = d.pop("streams_components", UNSET)
+        for streams_components_item_data in _streams_components or []:
+            _streams_components_item = streams_components_item_data
+            streams_components_item: StreamComponent
+            if isinstance(_streams_components_item, Unset):
+                streams_components_item = UNSET
             else:
-                modules_components_item = ModuleComponent.from_dict(
-                    _modules_components_item
+                streams_components_item = StreamComponent.from_dict(
+                    _streams_components_item
                 )
 
-            modules_components.append(modules_components_item)
+            streams_components.append(streams_components_item)
 
         not_applicable = []
         _not_applicable = d.pop("not_applicable", UNSET)
@@ -89,7 +89,7 @@ class TrackerSuggestion(OSIDBModel):
             not_applicable.append(not_applicable_item)
 
         tracker_suggestion = cls(
-            modules_components=modules_components,
+            streams_components=streams_components,
             not_applicable=not_applicable,
         )
 

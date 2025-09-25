@@ -9,7 +9,7 @@ from dateutil.parser import isoparse
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
-    from ..models.affect import Affect
+    from ..models.affect_v1 import AffectV1
 
 
 T = TypeVar("T", bound="OsidbApiV1AffectsListResponse200")
@@ -20,7 +20,7 @@ class OsidbApiV1AffectsListResponse200(OSIDBModel):
     """
     Attributes:
         count (int):  Example: 123.
-        results (list['Affect']):
+        results (list['AffectV1']):
         next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
         dt (Union[Unset, datetime.datetime]):
@@ -30,7 +30,7 @@ class OsidbApiV1AffectsListResponse200(OSIDBModel):
     """
 
     count: int
-    results: list["Affect"]
+    results: list["AffectV1"]
     next_: Union[None, Unset, str] = UNSET
     previous: Union[None, Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -97,7 +97,7 @@ class OsidbApiV1AffectsListResponse200(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.affect import Affect
+        from ..models.affect_v1 import AffectV1
 
         d = src_dict.copy()
         count = d.pop("count", UNSET)
@@ -106,11 +106,11 @@ class OsidbApiV1AffectsListResponse200(OSIDBModel):
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
             _results_item = results_item_data
-            results_item: Affect
+            results_item: AffectV1
             if isinstance(_results_item, Unset):
                 results_item = UNSET
             else:
-                results_item = Affect.from_dict(_results_item)
+                results_item = AffectV1.from_dict(_results_item)
 
             results.append(results_item)
 

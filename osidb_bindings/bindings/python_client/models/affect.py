@@ -30,10 +30,10 @@ class Affect(OSIDBModel):
     Attributes:
         uuid (UUID):
         flaw (UUID):
-        ps_module (str):
+        ps_update_stream (str):
         cve_id (str):
         ps_product (str):
-        trackers (list['Tracker']):
+        tracker (Union['Tracker', None]):
         delegated_resolution (str):
         cvss_scores (list['AffectCVSS']):
         delegated_not_affected_justification (str):
@@ -46,6 +46,7 @@ class Affect(OSIDBModel):
             detect mit-air collisions.
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
+        ps_module (Union[Unset, str]):
         ps_component (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         purl (Union[None, Unset, str]):
@@ -54,10 +55,10 @@ class Affect(OSIDBModel):
 
     uuid: UUID
     flaw: UUID
-    ps_module: str
+    ps_update_stream: str
     cve_id: str
     ps_product: str
-    trackers: list["Tracker"]
+    tracker: Union["Tracker", None]
     delegated_resolution: str
     cvss_scores: list["AffectCVSS"]
     delegated_not_affected_justification: str
@@ -68,6 +69,7 @@ class Affect(OSIDBModel):
     updated_dt: datetime.datetime
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
+    ps_module: Union[Unset, str] = UNSET
     ps_component: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     purl: Union[None, Unset, str] = UNSET
@@ -77,6 +79,8 @@ class Affect(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.tracker import Tracker
+
         uuid: str = UNSET
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
@@ -85,21 +89,22 @@ class Affect(OSIDBModel):
         if not isinstance(self.flaw, Unset):
             flaw = str(self.flaw)
 
-        ps_module = self.ps_module
+        ps_update_stream = self.ps_update_stream
 
         cve_id = self.cve_id
 
         ps_product = self.ps_product
 
-        trackers: list[dict[str, Any]] = UNSET
-        if not isinstance(self.trackers, Unset):
-            trackers = []
-            for trackers_item_data in self.trackers:
-                trackers_item: dict[str, Any] = UNSET
-                if not isinstance(trackers_item_data, Unset):
-                    trackers_item = trackers_item_data.to_dict()
+        tracker: Union[None, dict[str, Any]]
+        if isinstance(self.tracker, Unset):
+            tracker = UNSET
+        elif isinstance(self.tracker, Tracker):
+            tracker = UNSET
+            if not isinstance(self.tracker, Unset):
+                tracker = self.tracker.to_dict()
 
-                trackers.append(trackers_item)
+        else:
+            tracker = self.tracker
 
         delegated_resolution = self.delegated_resolution
 
@@ -172,6 +177,8 @@ class Affect(OSIDBModel):
             if not isinstance(self.resolution, Unset):
                 resolution = BlankEnum(self.resolution).value
 
+        ps_module = self.ps_module
+
         ps_component: Union[None, Unset, str]
         if isinstance(self.ps_component, Unset):
             ps_component = UNSET
@@ -220,14 +227,14 @@ class Affect(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(ps_product, Unset):
             field_dict["ps_product"] = ps_product
-        if not isinstance(trackers, Unset):
-            field_dict["trackers"] = trackers
+        if not isinstance(tracker, Unset):
+            field_dict["tracker"] = tracker
         if not isinstance(delegated_resolution, Unset):
             field_dict["delegated_resolution"] = delegated_resolution
         if not isinstance(cvss_scores, Unset):
@@ -250,6 +257,8 @@ class Affect(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(ps_module, Unset):
+            field_dict["ps_module"] = ps_module
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
@@ -282,23 +291,33 @@ class Affect(OSIDBModel):
         else:
             flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
-        ps_module = d.pop("ps_module", UNSET)
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         cve_id = d.pop("cve_id", UNSET)
 
         ps_product = d.pop("ps_product", UNSET)
 
-        trackers = []
-        _trackers = d.pop("trackers", UNSET)
-        for trackers_item_data in _trackers or []:
-            _trackers_item = trackers_item_data
-            trackers_item: Tracker
-            if isinstance(_trackers_item, Unset):
-                trackers_item = UNSET
-            else:
-                trackers_item = Tracker.from_dict(_trackers_item)
+        def _parse_tracker(data: object) -> Union["Tracker", None]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                _tracker_type_1 = data
+                tracker_type_1: Tracker
+                if isinstance(_tracker_type_1, Unset):
+                    tracker_type_1 = UNSET
+                else:
+                    tracker_type_1 = Tracker.from_dict(_tracker_type_1)
 
-            trackers.append(trackers_item)
+                return tracker_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union["Tracker", None], data)
+
+        tracker = _parse_tracker(d.pop("tracker", UNSET))
 
         delegated_resolution = d.pop("delegated_resolution", UNSET)
 
@@ -432,6 +451,8 @@ class Affect(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
+        ps_module = d.pop("ps_module", UNSET)
+
         def _parse_ps_component(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -523,10 +544,10 @@ class Affect(OSIDBModel):
         affect = cls(
             uuid=uuid,
             flaw=flaw,
-            ps_module=ps_module,
+            ps_update_stream=ps_update_stream,
             cve_id=cve_id,
             ps_product=ps_product,
-            trackers=trackers,
+            tracker=tracker,
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             delegated_not_affected_justification=delegated_not_affected_justification,
@@ -537,6 +558,7 @@ class Affect(OSIDBModel):
             updated_dt=updated_dt,
             affectedness=affectedness,
             resolution=resolution,
+            ps_module=ps_module,
             ps_component=ps_component,
             impact=impact,
             purl=purl,
