@@ -4,7 +4,9 @@ osidb-bindings session
 
 import asyncio
 import importlib
+import re
 import types
+from collections import defaultdict
 from types import ModuleType
 from typing import Any, Callable, Dict, List, Optional, Tuple, get_args, get_origin
 
@@ -27,11 +29,13 @@ from .constants import (
     OSIDB_BINDINGS_USERAGENT,
 )
 from .exceptions import (
+    MissingEndpointMethod,
+    MissingEndpointSection,
     OperationUnsupported,
     OSIDBBindingsException,
     UndefinedRequestBody,
 )
-from .helpers import get_env
+from .helpers import get_env, parse_version_key
 from .iterators import Paginator
 
 osidb_status_retrieve = importlib.import_module(
@@ -183,6 +187,7 @@ class Session:
     def __init__(self, base_url, auth=None, verify_ssl=True):
         # Store auth for the refresh token acquirement
         self.auth = auth
+        self.endpoints = self.__cache_endpoints()
 
         self.__client = AuthenticatedClient(
             base_url=base_url,
@@ -195,7 +200,7 @@ class Session:
         )
 
         self.flaws = SessionOperationsGroup(
-            self.__get_client_with_new_access_token,
+            self,
             "flaws",
             allowed_operations=(
                 "retrieve",
@@ -255,7 +260,7 @@ class Session:
             extra_operations=[("promote", promote_flaw), ("reject", reject_flaw)],
         )
         self.affects = SessionOperationsGroup(
-            self.__get_client_with_new_access_token,
+            self,
             "affects",
             allowed_operations=(
                 "retrieve",
@@ -281,7 +286,7 @@ class Session:
             },
         )
         self.trackers = SessionOperationsGroup(
-            self.__get_client_with_new_access_token,
+            self,
             "trackers",
             allowed_operations=(
                 "retrieve",
@@ -293,16 +298,50 @@ class Session:
         )
 
         self.labels = SessionOperationsGroup(
-            self.__get_client_with_new_access_token,
+            self,
             "labels",
             allowed_operations=("retrieve", "list"),
         )
 
         self.refresh_token = self.__get_refresh_token()
 
+    def get_latest_endpoint_version(
+        self, api_section: str, resource_name: str, method: str
+    ) -> str:
+        method_name = f"{resource_name}_{method}"
+        section = self.endpoints.get(f"{api_section}_api")
+        if section is not None:
+            if method_name in section:
+                return max(section[method_name], key=parse_version_key)
+            else:
+                raise MissingEndpointMethod(
+                    f"Endpoint method '{method}' for resource '{resource_name}' does not exist."
+                )
+        else:
+            raise MissingEndpointSection(
+                f"Endpoint section {api_section} does not exist."
+            )
+
+    @staticmethod
+    def __cache_endpoints():
+        from osidb_bindings.bindings.python_client.api import osidb
+
+        pattern = re.compile(r"^osidb_api_(v[^_]+)_(.+)$")
+        endpoints = {"osidb_api": defaultdict(set)}
+        for endpoint_name in osidb.ENDPOINT_NAMES:
+            match = pattern.match(endpoint_name)
+            if match:
+                version = match.group(1)
+                method = match.group(2)
+                endpoints["osidb_api"][method].add(version)
+            else:
+                continue
+
+        return endpoints
+
     def status(self):
         status_fn = get_sync_function(osidb_status_retrieve)
-        return status_fn(client=self.__get_client_with_new_access_token())
+        return status_fn(client=self.get_client_with_new_access_token())
 
     def __get_refresh_token(self) -> str:
         """Get resfresh token based on the auth type"""
@@ -342,7 +381,7 @@ class Session:
 
         return response.access
 
-    def __get_client_with_new_access_token(self) -> AuthenticatedClient:
+    def get_client_with_new_access_token(self) -> AuthenticatedClient:
         """Create a new client with refreshed access token"""
 
         return self.__client.with_headers(
@@ -357,13 +396,13 @@ class SessionOperationsGroup:
 
     def __init__(
         self,
-        client: Callable,
+        session: Session,
         resource_name: str,
         allowed_operations: List[str] = ALL_SESSION_OPERATIONS,
         extra_operations: List[Tuple[str, Callable]] = None,
         subresources: Dict[str, dict] = None,
     ):
-        self.client = client
+        self.session = session
         self.resource_name = resource_name
         self.allowed_operations = allowed_operations
 
@@ -377,7 +416,7 @@ class SessionOperationsGroup:
                 self,
                 subresource_name,
                 SessionOperationsGroup(
-                    client,
+                    self.session,
                     resource_name=f"{resource_name}_{subresource_name}",
                     **subresource_metadata,
                 ),
@@ -412,9 +451,31 @@ class SessionOperationsGroup:
         api_section: str = "osidb",
         api_version: str | None = None,
     ) -> ModuleType:
-        # import endpoint module based on a method
+        latest_api_version = self.session.get_latest_endpoint_version(
+            api_section, resource_name, method
+        )
+        if api_version is None:
+            selected_method_endpoint = (
+                f"{OSIDB_BINDINGS_API_PATH}.{api_section}."
+                f"{api_section}_api_{latest_api_version}_{resource_name}_{method}"
+            )
+        else:
+            if api_version != latest_api_version:
+                print(
+                    (
+                        f"WARNING: A non-latest API version ({api_version}) was used for {resource_name}::{method}. "
+                        f"Please consider upgrading to the latest version: {latest_api_version}."
+                    )
+                )
+
+            selected_method_endpoint = (
+                f"{OSIDB_BINDINGS_API_PATH}.{api_section}."
+                f"{api_section}_api_{api_version}_{resource_name}_{method}"
+            )
+
+        # import endpoint module based on a method and version
         return importlib.import_module(
-            f"{OSIDB_BINDINGS_API_PATH}.{api_section}.{api_section}_api_{api_version}_{resource_name}_{method}",
+            selected_method_endpoint,
             package="osidb_bindings",
         )
 
@@ -428,7 +489,12 @@ class SessionOperationsGroup:
                 api_version=api_version,
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(id, *args, client=self.client(), **kwargs)
+            return sync_fn(
+                id,
+                *args,
+                client=self.session.get_client_with_new_access_token(),
+                **kwargs,
+            )
         else:
             self.__raise_operation_unsupported("retrieve")
 
@@ -438,7 +504,9 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
-            response = sync_fn(*args, client=self.client(), **kwargs)
+            response = sync_fn(
+                *args, client=self.session.get_client_with_new_access_token(), **kwargs
+            )
             return Paginator.make_response_iterable(
                 response, self.retrieve_list, *args, api_version=api_version, **kwargs
             )
@@ -462,7 +530,7 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 body=serialized_data,
                 **kwargs,
             )
@@ -486,7 +554,7 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 body=serialized_data,
                 **kwargs,
             )
@@ -516,7 +584,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 id,
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 body=serialized_data,
                 **kwargs,
             )
@@ -540,7 +608,7 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 body=serialized_data,
                 **kwargs,
             )
@@ -558,7 +626,7 @@ class SessionOperationsGroup:
             return sync_fn(
                 id,
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 **kwargs,
             )
         else:
@@ -581,7 +649,7 @@ class SessionOperationsGroup:
             sync_fn = get_sync_function(method_module)
             return sync_fn(
                 *args,
-                client=self.client(),
+                client=self.session.get_client_with_new_access_token(),
                 body=serialized_data,
                 **kwargs,
             )
@@ -600,7 +668,9 @@ class SessionOperationsGroup:
             kwargs["limit"] = 1
             kwargs["include_fields"] = OSIDB_BINDINGS_PLACEHOLDER_FIELD
 
-            response = sync_fn(*args, client=self.client(), **kwargs)
+            response = sync_fn(
+                *args, client=self.session.get_client_with_new_access_token(), **kwargs
+            )
             return response.count
         else:
             self.__raise_operation_unsupported("retrieve_list")
@@ -611,7 +681,10 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(client=self.client(), search=searched_text)
+            return sync_fn(
+                client=self.session.get_client_with_new_access_token(),
+                search=searched_text,
+            )
         else:
             self.__raise_operation_unsupported("search")
 
@@ -667,7 +740,11 @@ class SessionOperationsGroup:
             results = []
             connector = aiohttp.TCPConnector(limit=MAX_CONCURRENCY)
             async with aiohttp.ClientSession(connector=connector) as async_session:
-                client = self.client().with_async_session(async_session)
+                client = (
+                    self.session.get_client_with_new_access_token().with_async_session(
+                        async_session
+                    )
+                )
 
                 # await first response page
                 first_response = await async_fn(

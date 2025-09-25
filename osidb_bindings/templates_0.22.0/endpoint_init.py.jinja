@@ -8,3 +8,11 @@
 from .{{ endpoint.name }} import *
 {% endfor %}
 {# CHANGE END (1) #}
+
+{# CHANGE START (2) - list all the possible endpoints for the API section #}
+ENDPOINT_NAMES = [
+{% for endpoint in endpoint_collection.endpoints %}
+    "{{ endpoint.name }}",
+{% endfor %}
+]
+{# CHANGE END (2) #}
