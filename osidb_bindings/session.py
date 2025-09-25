@@ -35,7 +35,7 @@ from .helpers import get_env
 from .iterators import Paginator
 
 osidb_status_retrieve = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
+    f"{OSIDB_BINDINGS_API_PATH}.osidb.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
     package="osidb_bindings",
 )
 
@@ -326,14 +326,18 @@ class Session:
         try:
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefreshRequest.from_dict({"refresh": self.refresh_token}),
+                body=models.TokenRefreshRequest.from_dict(
+                    {"refresh": self.refresh_token}
+                ),
             )
         except requests.HTTPError:
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
             response = auth_token_refresh_create.sync(
                 client=self.__client,
-                body=models.TokenRefreshRequest.from_dict({"refresh": self.refresh_token}),
+                body=models.TokenRefreshRequest.from_dict(
+                    {"refresh": self.refresh_token}
+                ),
             )
 
         return response.access
@@ -402,43 +406,53 @@ class SessionOperationsGroup:
         )
 
     def __get_method_module(
-        self, resource_name: str, method: str, api_section: str = "osidb"
+        self,
+        resource_name: str,
+        method: str,
+        api_section: str = "osidb",
+        api_version: str | None = None,
     ) -> ModuleType:
         # import endpoint module based on a method
         return importlib.import_module(
-            f"{OSIDB_BINDINGS_API_PATH}.{api_section}_api_{OSIDB_API_VERSION}_{resource_name}_{method}",
+            f"{OSIDB_BINDINGS_API_PATH}.{api_section}.{api_section}_api_{api_version}_{resource_name}_{method}",
             package="osidb_bindings",
         )
 
     # CRUD operations
 
-    def retrieve(self, id, *args, **kwargs):
+    def retrieve(self, id, *args, api_version: str | None = None, **kwargs):
         if "retrieve" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="retrieve"
+                resource_name=self.resource_name,
+                method="retrieve",
+                api_version=api_version,
             )
             sync_fn = get_sync_function(method_module)
             return sync_fn(id, *args, client=self.client(), **kwargs)
         else:
             self.__raise_operation_unsupported("retrieve")
 
-    def retrieve_list(self, *args, **kwargs):
+    def retrieve_list(self, *args, api_version: str | None = None, **kwargs):
         if "list" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="list"
+                resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
             response = sync_fn(*args, client=self.client(), **kwargs)
             return Paginator.make_response_iterable(
-                response, self.retrieve_list, *args, **kwargs
+                response, self.retrieve_list, *args, api_version=api_version, **kwargs
             )
         else:
             self.__raise_operation_unsupported("retrieve_list")
 
-    def create(self, form_data: Dict[str, Any], *args, **kwargs):
+    def create(
+        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+    ):
         if "create" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="create"
+                resource_name=self.resource_name,
+                method="create",
+                api_version=api_version,
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
@@ -455,10 +469,14 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("create")
 
-    def bulk_create(self, form_data: Dict[str, Any], *args, **kwargs):
+    def bulk_create(
+        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+    ):
         if "bulk_create" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="bulk_create"
+                resource_name=self.resource_name,
+                method="bulk_create",
+                api_version=api_version,
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
@@ -475,10 +493,19 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("bulk_create")
 
-    def update(self, id, form_data: Dict[str, Any], *args, **kwargs):
+    def update(
+        self,
+        id,
+        form_data: Dict[str, Any],
+        *args,
+        api_version: str | None = None,
+        **kwargs,
+    ):
         if "update" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="update"
+                resource_name=self.resource_name,
+                method="update",
+                api_version=api_version,
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
@@ -496,10 +523,14 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("update")
 
-    def bulk_update(self, form_data: Dict[str, Any], *args, **kwargs):
+    def bulk_update(
+        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+    ):
         if "bulk_update" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="bulk_update"
+                resource_name=self.resource_name,
+                method="bulk_update",
+                api_version=api_version,
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
@@ -516,10 +547,12 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("bulk_update")
 
-    def delete(self, id, *args, **kwargs):
+    def delete(self, id, *args, api_version: str | None = None, **kwargs):
         if "destroy" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="destroy"
+                resource_name=self.resource_name,
+                method="destroy",
+                api_version=api_version,
             )
             sync_fn = get_sync_function(method_module)
             return sync_fn(
@@ -531,10 +564,14 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("delete")
 
-    def bulk_delete(self, form_data: Dict[str, Any], *args, **kwargs):
+    def bulk_delete(
+        self, form_data: Dict[str, Any], *args, api_version: str | None = None, **kwargs
+    ):
         if "bulk_delete" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="bulk_destroy"
+                resource_name=self.resource_name,
+                method="bulk_destroy",
+                api_version=api_version,
             )
             model = getattr(method_module, "REQUEST_BODY_TYPE", None)
             if model is None:
@@ -553,10 +590,10 @@ class SessionOperationsGroup:
 
     # Extra operations
 
-    def count(self, *args, **kwargs):
+    def count(self, *args, api_version: str | None = None, **kwargs):
         if "list" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="list"
+                resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
             kwargs.pop("offset", None)
@@ -568,21 +605,22 @@ class SessionOperationsGroup:
         else:
             self.__raise_operation_unsupported("retrieve_list")
 
-    def search(self, searched_text: str):
+    def search(self, searched_text: str, api_version: str | None = None):
         if "search" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="list"
+                resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
             return sync_fn(client=self.client(), search=searched_text)
         else:
             self.__raise_operation_unsupported("search")
 
-    def retrieve_list_iterator(self, *args, **kwargs):
+    def retrieve_list_iterator(self, *args, api_version: str | None = None, **kwargs):
         if "list" in self.allowed_operations:
             paginator = Paginator(
                 *args,
                 retrieve_list_fn=self.retrieve_list,
+                api_version=api_version,
                 **kwargs,
             )
 
@@ -593,11 +631,17 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("retrieve_list")
 
     def retrieve_list_iterator_async(
-        self, *args, max_results: Optional[int] = None, **kwargs
+        self,
+        *args,
+        max_results: Optional[int] = None,
+        api_version: str | None = None,
+        **kwargs,
     ):
         if "list" in self.allowed_operations:
             for page in asyncio.run(
-                self.__retrieve_list_async(*args, max_results=max_results, **kwargs)
+                self.__retrieve_list_async(
+                    *args, max_results=max_results, api_version=api_version, **kwargs
+                )
             ):
                 for resource in page.results:
                     yield resource
@@ -605,11 +649,15 @@ class SessionOperationsGroup:
             self.__raise_operation_unsupported("retrieve_list")
 
     async def __retrieve_list_async(
-        self, *args, max_results: Optional[int] = None, **kwargs
+        self,
+        *args,
+        max_results: Optional[int] = None,
+        api_version: str | None = None,
+        **kwargs,
     ):
         if "list" in self.allowed_operations:
             method_module = self.__get_method_module(
-                resource_name=self.resource_name, method="list"
+                resource_name=self.resource_name, method="list", api_version=api_version
             )
             async_fn = get_asyncio_function(method_module)
 
