@@ -4,7 +4,7 @@ osidb-bindings iterators
 
 import re
 from functools import partial
-from typing import Callable, Optional
+from typing import Callable
 
 from .constants import DEFAULT_LIMIT
 from .exceptions import OSIDBBindingsException
@@ -14,7 +14,7 @@ class Paginator:
     """
     Iterator for handling API pagination.
 
-    Receives either starting limit and offset together with the retreive list function
+    Receives either starting limit and offset together with the retrieve list function
     or already existing response from which it should continue.
 
     It keeps calling `.next()` response until pages are exhausted.
@@ -23,10 +23,11 @@ class Paginator:
     def __init__(
         self,
         *args,
-        retrieve_list_fn: Optional[Callable] = None,
+        retrieve_list_fn: Callable | None = None,
         limit: int = DEFAULT_LIMIT,
         offset: int = 0,
         init_response=None,
+        api_version: str | None = None,
         **kwargs,
     ):
         if not init_response and not retrieve_list_fn:
@@ -50,6 +51,7 @@ class Paginator:
         # request arguments
         self.args = args
         self.kwargs = kwargs
+        self.api_version = api_version
 
     def __iter__(self):
         # restore initial response
@@ -63,10 +65,15 @@ class Paginator:
                 *self.args,
                 limit=self.__init_limit,
                 offset=self.__init_offset,
+                api_version=self.api_version,
                 **self.kwargs,
             )
             response = self.make_response_iterable(
-                response, self.retrieve_list_fn, *self.args, **self.kwargs
+                response,
+                self.retrieve_list_fn,
+                *self.args,
+                api_version=self.api_version,
+                **self.kwargs,
             )
             self.current_response = response
             return response
@@ -80,7 +87,9 @@ class Paginator:
                 raise StopIteration
 
     @staticmethod
-    def make_response_iterable(response, retrieve_list_fn, *args, **kwargs):
+    def make_response_iterable(
+        response, retrieve_list_fn, *args, api_version: str | None = None, **kwargs
+    ):
         """
         Populate next, prev and iterator helper methods for paginated responses
         """
@@ -103,6 +112,10 @@ class Paginator:
                 if offset is not None:
                     kwargs["offset"] = offset.group(1)
 
-                setattr(response, func_name, partial(retrieve_list_fn, *args, **kwargs))
+                setattr(
+                    response,
+                    func_name,
+                    partial(retrieve_list_fn, *args, api_version=api_version, **kwargs),
+                )
 
         return response
