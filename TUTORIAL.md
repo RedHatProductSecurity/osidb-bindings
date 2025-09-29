@@ -1,112 +1,198 @@
-# osidb-bindings
-Python bindings for seamless access to OSIDB API endpoints, requiring no in-depth understanding of HTTP.
+# OSIDB Bindings Tutorial
+
+A Pythonic way to talk to OSIDB without getting lost in HTTP details.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [PyPI (Recommended)](#pypi-recommended)
+  - [RPM Package](#rpm-package)
+  - [Development Installation](#development-installation)
+- [OSIDB Compatibility](#osidb-compatibility)
+- [Usage](#usage)
+  - [Import the Bindings](#import-the-bindings)
+  - [Create a Session](#create-a-session)
+  - [Required Environment Variables](#required-environment-variables)
+  - [SSL Configuration](#ssl-configuration)
+- [Session Operations](#session-operations)
+  - [API Version Control](#api-version-control)
+  - [Available Resources and Operations](#available-resources-and-operations)
+  - [Basic Operations](#basic-operations)
+    - [`status`](#status)
+    - [`retrieve`](#retrieve)
+    - [`retrieve_list`](#retrieve_list)
+    - [`retrieve_list_iterator`](#retrieve_list_iterator)
+    - [`retrieve_list_iterator_async`](#retrieve_list_iterator_async)
+    - [`count`](#count)
+    - [`search`](#search)
+    - [`create`](#create)
+    - [`update`](#update)
+    - [`delete`](#delete)
+  - [Extra Operations](#extra-operations)
+- [Working with Responses](#working-with-responses)
+  - [Single Resource Response](#single-resource-response)
+  - [Paginated Response](#paginated-response)
+- [Utility Functions](#utility-functions)
+  - [`cve_ids`](#cve_ids)
+- [Debugging and Error Handling](#debugging-and-error-handling)
+  - [Exception Handling](#exception-handling)
+
+---
 
 ## Requirements
 
-* gcc
-* krb5-devel
-* pip
-* python3
-* python3-devel
+- gcc
+- krb5-devel
+- pip
+- python3
+- python3-devel
 
 ## Installation
 
-You can install the bindings via:
+You can install the bindings using several methods:
 
-* Python 3 pip from [PyPI](https://pypi.org/project/osidb-bindings/) - it is higly recommended to install the package within [virtual environment](https://docs.python.org/3/library/venv.html)
-    ```
-    pip install osidb-bindings
-    ```
-* RPM from [Fedora Copr](https://copr.fedorainfracloud.org/coprs/jazinner/osidb-bindings/)
-    ```
-    dnf copr enable jazinner/osidb-bindings
-    dnf install osidb_bindings
-    ```
-* Python 3 pip directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository (will install the version
-    from master branch)
-    ```
-    pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git#egg=osidb_bindings
-    ```
-* OPTIONAL - Python 3 pip directly from the [GitHub](https://github.com/RedHatProductSecurity/osidb-bindings) repository with branch specification
-    ```
-    pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git@<branch_name>#egg=osidb_bindings
-    ```
+### PyPI (Recommended)
+
+Install from [PyPI](https://pypi.org/project/osidb-bindings/) using pip. It is highly recommended to install the package within a [virtual environment](https://docs.python.org/3/library/venv.html):
+
+```bash
+pip install osidb-bindings
+```
+
+### RPM Package
+
+Install from [Fedora Copr](https://copr.fedorainfracloud.org/coprs/jazinner/osidb-bindings/):
+
+```bash
+dnf copr enable jazinner/osidb-bindings
+dnf install osidb_bindings
+```
+
+### Development Installation
+
+Install directly from the [GitHub repository](https://github.com/RedHatProductSecurity/osidb-bindings) (installs from master branch):
+
+```bash
+pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git#egg=osidb_bindings
+```
+
+To install from a specific branch:
+
+```bash
+pip install -e git+https://github.com/RedHatProductSecurity/osidb-bindings.git@<branch_name>#egg=osidb_bindings
+```
 
 ## OSIDB Compatibility
 
-OSIDB and bindings both uses [semantic versioning](https://semver.org/) (eg. MAJOR.MINOR.PATCH, 1.2.3). Bindings are compatible
-with OSIDB when MAJOR and MINOR version matches.
+Both OSIDB and the bindings use [semantic versioning](https://semver.org/) (MAJOR.MINOR.PATCH format, e.g., 1.2.3). The bindings are compatible with OSIDB when the MAJOR and MINOR versions match.
 
-Eg.
-* OSIDB 1.2.0, bindings 1.2.0 - compatible
-* OSIDB 1.2.0, bindings 1.2.1 - compatible
-* OSIDB 1.2.2, bindings 1.2.1 - compatible
-* OSIDB 1.3.0, bindings 1.2.1 - **feature incomplete**
-* OSIDB 2.0.0, bindings 1.9.9 - **incompatible**
+**Compatibility Examples:**
+- OSIDB 1.2.0, bindings 1.2.0 → ✅ **Compatible**
+- OSIDB 1.2.0, bindings 1.2.1 → ✅ **Compatible**
+- OSIDB 1.2.2, bindings 1.2.1 → ✅ **Compatible**
+- OSIDB 1.3.0, bindings 1.2.1 → ⚠️ **Feature incomplete**
+- OSIDB 2.0.0, bindings 1.9.9 → ❌ **Incompatible**
 
-**This compatibility starts from version 1.1.0. Any previous version of bindings is considered experimental and should not be used.**
+> **Note:** This compatibility guarantee starts from version 1.1.0. Any previous version of the bindings is considered experimental and should not be used in production.
 
 ## Usage
 
-### Import the bindings
+### Import the Bindings
 
 ```python
 import osidb_bindings
 ```
 
-### Create a session
-The Session is the core component of the bindings that you'll interact with. You can create a session using `osidb_bindings.new_session`. Once created, the session serves as the gateway to access various endpoints.
+### Create a Session
 
-When initializing a session, you must specify the osidb_server_uri of the OSIDB instance you want to connect to. In this tutorial, we'll use a local OSIDB instance hosted on port 8000.
+The Session is the core component you'll interact with. Create a session using `osidb_bindings.new_session()`. Once created, the session serves as your gateway to access all OSIDB endpoints.
 
-OSIDB relies on token-based (JWT) authentication for most endpoints. The bindings automatically handle token refreshing, so your primary task is to specify the method for obtaining the token. OSIDB currently supports two main authentication mechanisms for its token endpoints:
-* Basic authentication - `username` and `password` (used for the OSIDB instances without the kerberos authentication enabled, mostly local instances)
-    ```python
-    session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password")
-    ```
-* Kerberos authentication - default (used for the OSIDB instances with kerberos authentication enabled, production/stage/UAT)
-    ```python
-    session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
-    ```
+When initializing a session, you must specify the `osidb_server_uri` of the OSIDB instance you want to connect to. This tutorial uses a local OSIDB instance on port 8000 for examples.
 
-Certain operations outlined in the [operations section](#session-operations) (primarily those involving creating or modifying content) will require Bugzilla API key or Jira Access Token to work properly.
+OSIDB uses token-based (JWT) authentication for most endpoints. The bindings automatically handle token refreshing, so you only need to specify how to obtain the initial token. OSIDB supports two main authentication mechanisms:
 
-* Valid Bugzilla API key is provided via `BUGZILLA_API_KEY` environment variable.
+#### Basic Authentication
+Used for OSIDB instances without Kerberos authentication (typically local development instances):
 
-    ```bash
-    export BUGZILLA_API_KEY="bugzilla api key"
-    ```
-* Valid Jira Access Token is provided via `JIRA_ACCESS_TOKEN` environment variable.
+```python
+session = osidb_bindings.new_session(
+    osidb_server_uri="http://localhost:8000/",
+    username="your_username",
+    password="your_password"
+)
+```
 
-    ```bash
-    export JIRA_ACCESS_TOKEN="jira access token"
-    ```
+#### Kerberos Authentication (Default)
+Used for OSIDB instances with Kerberos authentication enabled (production/staging/UAT environments):
 
-SSL verification is enabled by default. To ensure proper functionality, you should set the `REQUESTS_CA_BUNDLE` environment variable to point to the location of the appropriate CA bundle. The path varies by operating system:
+```python
+session = osidb_bindings.new_session(osidb_server_uri="https://osidb-prod.example.com/")
+```
+
+### Required Environment Variables
+
+Certain operations (primarily those involving creating or modifying content) require additional API keys to work properly:
+
+#### Bugzilla API Key
+Required for operations that interact with Bugzilla:
 
 ```bash
-# Fedora/RHEL/CentOS systems
+export BUGZILLA_API_KEY="your_bugzilla_api_key"
+```
+
+#### Jira Access Token
+Required for operations that interact with Jira:
+
+```bash
+export JIRA_ACCESS_TOKEN="your_jira_access_token"
+```
+
+### SSL Configuration
+
+SSL verification is enabled by default. For proper functionality, set the `REQUESTS_CA_BUNDLE` environment variable to point to your system's CA bundle:
+
+#### Common Linux Distributions
+```bash
+# Fedora/RHEL/CentOS
 export REQUESTS_CA_BUNDLE="/etc/pki/tls/certs/ca-bundle.crt"
 
-# Ubuntu/Debian systems
+# Ubuntu/Debian
 export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
 ```
 
-For other systems (like macOS) where the CA bundle might not be present or located elsewhere, you may need to download the required certificate authority bundle from your organization or a trusted source and use the path to it:
+#### macOS and Other Systems
+For macOS and other systems where the CA bundle might not be present or is located elsewhere, you may need to download the required certificate authority bundle from your organization or a trusted source:
 
 ```bash
 # Use custom CA bundle path
 export REQUESTS_CA_BUNDLE="/path/to/your/ca-bundle.crt"
 ```
 
-You can also pass the path to the CA bundle directly when creating the new session or you can disable the SSL verification:
+#### SSL Configuration in Code
+You can also configure SSL settings directly when creating a session:
+
 ```python
-# default behavior, REQUESTS_CA_BUNDLE should be exported
-session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=True)
+# Default behavior (verify_ssl=True is default, uses REQUESTS_CA_BUNDLE environment variable)
+session = osidb_bindings.new_session(osidb_server_uri="https://osidb.example.com/")
 
-session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl="/path/to/cert")
+# Explicitly enable SSL verification (same as default)
+session = osidb_bindings.new_session(
+    osidb_server_uri="https://osidb.example.com/",
+    verify_ssl=True
+)
 
-session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password", verify_ssl=False)
+# Use custom CA bundle path
+session = osidb_bindings.new_session(
+    osidb_server_uri="https://osidb.example.com/",
+    verify_ssl="/path/to/custom/ca-bundle.crt"
+)
+
+# Disable SSL verification (not recommended for production)
+session = osidb_bindings.new_session(
+    osidb_server_uri="https://osidb.example.com/",
+    verify_ssl=False
+)
 ```
 
 ### Session operations
@@ -147,359 +233,561 @@ print(available_versions)  # {'v1', 'v2'}
 
 You can also view the complete API schema with version information by visiting the Swagger UI on your OSIDB instance: `https://<your-osidb-instance>/osidb/api/v1/schema/swagger-ui/`
 
-* #### ```status```
-    Most basic operation of the session is retrieving the status. You can verify that your session can successfully access the OSIDB using this operation.
+#### Available Resources and Operations
 
-    See `/GET /osidb/api/{api_version}/status` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
-    ```python
-    status_response = session.status()
-    ```
+Operations can be performed on the following resources and their subresources:
 
-Operations can be performed on the following resources/subresources (also some of the resources/subresources do have extra operations):
-* flaws
-    * acknowledgments
-    * comments
-    * cvss_scores
-    * labels
-    * packages_versions
-    * references
-    * extra operations
-        * promote
-        * reject
-* affects
-    * cvss_scores
-* trackers
-    * extra operations
-        * file
-* labels
+**Flaws** (`session.flaws`)
+- Standard operations: retrieve, retrieve_list, create, update, search
+- Subresources:
+  - acknowledgments
+  - comments
+  - cvss_scores
+  - labels
+  - package_versions
+  - references
+- Extra operations: promote, reject
 
-Following operations are demonstrated on `flaws` resource, to work with different resource, just replace the `flaws` with the name of the resource. In case of subresources like `flaw comments`, `flaw references`, etc. you can use the dot notation like this `session.flaws.comments.retrieve(...)`.
+**Affects** (`session.affects`)
+- Standard operations: retrieve, retrieve_list, create, update, delete, bulk_create, bulk_update
+- Subresources:
+  - cvss_scores
 
-* #### ```retrieve```
-    Retrieve a single resource with specified `id`.
+**Trackers** (`session.trackers`)
+- Standard operations: retrieve, retrieve_list, create, update
+- Extra operations: file
 
+**Labels** (`session.labels`)
+- Standard operations: retrieve, retrieve_list
 
-    See `/GET /osidb/api/{api_version}/flaws/{id}` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
-    ```python
-    # CVE ID
-    flaw1_response = session.flaws.retrieve(id="CVE-1111-2222")
+> **Note:** The following examples demonstrate operations on the `flaws` resource. To work with different resources, simply replace `flaws` with the resource name. For subresources (e.g., flaw comments, flaw references), use dot notation: `session.flaws.comments.retrieve(...)`
 
-    # UUID
-    flaw2_response = session.flaws.retrieve(id="aedb854d-1afc-40fe-9554-bc50098b0154")
-    ```
+#### Basic Operations
 
-* #### ```retrieve_list```
-    Retrieve a list of Flaws. You can filter the flaws using the query parameters. Results are paginated, see [paginated response section](#paginated-response).
-
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
-    ```python
-    all_flaws_response = session.flaws.retrieve_list()
-
-    # string query parameters
-    critical_impact_flaws_response = session.flaws.retrieve_list(impact="CRITICAL")
-    internet_source_flaws_response = session.flaws.retrieve_list(source="INTERNET")
-
-    # datetime query parameters
-    from datetime import datetime
-    changed_before_flaws_response = session.flaws.retrieve_list(changed_before=datetime.now())
-    changed_after_flaws_response = session.flaws.retrieve_list(changed_after=datetime(2021,7,13))
-    changed_after_and_before_response = session.flaws.retrieve_list(
-        changed_after=datetime.strptime("2021-07-13", "%Y-%m-%d"),
-        changed_before=datetime.strptime("2021-12-24", "%Y-%m-%d"),
-    )
-
-    # comma separated list query parameters
-    specified_cves_flaws_response = session.flaws.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")
-
-    # multiple query parameters specifying multiple filter conditions
-    multiple_criteria_flaws_response = session.flaws.retrieve_list(source="REDHAT", impact="LOW", changed_after=datetime(2021,7,12))
-    ```
-
-* #### ```retrieve_list_iterator```
-    Retrieve a list of Flaws. You can filter the flaws using the query parameters. Handles the pagination and returns the generator of individual resource entities.
-
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
-
-    ```python
-    all_flaws = session.flaws.retrieve_list_iterator()
-    for flaw in all_flaws:
-        do_calc(flaw)
-
-    # string query parameters
-    critical_impact_flaws = session.flaws.retrieve_list_iterator(impact="CRITICAL")
-    for flaw in critical_impact_flaws:
-        print(flaw.impact)
-    ```
-    For the rest of the examples refer to the [retrieve_list](#retrieve_list)
-
-* #### ```retrieve_list_iterator_async```
-    Retrieve a list of Flaws. Handles the pagination and returns the generator of individual resource entities. Uses asynchronous communitation
-    to speed up the data retrieval.
-
-    By default, the system allows up to 10 concurrent connections. This limit can be adjusted by setting the `OSIDB_BINDINGS_MAX_CONCURRENCY` environment variable. It is highly recommended to keep the limit between 1 and 50 concurrent connections. Exceeding this limit may lead to service overload, which could be interpreted as a Denial-of-Service attack.
-
-    ```bash
-    export OSIDB_BINDINGS_MAX_CONCURRENCY=30
-    ```
-
-    Using the argument `max_results` you can limit the number of results returned.
-
-
-    See `/GET /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, response format, etc.)
-
-    ```python
-    all_flaws = session.flaws.retrieve_list_iterator_async()
-    for flaw in all_flaws:
-        do_calc(flaw)
-
-    # string query parameters
-    critical_impact_flaws = session.flaws.retrieve_list_iterator_async(impact="CRITICAL")
-    for flaw in critical_impact_flaws:
-        print(flaw.impact)
-
-    # get the first 200 results
-    for flaw in session.flaws.retrieve_list_iterator_async(max_results=200):
-        do_calc(flaw)
-    ```
-    For the rest of the examples refer to the [retrieve_list](#retrieve_list)
-
-* #### ```count```
-
-    Retrieve the the total count number of entities which would be returned by the same `retrieve_list` call. In terms of the input arguments this operation behaves the same as `retrieve_list`.
-
-    ```python
-    low_impact_flaw_count = session.flaw.count(impact="LOW")
-    ```
-
-* #### ```search```
-    Retrieve a list of Flaws. Performs full text search filter.
-    ```python
-    search_response = session.flaws.search("Red Hat Satellite v.5")
-    cve_search_response = session.flaws.search("CVE-1111-2222")
-    ```
-
-* #### ```create```
-    Create a new Flaw from given data.
-
-    See `/POST /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
-    ```python
-    from datetime import datetime
-    create_data = {
-        "cve_id": "CVE-1111-2222",
-        "state": "NEW",
-        "impact": "LOW",
-        "title": "New title",
-        "components": ["component1", "component2"],
-        "cve_description": "New CVE description",
-        "comment_zero": "New comment zero",
-        "statement": "New statement",
-        "cwe_id": "CWE-123",
-        "unembargo_dt": datetime(2022,1,1),
-        "source": "ADOBE",
-        "reported_dt": "2022-02-10T15:27:24.131Z",
-        "is_major_incident": False
-    }
-
-    create_flaw_response = session.flaws.create(form_data=create_data)
-    ```
-
-* #### ```update```
-    Update an existing Flaw with given data.
-
-    See `/POST /osidb/api/{api_version}/flaws` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
-    ```python
-
-    flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
-    flaw_data = flaw_response.to_dict()
-    flaw_data["cve_id"] = "CVE-1111-3333"
-    flaw_data["impact"] = "MEDIUM"
-
-    update_flaw_response = session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
-    ```
-
-* #### ```delete```
-    Delete an existing Flaw
-
-    See `/DELETE /osidb/api/{api_version}/flaws/{id}` in [API docs](osidb_bindings/openapi_schema.yml) for more details (query parameters, request format, response format, etc.)
-    ```python
-    delete_flaw_response = session.flaws.delete(id="CVE-1111-2222")
-    ```
-
-* #### ```extra operations```
-
-    * Flaws
-        * `promote` - advance a flaw through workflow (**POST** `/osidb/api/v1/flaws/{flaw_id}/promote` functionality)
-        * `reject` - reject a flaw (**POST** `/osidb/api/v1/flaws/{flaw_id}/reject` functionality)
-    * Trackers
-        * `file` - Given a list of flaws, generates a list of suggested trackers to file. (**POST** `/trackers/api/v1/file` functionality)
-
-
-### Response
-
-This section describes how to work with responses. See [operations section](#session-operations) to learn how to get these responses.
-
-#### Single response
-This response is typically retrieved from the [retrieve](#retrieve) or [status](#status) operations, where you receive a single item of the requested resource. The retrieved data is encapsulated within the corresponding model of the resource, which is constructed on the bindings side.
+#### `status`
+The most basic operation is retrieving the status to verify your session can successfully access OSIDB:
 
 ```python
-single_response = session.flaws.retrieve(id="CVE-1111-2222")
-
-single_response
-# Flaw(uuid='4a41bafd-43e9-4255-b5cc-a554af8dbb0c', updated_dt=datetime.datetime(2021, 11, 19, 14, 19, 30, 15530, tzinfo=tzutc()), ... )
+status_response = session.status()
 ```
 
-You can access all the model fields as attributes.
+See `/GET /osidb/api/{api_version}/status` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on response format and available parameters.
 
+#### `retrieve`
+Retrieve a single resource using its identifier (`id`).
+
+**Examples:**
 ```python
-single_response.uuid
-# "4a41bafd-43e9-4255-b5cc-a554af8dbb0c"
+# Using CVE ID
+flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
 
-single_response.impact
-# <ImpactEnum.MODERATE: 'MODERATE'>
+# Using UUID
+flaw_response = session.flaws.retrieve(id="aedb854d-1afc-40fe-9554-bc50098b0154")
 
-single_response.impact.value
-# "MODERATE"
-
-single_response.affects
-# [Affect(uuid='6afed665-e62d-418f-ae8b-aab51d0fc3ef', trackers=[Tracker(uuid='4e465acc-a5ca-4c5e-a7fc-d8155aa3e944', type=<TrackerTypeEnum.BUGZILLA: 'BUGZILLA'>, external_system_id='1962596', additional_properties={})], ... ]
-
-single_response.affects[0]
-# Affect(uuid='6afed665-e62d-418f-ae8b-aab51d0fc3ef', trackers=[Tracker(uuid='4e465acc-a5ca-4c5e-a7fc-d8155aa3e944', type=<TrackerTypeEnum.BUGZILLA: 'BUGZILLA'>, external_system_id='1962596', additional_properties={})], ... )
+# Using specific API version
+flaw_response = session.flaws.retrieve(id="CVE-1111-2222", api_version="v1")
 ```
 
-Or you can convert the model to dictionary representation.
+See `/GET /osidb/api/{api_version}/flaws/{id}` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on query parameters and response format.
 
+#### `retrieve_list`
+Retrieve a list of resources with optional filtering using query parameters. Results are paginated (see [paginated response section](#paginated-response)).
+
+**Basic Usage:**
 ```python
-single_response_dict = single_response.to_dict()
+# Retrieve all flaws
+all_flaws = session.flaws.retrieve_list()
 
-single_response_dict
-# {'classification': {'workflow': 'DEFAULT', 'state': 'FIX'}, 'uuid': '4a41bafd-43e9-4255-b5cc-a554af8dbb0c','updated_dt': '2021-11-19T14:19:30.015530+00:00', 'type': 'VULNERABILITY', ... )
-
-single_response_dict["uuid"]
-# "4a41bafd-43e9-4255-b5cc-a554af8dbb0c"
-
-single_response_dict["impact"]
-# "MODERATE"
-
-single_response_dict["affects"]
-# [{'uuid': '6afed665-e62d-418f-ae8b-aab51d0fc3ef', 'trackers': [{'uuid': '4e465acc-a5ca-4c5e-a7fc-d8155aa3e944','type': 'BUGZILLA', 'external_system_id': '1962596'}], 'type': 'DEFAULT', 'state': 'AFFECTED', ... ]
-
-single_response_dict["affects"][0]
-# {'uuid': '6afed665-e62d-418f-ae8b-aab51d0fc3ef', 'trackers': [{'uuid': '4e465acc-a5ca-4c5e-a7fc-d8155aa3e944','type': 'BUGZILLA', 'external_system_id': '1962596'}], 'type': 'DEFAULT', 'state': 'AFFECTED', ... }
+# Retrieve with specific API version
+all_flaws = session.flaws.retrieve_list(api_version="v1")
 ```
 
-#### Paginated response
-Paginated responses are typically retrieved from [retrieve_list](#retrieve_list) or [search](#search) operations.
-You can view overall count of responses, previous and next page of a query (based on the `offset` and `limit` values) and content of the current page.
+**Filtering Examples:**
+```python
+# String query parameters
+critical_flaws = session.flaws.retrieve_list(impact="CRITICAL")
+internet_flaws = session.flaws.retrieve_list(source="INTERNET")
 
+# Datetime query parameters
+from datetime import datetime
+recent_flaws = session.flaws.retrieve_list(changed_after=datetime(2023, 1, 1))
+older_flaws = session.flaws.retrieve_list(changed_before=datetime.now())
+
+# Date range filtering
+date_range_flaws = session.flaws.retrieve_list(
+    changed_after=datetime.strptime("2023-01-01", "%Y-%m-%d"),
+    changed_before=datetime.strptime("2023-12-31", "%Y-%m-%d")
+)
+
+# List parameters (both formats work)
+specific_cves = session.flaws.retrieve_list(cve_ids="CVE-1111-2222,CVE-1111-2223")  # comma-separated string
+specific_cves = session.flaws.retrieve_list(cve_ids=["CVE-1111-2222", "CVE-1111-2223"])  # Python list
+
+# Multiple filter conditions
+filtered_flaws = session.flaws.retrieve_list(
+    source="REDHAT",
+    impact="CRITICAL",
+    changed_after=datetime(2023, 1, 1)
+)
+```
+
+See `/GET /osidb/api/{api_version}/flaws` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on available query parameters and response format.
+
+#### `retrieve_list_iterator`
+Retrieve a list of resources with automatic pagination handling. Returns a generator that yields individual resource entities. Note that the API is called in a paginated way - pages are loaded sequentially (e.g., first 100 results, then next 100, etc.) but you can iterate through individual items.
+
+**Basic Usage:**
+```python
+# Iterate through all flaws (handles pagination automatically)
+for flaw in session.flaws.retrieve_list_iterator():
+    print(f"Processing {flaw.cve_id}")
+    # Pages are loaded as needed (e.g., 100 items at a time)
+
+# With filtering
+for flaw in session.flaws.retrieve_list_iterator(impact="CRITICAL"):
+    print(f"Critical flaw: {flaw.cve_id}")
+
+# With API version specification
+for flaw in session.flaws.retrieve_list_iterator(api_version="v1"):
+    process_flaw(flaw)
+```
+
+**Processing Large Datasets:**
+```python
+# Process flaws efficiently with automatic page loading
+for flaw in session.flaws.retrieve_list_iterator(source="REDHAT"):
+    # Iterator loads pages sequentially (not the entire dataset at once)
+    # but you process each flaw individually
+    analyze_flaw(flaw)
+    update_database(flaw)
+```
+
+See `/GET /osidb/api/{api_version}/flaws` in the [API documentation](osidb_bindings/openapi_schema.yml) for details. All query parameters from `retrieve_list` are supported.
+
+#### `retrieve_list_iterator_async`
+Retrieve a list of resources with automatic pagination handling using asynchronous communication to significantly speed up data retrieval. Returns a generator that yields individual resource entities. Multiple pages are fetched concurrently rather than sequentially.
+
+**Concurrency Configuration:**
+By default, the system allows up to 10 concurrent connections. You can adjust this limit using the `OSIDB_BINDINGS_MAX_CONCURRENCY` environment variable. Keep the limit between 1 and 50 concurrent connections to avoid service overload.
+
+```bash
+export OSIDB_BINDINGS_MAX_CONCURRENCY=30
+```
+
+**Basic Usage:**
+```python
+# Fast iteration through all flaws using concurrent page requests
+for flaw in session.flaws.retrieve_list_iterator_async():
+    print(f"Processing {flaw.cve_id}")
+    # Multiple pages are fetched concurrently for better performance
+
+# With filtering
+for flaw in session.flaws.retrieve_list_iterator_async(impact="CRITICAL"):
+    print(f"Critical flaw: {flaw.cve_id}")
+
+# Limit the number of results
+for flaw in session.flaws.retrieve_list_iterator_async(max_results=200):
+    process_flaw(flaw)
+
+# With API version specification
+for flaw in session.flaws.retrieve_list_iterator_async(api_version="v1"):
+    analyze_flaw(flaw)
+```
+
+**Performance Considerations:**
+```python
+# Process large datasets efficiently with concurrent page loading
+for flaw in session.flaws.retrieve_list_iterator_async(
+    source="REDHAT",
+    max_results=1000
+):
+    # Pages are loaded concurrently (e.g., multiple 100-item pages at once)
+    # significantly faster than sequential loading
+    update_metrics(flaw)
+```
+
+> **Warning:** Exceeding the recommended concurrency limit may lead to service overload, which could be interpreted as a Denial-of-Service attack.
+
+See `/GET /osidb/api/{api_version}/flaws` in the [API documentation](osidb_bindings/openapi_schema.yml) for details. All query parameters from `retrieve_list` are supported.
+
+#### `count`
+Retrieve the total count of entities that would be returned by the same `retrieve_list` call. This operation accepts the same input arguments as `retrieve_list` but only returns the count, making it efficient for checking dataset sizes.
+
+**Basic Usage:**
+```python
+# Count all flaws
+total_flaws = session.flaws.count()
+
+# Count with filtering
+low_impact_count = session.flaws.count(impact="LOW")
+critical_count = session.flaws.count(impact="CRITICAL")
+
+# Count with multiple filters
+recent_critical_count = session.flaws.count(
+    impact="CRITICAL",
+    changed_after=datetime(2023, 1, 1)
+)
+
+# Count with API version specification
+count_v1 = session.flaws.count(api_version="v1")
+```
+
+**Use Cases:**
+```python
+from datetime import datetime
+
+# Check if any critical flaws exist before processing
+if session.flaws.count(impact="CRITICAL") > 0:
+    process_critical_flaws()
+
+# Monitor flaw trends
+today_count = session.flaws.count(changed_after=datetime.now().replace(hour=0, minute=0))
+print(f"Flaws updated today: {today_count}")
+```
+
+#### `search`
+Retrieve a list of resources using full-text search. This performs a search across multiple text fields in the resource to find matches.
+
+**Basic Usage:**
+```python
+# Search for flaws containing specific text
+satellite_flaws = session.flaws.search("Red Hat Satellite v.5")
+apache_flaws = session.flaws.search("Apache HTTP Server")
+
+# Search for specific CVE
+cve_results = session.flaws.search("CVE-1111-2222")
+
+# Search with API version specification
+search_results = session.flaws.search("buffer overflow", api_version="v1")
+```
+
+**Search Examples:**
+```python
+# Search for product names
+product_flaws = session.flaws.search("OpenSSL")
+
+# Search for vulnerability types
+xss_flaws = session.flaws.search("cross-site scripting")
+
+# Search for component names
+kernel_flaws = session.flaws.search("kernel")
+```
+
+> **Note:** Search functionality depends on the OSIDB instance configuration and may search across different fields like titles, descriptions, and component names.
+
+#### `create`
+Create a new resource from provided data. This operation requires appropriate permissions and may need Bugzilla/Jira API keys depending on the resource type.
+
+**Basic Usage:**
+```python
+from datetime import datetime
+
+# Define the flaw data
+flaw_data = {
+    "cve_id": "CVE-1111-2222",
+    "state": "NEW",
+    "impact": "CRITICAL",
+    "title": "Remote Code Execution in Example Component",
+    "components": ["example-component", "core-library"],
+    "cve_description": "A remote code execution vulnerability exists in the example component.",
+    "comment_zero": "Initial analysis indicates this affects all versions prior to 2.1.0",
+    "statement": "Red Hat is aware of this issue and is working on a fix.",
+    "cwe_id": "CWE-787",
+    "unembargo_dt": datetime(2024, 1, 15),
+    "source": "REDHAT",
+    "reported_dt": datetime(2023, 12, 1, 10, 30, 0),
+    "is_major_incident": True
+}
+
+# Create the flaw
+new_flaw = session.flaws.create(form_data=flaw_data)
+
+# Create with specific API version
+new_flaw = session.flaws.create(form_data=flaw_data, api_version="v1")
+```
+
+**Working with the Response:**
+```python
+# Access the created flaw's properties
+print(f"Created flaw: {new_flaw.cve_id}")
+print(f"UUID: {new_flaw.uuid}")
+print(f"Impact: {new_flaw.impact}")
+```
+
+See `/POST /osidb/api/{api_version}/flaws` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on required fields, request format, and response structure.
+
+#### `update`
+Update an existing resource with new data. This operation requires appropriate permissions and may need Bugzilla/Jira API keys depending on the resource type.
+
+**Basic Usage:**
+```python
+# First, retrieve the existing flaw
+existing_flaw = session.flaws.retrieve(id="CVE-1111-2222")
+
+# Convert to dictionary for modification
+flaw_data = existing_flaw.to_dict()
+
+# Update specific fields
+flaw_data["impact"] = "IMPORTANT"
+flaw_data["title"] = "Updated vulnerability title"
+flaw_data["statement"] = "Updated security statement"
+
+# Apply the update
+updated_flaw = session.flaws.update(id=existing_flaw.uuid, form_data=flaw_data)
+
+# Update with specific API version
+updated_flaw = session.flaws.update(
+    id=existing_flaw.uuid,
+    form_data=flaw_data,
+    api_version="v1"
+)
+```
+
+**Working with the Response:**
+```python
+# Verify the update was successful
+print(f"Updated flaw: {updated_flaw.cve_id}")
+print(f"New impact: {updated_flaw.impact}")
+print(f"Last updated: {updated_flaw.updated_dt}")
+```
+
+See `/PUT /osidb/api/{api_version}/flaws/{id}` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on required fields and request format.
+
+#### `delete`
+Delete an existing resource. This operation requires appropriate permissions.
+
+**Basic Usage:**
+```python
+# Delete by CVE ID
+delete_response = session.flaws.delete(id="CVE-1111-2222")
+
+# Delete by UUID
+delete_response = session.flaws.delete(id="aedb854d-1afc-40fe-9554-bc50098b0154")
+
+# Delete with specific API version
+delete_response = session.flaws.delete(id="CVE-1111-2222", api_version="v1")
+```
+
+See `/DELETE /osidb/api/{api_version}/flaws/{id}` in the [API documentation](osidb_bindings/openapi_schema.yml) for details on response format and required permissions.
+
+#### Extra Operations
+
+Some resources have additional operations beyond the standard CRUD operations:
+
+**Flaws:**
+- `promote` - Advance a flaw through workflow (POST `/osidb/api/v1/flaws/{flaw_id}/promote`)
+- `reject` - Reject a flaw (POST `/osidb/api/v1/flaws/{flaw_id}/reject`)
+
+**Trackers:**
+- `file` - Given a list of flaws, generates a list of suggested trackers to file (POST `/trackers/api/v1/file`)
+
+**Examples:**
+```python
+# Promote a flaw
+promote_response = session.flaws.promote(id="CVE-1111-2222")
+
+# Reject a flaw with rejection data
+reject_data = {"reason": "duplicate"}
+reject_response = session.flaws.reject(id="CVE-1111-2222", form_data=reject_data)
+
+# File trackers
+file_data = {"flaw_uuids": ["3fa85f64-5717-4562-b3fc-2c963f66afa6"]}
+trackers_response = session.trackers.file(form_data=file_data)
+```
+
+
+## Working with Responses
+
+This section describes how to work with responses from session operations.
+
+### Single Resource Response
+
+Single resource responses are typically returned from `retrieve`, `create`, `update`, or `status` operations. The retrieved data is encapsulated within the corresponding model class.
+
+**Accessing Response Data:**
+```python
+flaw = session.flaws.retrieve(id="CVE-1111-2222")
+
+# Access attributes directly
+print(flaw.uuid)
+print(flaw.cve_id)
+print(flaw.impact)
+print(flaw.title)
+
+# Impact enum example
+print(flaw.impact)  # <ImpactEnum.MODERATE: 'MODERATE'>
+print(flaw.impact.value)  # "MODERATE"
+
+# Access nested objects
+if flaw.affects:
+    for affect in flaw.affects:
+        print(f"Affect UUID: {affect.uuid}")
+        if affect.trackers:
+            for tracker in affect.trackers:
+                print(f"Tracker: {tracker.external_system_id}")
+```
+
+**Converting to Dictionary:**
+```python
+flaw_dict = flaw.to_dict()
+
+# Access as dictionary
+print(flaw_dict["uuid"])
+print(flaw_dict["impact"])
+print(flaw_dict["affects"])
+
+# Useful for modifications
+flaw_dict["impact"] = "CRITICAL"
+updated_flaw = session.flaws.update(id=flaw.uuid, form_data=flaw_dict)
+```
+
+### Paginated Response
+
+Paginated responses are returned from `retrieve_list` and `search` operations. They contain metadata about the total count, pagination links, and the actual results.
+
+**Basic Paginated Response Structure:**
 ```python
 paginated_response = session.flaws.retrieve_list(limit=5)
 
-paginated_response
-# PaginatedFlawListList(count=12, next_='http://localhost:8000/osidb/api/v1/flaws?limit=5&offset=5', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+# Access pagination metadata
+print(f"Total count: {paginated_response.count}")
+print(f"Previous page: {paginated_response.previous}")
+print(f"Next page: {paginated_response.next_}")
 
-paginated_response.count
-# 12
-
-paginated_response.previous
-# None
-
-paginated_response.next_
-# "http://localhost:8000/osidb/api/v1/flaws?limit=5&offset=5"
-
-paginated_response.results
-# [FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... ]
-
-paginated_response.results[0]
-# FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+# Access the actual results
+print(f"Results on this page: {len(paginated_response.results)}")
+for flaw in paginated_response.results:
+    print(f"CVE: {flaw.cve_id}, Impact: {flaw.impact}")
 ```
 
-Each paginated response comes also with pagination helpers which allows user to conveniently browse through all the pages without the need to adjust offset or limit. These methods are `.next()`, `.prev()` for basic navigation in both directions:
-
+**Pagination Properties:**
 ```python
-paginated_response_page_1 = session.flaws.retrieve_list()
+# Total number of items across all pages
+total_items = paginated_response.count
 
-paginated_response_page_1
-# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
+# URL for the next page (None if last page)
+next_page_url = paginated_response.next_
 
-paginated_response_page_1.prev()
-# None
+# URL for the previous page (None if first page)
+previous_page_url = paginated_response.previous
 
-paginated_response_page_2 = paginated_response_page_1.next()
-
-paginated_response_page_2
-# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100&offset=100', previous=None, results=[FlawList(uuid='0ac7a852-c973-4f7b-8c78-978fbbb59c71', updated_dt=datetime.datetime(2021, 11, 20, 14, 45, 15, 724222, tzinfo=tzutc()), ... )
-
-previous_response = paginated_response_page_2.prev()
-
-previous_response
-# PaginatedFlawListList(count=100, next_='http://localhost:8000/osidb/api/v1/flaws?limit=100', previous=None, results=[FlawList(uuid='de4d4901-d489-4d23-b1e2-76e14cae206f', updated_dt=datetime.datetime(2021, 11, 19, 14, 34, 15, 724267, tzinfo=tzutc()), ... )
-# Same as paginated_response_page_1
+# List of items on current page
+current_page_items = paginated_response.results
 ```
 
-and `.iterator` which returns iterable enabling looping through the rest of response pages in for loop:
+**Pagination Helpers:**
+
+Each paginated response includes helper methods for convenient navigation:
 
 ```python
-first_paginated_response = session.flaws.retrieve_list()
-# loop through second, third, fourth, ... page
-for page in paginated_response.iterator:
-    for flaw in page:
-        do_calc(flaw)
+# Get first page
+page_1 = session.flaws.retrieve_list()
+
+# Navigate to next page
+page_2 = page_1.next()  # Returns None if no next page
+
+# Navigate back to previous page
+back_to_page_1 = page_2.prev()  # Returns None if no previous page
+
+# Check if navigation is possible
+if page_1.next_:  # Check if next page URL exists
+    page_2 = page_1.next()
 ```
 
-Iterator may begin from whichever page:
+**Iterator for All Pages:**
+
+Use the `.iterator` property to loop through all remaining pages:
 
 ```python
-# first response page
-paginated_response_page_1 = session.flaws.retrieve_list()
+first_page = session.flaws.retrieve_list()
 
-# fourth response page
-paginated_response_page_4 = paginated_response_page_1.next().next().next()
+# Process all pages starting from the second page
+for page in first_page.iterator:
+    for flaw in page.results:
+        print(f"Processing {flaw.cve_id}")
 
-# iterator starting with fifth page
-for response in paginated_response_page_4.iterator:
-    for flaw in page:
-        do_calc(flaw)
+# Iterator can start from any page
+some_page = session.flaws.retrieve_list(offset=100)
+for page in some_page.iterator:
+    for flaw in page.results:
+        process_flaw(flaw)
 ```
 
-Working with each item of the results is basically identical to work with [single response](#single-response)
+> **Note:** Working with individual items in paginated results is identical to working with single resource responses.
 
-### Utils
+## Utility Functions
 
-There are some utility functions which can help you with common use cases of the bindings.
+The bindings provide utility functions for common use cases.
 
-* #### ```cve_ids```
-    Retrieve list of all CVE IDs. Takes care of the response pagination.
-    ```python
-    all_cve_ids = osidb_bindings.cve_ids(session)
-    #  ['CVE-2021-43527', 'CVE-2021-3984', 'CVE-2021-4019', ... ]
-    ```
+### `cve_ids`
 
-### Debugging
-
-As this package serves as a client to an existing database, most of its functionality depends on communication with that database. Consequently, errors are likely to occur during this communication, and it's crucial to handle such errors appropriately.
-
-#### Exception handling
-
-Exception handling is essential to ensure that your requests are properly managed, especially when HTTP communication fails due to issues such as network failure, incorrect requests, or invalid request bodies.
+Retrieve a list of all CVE IDs with automatic pagination handling.
 
 ```python
-flaw_response = session.flaws.retrieve(id="CVE-1111-2222")
-flaw_data = flaw_response.to_dict()
-# Invalid operation: Flaw cannot be embargoed again once unembargoed
-flaw_data.embargoed = True
+import osidb_bindings
 
-# Handling specific HTTPError exceptions
+# Get all CVE IDs
+all_cve_ids = osidb_bindings.cve_ids(session)
+print(all_cve_ids)
+# ['CVE-2021-43527', 'CVE-2021-3984', 'CVE-2021-4019', ...]
+
+# Use the CVE IDs for further processing
+for cve_id in all_cve_ids:
+    flaw = session.flaws.retrieve(id=cve_id)
+    print(f"{cve_id}: {flaw.impact}")
+```
+
+This function handles pagination automatically, so you don't need to worry about managing page offsets or limits.
+
+## Debugging and Error Handling
+
+Since the bindings communicate with a remote OSIDB database, various errors can occur during HTTP communication. Proper error handling is essential for robust applications.
+
+### Exception Handling
+
+**Basic Exception Handling:**
+```python
 from requests import HTTPError
-try:
-    session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
-except HTTPError as exc:
-    print(exc.response.content)
-    handle_exception(exc)
 
-# Handling general exceptions
 try:
-    session.flaws.update(id=flaw_response.uuid, form_data=flaw_data)
+    flaw = session.flaws.retrieve(id="CVE-1111-2222")
+    print(f"Retrieved flaw: {flaw.cve_id}")
+except HTTPError as exc:
+    print(f"HTTP Error: {exc.response.status_code}")
+    print(f"Response content: {exc.response.content}")
 except Exception as exc:
-    handle_exception(exc)
+    print(f"Unexpected error: {exc}")
 ```
+
+**Handling Specific Error Scenarios:**
+```python
+try:
+    # Attempt to create a flaw
+    new_flaw = session.flaws.create(form_data=flaw_data)
+except HTTPError as exc:
+    if exc.response.status_code == 400:
+        print("Bad request - check your data format")
+        print(exc.response.content)
+    elif exc.response.status_code == 401:
+        print("Authentication failed - check your credentials")
+    elif exc.response.status_code == 403:
+        print("Permission denied - insufficient privileges")
+    elif exc.response.status_code == 404:
+        print("Resource not found")
+    else:
+        print(f"HTTP {exc.response.status_code}: {exc.response.content}")
+```
+
+**Common Error Sources:**
+- Network connectivity issues
+- Authentication failures
+- Invalid request data
+- Permission restrictions
+- Resource not found
+- Server-side errors
+
+**Best Practices:**
+- Always wrap API calls in try-except blocks
+- Log error details for debugging
+- Check response status codes for specific error handling
+- Validate input data before sending requests
