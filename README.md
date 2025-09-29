@@ -1,62 +1,94 @@
-# osidb-bindings
-A client library for accessing OSIDB API
+# OSIDB Bindings
+
+A Pythonic way to talk to OSIDB without getting lost in HTTP details.
 
 ## Requirements
-* gcc
-* krb5-devel
-* pip
-* python3
-* python3-devel
+
+- gcc
+- krb5-devel
+- pip
+- python3
+- python3-devel
 
 ## Installation
 
-```
+Install the bindings using pip (recommended within a [virtual environment](https://docs.python.org/3/library/venv.html)):
+
+```bash
 pip install osidb-bindings
 ```
 
-## Usage
+## Quick Start
 
+### Basic Authentication
 ```python
 import osidb_bindings
 
-# Basic auth
-osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/", username="username", password="password")
+# For local OSIDB instances with username/password authentication
+session = osidb_bindings.new_session(
+    osidb_server_uri="http://localhost:8000/",
+    username="your_username",
+    password="your_password"
+)
 ```
-or
+
+### Kerberos Authentication
 ```python
-# Default kerberos auth
-osidb_session = osidb_bindings.new_session(osidb_server_uri="http://localhost:8000/")
+# For production/staging instances with Kerberos authentication (default)
+session = osidb_bindings.new_session(osidb_server_uri="https://your-osidb-instance.com/")
 ```
 
+### Basic Operations
+
 ```python
-# Get status
-osidb_session.status()
+# Check connection status
+status = session.status()
 
-# Retrieve flaw
-flaw = osidb_session.flaws.retrieve(id="CVE-1111-2222")
+# Retrieve a specific flaw
+flaw = session.flaws.retrieve(id="CVE-1111-2222")
 
-# Fields can be accessed directly via attributes
-flaw.title
-flaw.impact
+# Access flaw attributes
+print(flaw.title)
+print(flaw.impact)
 
-# or the flaw can be converted into dict
+# Convert to dictionary for easier manipulation
 flaw_dict = flaw.to_dict()
-flaw_dict["title"]
-flaw_dict["impact"]
+print(flaw_dict["title"])
+print(flaw_dict["impact"])
 
-# Retrieving multiple flaws
-all_flaws = osidb_session.flaws.retrieve_list()
+# Retrieve multiple flaws with filtering
+critical_flaws = session.flaws.retrieve_list(impact="CRITICAL")
+recent_flaws = session.flaws.retrieve_list(changed_after="2023-01-01")
 
-# All query params listed in OpenAPI schema can be passed as well
-filtered_flaws = osidb_session.flaws.retrieve_list(impact="IMPORTANT", tracker_ids=["111111", "222222"])
-
-# number of results
-filtered_flaws.count
-
-# list with the results
-filtered_flaws.results
+# Access paginated results
+print(f"Total flaws found: {critical_flaws.count}")
+for flaw in critical_flaws.results:
+    print(f"CVE: {flaw.cve_id}, Impact: {flaw.impact}")
 ```
 
-## For more details read [tutorial](TUTORIAL.md)
+### API Version Control
 
-## For development details read [developer guide](DEVELOP.md)
+```python
+# Use latest API version (default behavior)
+flaw = session.flaws.retrieve(id="CVE-1111-2222")
+
+# Specify a particular API version for stability
+flaw = session.flaws.retrieve(id="CVE-1111-2222", api_version="v1")
+
+# Discover available API versions
+print(session.endpoints)
+```
+
+## Documentation
+
+- **[Complete Tutorial](TUTORIAL.md)** - Comprehensive guide with examples
+- **[Developer Guide](DEVELOP.md)** - Development and contribution guidelines
+
+## Features
+
+- **Automatic Authentication** - Handles JWT token refresh automatically
+- **Multiple API Versions** - Support for v1, v2, and future API versions
+- **Intuitive Interface** - Pythonic API that mirrors OSIDB REST endpoints
+- **Comprehensive Coverage** - Access to flaws, affects, trackers, and more
+- **Pagination Support** - Built-in handling of paginated responses
+- **Error Handling** - Clear exceptions for better debugging
