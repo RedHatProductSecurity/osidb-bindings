@@ -51,32 +51,32 @@ from .osidb_api_v1_trackers_create import *
 from .osidb_api_v1_trackers_list import *
 from .osidb_api_v1_trackers_retrieve import *
 from .osidb_api_v1_trackers_update import *
-from .osidb_api_v2beta_affects_bulk_create import *
-from .osidb_api_v2beta_affects_bulk_destroy import *
-from .osidb_api_v2beta_affects_bulk_update import *
-from .osidb_api_v2beta_affects_create import *
-from .osidb_api_v2beta_affects_cvss_scores_create import *
-from .osidb_api_v2beta_affects_cvss_scores_destroy import *
-from .osidb_api_v2beta_affects_cvss_scores_list import *
-from .osidb_api_v2beta_affects_cvss_scores_retrieve import *
-from .osidb_api_v2beta_affects_cvss_scores_update import *
-from .osidb_api_v2beta_affects_destroy import *
-from .osidb_api_v2beta_affects_list import *
-from .osidb_api_v2beta_affects_retrieve import *
-from .osidb_api_v2beta_affects_update import *
-from .osidb_api_v2beta_flaws_create import *
-from .osidb_api_v2beta_flaws_cvss_scores_create import *
-from .osidb_api_v2beta_flaws_cvss_scores_destroy import *
-from .osidb_api_v2beta_flaws_cvss_scores_list import *
-from .osidb_api_v2beta_flaws_cvss_scores_retrieve import *
-from .osidb_api_v2beta_flaws_cvss_scores_update import *
-from .osidb_api_v2beta_flaws_list import *
-from .osidb_api_v2beta_flaws_retrieve import *
-from .osidb_api_v2beta_flaws_update import *
-from .osidb_api_v2beta_trackers_create import *
-from .osidb_api_v2beta_trackers_list import *
-from .osidb_api_v2beta_trackers_retrieve import *
-from .osidb_api_v2beta_trackers_update import *
+from .osidb_api_v2_affects_bulk_create import *
+from .osidb_api_v2_affects_bulk_destroy import *
+from .osidb_api_v2_affects_bulk_update import *
+from .osidb_api_v2_affects_create import *
+from .osidb_api_v2_affects_cvss_scores_create import *
+from .osidb_api_v2_affects_cvss_scores_destroy import *
+from .osidb_api_v2_affects_cvss_scores_list import *
+from .osidb_api_v2_affects_cvss_scores_retrieve import *
+from .osidb_api_v2_affects_cvss_scores_update import *
+from .osidb_api_v2_affects_destroy import *
+from .osidb_api_v2_affects_list import *
+from .osidb_api_v2_affects_retrieve import *
+from .osidb_api_v2_affects_update import *
+from .osidb_api_v2_flaws_create import *
+from .osidb_api_v2_flaws_cvss_scores_create import *
+from .osidb_api_v2_flaws_cvss_scores_destroy import *
+from .osidb_api_v2_flaws_cvss_scores_list import *
+from .osidb_api_v2_flaws_cvss_scores_retrieve import *
+from .osidb_api_v2_flaws_cvss_scores_update import *
+from .osidb_api_v2_flaws_list import *
+from .osidb_api_v2_flaws_retrieve import *
+from .osidb_api_v2_flaws_update import *
+from .osidb_api_v2_trackers_create import *
+from .osidb_api_v2_trackers_list import *
+from .osidb_api_v2_trackers_retrieve import *
+from .osidb_api_v2_trackers_update import *
 from .osidb_healthy_retrieve import *
 from .osidb_integrations_partial_update import *
 from .osidb_integrations_retrieve import *
@@ -136,32 +136,32 @@ ENDPOINT_NAMES = [
     "osidb_api_v1_trackers_create",
     "osidb_api_v1_trackers_retrieve",
     "osidb_api_v1_trackers_update",
-    "osidb_api_v2beta_affects_list",
-    "osidb_api_v2beta_affects_create",
-    "osidb_api_v2beta_affects_cvss_scores_list",
-    "osidb_api_v2beta_affects_cvss_scores_create",
-    "osidb_api_v2beta_affects_cvss_scores_retrieve",
-    "osidb_api_v2beta_affects_cvss_scores_update",
-    "osidb_api_v2beta_affects_cvss_scores_destroy",
-    "osidb_api_v2beta_affects_retrieve",
-    "osidb_api_v2beta_affects_update",
-    "osidb_api_v2beta_affects_destroy",
-    "osidb_api_v2beta_affects_bulk_update",
-    "osidb_api_v2beta_affects_bulk_create",
-    "osidb_api_v2beta_affects_bulk_destroy",
-    "osidb_api_v2beta_flaws_list",
-    "osidb_api_v2beta_flaws_create",
-    "osidb_api_v2beta_flaws_cvss_scores_list",
-    "osidb_api_v2beta_flaws_cvss_scores_create",
-    "osidb_api_v2beta_flaws_cvss_scores_retrieve",
-    "osidb_api_v2beta_flaws_cvss_scores_update",
-    "osidb_api_v2beta_flaws_cvss_scores_destroy",
-    "osidb_api_v2beta_flaws_retrieve",
-    "osidb_api_v2beta_flaws_update",
-    "osidb_api_v2beta_trackers_list",
-    "osidb_api_v2beta_trackers_create",
-    "osidb_api_v2beta_trackers_retrieve",
-    "osidb_api_v2beta_trackers_update",
+    "osidb_api_v2_affects_list",
+    "osidb_api_v2_affects_create",
+    "osidb_api_v2_affects_cvss_scores_list",
+    "osidb_api_v2_affects_cvss_scores_create",
+    "osidb_api_v2_affects_cvss_scores_retrieve",
+    "osidb_api_v2_affects_cvss_scores_update",
+    "osidb_api_v2_affects_cvss_scores_destroy",
+    "osidb_api_v2_affects_retrieve",
+    "osidb_api_v2_affects_update",
+    "osidb_api_v2_affects_destroy",
+    "osidb_api_v2_affects_bulk_update",
+    "osidb_api_v2_affects_bulk_create",
+    "osidb_api_v2_affects_bulk_destroy",
+    "osidb_api_v2_flaws_list",
+    "osidb_api_v2_flaws_create",
+    "osidb_api_v2_flaws_cvss_scores_list",
+    "osidb_api_v2_flaws_cvss_scores_create",
+    "osidb_api_v2_flaws_cvss_scores_retrieve",
+    "osidb_api_v2_flaws_cvss_scores_update",
+    "osidb_api_v2_flaws_cvss_scores_destroy",
+    "osidb_api_v2_flaws_retrieve",
+    "osidb_api_v2_flaws_update",
+    "osidb_api_v2_trackers_list",
+    "osidb_api_v2_trackers_create",
+    "osidb_api_v2_trackers_retrieve",
+    "osidb_api_v2_trackers_update",
     "osidb_healthy_retrieve",
     "osidb_integrations_retrieve",
     "osidb_integrations_partial_update",

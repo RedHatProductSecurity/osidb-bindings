@@ -38,6 +38,7 @@ class Affect(OSIDBModel):
         cvss_scores (list['AffectCVSS']):
         delegated_not_affected_justification (str):
         resolved_dt (Union[None, datetime.datetime]):
+        labels (list[str]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         alerts (list['Alert']):
@@ -63,6 +64,7 @@ class Affect(OSIDBModel):
     cvss_scores: list["AffectCVSS"]
     delegated_not_affected_justification: str
     resolved_dt: Union[None, datetime.datetime]
+    labels: list[str]
     embargoed: bool
     alerts: list["Alert"]
     created_dt: datetime.datetime
@@ -130,6 +132,10 @@ class Affect(OSIDBModel):
 
         else:
             resolved_dt = self.resolved_dt
+
+        labels: list[str] = UNSET
+        if not isinstance(self.labels, Unset):
+            labels = self.labels
 
         embargoed = self.embargoed
 
@@ -245,6 +251,8 @@ class Affect(OSIDBModel):
             )
         if not isinstance(resolved_dt, Unset):
             field_dict["resolved_dt"] = resolved_dt
+        if not isinstance(labels, Unset):
+            field_dict["labels"] = labels
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(alerts, Unset):
@@ -358,6 +366,8 @@ class Affect(OSIDBModel):
             return cast(Union[None, datetime.datetime], data)
 
         resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
+
+        labels = cast(list[str], d.pop("labels", UNSET))
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -552,6 +562,7 @@ class Affect(OSIDBModel):
             cvss_scores=cvss_scores,
             delegated_not_affected_justification=delegated_not_affected_justification,
             resolved_dt=resolved_dt,
+            labels=labels,
             embargoed=embargoed,
             alerts=alerts,
             created_dt=created_dt,
