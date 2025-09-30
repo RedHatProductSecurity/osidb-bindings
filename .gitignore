@@ -8,9 +8,9 @@ dist/
 .python-version
 
 # Environments
-.env
-.venv
-venv
+.env*
+.venv*
+venv*
 
 # mypy
 .mypy_cache/
@@ -28,5 +28,3 @@ local-requirements.*
 
 # Visual Studio Code
 .vscode
-
-
