@@ -1,5 +1,5 @@
 %define name osidb_bindings
-%define version 5.0.0b2
+%define version 5.0.0b3
 %define release 0%{?dist}
 
 Name:           %{name}
@@ -53,6 +53,3 @@ Python Client bindings for OSIDB
 %changelog
 * Wed May 22 2024 Jason <jshepher@redhat.com> - 3.6.0
 - RPM packing for osidb_bindings added
-
-
-

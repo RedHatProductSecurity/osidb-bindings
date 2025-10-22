@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bindings"
-version = "5.0.0b2"
+version = "5.0.0b3"
 description = "A client library for accessing OSIDB API"
 authors = []
 readme = "README.md"
