@@ -106,6 +106,34 @@ def reject_flaw(self, id: str, form_data: dict[str, Any], *args, **kwargs):
     )
 
 
+def reset_flaw(self, id, *args, **kwargs):
+    method_module = importlib.import_module(
+        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_reset_create",
+        package="osidb_bindings",
+    )
+    sync_fn = get_sync_function(method_module)
+    return sync_fn(
+        id,
+        *args,
+        client=self.client(),
+        **kwargs,
+    )
+
+
+def revert_flaw(self, id, *args, **kwargs):
+    method_module = importlib.import_module(
+        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_revert_create",
+        package="osidb_bindings",
+    )
+    sync_fn = get_sync_function(method_module)
+    return sync_fn(
+        id,
+        *args,
+        client=self.client(),
+        **kwargs,
+    )
+
+
 def double_underscores_to_single_underscores(fn):
     """
     Function decorator which changes all the keyword arguments which include
@@ -257,7 +285,12 @@ class Session:
                     ]
                 },
             },
-            extra_operations=[("promote", promote_flaw), ("reject", reject_flaw)],
+            extra_operations=[
+                ("promote", promote_flaw),
+                ("reject", reject_flaw),
+                ("reset", reset_flaw),
+                ("revert", revert_flaw),
+            ],
         )
         self.affects = SessionOperationsGroup(
             self,
