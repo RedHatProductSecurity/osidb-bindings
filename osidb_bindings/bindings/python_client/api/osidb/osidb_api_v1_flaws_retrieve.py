@@ -115,7 +115,8 @@ def sync_detailed(
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         exclude_fields (Union[Unset, list[str]]):
@@ -166,7 +167,8 @@ def sync(
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         exclude_fields (Union[Unset, list[str]]):
@@ -207,7 +209,8 @@ async def asyncio_detailed(
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsRetrieveResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         exclude_fields (Union[Unset, list[str]]):
@@ -258,7 +261,8 @@ async def asyncio(
     query: Union[Unset, str] = UNSET,
     tracker_ids: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsRetrieveResponse200]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         id (str):
         exclude_fields (Union[Unset, list[str]]):

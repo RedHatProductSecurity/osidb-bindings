@@ -24,13 +24,14 @@ class AffectBulkPutRequest(OSIDBModel):
     Attributes:
         uuid (UUID):
         flaw (UUID):
-        ps_module (str):
+        ps_update_stream (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
+        ps_module (Union[Unset, str]):
         ps_component (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         purl (Union[None, Unset, str]):
@@ -39,11 +40,12 @@ class AffectBulkPutRequest(OSIDBModel):
 
     uuid: UUID
     flaw: UUID
-    ps_module: str
+    ps_update_stream: str
     embargoed: bool
     updated_dt: datetime.datetime
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
+    ps_module: Union[Unset, str] = UNSET
     ps_component: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     purl: Union[None, Unset, str] = UNSET
@@ -61,7 +63,7 @@ class AffectBulkPutRequest(OSIDBModel):
         if not isinstance(self.flaw, Unset):
             flaw = str(self.flaw)
 
-        ps_module = self.ps_module
+        ps_update_stream = self.ps_update_stream
 
         embargoed = self.embargoed
 
@@ -94,6 +96,8 @@ class AffectBulkPutRequest(OSIDBModel):
             resolution = UNSET
             if not isinstance(self.resolution, Unset):
                 resolution = BlankEnum(self.resolution).value
+
+        ps_module = self.ps_module
 
         ps_component: Union[None, Unset, str]
         if isinstance(self.ps_component, Unset):
@@ -143,8 +147,8 @@ class AffectBulkPutRequest(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(flaw, Unset):
             field_dict["flaw"] = flaw
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
+        if not isinstance(ps_update_stream, Unset):
+            field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(updated_dt, Unset):
@@ -153,6 +157,8 @@ class AffectBulkPutRequest(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
+        if not isinstance(ps_module, Unset):
+            field_dict["ps_module"] = ps_module
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
@@ -181,7 +187,7 @@ class AffectBulkPutRequest(OSIDBModel):
         else:
             flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
-        ps_module = d.pop("ps_module", UNSET)
+        ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -255,6 +261,8 @@ class AffectBulkPutRequest(OSIDBModel):
             return resolution_type_1
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
+
+        ps_module = d.pop("ps_module", UNSET)
 
         def _parse_ps_component(data: object) -> Union[None, Unset, str]:
             if data is None:
@@ -347,11 +355,12 @@ class AffectBulkPutRequest(OSIDBModel):
         affect_bulk_put_request = cls(
             uuid=uuid,
             flaw=flaw,
-            ps_module=ps_module,
+            ps_update_stream=ps_update_stream,
             embargoed=embargoed,
             updated_dt=updated_dt,
             affectedness=affectedness,
             resolution=resolution,
+            ps_module=ps_module,
             ps_component=ps_component,
             impact=impact,
             purl=purl,

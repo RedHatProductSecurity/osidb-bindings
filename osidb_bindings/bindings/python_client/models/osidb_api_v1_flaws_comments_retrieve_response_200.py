@@ -30,7 +30,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             detect mit-air collisions.
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
-        order (Union[Unset, int]):
         creator (Union[Unset, str]):
         is_private (Union[Unset, bool]):
         dt (Union[Unset, datetime.datetime]):
@@ -47,7 +46,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
-    order: Union[Unset, int] = UNSET
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -89,8 +87,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
 
         embargoed = self.embargoed
 
-        order = self.order
-
         creator = self.creator
 
         is_private = self.is_private
@@ -123,8 +119,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
-        if not isinstance(order, Unset):
-            field_dict["order"] = order
         if not isinstance(creator, Unset):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
@@ -191,8 +185,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
-        order = d.pop("order", UNSET)
-
         creator = d.pop("creator", UNSET)
 
         is_private = d.pop("is_private", UNSET)
@@ -219,7 +211,6 @@ class OsidbApiV1FlawsCommentsRetrieveResponse200(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             embargoed=embargoed,
-            order=order,
             creator=creator,
             is_private=is_private,
             dt=dt,

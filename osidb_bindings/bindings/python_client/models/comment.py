@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 from uuid import UUID
 
 from attrs import define as _attrs_define
@@ -28,7 +28,6 @@ class Comment(OSIDBModel):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         external_system_id (Union[Unset, str]):
-        order (Union[None, Unset, int]):
         creator (Union[Unset, str]):
         is_private (Union[Unset, bool]):
     """
@@ -39,7 +38,6 @@ class Comment(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     external_system_id: Union[Unset, str] = UNSET
-    order: Union[None, Unset, int] = UNSET
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -71,12 +69,6 @@ class Comment(OSIDBModel):
 
         external_system_id = self.external_system_id
 
-        order: Union[None, Unset, int]
-        if isinstance(self.order, Unset):
-            order = UNSET
-        else:
-            order = self.order
-
         creator = self.creator
 
         is_private = self.is_private
@@ -95,8 +87,6 @@ class Comment(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(external_system_id, Unset):
             field_dict["external_system_id"] = external_system_id
-        if not isinstance(order, Unset):
-            field_dict["order"] = order
         if not isinstance(creator, Unset):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
@@ -146,15 +136,6 @@ class Comment(OSIDBModel):
 
         external_system_id = d.pop("external_system_id", UNSET)
 
-        def _parse_order(data: object) -> Union[None, Unset, int]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, int], data)
-
-        order = _parse_order(d.pop("order", UNSET))
-
         creator = d.pop("creator", UNSET)
 
         is_private = d.pop("is_private", UNSET)
@@ -166,7 +147,6 @@ class Comment(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             external_system_id=external_system_id,
-            order=order,
             creator=creator,
             is_private=is_private,
         )

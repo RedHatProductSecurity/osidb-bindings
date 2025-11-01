@@ -99,7 +99,8 @@ def sync_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1TrackersRetrieveResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -141,7 +142,8 @@ def sync(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1TrackersRetrieveResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -173,7 +175,8 @@ async def asyncio_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1TrackersRetrieveResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -215,7 +218,8 @@ async def asyncio(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1TrackersRetrieveResponse200]:
-    """
+    """View for the tracker model adapted to affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
