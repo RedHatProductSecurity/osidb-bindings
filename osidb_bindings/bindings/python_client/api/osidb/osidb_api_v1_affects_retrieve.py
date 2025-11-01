@@ -102,7 +102,8 @@ def sync_detailed(
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1AffectsRetrieveResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -147,7 +148,8 @@ def sync(
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1AffectsRetrieveResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -182,7 +184,8 @@ async def asyncio_detailed(
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1AffectsRetrieveResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):
@@ -227,7 +230,8 @@ async def asyncio(
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1AffectsRetrieveResponse200]:
-    """
+    """Read-only view for affects v1
+
     Args:
         uuid (UUID):
         exclude_fields (Union[Unset, list[str]]):

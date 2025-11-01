@@ -16,24 +16,18 @@ class PackageVer(OSIDBModel):
 
         Attributes:
             version (str):
-            status (str):  Default: 'UNAFFECTED'.
     """
 
     version: str
-    status: str = "UNAFFECTED"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         version = self.version
 
-        status = self.status
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(version, Unset):
             field_dict["version"] = version
-        if not isinstance(status, Unset):
-            field_dict["status"] = status
 
         return field_dict
 
@@ -42,11 +36,8 @@ class PackageVer(OSIDBModel):
         d = src_dict.copy()
         version = d.pop("version", UNSET)
 
-        status = d.pop("status", UNSET)
-
         package_ver = cls(
             version=version,
-            status=status,
         )
 
         package_ver.additional_properties = d

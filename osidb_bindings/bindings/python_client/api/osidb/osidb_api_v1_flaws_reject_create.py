@@ -88,8 +88,8 @@ def sync_detailed(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
@@ -135,8 +135,8 @@ def sync(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
@@ -172,8 +172,8 @@ async def asyncio_detailed(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
@@ -219,8 +219,8 @@ async def asyncio(
 
     Args:
         flaw_id (str):
-        bugzilla_api_key (str):
-        jira_api_key (str):
+        bugzilla_api_key (Union[Unset, str]):
+        jira_api_key (Union[Unset, str]):
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer
         body (RejectRequest): Task rejection serializer

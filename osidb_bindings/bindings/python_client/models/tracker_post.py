@@ -26,6 +26,7 @@ class TrackerPost(OSIDBModel):
     """Tracker serializer
 
     Attributes:
+        affects (list[UUID]):
         cve_id (str):
         errata (list['Erratum']):
         ps_update_stream (str):
@@ -42,9 +43,9 @@ class TrackerPost(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        affects (Union[Unset, list[UUID]]):
     """
 
+    affects: list[UUID]
     cve_id: str
     errata: list["Erratum"]
     ps_update_stream: str
@@ -59,10 +60,19 @@ class TrackerPost(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    affects: Union[Unset, list[UUID]] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        affects: list[str] = UNSET
+        if not isinstance(self.affects, Unset):
+            affects = []
+            for affects_item_data in self.affects:
+                affects_item: str = UNSET
+                if not isinstance(affects_item_data, Unset):
+                    affects_item = str(affects_item_data)
+
+                affects.append(affects_item)
+
         cve_id = self.cve_id
 
         errata: list[dict[str, Any]] = UNSET
@@ -149,18 +159,10 @@ class TrackerPost(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        affects: Union[Unset, list[str]] = UNSET
-        if not isinstance(self.affects, Unset):
-            affects = []
-            for affects_item_data in self.affects:
-                affects_item: str = UNSET
-                if not isinstance(affects_item_data, Unset):
-                    affects_item = str(affects_item_data)
-
-                affects.append(affects_item)
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(affects, Unset):
+            field_dict["affects"] = affects
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(errata, Unset):
@@ -189,8 +191,6 @@ class TrackerPost(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(affects, Unset):
-            field_dict["affects"] = affects
 
         return field_dict
 
@@ -200,6 +200,22 @@ class TrackerPost(OSIDBModel):
         from ..models.erratum import Erratum
 
         d = src_dict.copy()
+        affects = []
+        _affects = d.pop("affects", UNSET)
+        for affects_item_data in _affects or []:
+            _affects_item = affects_item_data
+            affects_item: UUID
+            if isinstance(_affects_item, Unset):
+                affects_item = UNSET
+            else:
+                affects_item = (
+                    _affects_item
+                    if isinstance(_affects_item, UUID)
+                    else UUID(_affects_item)
+                )
+
+            affects.append(affects_item)
+
         cve_id = d.pop("cve_id", UNSET)
 
         errata = []
@@ -335,23 +351,8 @@ class TrackerPost(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        affects = []
-        _affects = d.pop("affects", UNSET)
-        for affects_item_data in _affects or []:
-            _affects_item = affects_item_data
-            affects_item: UUID
-            if isinstance(_affects_item, Unset):
-                affects_item = UNSET
-            else:
-                affects_item = (
-                    _affects_item
-                    if isinstance(_affects_item, UUID)
-                    else UUID(_affects_item)
-                )
-
-            affects.append(affects_item)
-
         tracker_post = cls(
+            affects=affects,
             cve_id=cve_id,
             errata=errata,
             ps_update_stream=ps_update_stream,
@@ -366,7 +367,6 @@ class TrackerPost(OSIDBModel):
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            affects=affects,
         )
 
         tracker_post.additional_properties = d

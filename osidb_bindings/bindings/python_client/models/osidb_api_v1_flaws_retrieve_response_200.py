@@ -67,6 +67,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
         major_incident_state (Union[BlankEnum, MajorIncidentStateEnum, Unset]):
         major_incident_start_dt (Union[None, Unset, datetime.datetime]):
         nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
+        aegis_meta (Union[Unset, Any]):
         group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
         team_id (Union[Unset, str]):
@@ -109,6 +110,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
     major_incident_state: Union[BlankEnum, MajorIncidentStateEnum, Unset] = UNSET
     major_incident_start_dt: Union[None, Unset, datetime.datetime] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
+    aegis_meta: Union[Unset, Any] = UNSET
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
     team_id: Union[Unset, str] = UNSET
@@ -354,6 +356,8 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             if not isinstance(self.nist_cvss_validation, Unset):
                 nist_cvss_validation = BlankEnum(self.nist_cvss_validation).value
 
+        aegis_meta = self.aegis_meta
+
         group_key = self.group_key
 
         owner = self.owner
@@ -434,6 +438,8 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             field_dict["major_incident_start_dt"] = major_incident_start_dt
         if not isinstance(nist_cvss_validation, Unset):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
+        if not isinstance(aegis_meta, Unset):
+            field_dict["aegis_meta"] = aegis_meta
         if not isinstance(group_key, Unset):
             field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
@@ -873,6 +879,8 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             d.pop("nist_cvss_validation", UNSET)
         )
 
+        aegis_meta = d.pop("aegis_meta", UNSET)
+
         group_key = d.pop("group_key", UNSET)
 
         owner = d.pop("owner", UNSET)
@@ -924,6 +932,7 @@ class OsidbApiV1FlawsRetrieveResponse200(OSIDBModel):
             major_incident_state=major_incident_state,
             major_incident_start_dt=major_incident_start_dt,
             nist_cvss_validation=nist_cvss_validation,
+            aegis_meta=aegis_meta,
             group_key=group_key,
             owner=owner,
             team_id=team_id,

@@ -76,7 +76,8 @@ def sync_detailed(
         FlawPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsCreateResponse201]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -117,7 +118,8 @@ def sync(
         FlawPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsCreateResponse201]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -148,7 +150,8 @@ async def asyncio_detailed(
         FlawPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsCreateResponse201]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
@@ -189,7 +192,8 @@ async def asyncio(
         FlawPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsCreateResponse201]:
-    """
+    """View for the flaw model adapted to affects v1
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
