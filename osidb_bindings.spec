@@ -1,5 +1,5 @@
 %define name osidb_bindings
-%define version 5.0.0
+%define version 5.1.0
 %define release 0%{?dist}
 
 Name:           %{name}

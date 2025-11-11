@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.1.0] - 2025-11-11
+### Added
+- support flaw reset and revert operations (OSIDB-4504)
+
+
 ## [5.0.0] - 2025-11-01
 ### Added
 - support API endpoint version choice (OSIDB-4413)
