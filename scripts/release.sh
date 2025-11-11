@@ -14,22 +14,22 @@ get_new_version() {
         echo "Error: Could not fetch tags from ${osidb_repo_url}"
         exit 1
     fi
-    local split_osidb_version=($(echo "${latest_osidb_version}" | tr "." '\n'))
+    IFS='.' read -ra split_osidb_version <<< "${latest_osidb_version}"
 
     # PATCH version is not synced between OSIDB and bindings, set it to zero
     split_osidb_version[2]="0"
 
     # Get latest tagged bindings version
-    latest_bindings_version=$(git tag --sort '-authordate' | head -n 1)
-    local split_bindings_version=($(echo "${latest_bindings_version}" | tr "." '\n'))
+    latest_bindings_version=$(git tag --sort=-v:refname | head -n 1)
+    IFS='.' read -ra split_bindings_version <<< "${latest_bindings_version}"
 
     # Based on the versions check whether the major/minor release is needed
     if [ ${split_osidb_version[0]} -gt ${split_bindings_version[0]} ]; then
         echo "New major version of OSIDB found [${latest_osidb_version}]"
-        new_version=$(echo $(local IFS="." ; echo "${split_osidb_version[*]}"))
+        new_version=$(IFS='.'; echo "${split_osidb_version[*]}")
     elif [ ${split_osidb_version[1]} -gt ${split_bindings_version[1]} ];then
         echo "New minor version of OSIDB found [${latest_osidb_version}]"
-        new_version=$(echo $(local IFS="." ; echo "${split_osidb_version[*]}"))
+        new_version=$(IFS='.'; echo "${split_osidb_version[*]}")
     else
         echo "No new major or minor version of OSIDB. Release is not needed."
         echo "OSIDB latest version: ${latest_osidb_version}"
