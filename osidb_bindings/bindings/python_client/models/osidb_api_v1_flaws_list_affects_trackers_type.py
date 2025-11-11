@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class OsidbApiV1FlawsListAffectsTrackerType(str, Enum):
+class OsidbApiV1FlawsListAffectsTrackersType(str, Enum):
     BUGZILLA = "BUGZILLA"
     JIRA = "JIRA"
 
