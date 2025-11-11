@@ -9,6 +9,9 @@ from dateutil.parser import isoparse
 
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
+from ..models.delegated_not_affected_justification_enum import (
+    DelegatedNotAffectedJustificationEnum,
+)
 from ..models.impact_enum import ImpactEnum
 from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.resolution_enum import ResolutionEnum
@@ -36,7 +39,7 @@ class Affect(OSIDBModel):
         tracker (Union['Tracker', None]):
         delegated_resolution (str):
         cvss_scores (list['AffectCVSS']):
-        delegated_not_affected_justification (str):
+        delegated_not_affected_justification (Union[BlankEnum, DelegatedNotAffectedJustificationEnum]):
         resolved_dt (Union[None, datetime.datetime]):
         labels (list[str]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
@@ -62,7 +65,9 @@ class Affect(OSIDBModel):
     tracker: Union["Tracker", None]
     delegated_resolution: str
     cvss_scores: list["AffectCVSS"]
-    delegated_not_affected_justification: str
+    delegated_not_affected_justification: Union[
+        BlankEnum, DelegatedNotAffectedJustificationEnum
+    ]
     resolved_dt: Union[None, datetime.datetime]
     labels: list[str]
     embargoed: bool
@@ -120,7 +125,27 @@ class Affect(OSIDBModel):
 
                 cvss_scores.append(cvss_scores_item)
 
-        delegated_not_affected_justification = self.delegated_not_affected_justification
+        delegated_not_affected_justification: str
+        if isinstance(self.delegated_not_affected_justification, Unset):
+            delegated_not_affected_justification = UNSET
+        elif isinstance(
+            self.delegated_not_affected_justification,
+            DelegatedNotAffectedJustificationEnum,
+        ):
+            delegated_not_affected_justification = UNSET
+            if not isinstance(self.delegated_not_affected_justification, Unset):
+                delegated_not_affected_justification = (
+                    DelegatedNotAffectedJustificationEnum(
+                        self.delegated_not_affected_justification
+                    ).value
+                )
+
+        else:
+            delegated_not_affected_justification = UNSET
+            if not isinstance(self.delegated_not_affected_justification, Unset):
+                delegated_not_affected_justification = BlankEnum(
+                    self.delegated_not_affected_justification
+                ).value
 
         resolved_dt: Union[None, str]
         if isinstance(self.resolved_dt, Unset):
@@ -341,8 +366,49 @@ class Affect(OSIDBModel):
 
             cvss_scores.append(cvss_scores_item)
 
-        delegated_not_affected_justification = d.pop(
-            "delegated_not_affected_justification", UNSET
+        def _parse_delegated_not_affected_justification(
+            data: object,
+        ) -> Union[BlankEnum, DelegatedNotAffectedJustificationEnum]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _delegated_not_affected_justification_type_0 = data
+                delegated_not_affected_justification_type_0: (
+                    DelegatedNotAffectedJustificationEnum
+                )
+                if isinstance(_delegated_not_affected_justification_type_0, Unset):
+                    delegated_not_affected_justification_type_0 = UNSET
+                else:
+                    delegated_not_affected_justification_type_0 = (
+                        DelegatedNotAffectedJustificationEnum(
+                            _delegated_not_affected_justification_type_0
+                        )
+                    )
+
+                return delegated_not_affected_justification_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _delegated_not_affected_justification_type_1 = data
+            delegated_not_affected_justification_type_1: BlankEnum
+            if isinstance(_delegated_not_affected_justification_type_1, Unset):
+                delegated_not_affected_justification_type_1 = UNSET
+            else:
+                delegated_not_affected_justification_type_1 = BlankEnum(
+                    _delegated_not_affected_justification_type_1
+                )
+
+            return delegated_not_affected_justification_type_1
+
+        delegated_not_affected_justification = (
+            _parse_delegated_not_affected_justification(
+                d.pop("delegated_not_affected_justification", UNSET)
+            )
         )
 
         def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:

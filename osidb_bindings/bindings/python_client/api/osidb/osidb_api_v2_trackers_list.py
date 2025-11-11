@@ -76,6 +76,7 @@ QUERY_PARAMS = {
     "affects__impact": OsidbApiV2TrackersListAffectsImpact,
     "affects__ps_component": str,
     "affects__ps_module": str,
+    "affects__ps_update_stream": str,
     "affects__resolution": OsidbApiV2TrackersListAffectsResolution,
     "affects__updated_dt": datetime.datetime,
     "affects__updated_dt__date": datetime.date,
@@ -169,6 +170,7 @@ def _get_kwargs(
     affects_impact: Union[Unset, OsidbApiV2TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
+    affects_ps_update_stream: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV2TrackersListAffectsResolution] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -490,6 +492,8 @@ def _get_kwargs(
 
     params["affects__ps_module"] = affects_ps_module
 
+    params["affects__ps_update_stream"] = affects_ps_update_stream
+
     json_affects_resolution: Union[Unset, str] = UNSET
     if not isinstance(affects_resolution, Unset):
         json_affects_resolution = OsidbApiV2TrackersListAffectsResolution(
@@ -796,6 +800,7 @@ def sync_detailed(
     affects_impact: Union[Unset, OsidbApiV2TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
+    affects_ps_update_stream: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV2TrackersListAffectsResolution] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -884,6 +889,7 @@ def sync_detailed(
         affects_impact (Union[Unset, OsidbApiV2TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
+        affects_ps_update_stream (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV2TrackersListAffectsResolution]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
@@ -980,6 +986,7 @@ def sync_detailed(
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
+        affects_ps_update_stream=affects_ps_update_stream,
         affects_resolution=affects_resolution,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -1083,6 +1090,7 @@ def sync(
     affects_impact: Union[Unset, OsidbApiV2TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
+    affects_ps_update_stream: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV2TrackersListAffectsResolution] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1171,6 +1179,7 @@ def sync(
         affects_impact (Union[Unset, OsidbApiV2TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
+        affects_ps_update_stream (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV2TrackersListAffectsResolution]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
@@ -1267,6 +1276,7 @@ def sync(
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
+        affects_ps_update_stream=affects_ps_update_stream,
         affects_resolution=affects_resolution,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -1360,6 +1370,7 @@ async def asyncio_detailed(
     affects_impact: Union[Unset, OsidbApiV2TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
+    affects_ps_update_stream: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV2TrackersListAffectsResolution] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1448,6 +1459,7 @@ async def asyncio_detailed(
         affects_impact (Union[Unset, OsidbApiV2TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
+        affects_ps_update_stream (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV2TrackersListAffectsResolution]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
@@ -1544,6 +1556,7 @@ async def asyncio_detailed(
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
+        affects_ps_update_stream=affects_ps_update_stream,
         affects_resolution=affects_resolution,
         affects_updated_dt=affects_updated_dt,
         affects_updated_dt_date=affects_updated_dt_date,
@@ -1647,6 +1660,7 @@ async def asyncio(
     affects_impact: Union[Unset, OsidbApiV2TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
+    affects_ps_update_stream: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV2TrackersListAffectsResolution] = UNSET,
     affects_updated_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -1735,6 +1749,7 @@ async def asyncio(
         affects_impact (Union[Unset, OsidbApiV2TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
+        affects_ps_update_stream (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV2TrackersListAffectsResolution]):
         affects_updated_dt (Union[Unset, datetime.datetime]):
         affects_updated_dt_date (Union[Unset, datetime.date]):
@@ -1832,6 +1847,7 @@ async def asyncio(
             affects_impact=affects_impact,
             affects_ps_component=affects_ps_component,
             affects_ps_module=affects_ps_module,
+            affects_ps_update_stream=affects_ps_update_stream,
             affects_resolution=affects_resolution,
             affects_updated_dt=affects_updated_dt,
             affects_updated_dt_date=affects_updated_dt_date,

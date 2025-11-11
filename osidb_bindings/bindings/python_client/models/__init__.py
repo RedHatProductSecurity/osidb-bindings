@@ -47,6 +47,9 @@ from .collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from .comment import Comment
 from .comment_request import CommentRequest
 from .cvss_version_enum import CvssVersionEnum
+from .delegated_not_affected_justification_enum import (
+    DelegatedNotAffectedJustificationEnum,
+)
 from .epss import EPSS
 from .erratum import Erratum
 from .exploit_only_report_data import ExploitOnlyReportData
@@ -273,8 +276,15 @@ from .osidb_api_v1_flaws_labels_retrieve_response_200 import (
 from .osidb_api_v1_flaws_labels_update_response_200 import (
     OsidbApiV1FlawsLabelsUpdateResponse200,
 )
-from .osidb_api_v1_flaws_list_affects_tracker_type import (
-    OsidbApiV1FlawsListAffectsTrackerType,
+from .osidb_api_v1_flaws_list_affects_affectedness import (
+    OsidbApiV1FlawsListAffectsAffectedness,
+)
+from .osidb_api_v1_flaws_list_affects_impact import OsidbApiV1FlawsListAffectsImpact
+from .osidb_api_v1_flaws_list_affects_resolution import (
+    OsidbApiV1FlawsListAffectsResolution,
+)
+from .osidb_api_v1_flaws_list_affects_trackers_type import (
+    OsidbApiV1FlawsListAffectsTrackersType,
 )
 from .osidb_api_v1_flaws_list_cvss_scores_issuer import (
     OsidbApiV1FlawsListCvssScoresIssuer,
@@ -361,6 +371,21 @@ from .osidb_api_v1_status_retrieve_response_200_osidb_data import (
 )
 from .osidb_api_v1_status_retrieve_response_200_osidb_service import (
     OsidbApiV1StatusRetrieveResponse200OsidbService,
+)
+from .osidb_api_v1_trackers_list_affects_affectedness import (
+    OsidbApiV1TrackersListAffectsAffectedness,
+)
+from .osidb_api_v1_trackers_list_affects_flaw_impact import (
+    OsidbApiV1TrackersListAffectsFlawImpact,
+)
+from .osidb_api_v1_trackers_list_affects_flaw_source import (
+    OsidbApiV1TrackersListAffectsFlawSource,
+)
+from .osidb_api_v1_trackers_list_affects_impact import (
+    OsidbApiV1TrackersListAffectsImpact,
+)
+from .osidb_api_v1_trackers_list_affects_resolution import (
+    OsidbApiV1TrackersListAffectsResolution,
 )
 from .osidb_api_v1_trackers_list_order_item import OsidbApiV1TrackersListOrderItem
 from .osidb_api_v1_trackers_list_response_200 import OsidbApiV1TrackersListResponse200
@@ -603,6 +628,7 @@ __all__ = (
     "Comment",
     "CommentRequest",
     "CvssVersionEnum",
+    "DelegatedNotAffectedJustificationEnum",
     "EPSS",
     "Erratum",
     "ExploitOnlyReportData",
@@ -723,7 +749,10 @@ __all__ = (
     "OsidbApiV1FlawsLabelsListResponse200",
     "OsidbApiV1FlawsLabelsRetrieveResponse200",
     "OsidbApiV1FlawsLabelsUpdateResponse200",
-    "OsidbApiV1FlawsListAffectsTrackerType",
+    "OsidbApiV1FlawsListAffectsAffectedness",
+    "OsidbApiV1FlawsListAffectsImpact",
+    "OsidbApiV1FlawsListAffectsResolution",
+    "OsidbApiV1FlawsListAffectsTrackersType",
     "OsidbApiV1FlawsListCvssScoresIssuer",
     "OsidbApiV1FlawsListImpact",
     "OsidbApiV1FlawsListMajorIncidentState",
@@ -760,6 +789,11 @@ __all__ = (
     "OsidbApiV1StatusRetrieveResponse200",
     "OsidbApiV1StatusRetrieveResponse200OsidbData",
     "OsidbApiV1StatusRetrieveResponse200OsidbService",
+    "OsidbApiV1TrackersListAffectsAffectedness",
+    "OsidbApiV1TrackersListAffectsFlawImpact",
+    "OsidbApiV1TrackersListAffectsFlawSource",
+    "OsidbApiV1TrackersListAffectsImpact",
+    "OsidbApiV1TrackersListAffectsResolution",
     "OsidbApiV1TrackersListOrderItem",
     "OsidbApiV1TrackersListResponse200",
     "OsidbApiV1TrackersListType",
