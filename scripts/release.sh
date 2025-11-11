@@ -5,24 +5,15 @@ source scripts/helpers.sh
 
 # Get number of the latest OSIDB version
 get_new_version() {
-    osidb_github_base_link="https://api.github.com/repos/RedHatProductSecurity/osidb"
+    osidb_repo_url="https://github.com/RedHatProductSecurity/osidb.git"
 
-    # Get latest tagged OSIDB version
-    local curl_args=(-s -f "${osidb_github_base_link}/tags" -f -w 'HTTPSTATUS:%{http_code}\n')
-    if [ -n "${GITHUB_API_TOKEN}" ]; then
-        curl_args+=(-H \"Authorization: Bearer ${GITHUB_API_TOKEN}\")
-    fi
-    local response=$(curl "${curl_args[@]}")
+    # Get latest tagged OSIDB version using git ls-remote
+    latest_osidb_version=$(git ls-remote --tags --refs --sort=-v:refname "${osidb_repo_url}" | head -n 1 | sed 's/.*refs\/tags\///')
 
-    local body=$(echo ${response} | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
-    local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
-
-    if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${osidb_github_base_link}/tags\" [HTTP status: ${status}]"
+    if [ -z "${latest_osidb_version}" ]; then
+        echo "Error: Could not fetch tags from ${osidb_repo_url}"
         exit 1
     fi
-
-    latest_osidb_version=$(echo ${body} | jq -r ".[0] | .name")
     local split_osidb_version=($(echo "${latest_osidb_version}" | tr "." '\n'))
 
     # PATCH version is not synced between OSIDB and bindings, set it to zero

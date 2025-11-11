@@ -5,25 +5,19 @@ source scripts/helpers.sh
 
 # Get number of the latest OSIDB version
 get_new_version() {
-    osidb_github_base_link="https://api.github.com/repos/RedHatProductSecurity/osidb"
+    osidb_repo_url="https://github.com/RedHatProductSecurity/osidb.git"
 
-    # Get latest OSIDB release branch name
-    local curl_args=(-s -f "${osidb_github_base_link}/branches" -f -w 'HTTPSTATUS:%{http_code}\n')
-    if [ -n "${GITHUB_API_TOKEN}" ]; then
-        curl_args+=(-H \"Authorization: Bearer ${GITHUB_API_TOKEN}\")
-    fi
-    local response=$(curl "${curl_args[@]}")
+    # Get latest OSIDB release branch name using git ls-remote
+    latest_osidb_release_branch=$(git ls-remote --heads "${osidb_repo_url}" 'release-*' | \
+        sed 's|.*/||' | \
+        grep -E '^release-[0-9]+\.[0-9]+\.[0-9]+$' | \
+        sort -r -V | head -n 1)
 
-    local body=$(echo ${response} | sed -E 's/HTTPSTATUS\:[0-9]{3}$//')
-    local status=$(echo ${response} | tr -d '\n' | sed -E 's/.*HTTPSTATUS:([0-9]{3})$/\1/')
-
-    if [ ! ${status} -eq 200 ]; then
-        echo "Error accessing \"${osidb_github_base_link}/branches\" [HTTP status: ${status}]"
+    if [ -z "${latest_osidb_release_branch}" ]; then
+        echo "Error: Could not fetch release branches from ${osidb_repo_url}"
         exit 1
     fi
 
-    latest_osidb_release_branch=$(echo ${body} | jq -r '.[] | .name | select(match("^release-[0-9]+\\.[0-9]+\\.[0-9]+$"))' |\
-    sort -r -V | head -n 1)
     latest_osidb_version=${latest_osidb_release_branch#"release-"}
     local split_osidb_version=($(echo "${latest_osidb_version}" | tr "." '\n'))
 
