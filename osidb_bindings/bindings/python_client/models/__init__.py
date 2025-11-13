@@ -151,6 +151,9 @@ from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post_request import FlawPackageVersionPostRequest
 from .flaw_package_version_put_request import FlawPackageVersionPutRequest
 from .flaw_post_request import FlawPostRequest
+from .flaw_put import FlawPut
+from .flaw_put_classification import FlawPutClassification
+from .flaw_put_classification_state import FlawPutClassificationState
 from .flaw_reference import FlawReference
 from .flaw_reference_post_request import FlawReferencePostRequest
 from .flaw_reference_put_request import FlawReferencePutRequest
@@ -168,8 +171,10 @@ from .flaw_v1_request import FlawV1Request
 from .flaw_version import FlawVersion
 from .flaw_version_request import FlawVersionRequest
 from .impact_enum import ImpactEnum
+from .incident_request_request import IncidentRequestRequest
 from .integration_token_get import IntegrationTokenGet
 from .issuer_enum import IssuerEnum
+from .kind_enum import KindEnum
 from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .module_component import ModuleComponent
@@ -260,6 +265,9 @@ from .osidb_api_v1_flaws_cvss_scores_retrieve_response_200 import (
 )
 from .osidb_api_v1_flaws_cvss_scores_update_response_200 import (
     OsidbApiV1FlawsCvssScoresUpdateResponse200,
+)
+from .osidb_api_v1_flaws_incident_requests_create_response_200 import (
+    OsidbApiV1FlawsIncidentRequestsCreateResponse200,
 )
 from .osidb_api_v1_flaws_labels_create_response_201 import (
     OsidbApiV1FlawsLabelsCreateResponse201,
@@ -682,6 +690,9 @@ __all__ = (
     "FlawPackageVersionPostRequest",
     "FlawPackageVersionPutRequest",
     "FlawPostRequest",
+    "FlawPut",
+    "FlawPutClassification",
+    "FlawPutClassificationState",
     "FlawReference",
     "FlawReferencePostRequest",
     "FlawReferencePutRequest",
@@ -699,8 +710,10 @@ __all__ = (
     "FlawVersion",
     "FlawVersionRequest",
     "ImpactEnum",
+    "IncidentRequestRequest",
     "IntegrationTokenGet",
     "IssuerEnum",
+    "KindEnum",
     "MajorIncidentStateEnum",
     "MaturityPreliminaryEnum",
     "ModuleComponent",
@@ -744,6 +757,7 @@ __all__ = (
     "OsidbApiV1FlawsCvssScoresListResponse200",
     "OsidbApiV1FlawsCvssScoresRetrieveResponse200",
     "OsidbApiV1FlawsCvssScoresUpdateResponse200",
+    "OsidbApiV1FlawsIncidentRequestsCreateResponse200",
     "OsidbApiV1FlawsLabelsCreateResponse201",
     "OsidbApiV1FlawsLabelsDestroyResponse204",
     "OsidbApiV1FlawsLabelsListResponse200",
