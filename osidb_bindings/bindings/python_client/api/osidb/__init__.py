@@ -21,6 +21,7 @@ from .osidb_api_v1_flaws_cvss_scores_destroy import *
 from .osidb_api_v1_flaws_cvss_scores_list import *
 from .osidb_api_v1_flaws_cvss_scores_retrieve import *
 from .osidb_api_v1_flaws_cvss_scores_update import *
+from .osidb_api_v1_flaws_incident_requests_create import *
 from .osidb_api_v1_flaws_labels_create import *
 from .osidb_api_v1_flaws_labels_destroy import *
 from .osidb_api_v1_flaws_labels_list import *
@@ -106,6 +107,7 @@ ENDPOINT_NAMES = [
     "osidb_api_v1_flaws_cvss_scores_retrieve",
     "osidb_api_v1_flaws_cvss_scores_update",
     "osidb_api_v1_flaws_cvss_scores_destroy",
+    "osidb_api_v1_flaws_incident_requests_create",
     "osidb_api_v1_flaws_labels_list",
     "osidb_api_v1_flaws_labels_create",
     "osidb_api_v1_flaws_labels_retrieve",

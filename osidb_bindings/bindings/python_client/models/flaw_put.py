@@ -27,12 +27,13 @@ if TYPE_CHECKING:
     from ..models.package import Package
 
 
-T = TypeVar("T", bound="OsidbApiV2FlawsUpdateResponse200")
+T = TypeVar("T", bound="FlawPut")
 
 
 @_attrs_define
-class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
-    """
+class FlawPut(OSIDBModel):
+    """serialize flaw model
+
     Attributes:
         uuid (UUID):
         title (str):
@@ -71,10 +72,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
         team_id (Union[Unset, str]):
-        dt (Union[Unset, datetime.datetime]):
-        env (Union[Unset, str]):
-        revision (Union[Unset, str]):
-        version (Union[Unset, str]):
     """
 
     uuid: UUID
@@ -114,10 +111,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
     group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
     team_id: Union[Unset, str] = UNSET
-    dt: Union[Unset, datetime.datetime] = UNSET
-    env: Union[Unset, str] = UNSET
-    revision: Union[Unset, str] = UNSET
-    version: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -364,16 +357,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
 
         team_id = self.team_id
 
-        dt: Union[Unset, str] = UNSET
-        if not isinstance(self.dt, Unset):
-            dt = self.dt.isoformat()
-
-        env = self.env
-
-        revision = self.revision
-
-        version = self.version
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
@@ -446,14 +429,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             field_dict["owner"] = owner
         if not isinstance(team_id, Unset):
             field_dict["team_id"] = team_id
-        if not isinstance(dt, Unset):
-            field_dict["dt"] = dt
-        if not isinstance(env, Unset):
-            field_dict["env"] = env
-        if not isinstance(revision, Unset):
-            field_dict["revision"] = revision
-        if not isinstance(version, Unset):
-            field_dict["version"] = version
 
         return field_dict
 
@@ -887,20 +862,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
 
         team_id = d.pop("team_id", UNSET)
 
-        _dt = d.pop("dt", UNSET)
-        dt: Union[Unset, datetime.datetime]
-        if isinstance(_dt, Unset):
-            dt = UNSET
-        else:
-            dt = isoparse(_dt)
-
-        env = d.pop("env", UNSET)
-
-        revision = d.pop("revision", UNSET)
-
-        version = d.pop("version", UNSET)
-
-        osidb_api_v2_flaws_update_response_200 = cls(
+        flaw_put = cls(
             uuid=uuid,
             title=title,
             trackers=trackers,
@@ -936,14 +898,10 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             group_key=group_key,
             owner=owner,
             team_id=team_id,
-            dt=dt,
-            env=env,
-            revision=revision,
-            version=version,
         )
 
-        osidb_api_v2_flaws_update_response_200.additional_properties = d
-        return osidb_api_v2_flaws_update_response_200
+        flaw_put.additional_properties = d
+        return flaw_put
 
     @classmethod
     def get_fields(cls):

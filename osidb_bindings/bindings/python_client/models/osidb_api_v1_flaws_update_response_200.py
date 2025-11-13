@@ -20,9 +20,9 @@ if TYPE_CHECKING:
     from ..models.alert import Alert
     from ..models.comment import Comment
     from ..models.flaw_acknowledgment import FlawAcknowledgment
-    from ..models.flaw_classification import FlawClassification
     from ..models.flaw_collaborator import FlawCollaborator
     from ..models.flaw_cvss import FlawCVSS
+    from ..models.flaw_put_classification import FlawPutClassification
     from ..models.flaw_reference import FlawReference
     from ..models.package import Package
 
@@ -50,7 +50,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        classification (FlawClassification):
+        classification (FlawPutClassification):
         task_key (Union[None, str]):
         alerts (list['Alert']):
         cve_id (Union[None, Unset, str]):
@@ -91,7 +91,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     embargoed: bool
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    classification: "FlawClassification"
+    classification: "FlawPutClassification"
     task_key: Union[None, str]
     alerts: list["Alert"]
     cve_id: Union[None, Unset, str] = UNSET
@@ -463,9 +463,9 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         from ..models.alert import Alert
         from ..models.comment import Comment
         from ..models.flaw_acknowledgment import FlawAcknowledgment
-        from ..models.flaw_classification import FlawClassification
         from ..models.flaw_collaborator import FlawCollaborator
         from ..models.flaw_cvss import FlawCVSS
+        from ..models.flaw_put_classification import FlawPutClassification
         from ..models.flaw_reference import FlawReference
         from ..models.package import Package
 
@@ -586,11 +586,11 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             updated_dt = isoparse(_updated_dt)
 
         _classification = d.pop("classification", UNSET)
-        classification: FlawClassification
+        classification: FlawPutClassification
         if isinstance(_classification, Unset):
             classification = UNSET
         else:
-            classification = FlawClassification.from_dict(_classification)
+            classification = FlawPutClassification.from_dict(_classification)
 
         def _parse_task_key(data: object) -> Union[None, str]:
             if data is None:
