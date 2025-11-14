@@ -64,7 +64,7 @@ def file_trackers(self, form_data: dict[str, Any], *args, **kwargs):
     sync_fn = get_sync_function(method_module)
     return sync_fn(
         *args,
-        client=self.client(),
+        client=self.session.get_client_with_new_access_token(),
         body=transformed_data,
         **kwargs,
     )
@@ -79,7 +79,7 @@ def promote_flaw(self, id, *args, **kwargs):
     return sync_fn(
         id,
         *args,
-        client=self.client(),
+        client=self.session.get_client_with_new_access_token(),
         **kwargs,
     )
 
@@ -100,7 +100,7 @@ def reject_flaw(self, id: str, form_data: dict[str, Any], *args, **kwargs):
     return sync_fn(
         id,
         *args,
-        client=self.client(),
+        client=self.session.get_client_with_new_access_token(),
         body=transformed_data,
         **kwargs,
     )
@@ -115,7 +115,7 @@ def reset_flaw(self, id, *args, **kwargs):
     return sync_fn(
         id,
         *args,
-        client=self.client(),
+        client=self.session.get_client_with_new_access_token(),
         **kwargs,
     )
 
@@ -129,7 +129,7 @@ def revert_flaw(self, id, *args, **kwargs):
     return sync_fn(
         id,
         *args,
-        client=self.client(),
+        client=self.session.get_client_with_new_access_token(),
         **kwargs,
     )
 
