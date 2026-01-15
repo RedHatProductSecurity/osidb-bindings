@@ -12,6 +12,9 @@ from ...models.osidb_api_v1_flaws_references_list_response_200 import (
 from ...models.osidb_api_v1_flaws_references_list_type import (
     OsidbApiV1FlawsReferencesListType,
 )
+from ...models.osidb_api_v1_flaws_references_list_type_in_item import (
+    OsidbApiV1FlawsReferencesListTypeInItem,
+)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
@@ -24,11 +27,13 @@ QUERY_PARAMS = {
     "created_dt__lt": datetime.datetime,
     "created_dt__lte": datetime.datetime,
     "description": str,
+    "description__in": list[str],
     "exclude_fields": list[str],
     "include_fields": list[str],
     "limit": int,
     "offset": int,
     "type": OsidbApiV1FlawsReferencesListType,
+    "type__in": list[OsidbApiV1FlawsReferencesListTypeInItem],
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
     "updated_dt__date__gte": datetime.date,
@@ -38,7 +43,9 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "url": str,
+    "url__in": list[str],
     "uuid": UUID,
+    "uuid__in": list[UUID],
 }
 
 
@@ -55,11 +62,13 @@ def _get_kwargs(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     description: Union[Unset, str] = UNSET,
+    description_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     type_: Union[Unset, OsidbApiV1FlawsReferencesListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -69,7 +78,9 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     url_query: Union[Unset, str] = UNSET,
+    url_in: Union[Unset, list[str]] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -125,6 +136,12 @@ def _get_kwargs(
 
     params["description"] = description
 
+    json_description_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(description_in, Unset):
+        json_description_in = description_in
+
+    params["description__in"] = json_description_in
+
     json_exclude_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
         json_exclude_fields = exclude_fields
@@ -146,6 +163,20 @@ def _get_kwargs(
         json_type_ = OsidbApiV1FlawsReferencesListType(type_).value
 
     params["type"] = json_type_
+
+    json_type_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(type_in, Unset):
+        json_type_in = []
+        for type_in_item_data in type_in:
+            type_in_item: str = UNSET
+            if not isinstance(type_in_item_data, Unset):
+                type_in_item = OsidbApiV1FlawsReferencesListTypeInItem(
+                    type_in_item_data
+                ).value
+
+            json_type_in.append(type_in_item)
+
+    params["type__in"] = json_type_in
 
     json_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt, Unset):
@@ -197,11 +228,29 @@ def _get_kwargs(
 
     params["url"] = url_query
 
+    json_url_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(url_in, Unset):
+        json_url_in = url_in
+
+    params["url__in"] = json_url_in
+
     json_uuid: Union[Unset, str] = UNSET
     if not isinstance(uuid, Unset):
         json_uuid = str(uuid)
 
     params["uuid"] = json_uuid
+
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
 
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
@@ -260,11 +309,13 @@ def sync_detailed(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     description: Union[Unset, str] = UNSET,
+    description_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     type_: Union[Unset, OsidbApiV1FlawsReferencesListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -274,7 +325,9 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     url_query: Union[Unset, str] = UNSET,
+    url_in: Union[Unset, list[str]] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsReferencesListResponse200]:
     """
     Args:
@@ -288,11 +341,13 @@ def sync_detailed(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         description (Union[Unset, str]):
+        description_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         type_ (Union[Unset, OsidbApiV1FlawsReferencesListType]):
+        type_in (Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -302,7 +357,9 @@ def sync_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         url_query (Union[Unset, str]):
+        url_in (Union[Unset, list[str]]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -324,11 +381,13 @@ def sync_detailed(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         description=description,
+        description_in=description_in,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -338,7 +397,9 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         url_query=url_query,
+        url_in=url_in,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     response = requests.get(
@@ -365,11 +426,13 @@ def sync(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     description: Union[Unset, str] = UNSET,
+    description_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     type_: Union[Unset, OsidbApiV1FlawsReferencesListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -379,7 +442,9 @@ def sync(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     url_query: Union[Unset, str] = UNSET,
+    url_in: Union[Unset, list[str]] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsReferencesListResponse200]:
     """
     Args:
@@ -393,11 +458,13 @@ def sync(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         description (Union[Unset, str]):
+        description_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         type_ (Union[Unset, OsidbApiV1FlawsReferencesListType]):
+        type_in (Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -407,7 +474,9 @@ def sync(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         url_query (Union[Unset, str]):
+        url_in (Union[Unset, list[str]]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -429,11 +498,13 @@ def sync(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         description=description,
+        description_in=description_in,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -443,7 +514,9 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         url_query=url_query,
+        url_in=url_in,
         uuid=uuid,
+        uuid_in=uuid_in,
     ).parsed
 
 
@@ -460,11 +533,13 @@ async def asyncio_detailed(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     description: Union[Unset, str] = UNSET,
+    description_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     type_: Union[Unset, OsidbApiV1FlawsReferencesListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -474,7 +549,9 @@ async def asyncio_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     url_query: Union[Unset, str] = UNSET,
+    url_in: Union[Unset, list[str]] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsReferencesListResponse200]:
     """
     Args:
@@ -488,11 +565,13 @@ async def asyncio_detailed(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         description (Union[Unset, str]):
+        description_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         type_ (Union[Unset, OsidbApiV1FlawsReferencesListType]):
+        type_in (Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -502,7 +581,9 @@ async def asyncio_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         url_query (Union[Unset, str]):
+        url_in (Union[Unset, list[str]]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -524,11 +605,13 @@ async def asyncio_detailed(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         description=description,
+        description_in=description_in,
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -538,7 +621,9 @@ async def asyncio_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         url_query=url_query,
+        url_in=url_in,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     async with client.get_async_session().get(
@@ -565,11 +650,13 @@ async def asyncio(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     description: Union[Unset, str] = UNSET,
+    description_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     type_: Union[Unset, OsidbApiV1FlawsReferencesListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -579,7 +666,9 @@ async def asyncio(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     url_query: Union[Unset, str] = UNSET,
+    url_in: Union[Unset, list[str]] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsReferencesListResponse200]:
     """
     Args:
@@ -593,11 +682,13 @@ async def asyncio(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         description (Union[Unset, str]):
+        description_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         type_ (Union[Unset, OsidbApiV1FlawsReferencesListType]):
+        type_in (Union[Unset, list[OsidbApiV1FlawsReferencesListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -607,7 +698,9 @@ async def asyncio(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         url_query (Union[Unset, str]):
+        url_in (Union[Unset, list[str]]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -630,11 +723,13 @@ async def asyncio(
             created_dt_lt=created_dt_lt,
             created_dt_lte=created_dt_lte,
             description=description,
+            description_in=description_in,
             exclude_fields=exclude_fields,
             include_fields=include_fields,
             limit=limit,
             offset=offset,
             type_=type_,
+            type_in=type_in,
             updated_dt=updated_dt,
             updated_dt_date=updated_dt_date,
             updated_dt_date_gte=updated_dt_date_gte,
@@ -644,6 +739,8 @@ async def asyncio(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             url_query=url_query,
+            url_in=url_in,
             uuid=uuid,
+            uuid_in=uuid_in,
         )
     ).parsed

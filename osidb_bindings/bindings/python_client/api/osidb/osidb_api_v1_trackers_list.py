@@ -15,11 +15,17 @@ from ...models.osidb_api_v1_trackers_list_affects_flaw_impact import (
 from ...models.osidb_api_v1_trackers_list_affects_flaw_source import (
     OsidbApiV1TrackersListAffectsFlawSource,
 )
+from ...models.osidb_api_v1_trackers_list_affects_flaw_visibility import (
+    OsidbApiV1TrackersListAffectsFlawVisibility,
+)
 from ...models.osidb_api_v1_trackers_list_affects_impact import (
     OsidbApiV1TrackersListAffectsImpact,
 )
 from ...models.osidb_api_v1_trackers_list_affects_resolution import (
     OsidbApiV1TrackersListAffectsResolution,
+)
+from ...models.osidb_api_v1_trackers_list_affects_visibility import (
+    OsidbApiV1TrackersListAffectsVisibility,
 )
 from ...models.osidb_api_v1_trackers_list_order_item import (
     OsidbApiV1TrackersListOrderItem,
@@ -28,6 +34,12 @@ from ...models.osidb_api_v1_trackers_list_response_200 import (
     OsidbApiV1TrackersListResponse200,
 )
 from ...models.osidb_api_v1_trackers_list_type import OsidbApiV1TrackersListType
+from ...models.osidb_api_v1_trackers_list_type_in_item import (
+    OsidbApiV1TrackersListTypeInItem,
+)
+from ...models.osidb_api_v1_trackers_list_visibility import (
+    OsidbApiV1TrackersListVisibility,
+)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
@@ -73,6 +85,7 @@ QUERY_PARAMS = {
     "affects__flaw__updated_dt__lt": datetime.datetime,
     "affects__flaw__updated_dt__lte": datetime.datetime,
     "affects__flaw__uuid": UUID,
+    "affects__flaw__visibility": OsidbApiV1TrackersListAffectsFlawVisibility,
     "affects__impact": OsidbApiV1TrackersListAffectsImpact,
     "affects__ps_component": str,
     "affects__ps_module": str,
@@ -86,6 +99,7 @@ QUERY_PARAMS = {
     "affects__updated_dt__lt": datetime.datetime,
     "affects__updated_dt__lte": datetime.datetime,
     "affects__uuid": UUID,
+    "affects__visibility": OsidbApiV1TrackersListAffectsVisibility,
     "created_dt": datetime.datetime,
     "created_dt__date": datetime.date,
     "created_dt__date__gte": datetime.date,
@@ -95,18 +109,24 @@ QUERY_PARAMS = {
     "created_dt__lt": datetime.datetime,
     "created_dt__lte": datetime.datetime,
     "cve_id": str,
+    "cve_id__in": list[str],
     "embargoed": bool,
     "exclude_fields": list[str],
     "external_system_id": str,
+    "external_system_id__in": list[str],
     "include_fields": list[str],
     "include_meta_attr": list[str],
     "limit": int,
     "offset": int,
     "order": list[OsidbApiV1TrackersListOrderItem],
     "ps_update_stream": str,
+    "ps_update_stream__in": list[str],
     "resolution": str,
+    "resolution__in": list[str],
     "status": str,
+    "status__in": list[str],
     "type": OsidbApiV1TrackersListType,
+    "type__in": list[OsidbApiV1TrackersListTypeInItem],
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
     "updated_dt__date__gte": datetime.date,
@@ -116,6 +136,8 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "uuid": UUID,
+    "uuid__in": list[UUID],
+    "visibility": OsidbApiV1TrackersListVisibility,
 }
 
 
@@ -166,6 +188,9 @@ def _get_kwargs(
     affects_flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_uuid: Union[Unset, UUID] = UNSET,
+    affects_flaw_visibility: Union[
+        Unset, OsidbApiV1TrackersListAffectsFlawVisibility
+    ] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -179,6 +204,7 @@ def _get_kwargs(
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_visibility: Union[Unset, OsidbApiV1TrackersListAffectsVisibility] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -188,18 +214,24 @@ def _get_kwargs(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     cve_id: Union[Unset, str] = UNSET,
+    cve_id_in: Union[Unset, list[str]] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV1TrackersListOrderItem]] = UNSET,
     ps_update_stream: Union[Unset, str] = UNSET,
+    ps_update_stream_in: Union[Unset, list[str]] = UNSET,
     resolution: Union[Unset, str] = UNSET,
+    resolution_in: Union[Unset, list[str]] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_in: Union[Unset, list[str]] = UNSET,
     type_: Union[Unset, OsidbApiV1TrackersListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1TrackersListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -209,6 +241,8 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
+    visibility: Union[Unset, OsidbApiV1TrackersListVisibility] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -480,6 +514,14 @@ def _get_kwargs(
 
     params["affects__flaw__uuid"] = json_affects_flaw_uuid
 
+    json_affects_flaw_visibility: Union[Unset, str] = UNSET
+    if not isinstance(affects_flaw_visibility, Unset):
+        json_affects_flaw_visibility = OsidbApiV1TrackersListAffectsFlawVisibility(
+            affects_flaw_visibility
+        ).value
+
+    params["affects__flaw__visibility"] = json_affects_flaw_visibility
+
     json_affects_impact: Union[Unset, str] = UNSET
     if not isinstance(affects_impact, Unset):
         json_affects_impact = OsidbApiV1TrackersListAffectsImpact(affects_impact).value
@@ -552,6 +594,14 @@ def _get_kwargs(
 
     params["affects__uuid"] = json_affects_uuid
 
+    json_affects_visibility: Union[Unset, str] = UNSET
+    if not isinstance(affects_visibility, Unset):
+        json_affects_visibility = OsidbApiV1TrackersListAffectsVisibility(
+            affects_visibility
+        ).value
+
+    params["affects__visibility"] = json_affects_visibility
+
     json_created_dt: Union[Unset, str] = UNSET
     if not isinstance(created_dt, Unset):
         json_created_dt = created_dt.isoformat()
@@ -602,6 +652,12 @@ def _get_kwargs(
 
     params["cve_id"] = cve_id
 
+    json_cve_id_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(cve_id_in, Unset):
+        json_cve_id_in = cve_id_in
+
+    params["cve_id__in"] = json_cve_id_in
+
     params["embargoed"] = embargoed
 
     json_exclude_fields: Union[Unset, list[str]] = UNSET
@@ -611,6 +667,12 @@ def _get_kwargs(
     params["exclude_fields"] = json_exclude_fields
 
     params["external_system_id"] = external_system_id
+
+    json_external_system_id_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(external_system_id_in, Unset):
+        json_external_system_id_in = external_system_id_in
+
+    params["external_system_id__in"] = json_external_system_id_in
 
     json_include_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(include_fields, Unset):
@@ -642,15 +704,45 @@ def _get_kwargs(
 
     params["ps_update_stream"] = ps_update_stream
 
+    json_ps_update_stream_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(ps_update_stream_in, Unset):
+        json_ps_update_stream_in = ps_update_stream_in
+
+    params["ps_update_stream__in"] = json_ps_update_stream_in
+
     params["resolution"] = resolution
 
+    json_resolution_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(resolution_in, Unset):
+        json_resolution_in = resolution_in
+
+    params["resolution__in"] = json_resolution_in
+
     params["status"] = status
+
+    json_status_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(status_in, Unset):
+        json_status_in = status_in
+
+    params["status__in"] = json_status_in
 
     json_type_: Union[Unset, str] = UNSET
     if not isinstance(type_, Unset):
         json_type_ = OsidbApiV1TrackersListType(type_).value
 
     params["type"] = json_type_
+
+    json_type_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(type_in, Unset):
+        json_type_in = []
+        for type_in_item_data in type_in:
+            type_in_item: str = UNSET
+            if not isinstance(type_in_item_data, Unset):
+                type_in_item = OsidbApiV1TrackersListTypeInItem(type_in_item_data).value
+
+            json_type_in.append(type_in_item)
+
+    params["type__in"] = json_type_in
 
     json_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt, Unset):
@@ -705,6 +797,24 @@ def _get_kwargs(
         json_uuid = str(uuid)
 
     params["uuid"] = json_uuid
+
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
+
+    json_visibility: Union[Unset, str] = UNSET
+    if not isinstance(visibility, Unset):
+        json_visibility = OsidbApiV1TrackersListVisibility(visibility).value
+
+    params["visibility"] = json_visibility
 
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
@@ -793,6 +903,9 @@ def sync_detailed(
     affects_flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_uuid: Union[Unset, UUID] = UNSET,
+    affects_flaw_visibility: Union[
+        Unset, OsidbApiV1TrackersListAffectsFlawVisibility
+    ] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -806,6 +919,7 @@ def sync_detailed(
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_visibility: Union[Unset, OsidbApiV1TrackersListAffectsVisibility] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -815,18 +929,24 @@ def sync_detailed(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     cve_id: Union[Unset, str] = UNSET,
+    cve_id_in: Union[Unset, list[str]] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV1TrackersListOrderItem]] = UNSET,
     ps_update_stream: Union[Unset, str] = UNSET,
+    ps_update_stream_in: Union[Unset, list[str]] = UNSET,
     resolution: Union[Unset, str] = UNSET,
+    resolution_in: Union[Unset, list[str]] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_in: Union[Unset, list[str]] = UNSET,
     type_: Union[Unset, OsidbApiV1TrackersListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1TrackersListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -836,6 +956,8 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
+    visibility: Union[Unset, OsidbApiV1TrackersListVisibility] = UNSET,
 ) -> Response[OsidbApiV1TrackersListResponse200]:
     """View for the tracker model adapted to affects v1
 
@@ -882,6 +1004,7 @@ def sync_detailed(
         affects_flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_flaw_uuid (Union[Unset, UUID]):
+        affects_flaw_visibility (Union[Unset, OsidbApiV1TrackersListAffectsFlawVisibility]):
         affects_impact (Union[Unset, OsidbApiV1TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
@@ -895,6 +1018,7 @@ def sync_detailed(
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_uuid (Union[Unset, UUID]):
+        affects_visibility (Union[Unset, OsidbApiV1TrackersListAffectsVisibility]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -904,18 +1028,24 @@ def sync_detailed(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         cve_id (Union[Unset, str]):
+        cve_id_in (Union[Unset, list[str]]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV1TrackersListOrderItem]]):
         ps_update_stream (Union[Unset, str]):
+        ps_update_stream_in (Union[Unset, list[str]]):
         resolution (Union[Unset, str]):
+        resolution_in (Union[Unset, list[str]]):
         status (Union[Unset, str]):
+        status_in (Union[Unset, list[str]]):
         type_ (Union[Unset, OsidbApiV1TrackersListType]):
+        type_in (Union[Unset, list[OsidbApiV1TrackersListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -925,6 +1055,8 @@ def sync_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
+        visibility (Union[Unset, OsidbApiV1TrackersListVisibility]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -978,6 +1110,7 @@ def sync_detailed(
         affects_flaw_updated_dt_lt=affects_flaw_updated_dt_lt,
         affects_flaw_updated_dt_lte=affects_flaw_updated_dt_lte,
         affects_flaw_uuid=affects_flaw_uuid,
+        affects_flaw_visibility=affects_flaw_visibility,
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
@@ -991,6 +1124,7 @@ def sync_detailed(
         affects_updated_dt_lt=affects_updated_dt_lt,
         affects_updated_dt_lte=affects_updated_dt_lte,
         affects_uuid=affects_uuid,
+        affects_visibility=affects_visibility,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -1000,18 +1134,24 @@ def sync_detailed(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         cve_id=cve_id,
+        cve_id_in=cve_id_in,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
         ps_update_stream=ps_update_stream,
+        ps_update_stream_in=ps_update_stream_in,
         resolution=resolution,
+        resolution_in=resolution_in,
         status=status,
+        status_in=status_in,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -1021,6 +1161,8 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
+        visibility=visibility,
     )
 
     response = requests.get(
@@ -1081,6 +1223,9 @@ def sync(
     affects_flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_uuid: Union[Unset, UUID] = UNSET,
+    affects_flaw_visibility: Union[
+        Unset, OsidbApiV1TrackersListAffectsFlawVisibility
+    ] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -1094,6 +1239,7 @@ def sync(
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_visibility: Union[Unset, OsidbApiV1TrackersListAffectsVisibility] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1103,18 +1249,24 @@ def sync(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     cve_id: Union[Unset, str] = UNSET,
+    cve_id_in: Union[Unset, list[str]] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV1TrackersListOrderItem]] = UNSET,
     ps_update_stream: Union[Unset, str] = UNSET,
+    ps_update_stream_in: Union[Unset, list[str]] = UNSET,
     resolution: Union[Unset, str] = UNSET,
+    resolution_in: Union[Unset, list[str]] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_in: Union[Unset, list[str]] = UNSET,
     type_: Union[Unset, OsidbApiV1TrackersListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1TrackersListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1124,6 +1276,8 @@ def sync(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
+    visibility: Union[Unset, OsidbApiV1TrackersListVisibility] = UNSET,
 ) -> Optional[OsidbApiV1TrackersListResponse200]:
     """View for the tracker model adapted to affects v1
 
@@ -1170,6 +1324,7 @@ def sync(
         affects_flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_flaw_uuid (Union[Unset, UUID]):
+        affects_flaw_visibility (Union[Unset, OsidbApiV1TrackersListAffectsFlawVisibility]):
         affects_impact (Union[Unset, OsidbApiV1TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
@@ -1183,6 +1338,7 @@ def sync(
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_uuid (Union[Unset, UUID]):
+        affects_visibility (Union[Unset, OsidbApiV1TrackersListAffectsVisibility]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1192,18 +1348,24 @@ def sync(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         cve_id (Union[Unset, str]):
+        cve_id_in (Union[Unset, list[str]]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV1TrackersListOrderItem]]):
         ps_update_stream (Union[Unset, str]):
+        ps_update_stream_in (Union[Unset, list[str]]):
         resolution (Union[Unset, str]):
+        resolution_in (Union[Unset, list[str]]):
         status (Union[Unset, str]):
+        status_in (Union[Unset, list[str]]):
         type_ (Union[Unset, OsidbApiV1TrackersListType]):
+        type_in (Union[Unset, list[OsidbApiV1TrackersListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -1213,6 +1375,8 @@ def sync(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
+        visibility (Union[Unset, OsidbApiV1TrackersListVisibility]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -1266,6 +1430,7 @@ def sync(
         affects_flaw_updated_dt_lt=affects_flaw_updated_dt_lt,
         affects_flaw_updated_dt_lte=affects_flaw_updated_dt_lte,
         affects_flaw_uuid=affects_flaw_uuid,
+        affects_flaw_visibility=affects_flaw_visibility,
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
@@ -1279,6 +1444,7 @@ def sync(
         affects_updated_dt_lt=affects_updated_dt_lt,
         affects_updated_dt_lte=affects_updated_dt_lte,
         affects_uuid=affects_uuid,
+        affects_visibility=affects_visibility,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -1288,18 +1454,24 @@ def sync(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         cve_id=cve_id,
+        cve_id_in=cve_id_in,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
         ps_update_stream=ps_update_stream,
+        ps_update_stream_in=ps_update_stream_in,
         resolution=resolution,
+        resolution_in=resolution_in,
         status=status,
+        status_in=status_in,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -1309,6 +1481,8 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
+        visibility=visibility,
     ).parsed
 
 
@@ -1359,6 +1533,9 @@ async def asyncio_detailed(
     affects_flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_uuid: Union[Unset, UUID] = UNSET,
+    affects_flaw_visibility: Union[
+        Unset, OsidbApiV1TrackersListAffectsFlawVisibility
+    ] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -1372,6 +1549,7 @@ async def asyncio_detailed(
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_visibility: Union[Unset, OsidbApiV1TrackersListAffectsVisibility] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1381,18 +1559,24 @@ async def asyncio_detailed(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     cve_id: Union[Unset, str] = UNSET,
+    cve_id_in: Union[Unset, list[str]] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV1TrackersListOrderItem]] = UNSET,
     ps_update_stream: Union[Unset, str] = UNSET,
+    ps_update_stream_in: Union[Unset, list[str]] = UNSET,
     resolution: Union[Unset, str] = UNSET,
+    resolution_in: Union[Unset, list[str]] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_in: Union[Unset, list[str]] = UNSET,
     type_: Union[Unset, OsidbApiV1TrackersListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1TrackersListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1402,6 +1586,8 @@ async def asyncio_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
+    visibility: Union[Unset, OsidbApiV1TrackersListVisibility] = UNSET,
 ) -> Response[OsidbApiV1TrackersListResponse200]:
     """View for the tracker model adapted to affects v1
 
@@ -1448,6 +1634,7 @@ async def asyncio_detailed(
         affects_flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_flaw_uuid (Union[Unset, UUID]):
+        affects_flaw_visibility (Union[Unset, OsidbApiV1TrackersListAffectsFlawVisibility]):
         affects_impact (Union[Unset, OsidbApiV1TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
@@ -1461,6 +1648,7 @@ async def asyncio_detailed(
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_uuid (Union[Unset, UUID]):
+        affects_visibility (Union[Unset, OsidbApiV1TrackersListAffectsVisibility]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1470,18 +1658,24 @@ async def asyncio_detailed(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         cve_id (Union[Unset, str]):
+        cve_id_in (Union[Unset, list[str]]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV1TrackersListOrderItem]]):
         ps_update_stream (Union[Unset, str]):
+        ps_update_stream_in (Union[Unset, list[str]]):
         resolution (Union[Unset, str]):
+        resolution_in (Union[Unset, list[str]]):
         status (Union[Unset, str]):
+        status_in (Union[Unset, list[str]]):
         type_ (Union[Unset, OsidbApiV1TrackersListType]):
+        type_in (Union[Unset, list[OsidbApiV1TrackersListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -1491,6 +1685,8 @@ async def asyncio_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
+        visibility (Union[Unset, OsidbApiV1TrackersListVisibility]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -1544,6 +1740,7 @@ async def asyncio_detailed(
         affects_flaw_updated_dt_lt=affects_flaw_updated_dt_lt,
         affects_flaw_updated_dt_lte=affects_flaw_updated_dt_lte,
         affects_flaw_uuid=affects_flaw_uuid,
+        affects_flaw_visibility=affects_flaw_visibility,
         affects_impact=affects_impact,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
@@ -1557,6 +1754,7 @@ async def asyncio_detailed(
         affects_updated_dt_lt=affects_updated_dt_lt,
         affects_updated_dt_lte=affects_updated_dt_lte,
         affects_uuid=affects_uuid,
+        affects_visibility=affects_visibility,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -1566,18 +1764,24 @@ async def asyncio_detailed(
         created_dt_lt=created_dt_lt,
         created_dt_lte=created_dt_lte,
         cve_id=cve_id,
+        cve_id_in=cve_id_in,
         embargoed=embargoed,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         include_meta_attr=include_meta_attr,
         limit=limit,
         offset=offset,
         order=order,
         ps_update_stream=ps_update_stream,
+        ps_update_stream_in=ps_update_stream_in,
         resolution=resolution,
+        resolution_in=resolution_in,
         status=status,
+        status_in=status_in,
         type_=type_,
+        type_in=type_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -1587,6 +1791,8 @@ async def asyncio_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
+        visibility=visibility,
     )
 
     async with client.get_async_session().get(
@@ -1647,6 +1853,9 @@ async def asyncio(
     affects_flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_flaw_uuid: Union[Unset, UUID] = UNSET,
+    affects_flaw_visibility: Union[
+        Unset, OsidbApiV1TrackersListAffectsFlawVisibility
+    ] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1TrackersListAffectsImpact] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -1660,6 +1869,7 @@ async def asyncio(
     affects_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     affects_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_uuid: Union[Unset, UUID] = UNSET,
+    affects_visibility: Union[Unset, OsidbApiV1TrackersListAffectsVisibility] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1669,18 +1879,24 @@ async def asyncio(
     created_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     cve_id: Union[Unset, str] = UNSET,
+    cve_id_in: Union[Unset, list[str]] = UNSET,
     embargoed: Union[Unset, bool] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV1TrackersListOrderItem]] = UNSET,
     ps_update_stream: Union[Unset, str] = UNSET,
+    ps_update_stream_in: Union[Unset, list[str]] = UNSET,
     resolution: Union[Unset, str] = UNSET,
+    resolution_in: Union[Unset, list[str]] = UNSET,
     status: Union[Unset, str] = UNSET,
+    status_in: Union[Unset, list[str]] = UNSET,
     type_: Union[Unset, OsidbApiV1TrackersListType] = UNSET,
+    type_in: Union[Unset, list[OsidbApiV1TrackersListTypeInItem]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1690,6 +1906,8 @@ async def asyncio(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
+    visibility: Union[Unset, OsidbApiV1TrackersListVisibility] = UNSET,
 ) -> Optional[OsidbApiV1TrackersListResponse200]:
     """View for the tracker model adapted to affects v1
 
@@ -1736,6 +1954,7 @@ async def asyncio(
         affects_flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_flaw_uuid (Union[Unset, UUID]):
+        affects_flaw_visibility (Union[Unset, OsidbApiV1TrackersListAffectsFlawVisibility]):
         affects_impact (Union[Unset, OsidbApiV1TrackersListAffectsImpact]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
@@ -1749,6 +1968,7 @@ async def asyncio(
         affects_updated_dt_lt (Union[Unset, datetime.datetime]):
         affects_updated_dt_lte (Union[Unset, datetime.datetime]):
         affects_uuid (Union[Unset, UUID]):
+        affects_visibility (Union[Unset, OsidbApiV1TrackersListAffectsVisibility]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1758,18 +1978,24 @@ async def asyncio(
         created_dt_lt (Union[Unset, datetime.datetime]):
         created_dt_lte (Union[Unset, datetime.datetime]):
         cve_id (Union[Unset, str]):
+        cve_id_in (Union[Unset, list[str]]):
         embargoed (Union[Unset, bool]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         include_meta_attr (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV1TrackersListOrderItem]]):
         ps_update_stream (Union[Unset, str]):
+        ps_update_stream_in (Union[Unset, list[str]]):
         resolution (Union[Unset, str]):
+        resolution_in (Union[Unset, list[str]]):
         status (Union[Unset, str]):
+        status_in (Union[Unset, list[str]]):
         type_ (Union[Unset, OsidbApiV1TrackersListType]):
+        type_in (Union[Unset, list[OsidbApiV1TrackersListTypeInItem]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -1779,6 +2005,8 @@ async def asyncio(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
+        visibility (Union[Unset, OsidbApiV1TrackersListVisibility]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -1833,6 +2061,7 @@ async def asyncio(
             affects_flaw_updated_dt_lt=affects_flaw_updated_dt_lt,
             affects_flaw_updated_dt_lte=affects_flaw_updated_dt_lte,
             affects_flaw_uuid=affects_flaw_uuid,
+            affects_flaw_visibility=affects_flaw_visibility,
             affects_impact=affects_impact,
             affects_ps_component=affects_ps_component,
             affects_ps_module=affects_ps_module,
@@ -1846,6 +2075,7 @@ async def asyncio(
             affects_updated_dt_lt=affects_updated_dt_lt,
             affects_updated_dt_lte=affects_updated_dt_lte,
             affects_uuid=affects_uuid,
+            affects_visibility=affects_visibility,
             created_dt=created_dt,
             created_dt_date=created_dt_date,
             created_dt_date_gte=created_dt_date_gte,
@@ -1855,18 +2085,24 @@ async def asyncio(
             created_dt_lt=created_dt_lt,
             created_dt_lte=created_dt_lte,
             cve_id=cve_id,
+            cve_id_in=cve_id_in,
             embargoed=embargoed,
             exclude_fields=exclude_fields,
             external_system_id=external_system_id,
+            external_system_id_in=external_system_id_in,
             include_fields=include_fields,
             include_meta_attr=include_meta_attr,
             limit=limit,
             offset=offset,
             order=order,
             ps_update_stream=ps_update_stream,
+            ps_update_stream_in=ps_update_stream_in,
             resolution=resolution,
+            resolution_in=resolution_in,
             status=status,
+            status_in=status_in,
             type_=type_,
+            type_in=type_in,
             updated_dt=updated_dt,
             updated_dt_date=updated_dt_date,
             updated_dt_date_gte=updated_dt_date_gte,
@@ -1876,5 +2112,7 @@ async def asyncio(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             uuid=uuid,
+            uuid_in=uuid_in,
+            visibility=visibility,
         )
     ).parsed

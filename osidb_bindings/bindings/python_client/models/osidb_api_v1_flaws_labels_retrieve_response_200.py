@@ -7,6 +7,7 @@ from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
+from ..models.flaw_label_type import FlawLabelType
 from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -19,10 +20,10 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
     Attributes:
         uuid (UUID):
         label (str):
-        type_ (str):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        type_ (Union[Unset, FlawLabelType]):  Default: FlawLabelType.CONTEXT_BASED.
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -31,10 +32,10 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
 
     uuid: UUID
     label: str
-    type_: str
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    type_: Union[Unset, FlawLabelType] = FlawLabelType.CONTEXT_BASED
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -48,8 +49,6 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
 
         label = self.label
 
-        type_ = self.type_
-
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
             state = StateEnum(self.state).value
@@ -57,6 +56,10 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
         contributor = self.contributor
 
         relevant = self.relevant
+
+        type_: Union[Unset, str] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = FlawLabelType(self.type_).value
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -74,14 +77,14 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(label, Unset):
             field_dict["label"] = label
-        if not isinstance(type_, Unset):
-            field_dict["type"] = type_
         if not isinstance(state, Unset):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -105,8 +108,6 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
 
         label = d.pop("label", UNSET)
 
-        type_ = d.pop("type", UNSET)
-
         _state = d.pop("state", UNSET)
         state: Union[Unset, StateEnum]
         if isinstance(_state, Unset):
@@ -117,6 +118,13 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
         contributor = d.pop("contributor", UNSET)
 
         relevant = d.pop("relevant", UNSET)
+
+        _type_ = d.pop("type", UNSET)
+        type_: Union[Unset, FlawLabelType]
+        if isinstance(_type_, Unset):
+            type_ = UNSET
+        else:
+            type_ = FlawLabelType(_type_)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -134,10 +142,10 @@ class OsidbApiV1FlawsLabelsRetrieveResponse200(OSIDBModel):
         osidb_api_v1_flaws_labels_retrieve_response_200 = cls(
             uuid=uuid,
             label=label,
-            type_=type_,
             state=state,
             contributor=contributor,
             relevant=relevant,
+            type_=type_,
             dt=dt,
             env=env,
             revision=revision,

@@ -5,6 +5,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
+from ..models.flaw_label_type import FlawLabelType
 from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,18 +19,18 @@ class FlawCollaborator(OSIDBModel):
     Attributes:
         uuid (UUID):
         label (str):
-        type_ (str):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        type_ (Union[Unset, FlawLabelType]):  Default: FlawLabelType.CONTEXT_BASED.
     """
 
     uuid: UUID
     label: str
-    type_: str
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    type_: Union[Unset, FlawLabelType] = FlawLabelType.CONTEXT_BASED
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -39,8 +40,6 @@ class FlawCollaborator(OSIDBModel):
 
         label = self.label
 
-        type_ = self.type_
-
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
             state = StateEnum(self.state).value
@@ -49,20 +48,24 @@ class FlawCollaborator(OSIDBModel):
 
         relevant = self.relevant
 
+        type_: Union[Unset, str] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = FlawLabelType(self.type_).value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
         if not isinstance(label, Unset):
             field_dict["label"] = label
-        if not isinstance(type_, Unset):
-            field_dict["type"] = type_
         if not isinstance(state, Unset):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
 
         return field_dict
 
@@ -78,8 +81,6 @@ class FlawCollaborator(OSIDBModel):
 
         label = d.pop("label", UNSET)
 
-        type_ = d.pop("type", UNSET)
-
         _state = d.pop("state", UNSET)
         state: Union[Unset, StateEnum]
         if isinstance(_state, Unset):
@@ -91,13 +92,20 @@ class FlawCollaborator(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
+        _type_ = d.pop("type", UNSET)
+        type_: Union[Unset, FlawLabelType]
+        if isinstance(_type_, Unset):
+            type_ = UNSET
+        else:
+            type_ = FlawLabelType(_type_)
+
         flaw_collaborator = cls(
             uuid=uuid,
             label=label,
-            type_=type_,
             state=state,
             contributor=contributor,
             relevant=relevant,
+            type_=type_,
         )
 
         flaw_collaborator.additional_properties = d

@@ -12,13 +12,16 @@ from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
     "creator": str,
+    "creator__in": list[str],
     "exclude_fields": list[str],
     "external_system_id": str,
+    "external_system_id__in": list[str],
     "include_fields": list[str],
     "limit": int,
     "offset": int,
     "order": int,
     "uuid": UUID,
+    "uuid__in": list[UUID],
 }
 
 
@@ -27,19 +30,28 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     creator: Union[Unset, str] = UNSET,
+    creator_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, int] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     params: dict[str, Any] = {}
 
     params["creator"] = creator
+
+    json_creator_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(creator_in, Unset):
+        json_creator_in = creator_in
+
+    params["creator__in"] = json_creator_in
 
     json_exclude_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(exclude_fields, Unset):
@@ -48,6 +60,12 @@ def _get_kwargs(
     params["exclude_fields"] = json_exclude_fields
 
     params["external_system_id"] = external_system_id
+
+    json_external_system_id_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(external_system_id_in, Unset):
+        json_external_system_id_in = external_system_id_in
+
+    params["external_system_id__in"] = json_external_system_id_in
 
     json_include_fields: Union[Unset, list[str]] = UNSET
     if not isinstance(include_fields, Unset):
@@ -66,6 +84,18 @@ def _get_kwargs(
         json_uuid = str(uuid)
 
     params["uuid"] = json_uuid
+
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
 
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
@@ -116,13 +146,16 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     creator: Union[Unset, str] = UNSET,
+    creator_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, int] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsCommentsListResponse200]:
     """List existing comments for a given flaw. Beware that freshly created comments are not guaranteed to
     keep their original UUIDs, especially if multiple comments are created simultaneously.
@@ -130,13 +163,16 @@ def sync_detailed(
     Args:
         flaw_id (str):
         creator (Union[Unset, str]):
+        creator_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, int]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -150,13 +186,16 @@ def sync_detailed(
         flaw_id=flaw_id,
         client=client,
         creator=creator,
+        creator_in=creator_in,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         order=order,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     response = requests.get(
@@ -175,13 +214,16 @@ def sync(
     *,
     client: AuthenticatedClient,
     creator: Union[Unset, str] = UNSET,
+    creator_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, int] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsCommentsListResponse200]:
     """List existing comments for a given flaw. Beware that freshly created comments are not guaranteed to
     keep their original UUIDs, especially if multiple comments are created simultaneously.
@@ -189,13 +231,16 @@ def sync(
     Args:
         flaw_id (str):
         creator (Union[Unset, str]):
+        creator_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, int]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -209,13 +254,16 @@ def sync(
         flaw_id=flaw_id,
         client=client,
         creator=creator,
+        creator_in=creator_in,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         order=order,
         uuid=uuid,
+        uuid_in=uuid_in,
     ).parsed
 
 
@@ -224,13 +272,16 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     creator: Union[Unset, str] = UNSET,
+    creator_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, int] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsCommentsListResponse200]:
     """List existing comments for a given flaw. Beware that freshly created comments are not guaranteed to
     keep their original UUIDs, especially if multiple comments are created simultaneously.
@@ -238,13 +289,16 @@ async def asyncio_detailed(
     Args:
         flaw_id (str):
         creator (Union[Unset, str]):
+        creator_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, int]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -258,13 +312,16 @@ async def asyncio_detailed(
         flaw_id=flaw_id,
         client=client,
         creator=creator,
+        creator_in=creator_in,
         exclude_fields=exclude_fields,
         external_system_id=external_system_id,
+        external_system_id_in=external_system_id_in,
         include_fields=include_fields,
         limit=limit,
         offset=offset,
         order=order,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     async with client.get_async_session().get(
@@ -283,13 +340,16 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     creator: Union[Unset, str] = UNSET,
+    creator_in: Union[Unset, list[str]] = UNSET,
     exclude_fields: Union[Unset, list[str]] = UNSET,
     external_system_id: Union[Unset, str] = UNSET,
+    external_system_id_in: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, int] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsCommentsListResponse200]:
     """List existing comments for a given flaw. Beware that freshly created comments are not guaranteed to
     keep their original UUIDs, especially if multiple comments are created simultaneously.
@@ -297,13 +357,16 @@ async def asyncio(
     Args:
         flaw_id (str):
         creator (Union[Unset, str]):
+        creator_in (Union[Unset, list[str]]):
         exclude_fields (Union[Unset, list[str]]):
         external_system_id (Union[Unset, str]):
+        external_system_id_in (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, int]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -318,12 +381,15 @@ async def asyncio(
             flaw_id=flaw_id,
             client=client,
             creator=creator,
+            creator_in=creator_in,
             exclude_fields=exclude_fields,
             external_system_id=external_system_id,
+            external_system_id_in=external_system_id_in,
             include_fields=include_fields,
             limit=limit,
             offset=offset,
             order=order,
             uuid=uuid,
+            uuid_in=uuid_in,
         )
     ).parsed

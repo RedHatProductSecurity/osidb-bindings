@@ -9,6 +9,9 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v2_flaws_cvss_scores_list_issuer import (
     OsidbApiV2FlawsCvssScoresListIssuer,
 )
+from ...models.osidb_api_v2_flaws_cvss_scores_list_issuer_in_item import (
+    OsidbApiV2FlawsCvssScoresListIssuerInItem,
+)
 from ...models.osidb_api_v2_flaws_cvss_scores_list_response_200 import (
     OsidbApiV2FlawsCvssScoresListResponse200,
 )
@@ -16,6 +19,7 @@ from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
     "comment": str,
+    "comment__in": list[str],
     "created_dt": datetime.datetime,
     "created_dt__date": datetime.date,
     "created_dt__date__gte": datetime.date,
@@ -28,6 +32,7 @@ QUERY_PARAMS = {
     "exclude_fields": list[str],
     "include_fields": list[str],
     "issuer": OsidbApiV2FlawsCvssScoresListIssuer,
+    "issuer__in": list[OsidbApiV2FlawsCvssScoresListIssuerInItem],
     "limit": int,
     "offset": int,
     "score": float,
@@ -40,7 +45,9 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "uuid": UUID,
+    "uuid__in": list[UUID],
     "vector": str,
+    "vector__in": list[str],
 }
 
 
@@ -49,6 +56,7 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     comment: Union[Unset, str] = UNSET,
+    comment_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -61,6 +69,7 @@ def _get_kwargs(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     issuer: Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer] = UNSET,
+    issuer_in: Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     score: Union[Unset, float] = UNSET,
@@ -73,13 +82,21 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     vector: Union[Unset, str] = UNSET,
+    vector_in: Union[Unset, list[str]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     params: dict[str, Any] = {}
 
     params["comment"] = comment
+
+    json_comment_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(comment_in, Unset):
+        json_comment_in = comment_in
+
+    params["comment__in"] = json_comment_in
 
     json_created_dt: Union[Unset, str] = UNSET
     if not isinstance(created_dt, Unset):
@@ -149,6 +166,20 @@ def _get_kwargs(
 
     params["issuer"] = json_issuer
 
+    json_issuer_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(issuer_in, Unset):
+        json_issuer_in = []
+        for issuer_in_item_data in issuer_in:
+            issuer_in_item: str = UNSET
+            if not isinstance(issuer_in_item_data, Unset):
+                issuer_in_item = OsidbApiV2FlawsCvssScoresListIssuerInItem(
+                    issuer_in_item_data
+                ).value
+
+            json_issuer_in.append(issuer_in_item)
+
+    params["issuer__in"] = json_issuer_in
+
     params["limit"] = limit
 
     params["offset"] = offset
@@ -209,7 +240,25 @@ def _get_kwargs(
 
     params["uuid"] = json_uuid
 
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
+
     params["vector"] = vector
+
+    json_vector_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(vector_in, Unset):
+        json_vector_in = vector_in
+
+    params["vector__in"] = json_vector_in
 
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
@@ -260,6 +309,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     comment: Union[Unset, str] = UNSET,
+    comment_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -272,6 +322,7 @@ def sync_detailed(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     issuer: Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer] = UNSET,
+    issuer_in: Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     score: Union[Unset, float] = UNSET,
@@ -284,12 +335,15 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     vector: Union[Unset, str] = UNSET,
+    vector_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV2FlawsCvssScoresListResponse200]:
     """
     Args:
         flaw_id (UUID):
         comment (Union[Unset, str]):
+        comment_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -302,6 +356,7 @@ def sync_detailed(
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         issuer (Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer]):
+        issuer_in (Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         score (Union[Unset, float]):
@@ -314,7 +369,9 @@ def sync_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         vector (Union[Unset, str]):
+        vector_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -328,6 +385,7 @@ def sync_detailed(
         flaw_id=flaw_id,
         client=client,
         comment=comment,
+        comment_in=comment_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -340,6 +398,7 @@ def sync_detailed(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         issuer=issuer,
+        issuer_in=issuer_in,
         limit=limit,
         offset=offset,
         score=score,
@@ -352,7 +411,9 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         vector=vector,
+        vector_in=vector_in,
     )
 
     response = requests.get(
@@ -371,6 +432,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     comment: Union[Unset, str] = UNSET,
+    comment_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -383,6 +445,7 @@ def sync(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     issuer: Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer] = UNSET,
+    issuer_in: Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     score: Union[Unset, float] = UNSET,
@@ -395,12 +458,15 @@ def sync(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     vector: Union[Unset, str] = UNSET,
+    vector_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV2FlawsCvssScoresListResponse200]:
     """
     Args:
         flaw_id (UUID):
         comment (Union[Unset, str]):
+        comment_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -413,6 +479,7 @@ def sync(
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         issuer (Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer]):
+        issuer_in (Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         score (Union[Unset, float]):
@@ -425,7 +492,9 @@ def sync(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         vector (Union[Unset, str]):
+        vector_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -439,6 +508,7 @@ def sync(
         flaw_id=flaw_id,
         client=client,
         comment=comment,
+        comment_in=comment_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -451,6 +521,7 @@ def sync(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         issuer=issuer,
+        issuer_in=issuer_in,
         limit=limit,
         offset=offset,
         score=score,
@@ -463,7 +534,9 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         vector=vector,
+        vector_in=vector_in,
     ).parsed
 
 
@@ -472,6 +545,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     comment: Union[Unset, str] = UNSET,
+    comment_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -484,6 +558,7 @@ async def asyncio_detailed(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     issuer: Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer] = UNSET,
+    issuer_in: Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     score: Union[Unset, float] = UNSET,
@@ -496,12 +571,15 @@ async def asyncio_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     vector: Union[Unset, str] = UNSET,
+    vector_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV2FlawsCvssScoresListResponse200]:
     """
     Args:
         flaw_id (UUID):
         comment (Union[Unset, str]):
+        comment_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -514,6 +592,7 @@ async def asyncio_detailed(
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         issuer (Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer]):
+        issuer_in (Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         score (Union[Unset, float]):
@@ -526,7 +605,9 @@ async def asyncio_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         vector (Union[Unset, str]):
+        vector_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -540,6 +621,7 @@ async def asyncio_detailed(
         flaw_id=flaw_id,
         client=client,
         comment=comment,
+        comment_in=comment_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -552,6 +634,7 @@ async def asyncio_detailed(
         exclude_fields=exclude_fields,
         include_fields=include_fields,
         issuer=issuer,
+        issuer_in=issuer_in,
         limit=limit,
         offset=offset,
         score=score,
@@ -564,7 +647,9 @@ async def asyncio_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         vector=vector,
+        vector_in=vector_in,
     )
 
     async with client.get_async_session().get(
@@ -583,6 +668,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     comment: Union[Unset, str] = UNSET,
+    comment_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -595,6 +681,7 @@ async def asyncio(
     exclude_fields: Union[Unset, list[str]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     issuer: Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer] = UNSET,
+    issuer_in: Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     score: Union[Unset, float] = UNSET,
@@ -607,12 +694,15 @@ async def asyncio(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     vector: Union[Unset, str] = UNSET,
+    vector_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV2FlawsCvssScoresListResponse200]:
     """
     Args:
         flaw_id (UUID):
         comment (Union[Unset, str]):
+        comment_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -625,6 +715,7 @@ async def asyncio(
         exclude_fields (Union[Unset, list[str]]):
         include_fields (Union[Unset, list[str]]):
         issuer (Union[Unset, OsidbApiV2FlawsCvssScoresListIssuer]):
+        issuer_in (Union[Unset, list[OsidbApiV2FlawsCvssScoresListIssuerInItem]]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         score (Union[Unset, float]):
@@ -637,7 +728,9 @@ async def asyncio(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         vector (Union[Unset, str]):
+        vector_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -652,6 +745,7 @@ async def asyncio(
             flaw_id=flaw_id,
             client=client,
             comment=comment,
+            comment_in=comment_in,
             created_dt=created_dt,
             created_dt_date=created_dt_date,
             created_dt_date_gte=created_dt_date_gte,
@@ -664,6 +758,7 @@ async def asyncio(
             exclude_fields=exclude_fields,
             include_fields=include_fields,
             issuer=issuer,
+            issuer_in=issuer_in,
             limit=limit,
             offset=offset,
             score=score,
@@ -676,6 +771,8 @@ async def asyncio(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             uuid=uuid,
+            uuid_in=uuid_in,
             vector=vector,
+            vector_in=vector_in,
         )
     ).parsed

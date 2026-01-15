@@ -5,6 +5,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
+from ..models.flaw_label_type import FlawLabelType
 from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -21,6 +22,7 @@ class FlawCollaboratorRequest(OSIDBModel):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        type_ (Union[Unset, FlawLabelType]):  Default: FlawLabelType.CONTEXT_BASED.
     """
 
     flaw: UUID
@@ -28,6 +30,7 @@ class FlawCollaboratorRequest(OSIDBModel):
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    type_: Union[Unset, FlawLabelType] = FlawLabelType.CONTEXT_BASED
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -45,6 +48,10 @@ class FlawCollaboratorRequest(OSIDBModel):
 
         relevant = self.relevant
 
+        type_: Union[Unset, str] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = FlawLabelType(self.type_).value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(flaw, Unset):
@@ -57,6 +64,8 @@ class FlawCollaboratorRequest(OSIDBModel):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
 
         return field_dict
 
@@ -83,12 +92,20 @@ class FlawCollaboratorRequest(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
+        _type_ = d.pop("type", UNSET)
+        type_: Union[Unset, FlawLabelType]
+        if isinstance(_type_, Unset):
+            type_ = UNSET
+        else:
+            type_ = FlawLabelType(_type_)
+
         flaw_collaborator_request = cls(
             flaw=flaw,
             label=label,
             state=state,
             contributor=contributor,
             relevant=relevant,
+            type_=type_,
         )
 
         flaw_collaborator_request.additional_properties = d

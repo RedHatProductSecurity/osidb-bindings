@@ -94,6 +94,7 @@ class OsidbApiV1SchemaRetrieveLang(str, Enum):
     TR = "tr"
     TT = "tt"
     UDM = "udm"
+    UG = "ug"
     UK = "uk"
     UR = "ur"
     UZ = "uz"

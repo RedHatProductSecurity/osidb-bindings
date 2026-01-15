@@ -25,6 +25,7 @@ QUERY_PARAMS = {
     "limit": int,
     "offset": int,
     "package": str,
+    "package__in": list[str],
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
     "updated_dt__date__gte": datetime.date,
@@ -34,7 +35,9 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "uuid": UUID,
+    "uuid__in": list[UUID],
     "versions__version": str,
+    "versions__version__in": list[str],
 }
 
 
@@ -55,6 +58,7 @@ def _get_kwargs(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     package: Union[Unset, str] = UNSET,
+    package_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -64,7 +68,9 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     versions_version: Union[Unset, str] = UNSET,
+    versions_version_in: Union[Unset, list[str]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -136,6 +142,12 @@ def _get_kwargs(
 
     params["package"] = package
 
+    json_package_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(package_in, Unset):
+        json_package_in = package_in
+
+    params["package__in"] = json_package_in
+
     json_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt, Unset):
         json_updated_dt = updated_dt.isoformat()
@@ -190,7 +202,25 @@ def _get_kwargs(
 
     params["uuid"] = json_uuid
 
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
+
     params["versions__version"] = versions_version
+
+    json_versions_version_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(versions_version_in, Unset):
+        json_versions_version_in = versions_version_in
+
+    params["versions__version__in"] = json_versions_version_in
 
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
@@ -253,6 +283,7 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     package: Union[Unset, str] = UNSET,
+    package_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -262,7 +293,9 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     versions_version: Union[Unset, str] = UNSET,
+    versions_version_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsPackageVersionsListResponse200]:
     """
     Args:
@@ -280,6 +313,7 @@ def sync_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         package (Union[Unset, str]):
+        package_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -289,7 +323,9 @@ def sync_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         versions_version (Union[Unset, str]):
+        versions_version_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -315,6 +351,7 @@ def sync_detailed(
         limit=limit,
         offset=offset,
         package=package,
+        package_in=package_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -324,7 +361,9 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         versions_version=versions_version,
+        versions_version_in=versions_version_in,
     )
 
     response = requests.get(
@@ -355,6 +394,7 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     package: Union[Unset, str] = UNSET,
+    package_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -364,7 +404,9 @@ def sync(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     versions_version: Union[Unset, str] = UNSET,
+    versions_version_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsPackageVersionsListResponse200]:
     """
     Args:
@@ -382,6 +424,7 @@ def sync(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         package (Union[Unset, str]):
+        package_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -391,7 +434,9 @@ def sync(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         versions_version (Union[Unset, str]):
+        versions_version_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -417,6 +462,7 @@ def sync(
         limit=limit,
         offset=offset,
         package=package,
+        package_in=package_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -426,7 +472,9 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         versions_version=versions_version,
+        versions_version_in=versions_version_in,
     ).parsed
 
 
@@ -447,6 +495,7 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     package: Union[Unset, str] = UNSET,
+    package_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -456,7 +505,9 @@ async def asyncio_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     versions_version: Union[Unset, str] = UNSET,
+    versions_version_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsPackageVersionsListResponse200]:
     """
     Args:
@@ -474,6 +525,7 @@ async def asyncio_detailed(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         package (Union[Unset, str]):
+        package_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -483,7 +535,9 @@ async def asyncio_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         versions_version (Union[Unset, str]):
+        versions_version_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -509,6 +563,7 @@ async def asyncio_detailed(
         limit=limit,
         offset=offset,
         package=package,
+        package_in=package_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -518,7 +573,9 @@ async def asyncio_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
         versions_version=versions_version,
+        versions_version_in=versions_version_in,
     )
 
     async with client.get_async_session().get(
@@ -549,6 +606,7 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     package: Union[Unset, str] = UNSET,
+    package_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -558,7 +616,9 @@ async def asyncio(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
     versions_version: Union[Unset, str] = UNSET,
+    versions_version_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsPackageVersionsListResponse200]:
     """
     Args:
@@ -576,6 +636,7 @@ async def asyncio(
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         package (Union[Unset, str]):
+        package_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -585,7 +646,9 @@ async def asyncio(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
         versions_version (Union[Unset, str]):
+        versions_version_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -612,6 +675,7 @@ async def asyncio(
             limit=limit,
             offset=offset,
             package=package,
+            package_in=package_in,
             updated_dt=updated_dt,
             updated_dt_date=updated_dt_date,
             updated_dt_date_gte=updated_dt_date_gte,
@@ -621,6 +685,8 @@ async def asyncio(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             uuid=uuid,
+            uuid_in=uuid_in,
             versions_version=versions_version,
+            versions_version_in=versions_version_in,
         )
     ).parsed

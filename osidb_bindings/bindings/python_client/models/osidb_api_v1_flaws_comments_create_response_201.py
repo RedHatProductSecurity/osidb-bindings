@@ -7,6 +7,7 @@ from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -30,6 +31,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             detect mit-air collisions.
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         creator (Union[Unset, str]):
         is_private (Union[Unset, bool]):
         dt (Union[Unset, datetime.datetime]):
@@ -46,6 +48,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
+    visibility: VisibilityEnum
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
@@ -87,6 +90,10 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
 
         embargoed = self.embargoed
 
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
+
         creator = self.creator
 
         is_private = self.is_private
@@ -119,6 +126,8 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(creator, Unset):
             field_dict["creator"] = creator
         if not isinstance(is_private, Unset):
@@ -185,6 +194,13 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
+
         creator = d.pop("creator", UNSET)
 
         is_private = d.pop("is_private", UNSET)
@@ -211,6 +227,7 @@ class OsidbApiV1FlawsCommentsCreateResponse201(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             embargoed=embargoed,
+            visibility=visibility,
             creator=creator,
             is_private=is_private,
             dt=dt,

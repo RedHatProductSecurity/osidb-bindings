@@ -31,10 +31,10 @@ class AffectBulkPutRequest(OSIDBModel):
             detect mit-air collisions.
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
-        ps_module (Union[Unset, str]):
         ps_component (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
-        purl (Union[None, Unset, str]):
+        purl (Union[None, Unset, str]):  Default: ''.
+        subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
     """
 
@@ -45,10 +45,10 @@ class AffectBulkPutRequest(OSIDBModel):
     updated_dt: datetime.datetime
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
-    ps_module: Union[Unset, str] = UNSET
     ps_component: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
-    purl: Union[None, Unset, str] = UNSET
+    purl: Union[None, Unset, str] = ""
+    subpackage_purls: Union[Unset, list[str]] = UNSET
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
@@ -97,8 +97,6 @@ class AffectBulkPutRequest(OSIDBModel):
             if not isinstance(self.resolution, Unset):
                 resolution = BlankEnum(self.resolution).value
 
-        ps_module = self.ps_module
-
         ps_component: Union[None, Unset, str]
         if isinstance(self.ps_component, Unset):
             ps_component = UNSET
@@ -123,6 +121,10 @@ class AffectBulkPutRequest(OSIDBModel):
             purl = UNSET
         else:
             purl = self.purl
+
+        subpackage_purls: Union[Unset, list[str]] = UNSET
+        if not isinstance(self.subpackage_purls, Unset):
+            subpackage_purls = self.subpackage_purls
 
         not_affected_justification: Union[Unset, str]
         if isinstance(self.not_affected_justification, Unset):
@@ -157,14 +159,14 @@ class AffectBulkPutRequest(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
         if not isinstance(purl, Unset):
             field_dict["purl"] = purl
+        if not isinstance(subpackage_purls, Unset):
+            field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
 
@@ -262,8 +264,6 @@ class AffectBulkPutRequest(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
-        ps_module = d.pop("ps_module", UNSET)
-
         def _parse_ps_component(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -313,6 +313,8 @@ class AffectBulkPutRequest(OSIDBModel):
 
         purl = _parse_purl(d.pop("purl", UNSET))
 
+        subpackage_purls = cast(list[str], d.pop("subpackage_purls", UNSET))
+
         def _parse_not_affected_justification(
             data: object,
         ) -> Union[BlankEnum, NotAffectedJustificationEnum, Unset]:
@@ -360,10 +362,10 @@ class AffectBulkPutRequest(OSIDBModel):
             updated_dt=updated_dt,
             affectedness=affectedness,
             resolution=resolution,
-            ps_module=ps_module,
             ps_component=ps_component,
             impact=impact,
             purl=purl,
+            subpackage_purls=subpackage_purls,
             not_affected_justification=not_affected_justification,
         )
 
