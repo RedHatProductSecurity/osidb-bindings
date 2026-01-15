@@ -11,6 +11,7 @@ from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
 from ..models.impact_enum import ImpactEnum
 from ..models.resolution_enum import ResolutionEnum
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -41,6 +42,7 @@ class AffectV1(OSIDBModel):
         resolved_dt (Union[None, datetime.datetime]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
@@ -64,6 +66,7 @@ class AffectV1(OSIDBModel):
     delegated_not_affected_justification: str
     resolved_dt: Union[None, datetime.datetime]
     embargoed: bool
+    visibility: VisibilityEnum
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
@@ -142,6 +145,10 @@ class AffectV1(OSIDBModel):
 
         embargoed = self.embargoed
 
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
+
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
@@ -218,6 +225,8 @@ class AffectV1(OSIDBModel):
             field_dict["resolved_dt"] = resolved_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
@@ -362,6 +371,13 @@ class AffectV1(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
+
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
@@ -462,6 +478,7 @@ class AffectV1(OSIDBModel):
             delegated_not_affected_justification=delegated_not_affected_justification,
             resolved_dt=resolved_dt,
             embargoed=embargoed,
+            visibility=visibility,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,

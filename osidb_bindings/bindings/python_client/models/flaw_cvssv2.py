@@ -9,6 +9,7 @@ from dateutil.parser import isoparse
 
 from ..models.cvss_version_enum import CvssVersionEnum
 from ..models.issuer_enum import IssuerEnum
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -30,6 +31,7 @@ class FlawCVSSV2(OSIDBModel):
         vector (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
@@ -44,6 +46,7 @@ class FlawCVSSV2(OSIDBModel):
     uuid: UUID
     vector: str
     embargoed: bool
+    visibility: VisibilityEnum
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
@@ -69,6 +72,10 @@ class FlawCVSSV2(OSIDBModel):
         vector = self.vector
 
         embargoed = self.embargoed
+
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
 
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
@@ -112,6 +119,8 @@ class FlawCVSSV2(OSIDBModel):
             field_dict["vector"] = vector
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
@@ -156,6 +165,13 @@ class FlawCVSSV2(OSIDBModel):
         vector = d.pop("vector", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
@@ -206,6 +222,7 @@ class FlawCVSSV2(OSIDBModel):
             uuid=uuid,
             vector=vector,
             embargoed=embargoed,
+            visibility=visibility,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,

@@ -4,6 +4,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
+from ..models.flaw_collaborator_post_type_enum import FlawCollaboratorPostTypeEnum
 from ..models.state_enum import StateEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -18,11 +19,15 @@ class FlawCollaboratorPostRequest(OSIDBModel):
         label (str):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
+        type_ (Union[Unset, FlawCollaboratorPostTypeEnum]):  Default: FlawCollaboratorPostTypeEnum.CONTEXT_BASED.
     """
 
     label: str
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
+    type_: Union[Unset, FlawCollaboratorPostTypeEnum] = (
+        FlawCollaboratorPostTypeEnum.CONTEXT_BASED
+    )
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -34,6 +39,10 @@ class FlawCollaboratorPostRequest(OSIDBModel):
 
         contributor = self.contributor
 
+        type_: Union[Unset, str] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = FlawCollaboratorPostTypeEnum(self.type_).value
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(label, Unset):
@@ -42,6 +51,8 @@ class FlawCollaboratorPostRequest(OSIDBModel):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
 
         return field_dict
 
@@ -58,6 +69,10 @@ class FlawCollaboratorPostRequest(OSIDBModel):
             else (None, str(self.contributor).encode(), "text/plain")
         )
 
+        type_: Union[Unset, tuple[None, bytes, str]] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = (None, str(self.type_.value).encode(), "text/plain")
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -68,6 +83,8 @@ class FlawCollaboratorPostRequest(OSIDBModel):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
 
         return field_dict
 
@@ -85,10 +102,18 @@ class FlawCollaboratorPostRequest(OSIDBModel):
 
         contributor = d.pop("contributor", UNSET)
 
+        _type_ = d.pop("type", UNSET)
+        type_: Union[Unset, FlawCollaboratorPostTypeEnum]
+        if isinstance(_type_, Unset):
+            type_ = UNSET
+        else:
+            type_ = FlawCollaboratorPostTypeEnum(_type_)
+
         flaw_collaborator_post_request = cls(
             label=label,
             state=state,
             contributor=contributor,
+            type_=type_,
         )
 
         flaw_collaborator_post_request.additional_properties = d

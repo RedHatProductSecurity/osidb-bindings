@@ -11,6 +11,7 @@ from ..models.blank_enum import BlankEnum
 from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.special_handling_enum import SpecialHandlingEnum
 from ..models.tracker_type import TrackerType
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -38,6 +39,7 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
         resolved_dt (Union[None, datetime.datetime]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
@@ -60,6 +62,7 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
     special_handling: list[SpecialHandlingEnum]
     resolved_dt: Union[None, datetime.datetime]
     embargoed: bool
+    visibility: VisibilityEnum
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
@@ -148,6 +151,10 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
 
         embargoed = self.embargoed
 
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
+
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
@@ -202,6 +209,8 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
             field_dict["resolved_dt"] = resolved_dt
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
@@ -350,6 +359,13 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
+
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
@@ -402,6 +418,7 @@ class OsidbApiV2TrackersCreateResponse201(OSIDBModel):
             special_handling=special_handling,
             resolved_dt=resolved_dt,
             embargoed=embargoed,
+            visibility=visibility,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,

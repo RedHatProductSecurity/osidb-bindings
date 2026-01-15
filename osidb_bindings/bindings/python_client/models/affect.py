@@ -15,6 +15,7 @@ from ..models.delegated_not_affected_justification_enum import (
 from ..models.impact_enum import ImpactEnum
 from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.resolution_enum import ResolutionEnum
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -34,6 +35,7 @@ class Affect(OSIDBModel):
         uuid (UUID):
         flaw (UUID):
         ps_update_stream (str):
+        ps_module (str):
         cve_id (str):
         ps_product (str):
         tracker (Union['Tracker', None]):
@@ -44,22 +46,24 @@ class Affect(OSIDBModel):
         labels (list[str]):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
-        ps_module (Union[Unset, str]):
         ps_component (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
-        purl (Union[None, Unset, str]):
+        purl (Union[None, Unset, str]):  Default: ''.
+        subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
     """
 
     uuid: UUID
     flaw: UUID
     ps_update_stream: str
+    ps_module: str
     cve_id: str
     ps_product: str
     tracker: Union["Tracker", None]
@@ -71,15 +75,16 @@ class Affect(OSIDBModel):
     resolved_dt: Union[None, datetime.datetime]
     labels: list[str]
     embargoed: bool
+    visibility: VisibilityEnum
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
-    ps_module: Union[Unset, str] = UNSET
     ps_component: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
-    purl: Union[None, Unset, str] = UNSET
+    purl: Union[None, Unset, str] = ""
+    subpackage_purls: Union[Unset, list[str]] = UNSET
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
@@ -97,6 +102,8 @@ class Affect(OSIDBModel):
             flaw = str(self.flaw)
 
         ps_update_stream = self.ps_update_stream
+
+        ps_module = self.ps_module
 
         cve_id = self.cve_id
 
@@ -164,6 +171,10 @@ class Affect(OSIDBModel):
 
         embargoed = self.embargoed
 
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
+
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
             alerts = []
@@ -208,8 +219,6 @@ class Affect(OSIDBModel):
             if not isinstance(self.resolution, Unset):
                 resolution = BlankEnum(self.resolution).value
 
-        ps_module = self.ps_module
-
         ps_component: Union[None, Unset, str]
         if isinstance(self.ps_component, Unset):
             ps_component = UNSET
@@ -234,6 +243,10 @@ class Affect(OSIDBModel):
             purl = UNSET
         else:
             purl = self.purl
+
+        subpackage_purls: Union[Unset, list[str]] = UNSET
+        if not isinstance(self.subpackage_purls, Unset):
+            subpackage_purls = self.subpackage_purls
 
         not_affected_justification: Union[Unset, str]
         if isinstance(self.not_affected_justification, Unset):
@@ -260,6 +273,8 @@ class Affect(OSIDBModel):
             field_dict["flaw"] = flaw
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(ps_module, Unset):
+            field_dict["ps_module"] = ps_module
         if not isinstance(cve_id, Unset):
             field_dict["cve_id"] = cve_id
         if not isinstance(ps_product, Unset):
@@ -280,6 +295,8 @@ class Affect(OSIDBModel):
             field_dict["labels"] = labels
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
@@ -290,14 +307,14 @@ class Affect(OSIDBModel):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
             field_dict["resolution"] = resolution
-        if not isinstance(ps_module, Unset):
-            field_dict["ps_module"] = ps_module
         if not isinstance(ps_component, Unset):
             field_dict["ps_component"] = ps_component
         if not isinstance(impact, Unset):
             field_dict["impact"] = impact
         if not isinstance(purl, Unset):
             field_dict["purl"] = purl
+        if not isinstance(subpackage_purls, Unset):
+            field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
 
@@ -325,6 +342,8 @@ class Affect(OSIDBModel):
             flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
+
+        ps_module = d.pop("ps_module", UNSET)
 
         cve_id = d.pop("cve_id", UNSET)
 
@@ -437,6 +456,13 @@ class Affect(OSIDBModel):
 
         embargoed = d.pop("embargoed", UNSET)
 
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
+
         alerts = []
         _alerts = d.pop("alerts", UNSET)
         for alerts_item_data in _alerts or []:
@@ -527,8 +553,6 @@ class Affect(OSIDBModel):
 
         resolution = _parse_resolution(d.pop("resolution", UNSET))
 
-        ps_module = d.pop("ps_module", UNSET)
-
         def _parse_ps_component(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -578,6 +602,8 @@ class Affect(OSIDBModel):
 
         purl = _parse_purl(d.pop("purl", UNSET))
 
+        subpackage_purls = cast(list[str], d.pop("subpackage_purls", UNSET))
+
         def _parse_not_affected_justification(
             data: object,
         ) -> Union[BlankEnum, NotAffectedJustificationEnum, Unset]:
@@ -621,6 +647,7 @@ class Affect(OSIDBModel):
             uuid=uuid,
             flaw=flaw,
             ps_update_stream=ps_update_stream,
+            ps_module=ps_module,
             cve_id=cve_id,
             ps_product=ps_product,
             tracker=tracker,
@@ -630,15 +657,16 @@ class Affect(OSIDBModel):
             resolved_dt=resolved_dt,
             labels=labels,
             embargoed=embargoed,
+            visibility=visibility,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
             affectedness=affectedness,
             resolution=resolution,
-            ps_module=ps_module,
             ps_component=ps_component,
             impact=impact,
             purl=purl,
+            subpackage_purls=subpackage_purls,
             not_affected_justification=not_affected_justification,
         )
 

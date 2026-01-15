@@ -13,6 +13,7 @@ from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
     "affiliation": str,
+    "affiliation__in": list[str],
     "created_dt": datetime.datetime,
     "created_dt__date": datetime.date,
     "created_dt__date__gte": datetime.date,
@@ -26,6 +27,7 @@ QUERY_PARAMS = {
     "include_fields": list[str],
     "limit": int,
     "name": str,
+    "name__in": list[str],
     "offset": int,
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
@@ -36,6 +38,7 @@ QUERY_PARAMS = {
     "updated_dt__lt": datetime.datetime,
     "updated_dt__lte": datetime.datetime,
     "uuid": UUID,
+    "uuid__in": list[UUID],
 }
 
 
@@ -44,6 +47,7 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     affiliation: Union[Unset, str] = UNSET,
+    affiliation_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -57,6 +61,7 @@ def _get_kwargs(
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
+    name_in: Union[Unset, list[str]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -67,12 +72,19 @@ def _get_kwargs(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     params: dict[str, Any] = {}
 
     params["affiliation"] = affiliation
+
+    json_affiliation_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(affiliation_in, Unset):
+        json_affiliation_in = affiliation_in
+
+    params["affiliation__in"] = json_affiliation_in
 
     json_created_dt: Union[Unset, str] = UNSET
     if not isinstance(created_dt, Unset):
@@ -140,6 +152,12 @@ def _get_kwargs(
 
     params["name"] = name
 
+    json_name_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(name_in, Unset):
+        json_name_in = name_in
+
+    params["name__in"] = json_name_in
+
     params["offset"] = offset
 
     json_updated_dt: Union[Unset, str] = UNSET
@@ -196,6 +214,18 @@ def _get_kwargs(
 
     params["uuid"] = json_uuid
 
+    json_uuid_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(uuid_in, Unset):
+        json_uuid_in = []
+        for uuid_in_item_data in uuid_in:
+            uuid_in_item: str = UNSET
+            if not isinstance(uuid_in_item_data, Unset):
+                uuid_in_item = str(uuid_in_item_data)
+
+            json_uuid_in.append(uuid_in_item)
+
+    params["uuid__in"] = json_uuid_in
+
     params = {
         k: (",".join(v) if isinstance(v, list) else v)
         for k, v in params.items()
@@ -245,6 +275,7 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     affiliation: Union[Unset, str] = UNSET,
+    affiliation_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -258,6 +289,7 @@ def sync_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
+    name_in: Union[Unset, list[str]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -268,11 +300,13 @@ def sync_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
     """
     Args:
         flaw_id (UUID):
         affiliation (Union[Unset, str]):
+        affiliation_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -286,6 +320,7 @@ def sync_detailed(
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
+        name_in (Union[Unset, list[str]]):
         offset (Union[Unset, int]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
@@ -296,6 +331,7 @@ def sync_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -309,6 +345,7 @@ def sync_detailed(
         flaw_id=flaw_id,
         client=client,
         affiliation=affiliation,
+        affiliation_in=affiliation_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -322,6 +359,7 @@ def sync_detailed(
         include_fields=include_fields,
         limit=limit,
         name=name,
+        name_in=name_in,
         offset=offset,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
@@ -332,6 +370,7 @@ def sync_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     response = requests.get(
@@ -350,6 +389,7 @@ def sync(
     *,
     client: AuthenticatedClient,
     affiliation: Union[Unset, str] = UNSET,
+    affiliation_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -363,6 +403,7 @@ def sync(
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
+    name_in: Union[Unset, list[str]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -373,11 +414,13 @@ def sync(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
     """
     Args:
         flaw_id (UUID):
         affiliation (Union[Unset, str]):
+        affiliation_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -391,6 +434,7 @@ def sync(
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
+        name_in (Union[Unset, list[str]]):
         offset (Union[Unset, int]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
@@ -401,6 +445,7 @@ def sync(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -414,6 +459,7 @@ def sync(
         flaw_id=flaw_id,
         client=client,
         affiliation=affiliation,
+        affiliation_in=affiliation_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -427,6 +473,7 @@ def sync(
         include_fields=include_fields,
         limit=limit,
         name=name,
+        name_in=name_in,
         offset=offset,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
@@ -437,6 +484,7 @@ def sync(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
     ).parsed
 
 
@@ -445,6 +493,7 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     affiliation: Union[Unset, str] = UNSET,
+    affiliation_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -458,6 +507,7 @@ async def asyncio_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
+    name_in: Union[Unset, list[str]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -468,11 +518,13 @@ async def asyncio_detailed(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Response[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
     """
     Args:
         flaw_id (UUID):
         affiliation (Union[Unset, str]):
+        affiliation_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -486,6 +538,7 @@ async def asyncio_detailed(
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
+        name_in (Union[Unset, list[str]]):
         offset (Union[Unset, int]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
@@ -496,6 +549,7 @@ async def asyncio_detailed(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -509,6 +563,7 @@ async def asyncio_detailed(
         flaw_id=flaw_id,
         client=client,
         affiliation=affiliation,
+        affiliation_in=affiliation_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -522,6 +577,7 @@ async def asyncio_detailed(
         include_fields=include_fields,
         limit=limit,
         name=name,
+        name_in=name_in,
         offset=offset,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
@@ -532,6 +588,7 @@ async def asyncio_detailed(
         updated_dt_lt=updated_dt_lt,
         updated_dt_lte=updated_dt_lte,
         uuid=uuid,
+        uuid_in=uuid_in,
     )
 
     async with client.get_async_session().get(
@@ -550,6 +607,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     affiliation: Union[Unset, str] = UNSET,
+    affiliation_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -563,6 +621,7 @@ async def asyncio(
     include_fields: Union[Unset, list[str]] = UNSET,
     limit: Union[Unset, int] = UNSET,
     name: Union[Unset, str] = UNSET,
+    name_in: Union[Unset, list[str]] = UNSET,
     offset: Union[Unset, int] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -573,11 +632,13 @@ async def asyncio(
     updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     uuid: Union[Unset, UUID] = UNSET,
+    uuid_in: Union[Unset, list[UUID]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsAcknowledgmentsListResponse200]:
     """
     Args:
         flaw_id (UUID):
         affiliation (Union[Unset, str]):
+        affiliation_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -591,6 +652,7 @@ async def asyncio(
         include_fields (Union[Unset, list[str]]):
         limit (Union[Unset, int]):
         name (Union[Unset, str]):
+        name_in (Union[Unset, list[str]]):
         offset (Union[Unset, int]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
@@ -601,6 +663,7 @@ async def asyncio(
         updated_dt_lt (Union[Unset, datetime.datetime]):
         updated_dt_lte (Union[Unset, datetime.datetime]):
         uuid (Union[Unset, UUID]):
+        uuid_in (Union[Unset, list[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -615,6 +678,7 @@ async def asyncio(
             flaw_id=flaw_id,
             client=client,
             affiliation=affiliation,
+            affiliation_in=affiliation_in,
             created_dt=created_dt,
             created_dt_date=created_dt_date,
             created_dt_date_gte=created_dt_date_gte,
@@ -628,6 +692,7 @@ async def asyncio(
             include_fields=include_fields,
             limit=limit,
             name=name,
+            name_in=name_in,
             offset=offset,
             updated_dt=updated_dt,
             updated_dt_date=updated_dt_date,
@@ -638,5 +703,6 @@ async def asyncio(
             updated_dt_lt=updated_dt_lt,
             updated_dt_lte=updated_dt_lte,
             uuid=uuid,
+            uuid_in=uuid_in,
         )
     ).parsed

@@ -7,6 +7,7 @@ from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 from dateutil.parser import isoparse
 
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
@@ -27,6 +28,7 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
         uuid (UUID):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
@@ -43,6 +45,7 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
     flaw: UUID
     uuid: UUID
     embargoed: bool
+    visibility: VisibilityEnum
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
@@ -68,6 +71,10 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
             uuid = str(self.uuid)
 
         embargoed = self.embargoed
+
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
 
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
@@ -111,6 +118,8 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
             field_dict["uuid"] = uuid
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(created_dt, Unset):
@@ -154,6 +163,13 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         embargoed = d.pop("embargoed", UNSET)
+
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
@@ -201,6 +217,7 @@ class OsidbApiV1FlawsAcknowledgmentsRetrieveResponse200(OSIDBModel):
             flaw=flaw,
             uuid=uuid,
             embargoed=embargoed,
+            visibility=visibility,
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
