@@ -15,6 +15,7 @@ QUERY_PARAMS = {
     "offset": int,
     "pgh_created_at": datetime.datetime,
     "pgh_label": str,
+    "pgh_obj_id": str,
     "pgh_obj_model": str,
     "pgh_slug": str,
 }
@@ -27,6 +28,7 @@ def _get_kwargs(
     offset: Union[Unset, int] = UNSET,
     pgh_created_at: Union[Unset, datetime.datetime] = UNSET,
     pgh_label: Union[Unset, str] = UNSET,
+    pgh_obj_id: Union[Unset, str] = UNSET,
     pgh_obj_model: Union[Unset, str] = UNSET,
     pgh_slug: Union[Unset, str] = UNSET,
 ) -> dict[str, Any]:
@@ -45,6 +47,8 @@ def _get_kwargs(
     params["pgh_created_at"] = json_pgh_created_at
 
     params["pgh_label"] = pgh_label
+
+    params["pgh_obj_id"] = pgh_obj_id
 
     params["pgh_obj_model"] = pgh_obj_model
 
@@ -97,16 +101,17 @@ def sync_detailed(
     offset: Union[Unset, int] = UNSET,
     pgh_created_at: Union[Unset, datetime.datetime] = UNSET,
     pgh_label: Union[Unset, str] = UNSET,
+    pgh_obj_id: Union[Unset, str] = UNSET,
     pgh_obj_model: Union[Unset, str] = UNSET,
     pgh_slug: Union[Unset, str] = UNSET,
 ) -> Response[OsidbApiV1AuditListResponse200]:
-    """basic view of audit history events
-
+    """
     Args:
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         pgh_created_at (Union[Unset, datetime.datetime]):
         pgh_label (Union[Unset, str]):
+        pgh_obj_id (Union[Unset, str]):
         pgh_obj_model (Union[Unset, str]):
         pgh_slug (Union[Unset, str]):
 
@@ -124,6 +129,7 @@ def sync_detailed(
         offset=offset,
         pgh_created_at=pgh_created_at,
         pgh_label=pgh_label,
+        pgh_obj_id=pgh_obj_id,
         pgh_obj_model=pgh_obj_model,
         pgh_slug=pgh_slug,
     )
@@ -146,16 +152,17 @@ def sync(
     offset: Union[Unset, int] = UNSET,
     pgh_created_at: Union[Unset, datetime.datetime] = UNSET,
     pgh_label: Union[Unset, str] = UNSET,
+    pgh_obj_id: Union[Unset, str] = UNSET,
     pgh_obj_model: Union[Unset, str] = UNSET,
     pgh_slug: Union[Unset, str] = UNSET,
 ) -> Optional[OsidbApiV1AuditListResponse200]:
-    """basic view of audit history events
-
+    """
     Args:
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         pgh_created_at (Union[Unset, datetime.datetime]):
         pgh_label (Union[Unset, str]):
+        pgh_obj_id (Union[Unset, str]):
         pgh_obj_model (Union[Unset, str]):
         pgh_slug (Union[Unset, str]):
 
@@ -173,6 +180,7 @@ def sync(
         offset=offset,
         pgh_created_at=pgh_created_at,
         pgh_label=pgh_label,
+        pgh_obj_id=pgh_obj_id,
         pgh_obj_model=pgh_obj_model,
         pgh_slug=pgh_slug,
     ).parsed
@@ -185,16 +193,17 @@ async def asyncio_detailed(
     offset: Union[Unset, int] = UNSET,
     pgh_created_at: Union[Unset, datetime.datetime] = UNSET,
     pgh_label: Union[Unset, str] = UNSET,
+    pgh_obj_id: Union[Unset, str] = UNSET,
     pgh_obj_model: Union[Unset, str] = UNSET,
     pgh_slug: Union[Unset, str] = UNSET,
 ) -> Response[OsidbApiV1AuditListResponse200]:
-    """basic view of audit history events
-
+    """
     Args:
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         pgh_created_at (Union[Unset, datetime.datetime]):
         pgh_label (Union[Unset, str]):
+        pgh_obj_id (Union[Unset, str]):
         pgh_obj_model (Union[Unset, str]):
         pgh_slug (Union[Unset, str]):
 
@@ -212,6 +221,7 @@ async def asyncio_detailed(
         offset=offset,
         pgh_created_at=pgh_created_at,
         pgh_label=pgh_label,
+        pgh_obj_id=pgh_obj_id,
         pgh_obj_model=pgh_obj_model,
         pgh_slug=pgh_slug,
     )
@@ -234,16 +244,17 @@ async def asyncio(
     offset: Union[Unset, int] = UNSET,
     pgh_created_at: Union[Unset, datetime.datetime] = UNSET,
     pgh_label: Union[Unset, str] = UNSET,
+    pgh_obj_id: Union[Unset, str] = UNSET,
     pgh_obj_model: Union[Unset, str] = UNSET,
     pgh_slug: Union[Unset, str] = UNSET,
 ) -> Optional[OsidbApiV1AuditListResponse200]:
-    """basic view of audit history events
-
+    """
     Args:
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         pgh_created_at (Union[Unset, datetime.datetime]):
         pgh_label (Union[Unset, str]):
+        pgh_obj_id (Union[Unset, str]):
         pgh_obj_model (Union[Unset, str]):
         pgh_slug (Union[Unset, str]):
 
@@ -262,6 +273,7 @@ async def asyncio(
             offset=offset,
             pgh_created_at=pgh_created_at,
             pgh_label=pgh_label,
+            pgh_obj_id=pgh_obj_id,
             pgh_obj_model=pgh_obj_model,
             pgh_slug=pgh_slug,
         )

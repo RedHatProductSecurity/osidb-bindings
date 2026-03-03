@@ -39,6 +39,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         title (str):
         trackers (list[str]):
         comment_zero (str):
+        selected_cve_description (str):
         affects (list['Affect']):
         comments (list['Comment']):
         package_versions (list['Package']):
@@ -83,6 +84,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     title: str
     trackers: list[str]
     comment_zero: str
+    selected_cve_description: str
     affects: list["Affect"]
     comments: list["Comment"]
     package_versions: list["Package"]
@@ -135,6 +137,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             trackers = self.trackers
 
         comment_zero = self.comment_zero
+
+        selected_cve_description = self.selected_cve_description
 
         affects: list[dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
@@ -391,6 +395,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             field_dict["trackers"] = trackers
         if not isinstance(comment_zero, Unset):
             field_dict["comment_zero"] = comment_zero
+        if not isinstance(selected_cve_description, Unset):
+            field_dict["selected_cve_description"] = selected_cve_description
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
@@ -491,6 +497,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         trackers = cast(list[str], d.pop("trackers", UNSET))
 
         comment_zero = d.pop("comment_zero", UNSET)
+
+        selected_cve_description = d.pop("selected_cve_description", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -921,6 +929,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             title=title,
             trackers=trackers,
             comment_zero=comment_zero,
+            selected_cve_description=selected_cve_description,
             affects=affects,
             comments=comments,
             package_versions=package_versions,
