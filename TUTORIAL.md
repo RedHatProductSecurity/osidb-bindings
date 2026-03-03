@@ -148,6 +148,13 @@ Required for operations that interact with Jira:
 export JIRA_ACCESS_TOKEN="your_jira_access_token"
 ```
 
+#### Jira API Email
+Required for Jira authentication alongside the access token:
+
+```bash
+export JIRA_API_EMAIL="your_jira_email"
+```
+
 ### SSL Configuration
 
 SSL verification is enabled by default. For proper functionality, set the `REQUESTS_CA_BUNDLE` environment variable to point to your system's CA bundle:

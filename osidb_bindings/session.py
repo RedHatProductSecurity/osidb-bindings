@@ -223,6 +223,7 @@ class Session:
                 "User-Agent": OSIDB_BINDINGS_USERAGENT,
                 "Bugzilla-Api-Key": get_env("BUGZILLA_API_KEY", ""),
                 "Jira-Api-Key": get_env("JIRA_ACCESS_TOKEN", ""),
+                "Jira-Api-Email": get_env("JIRA_API_EMAIL", ""),
             },
             verify_ssl=verify_ssl,
         )
