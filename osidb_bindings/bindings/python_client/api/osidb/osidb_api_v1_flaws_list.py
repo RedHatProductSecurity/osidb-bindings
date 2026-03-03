@@ -107,6 +107,7 @@ QUERY_PARAMS = {
     "affects__created_dt__lte": datetime.datetime,
     "affects__embargoed": bool,
     "affects__impact": OsidbApiV1FlawsListAffectsImpact,
+    "affects__isnull": bool,
     "affects__ps_component": str,
     "affects__ps_module": str,
     "affects__resolution": OsidbApiV1FlawsListAffectsResolution,
@@ -335,6 +336,7 @@ def _get_kwargs(
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
@@ -755,6 +757,8 @@ def _get_kwargs(
         json_affects_impact = OsidbApiV1FlawsListAffectsImpact(affects_impact).value
 
     params["affects__impact"] = json_affects_impact
+
+    params["affects__isnull"] = affects_isnull
 
     params["affects__ps_component"] = affects_ps_component
 
@@ -1975,6 +1979,7 @@ def sync_detailed(
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
@@ -2213,6 +2218,7 @@ def sync_detailed(
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
@@ -2445,6 +2451,7 @@ def sync_detailed(
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
@@ -2681,6 +2688,7 @@ def sync(
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
@@ -2919,6 +2927,7 @@ def sync(
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
@@ -3151,6 +3160,7 @@ def sync(
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
@@ -3377,6 +3387,7 @@ async def asyncio_detailed(
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
@@ -3615,6 +3626,7 @@ async def asyncio_detailed(
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
@@ -3847,6 +3859,7 @@ async def asyncio_detailed(
         affects_created_dt_lte=affects_created_dt_lte,
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
@@ -4083,6 +4096,7 @@ async def asyncio(
     affects_created_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_embargoed: Union[Unset, bool] = UNSET,
     affects_impact: Union[Unset, OsidbApiV1FlawsListAffectsImpact] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
@@ -4321,6 +4335,7 @@ async def asyncio(
         affects_created_dt_lte (Union[Unset, datetime.datetime]):
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV1FlawsListAffectsImpact]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
@@ -4554,6 +4569,7 @@ async def asyncio(
             affects_created_dt_lte=affects_created_dt_lte,
             affects_embargoed=affects_embargoed,
             affects_impact=affects_impact,
+            affects_isnull=affects_isnull,
             affects_ps_component=affects_ps_component,
             affects_ps_module=affects_ps_module,
             affects_resolution=affects_resolution,

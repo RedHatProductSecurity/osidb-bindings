@@ -124,6 +124,7 @@ QUERY_PARAMS = {
     "affects__embargoed": bool,
     "affects__impact": OsidbApiV2FlawsListAffectsImpact,
     "affects__impact__in": list[OsidbApiV2FlawsListAffectsImpactInItem],
+    "affects__isnull": bool,
     "affects__ps_component": str,
     "affects__ps_component__in": list[str],
     "affects__ps_module": str,
@@ -372,6 +373,7 @@ def _get_kwargs(
     affects_impact_in: Union[
         Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]
     ] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_component_in: Union[Unset, list[str]] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -842,6 +844,8 @@ def _get_kwargs(
             json_affects_impact_in.append(affects_impact_in_item)
 
     params["affects__impact__in"] = json_affects_impact_in
+
+    params["affects__isnull"] = affects_isnull
 
     params["affects__ps_component"] = affects_ps_component
 
@@ -2180,6 +2184,7 @@ def sync_detailed(
     affects_impact_in: Union[
         Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]
     ] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_component_in: Union[Unset, list[str]] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -2440,6 +2445,7 @@ def sync_detailed(
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV2FlawsListAffectsImpact]):
         affects_impact_in (Union[Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_component_in (Union[Unset, list[str]]):
         affects_ps_module (Union[Unset, str]):
@@ -2688,6 +2694,7 @@ def sync_detailed(
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
         affects_impact_in=affects_impact_in,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_component_in=affects_ps_component_in,
         affects_ps_module=affects_ps_module,
@@ -2944,6 +2951,7 @@ def sync(
     affects_impact_in: Union[
         Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]
     ] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_component_in: Union[Unset, list[str]] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -3204,6 +3212,7 @@ def sync(
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV2FlawsListAffectsImpact]):
         affects_impact_in (Union[Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_component_in (Union[Unset, list[str]]):
         affects_ps_module (Union[Unset, str]):
@@ -3452,6 +3461,7 @@ def sync(
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
         affects_impact_in=affects_impact_in,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_component_in=affects_ps_component_in,
         affects_ps_module=affects_ps_module,
@@ -3698,6 +3708,7 @@ async def asyncio_detailed(
     affects_impact_in: Union[
         Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]
     ] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_component_in: Union[Unset, list[str]] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -3958,6 +3969,7 @@ async def asyncio_detailed(
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV2FlawsListAffectsImpact]):
         affects_impact_in (Union[Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_component_in (Union[Unset, list[str]]):
         affects_ps_module (Union[Unset, str]):
@@ -4206,6 +4218,7 @@ async def asyncio_detailed(
         affects_embargoed=affects_embargoed,
         affects_impact=affects_impact,
         affects_impact_in=affects_impact_in,
+        affects_isnull=affects_isnull,
         affects_ps_component=affects_ps_component,
         affects_ps_component_in=affects_ps_component_in,
         affects_ps_module=affects_ps_module,
@@ -4462,6 +4475,7 @@ async def asyncio(
     affects_impact_in: Union[
         Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]
     ] = UNSET,
+    affects_isnull: Union[Unset, bool] = UNSET,
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_component_in: Union[Unset, list[str]] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
@@ -4722,6 +4736,7 @@ async def asyncio(
         affects_embargoed (Union[Unset, bool]):
         affects_impact (Union[Unset, OsidbApiV2FlawsListAffectsImpact]):
         affects_impact_in (Union[Unset, list[OsidbApiV2FlawsListAffectsImpactInItem]]):
+        affects_isnull (Union[Unset, bool]):
         affects_ps_component (Union[Unset, str]):
         affects_ps_component_in (Union[Unset, list[str]]):
         affects_ps_module (Union[Unset, str]):
@@ -4971,6 +4986,7 @@ async def asyncio(
             affects_embargoed=affects_embargoed,
             affects_impact=affects_impact,
             affects_impact_in=affects_impact_in,
+            affects_isnull=affects_isnull,
             affects_ps_component=affects_ps_component,
             affects_ps_component_in=affects_ps_component_in,
             affects_ps_module=affects_ps_module,
