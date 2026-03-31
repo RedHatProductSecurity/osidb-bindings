@@ -23,7 +23,6 @@ from .bindings.python_client.api.auth import (
 from .constants import (
     ALL_SESSION_OPERATIONS,
     DEFAULT_LIMIT,
-    OSIDB_API_VERSION,
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_PLACEHOLDER_FIELD,
     OSIDB_BINDINGS_USERAGENT,
@@ -38,20 +37,19 @@ from .exceptions import (
 from .helpers import get_env, parse_version_key
 from .iterators import Paginator
 
-osidb_status_retrieve = importlib.import_module(
-    f"{OSIDB_BINDINGS_API_PATH}.osidb.osidb_api_{OSIDB_API_VERSION}_status_retrieve",
-    package="osidb_bindings",
-)
-
 MAX_CONCURRENCY = get_env("OSIDB_BINDINGS_MAX_CONCURRENCY", "10", is_int=True)
 
 
-def file_trackers(self, form_data: dict[str, Any], *args, **kwargs):
-    """Shortcut for POST /trackers/api/v1/file"""
+def file_trackers(
+    self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
+):
+    """Shortcut for POST /trackers/api/file"""
 
-    method_module = importlib.import_module(
-        f".bindings.python_client.api.trackers.trackers_api_{OSIDB_API_VERSION}_file_create",
-        package="osidb_bindings",
+    method_module = self._get_method_module(
+        resource_name="file",
+        method="create",
+        api_section="trackers",
+        api_version=api_version,
     )
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
     if model is None:
@@ -70,10 +68,11 @@ def file_trackers(self, form_data: dict[str, Any], *args, **kwargs):
     )
 
 
-def promote_flaw(self, id, *args, **kwargs):
-    method_module = importlib.import_module(
-        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_promote_create",
-        package="osidb_bindings",
+def promote_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    method_module = self._get_method_module(
+        resource_name="flaws",
+        method="promote_create",
+        api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
     return sync_fn(
@@ -84,10 +83,13 @@ def promote_flaw(self, id, *args, **kwargs):
     )
 
 
-def reject_flaw(self, id: str, form_data: dict[str, Any], *args, **kwargs):
-    method_module = importlib.import_module(
-        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_reject_create",
-        package="osidb_bindings",
+def reject_flaw(
+    self, id: str, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
+):
+    method_module = self._get_method_module(
+        resource_name="flaws",
+        method="reject_create",
+        api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
     model = getattr(method_module, "REQUEST_BODY_TYPE", None)
@@ -106,10 +108,11 @@ def reject_flaw(self, id: str, form_data: dict[str, Any], *args, **kwargs):
     )
 
 
-def reset_flaw(self, id, *args, **kwargs):
-    method_module = importlib.import_module(
-        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_reset_create",
-        package="osidb_bindings",
+def reset_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    method_module = self._get_method_module(
+        resource_name="flaws",
+        method="reset_create",
+        api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
     return sync_fn(
@@ -120,10 +123,11 @@ def reset_flaw(self, id, *args, **kwargs):
     )
 
 
-def revert_flaw(self, id, *args, **kwargs):
-    method_module = importlib.import_module(
-        f".bindings.python_client.api.osidb.osidb_api_{OSIDB_API_VERSION}_flaws_revert_create",
-        package="osidb_bindings",
+def revert_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    method_module = self._get_method_module(
+        resource_name="flaws",
+        method="revert_create",
+        api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
     return sync_fn(
@@ -358,23 +362,31 @@ class Session:
 
     @staticmethod
     def __cache_endpoints():
-        from osidb_bindings.bindings.python_client.api import osidb
+        from osidb_bindings.bindings.python_client.api import osidb, trackers
 
-        pattern = re.compile(r"^osidb_api_(v[^_]+)_(.+)$")
-        endpoints = {"osidb_api": defaultdict(set)}
-        for endpoint_name in osidb.ENDPOINT_NAMES:
-            match = pattern.match(endpoint_name)
-            if match:
-                version = match.group(1)
-                method = match.group(2)
-                endpoints["osidb_api"][method].add(version)
-            else:
-                continue
+        sections = {"osidb": osidb, "trackers": trackers}
+        endpoints = {}
+        for section_name, module in sections.items():
+            pattern = re.compile(rf"^{section_name}_api_(v[^_]+)_(.+)$")
+            endpoints[f"{section_name}_api"] = defaultdict(set)
+            for endpoint_name in module.ENDPOINT_NAMES:
+                match = pattern.match(endpoint_name)
+                if match:
+                    endpoints[f"{section_name}_api"][match.group(2)].add(
+                        match.group(1)
+                    )
 
         return endpoints
 
     def status(self):
-        status_fn = get_sync_function(osidb_status_retrieve)
+        api_version = self.get_latest_endpoint_version(
+            "osidb", "status", "retrieve"
+        )
+        status_module = importlib.import_module(
+            f"{OSIDB_BINDINGS_API_PATH}.osidb.osidb_api_{api_version}_status_retrieve",
+            package="osidb_bindings",
+        )
+        status_fn = get_sync_function(status_module)
         return status_fn(client=self.get_client_with_new_access_token())
 
     def __get_refresh_token(self) -> str:
@@ -478,7 +490,7 @@ class SessionOperationsGroup:
             f'and the operation "{operation_name}" is not defined.'
         )
 
-    def __get_method_module(
+    def _get_method_module(
         self,
         resource_name: str,
         method: str,
@@ -517,7 +529,7 @@ class SessionOperationsGroup:
 
     def retrieve(self, id, *args, api_version: str | None = None, **kwargs):
         if "retrieve" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="retrieve",
                 api_version=api_version,
@@ -534,7 +546,7 @@ class SessionOperationsGroup:
 
     def retrieve_list(self, *args, api_version: str | None = None, **kwargs):
         if "list" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
@@ -551,7 +563,7 @@ class SessionOperationsGroup:
         self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "create" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="create",
                 api_version=api_version,
@@ -575,7 +587,7 @@ class SessionOperationsGroup:
         self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_create" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="bulk_create",
                 api_version=api_version,
@@ -604,7 +616,7 @@ class SessionOperationsGroup:
         **kwargs,
     ):
         if "update" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="update",
                 api_version=api_version,
@@ -629,7 +641,7 @@ class SessionOperationsGroup:
         self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_update" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="bulk_update",
                 api_version=api_version,
@@ -651,7 +663,7 @@ class SessionOperationsGroup:
 
     def delete(self, id, *args, api_version: str | None = None, **kwargs):
         if "destroy" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="destroy",
                 api_version=api_version,
@@ -670,7 +682,7 @@ class SessionOperationsGroup:
         self, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
     ):
         if "bulk_delete" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name,
                 method="bulk_destroy",
                 api_version=api_version,
@@ -694,7 +706,7 @@ class SessionOperationsGroup:
 
     def count(self, *args, api_version: str | None = None, **kwargs):
         if "list" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
@@ -711,7 +723,7 @@ class SessionOperationsGroup:
 
     def search(self, searched_text: str, api_version: str | None = None):
         if "search" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
@@ -763,7 +775,7 @@ class SessionOperationsGroup:
         **kwargs,
     ):
         if "list" in self.allowed_operations:
-            method_module = self.__get_method_module(
+            method_module = self._get_method_module(
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             async_fn = get_asyncio_function(method_module)

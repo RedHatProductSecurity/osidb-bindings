@@ -2,7 +2,6 @@
 osidb-bindings constants
 """
 
-OSIDB_API_VERSION: str = "v1"
 OSIDB_BINDINGS_VERSION: str = "5.8.0"
 OSIDB_BINDINGS_USERAGENT: str = f"osidb-bindings-{OSIDB_BINDINGS_VERSION}"
 OSIDB_BINDINGS_API_PATH: str = ".bindings.python_client.api"
