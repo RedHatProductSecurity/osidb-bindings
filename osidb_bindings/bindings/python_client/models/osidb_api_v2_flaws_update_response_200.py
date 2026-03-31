@@ -12,7 +12,6 @@ from ..models.flaw_source import FlawSource
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
-from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
 from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -40,6 +39,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         trackers (list[str]):
         comment_zero (str):
         selected_cve_description (str):
+        requires_cve_description (str):
         affects (list['Affect']):
         comments (list['Comment']):
         package_versions (list['Package']):
@@ -54,13 +54,14 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         classification (FlawPutClassification):
+        group_key (str):
         task_key (Union[None, str]):
+        team_id (str):
         alerts (list['Alert']):
         cve_id (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         components (Union[Unset, list[str]]):
         cve_description (Union[Unset, str]):
-        requires_cve_description (Union[BlankEnum, RequiresCveDescriptionEnum, Unset]):
         statement (Union[Unset, str]):
         cwe_id (Union[Unset, str]):
         unembargo_dt (Union[None, Unset, datetime.datetime]):
@@ -71,9 +72,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         major_incident_start_dt (Union[None, Unset, datetime.datetime]):
         nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
         aegis_meta (Union[Unset, Any]):
-        group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
-        team_id (Union[Unset, str]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -85,6 +84,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
     trackers: list[str]
     comment_zero: str
     selected_cve_description: str
+    requires_cve_description: str
     affects: list["Affect"]
     comments: list["Comment"]
     package_versions: list["Package"]
@@ -97,15 +97,14 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     classification: "FlawPutClassification"
+    group_key: str
     task_key: Union[None, str]
+    team_id: str
     alerts: list["Alert"]
     cve_id: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     components: Union[Unset, list[str]] = UNSET
     cve_description: Union[Unset, str] = UNSET
-    requires_cve_description: Union[BlankEnum, RequiresCveDescriptionEnum, Unset] = (
-        UNSET
-    )
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[None, Unset, datetime.datetime] = UNSET
@@ -116,9 +115,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
     major_incident_start_dt: Union[None, Unset, datetime.datetime] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     aegis_meta: Union[Unset, Any] = UNSET
-    group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
-    team_id: Union[Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -139,6 +136,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         comment_zero = self.comment_zero
 
         selected_cve_description = self.selected_cve_description
+
+        requires_cve_description = self.requires_cve_description
 
         affects: list[dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
@@ -228,10 +227,14 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         if not isinstance(self.classification, Unset):
             classification = self.classification.to_dict()
 
+        group_key = self.group_key
+
         task_key: Union[None, str]
         if isinstance(self.task_key, Unset):
             task_key = UNSET
         task_key = self.task_key
+
+        team_id = self.team_id
 
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
@@ -267,23 +270,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             components = self.components
 
         cve_description = self.cve_description
-
-        requires_cve_description: Union[Unset, str]
-        if isinstance(self.requires_cve_description, Unset):
-            requires_cve_description = UNSET
-        elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
-            requires_cve_description = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = RequiresCveDescriptionEnum(
-                    self.requires_cve_description
-                ).value
-
-        else:
-            requires_cve_description = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = BlankEnum(
-                    self.requires_cve_description
-                ).value
 
         statement = self.statement
 
@@ -369,11 +355,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
 
         aegis_meta = self.aegis_meta
 
-        group_key = self.group_key
-
         owner = self.owner
-
-        team_id = self.team_id
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -397,6 +379,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             field_dict["comment_zero"] = comment_zero
         if not isinstance(selected_cve_description, Unset):
             field_dict["selected_cve_description"] = selected_cve_description
+        if not isinstance(requires_cve_description, Unset):
+            field_dict["requires_cve_description"] = requires_cve_description
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
@@ -421,8 +405,12 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             field_dict["updated_dt"] = updated_dt
         if not isinstance(classification, Unset):
             field_dict["classification"] = classification
+        if not isinstance(group_key, Unset):
+            field_dict["group_key"] = group_key
         if not isinstance(task_key, Unset):
             field_dict["task_key"] = task_key
+        if not isinstance(team_id, Unset):
+            field_dict["team_id"] = team_id
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(cve_id, Unset):
@@ -433,8 +421,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             field_dict["components"] = components
         if not isinstance(cve_description, Unset):
             field_dict["cve_description"] = cve_description
-        if not isinstance(requires_cve_description, Unset):
-            field_dict["requires_cve_description"] = requires_cve_description
         if not isinstance(statement, Unset):
             field_dict["statement"] = statement
         if not isinstance(cwe_id, Unset):
@@ -455,12 +441,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
         if not isinstance(aegis_meta, Unset):
             field_dict["aegis_meta"] = aegis_meta
-        if not isinstance(group_key, Unset):
-            field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(team_id, Unset):
-            field_dict["team_id"] = team_id
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -499,6 +481,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         comment_zero = d.pop("comment_zero", UNSET)
 
         selected_cve_description = d.pop("selected_cve_description", UNSET)
+
+        requires_cve_description = d.pop("requires_cve_description", UNSET)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -616,6 +600,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         else:
             classification = FlawPutClassification.from_dict(_classification)
 
+        group_key = d.pop("group_key", UNSET)
+
         def _parse_task_key(data: object) -> Union[None, str]:
             if data is None:
                 return data
@@ -624,6 +610,8 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             return cast(Union[None, str], data)
 
         task_key = _parse_task_key(d.pop("task_key", UNSET))
+
+        team_id = d.pop("team_id", UNSET)
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
@@ -680,45 +668,6 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
         components = cast(list[str], d.pop("components", UNSET))
 
         cve_description = d.pop("cve_description", UNSET)
-
-        def _parse_requires_cve_description(
-            data: object,
-        ) -> Union[BlankEnum, RequiresCveDescriptionEnum, Unset]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _requires_cve_description_type_0 = data
-                requires_cve_description_type_0: RequiresCveDescriptionEnum
-                if isinstance(_requires_cve_description_type_0, Unset):
-                    requires_cve_description_type_0 = UNSET
-                else:
-                    requires_cve_description_type_0 = RequiresCveDescriptionEnum(
-                        _requires_cve_description_type_0
-                    )
-
-                return requires_cve_description_type_0
-            except:  # noqa: E722
-                pass
-            if not isinstance(data, str):
-                raise TypeError()
-            _requires_cve_description_type_1 = data
-            requires_cve_description_type_1: BlankEnum
-            if isinstance(_requires_cve_description_type_1, Unset):
-                requires_cve_description_type_1 = UNSET
-            else:
-                requires_cve_description_type_1 = BlankEnum(
-                    _requires_cve_description_type_1
-                )
-
-            return requires_cve_description_type_1
-
-        requires_cve_description = _parse_requires_cve_description(
-            d.pop("requires_cve_description", UNSET)
-        )
 
         statement = d.pop("statement", UNSET)
 
@@ -905,11 +854,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
 
         aegis_meta = d.pop("aegis_meta", UNSET)
 
-        group_key = d.pop("group_key", UNSET)
-
         owner = d.pop("owner", UNSET)
-
-        team_id = d.pop("team_id", UNSET)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -930,6 +875,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             trackers=trackers,
             comment_zero=comment_zero,
             selected_cve_description=selected_cve_description,
+            requires_cve_description=requires_cve_description,
             affects=affects,
             comments=comments,
             package_versions=package_versions,
@@ -942,13 +888,14 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             created_dt=created_dt,
             updated_dt=updated_dt,
             classification=classification,
+            group_key=group_key,
             task_key=task_key,
+            team_id=team_id,
             alerts=alerts,
             cve_id=cve_id,
             impact=impact,
             components=components,
             cve_description=cve_description,
-            requires_cve_description=requires_cve_description,
             statement=statement,
             cwe_id=cwe_id,
             unembargo_dt=unembargo_dt,
@@ -959,9 +906,7 @@ class OsidbApiV2FlawsUpdateResponse200(OSIDBModel):
             major_incident_start_dt=major_incident_start_dt,
             nist_cvss_validation=nist_cvss_validation,
             aegis_meta=aegis_meta,
-            group_key=group_key,
             owner=owner,
-            team_id=team_id,
             dt=dt,
             env=env,
             revision=revision,
