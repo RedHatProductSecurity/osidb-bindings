@@ -333,12 +333,6 @@ from .osidb_api_v1_flaws_list_references_type import OsidbApiV1FlawsListReferenc
 from .osidb_api_v1_flaws_list_references_type_in_item import (
     OsidbApiV1FlawsListReferencesTypeInItem,
 )
-from .osidb_api_v1_flaws_list_requires_cve_description import (
-    OsidbApiV1FlawsListRequiresCveDescription,
-)
-from .osidb_api_v1_flaws_list_requires_cve_description_in_item import (
-    OsidbApiV1FlawsListRequiresCveDescriptionInItem,
-)
 from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from .osidb_api_v1_flaws_list_source_in_item import OsidbApiV1FlawsListSourceInItem
@@ -600,12 +594,6 @@ from .osidb_api_v2_flaws_list_references_type import OsidbApiV2FlawsListReferenc
 from .osidb_api_v2_flaws_list_references_type_in_item import (
     OsidbApiV2FlawsListReferencesTypeInItem,
 )
-from .osidb_api_v2_flaws_list_requires_cve_description import (
-    OsidbApiV2FlawsListRequiresCveDescription,
-)
-from .osidb_api_v2_flaws_list_requires_cve_description_in_item import (
-    OsidbApiV2FlawsListRequiresCveDescriptionInItem,
-)
 from .osidb_api_v2_flaws_list_response_200 import OsidbApiV2FlawsListResponse200
 from .osidb_api_v2_flaws_list_source import OsidbApiV2FlawsListSource
 from .osidb_api_v2_flaws_list_source_in_item import OsidbApiV2FlawsListSourceInItem
@@ -707,7 +695,6 @@ from .patched_integration_token_patch_request import PatchedIntegrationTokenPatc
 from .profile import Profile
 from .ps_stream_selection import PsStreamSelection
 from .reject_request import RejectRequest
-from .requires_cve_description_enum import RequiresCveDescriptionEnum
 from .resolution_enum import ResolutionEnum
 from .special_handling_enum import SpecialHandlingEnum
 from .state_enum import StateEnum
@@ -925,8 +912,6 @@ __all__ = (
     "OsidbApiV1FlawsListOrderItem",
     "OsidbApiV1FlawsListReferencesType",
     "OsidbApiV1FlawsListReferencesTypeInItem",
-    "OsidbApiV1FlawsListRequiresCveDescription",
-    "OsidbApiV1FlawsListRequiresCveDescriptionInItem",
     "OsidbApiV1FlawsListResponse200",
     "OsidbApiV1FlawsListSource",
     "OsidbApiV1FlawsListSourceInItem",
@@ -1036,8 +1021,6 @@ __all__ = (
     "OsidbApiV2FlawsListOrderItem",
     "OsidbApiV2FlawsListReferencesType",
     "OsidbApiV2FlawsListReferencesTypeInItem",
-    "OsidbApiV2FlawsListRequiresCveDescription",
-    "OsidbApiV2FlawsListRequiresCveDescriptionInItem",
     "OsidbApiV2FlawsListResponse200",
     "OsidbApiV2FlawsListSource",
     "OsidbApiV2FlawsListSourceInItem",
@@ -1101,7 +1084,6 @@ __all__ = (
     "Profile",
     "PsStreamSelection",
     "RejectRequest",
-    "RequiresCveDescriptionEnum",
     "ResolutionEnum",
     "SpecialHandlingEnum",
     "StateEnum",

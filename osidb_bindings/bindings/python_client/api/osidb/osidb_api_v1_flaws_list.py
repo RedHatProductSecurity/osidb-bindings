@@ -50,12 +50,6 @@ from ...models.osidb_api_v1_flaws_list_references_type import (
 from ...models.osidb_api_v1_flaws_list_references_type_in_item import (
     OsidbApiV1FlawsListReferencesTypeInItem,
 )
-from ...models.osidb_api_v1_flaws_list_requires_cve_description import (
-    OsidbApiV1FlawsListRequiresCveDescription,
-)
-from ...models.osidb_api_v1_flaws_list_requires_cve_description_in_item import (
-    OsidbApiV1FlawsListRequiresCveDescriptionInItem,
-)
 from ...models.osidb_api_v1_flaws_list_response_200 import (
     OsidbApiV1FlawsListResponse200,
 )
@@ -269,10 +263,6 @@ QUERY_PARAMS = {
     "reported_dt__gte": datetime.datetime,
     "reported_dt__lt": datetime.datetime,
     "reported_dt__lte": datetime.datetime,
-    "requires_cve_description": OsidbApiV1FlawsListRequiresCveDescription,
-    "requires_cve_description__in": list[
-        OsidbApiV1FlawsListRequiresCveDescriptionInItem
-    ],
     "search": str,
     "source": OsidbApiV1FlawsListSource,
     "source__in": list[OsidbApiV1FlawsListSourceInItem],
@@ -506,12 +496,6 @@ def _get_kwargs(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    requires_cve_description: Union[
-        Unset, OsidbApiV1FlawsListRequiresCveDescription
-    ] = UNSET,
-    requires_cve_description_in: Union[
-        Unset, list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]
-    ] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV1FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV1FlawsListSourceInItem]] = UNSET,
@@ -1730,30 +1714,6 @@ def _get_kwargs(
 
     params["reported_dt__lte"] = json_reported_dt_lte
 
-    json_requires_cve_description: Union[Unset, str] = UNSET
-    if not isinstance(requires_cve_description, Unset):
-        json_requires_cve_description = OsidbApiV1FlawsListRequiresCveDescription(
-            requires_cve_description
-        ).value
-
-    params["requires_cve_description"] = json_requires_cve_description
-
-    json_requires_cve_description_in: Union[Unset, list[str]] = UNSET
-    if not isinstance(requires_cve_description_in, Unset):
-        json_requires_cve_description_in = []
-        for requires_cve_description_in_item_data in requires_cve_description_in:
-            requires_cve_description_in_item: str = UNSET
-            if not isinstance(requires_cve_description_in_item_data, Unset):
-                requires_cve_description_in_item = (
-                    OsidbApiV1FlawsListRequiresCveDescriptionInItem(
-                        requires_cve_description_in_item_data
-                    ).value
-                )
-
-            json_requires_cve_description_in.append(requires_cve_description_in_item)
-
-    params["requires_cve_description__in"] = json_requires_cve_description_in
-
     params["search"] = search
 
     json_source: Union[Unset, str] = UNSET
@@ -2149,12 +2109,6 @@ def sync_detailed(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    requires_cve_description: Union[
-        Unset, OsidbApiV1FlawsListRequiresCveDescription
-    ] = UNSET,
-    requires_cve_description_in: Union[
-        Unset, list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]
-    ] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV1FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV1FlawsListSourceInItem]] = UNSET,
@@ -2380,9 +2334,6 @@ def sync_detailed(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
-        requires_cve_description (Union[Unset, OsidbApiV1FlawsListRequiresCveDescription]):
-        requires_cve_description_in (Union[Unset,
-            list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV1FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV1FlawsListSourceInItem]]):
@@ -2613,8 +2564,6 @@ def sync_detailed(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
-        requires_cve_description=requires_cve_description,
-        requires_cve_description_in=requires_cve_description_in,
         search=search,
         source=source,
         source_in=source_in,
@@ -2858,12 +2807,6 @@ def sync(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    requires_cve_description: Union[
-        Unset, OsidbApiV1FlawsListRequiresCveDescription
-    ] = UNSET,
-    requires_cve_description_in: Union[
-        Unset, list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]
-    ] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV1FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV1FlawsListSourceInItem]] = UNSET,
@@ -3089,9 +3032,6 @@ def sync(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
-        requires_cve_description (Union[Unset, OsidbApiV1FlawsListRequiresCveDescription]):
-        requires_cve_description_in (Union[Unset,
-            list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV1FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV1FlawsListSourceInItem]]):
@@ -3322,8 +3262,6 @@ def sync(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
-        requires_cve_description=requires_cve_description,
-        requires_cve_description_in=requires_cve_description_in,
         search=search,
         source=source,
         source_in=source_in,
@@ -3557,12 +3495,6 @@ async def asyncio_detailed(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    requires_cve_description: Union[
-        Unset, OsidbApiV1FlawsListRequiresCveDescription
-    ] = UNSET,
-    requires_cve_description_in: Union[
-        Unset, list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]
-    ] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV1FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV1FlawsListSourceInItem]] = UNSET,
@@ -3788,9 +3720,6 @@ async def asyncio_detailed(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
-        requires_cve_description (Union[Unset, OsidbApiV1FlawsListRequiresCveDescription]):
-        requires_cve_description_in (Union[Unset,
-            list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV1FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV1FlawsListSourceInItem]]):
@@ -4021,8 +3950,6 @@ async def asyncio_detailed(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
-        requires_cve_description=requires_cve_description,
-        requires_cve_description_in=requires_cve_description_in,
         search=search,
         source=source,
         source_in=source_in,
@@ -4266,12 +4193,6 @@ async def asyncio(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
-    requires_cve_description: Union[
-        Unset, OsidbApiV1FlawsListRequiresCveDescription
-    ] = UNSET,
-    requires_cve_description_in: Union[
-        Unset, list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]
-    ] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV1FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV1FlawsListSourceInItem]] = UNSET,
@@ -4497,9 +4418,6 @@ async def asyncio(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
-        requires_cve_description (Union[Unset, OsidbApiV1FlawsListRequiresCveDescription]):
-        requires_cve_description_in (Union[Unset,
-            list[OsidbApiV1FlawsListRequiresCveDescriptionInItem]]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV1FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV1FlawsListSourceInItem]]):
@@ -4731,8 +4649,6 @@ async def asyncio(
             reported_dt_gte=reported_dt_gte,
             reported_dt_lt=reported_dt_lt,
             reported_dt_lte=reported_dt_lte,
-            requires_cve_description=requires_cve_description,
-            requires_cve_description_in=requires_cve_description_in,
             search=search,
             source=source,
             source_in=source_in,

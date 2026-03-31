@@ -12,7 +12,6 @@ from ..models.flaw_source import FlawSource
 from ..models.impact_enum import ImpactEnum
 from ..models.major_incident_state_enum import MajorIncidentStateEnum
 from ..models.nist_cvss_validation_enum import NistCvssValidationEnum
-from ..models.requires_cve_description_enum import RequiresCveDescriptionEnum
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawRequest")
@@ -33,7 +32,6 @@ class FlawRequest(OSIDBModel):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         components (Union[Unset, list[str]]):
         cve_description (Union[Unset, str]):
-        requires_cve_description (Union[BlankEnum, RequiresCveDescriptionEnum, Unset]):
         statement (Union[Unset, str]):
         cwe_id (Union[Unset, str]):
         unembargo_dt (Union[None, Unset, datetime.datetime]):
@@ -44,9 +42,7 @@ class FlawRequest(OSIDBModel):
         major_incident_start_dt (Union[None, Unset, datetime.datetime]):
         nist_cvss_validation (Union[BlankEnum, NistCvssValidationEnum, Unset]):
         aegis_meta (Union[Unset, Any]):
-        group_key (Union[Unset, str]):
         owner (Union[Unset, str]):
-        team_id (Union[Unset, str]):
     """
 
     title: str
@@ -57,9 +53,6 @@ class FlawRequest(OSIDBModel):
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     components: Union[Unset, list[str]] = UNSET
     cve_description: Union[Unset, str] = UNSET
-    requires_cve_description: Union[BlankEnum, RequiresCveDescriptionEnum, Unset] = (
-        UNSET
-    )
     statement: Union[Unset, str] = UNSET
     cwe_id: Union[Unset, str] = UNSET
     unembargo_dt: Union[None, Unset, datetime.datetime] = UNSET
@@ -70,9 +63,7 @@ class FlawRequest(OSIDBModel):
     major_incident_start_dt: Union[None, Unset, datetime.datetime] = UNSET
     nist_cvss_validation: Union[BlankEnum, NistCvssValidationEnum, Unset] = UNSET
     aegis_meta: Union[Unset, Any] = UNSET
-    group_key: Union[Unset, str] = UNSET
     owner: Union[Unset, str] = UNSET
-    team_id: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -110,23 +101,6 @@ class FlawRequest(OSIDBModel):
             components = self.components
 
         cve_description = self.cve_description
-
-        requires_cve_description: Union[Unset, str]
-        if isinstance(self.requires_cve_description, Unset):
-            requires_cve_description = UNSET
-        elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
-            requires_cve_description = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = RequiresCveDescriptionEnum(
-                    self.requires_cve_description
-                ).value
-
-        else:
-            requires_cve_description = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = BlankEnum(
-                    self.requires_cve_description
-                ).value
 
         statement = self.statement
 
@@ -212,11 +186,7 @@ class FlawRequest(OSIDBModel):
 
         aegis_meta = self.aegis_meta
 
-        group_key = self.group_key
-
         owner = self.owner
-
-        team_id = self.team_id
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -236,8 +206,6 @@ class FlawRequest(OSIDBModel):
             field_dict["components"] = components
         if not isinstance(cve_description, Unset):
             field_dict["cve_description"] = cve_description
-        if not isinstance(requires_cve_description, Unset):
-            field_dict["requires_cve_description"] = requires_cve_description
         if not isinstance(statement, Unset):
             field_dict["statement"] = statement
         if not isinstance(cwe_id, Unset):
@@ -258,12 +226,8 @@ class FlawRequest(OSIDBModel):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
         if not isinstance(aegis_meta, Unset):
             field_dict["aegis_meta"] = aegis_meta
-        if not isinstance(group_key, Unset):
-            field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(team_id, Unset):
-            field_dict["team_id"] = team_id
 
         return field_dict
 
@@ -314,27 +278,6 @@ class FlawRequest(OSIDBModel):
             if isinstance(self.cve_description, Unset)
             else (None, str(self.cve_description).encode(), "text/plain")
         )
-
-        requires_cve_description: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.requires_cve_description, Unset):
-            requires_cve_description = UNSET
-        elif isinstance(self.requires_cve_description, RequiresCveDescriptionEnum):
-            requires_cve_description: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = (
-                    None,
-                    str(self.requires_cve_description.value).encode(),
-                    "text/plain",
-                )
-        else:
-            requires_cve_description: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.requires_cve_description, Unset):
-                requires_cve_description = (
-                    None,
-                    str(self.requires_cve_description.value).encode(),
-                    "text/plain",
-                )
 
         statement = (
             self.statement
@@ -454,22 +397,10 @@ class FlawRequest(OSIDBModel):
             else (None, str(self.aegis_meta).encode(), "text/plain")
         )
 
-        group_key = (
-            self.group_key
-            if isinstance(self.group_key, Unset)
-            else (None, str(self.group_key).encode(), "text/plain")
-        )
-
         owner = (
             self.owner
             if isinstance(self.owner, Unset)
             else (None, str(self.owner).encode(), "text/plain")
-        )
-
-        team_id = (
-            self.team_id
-            if isinstance(self.team_id, Unset)
-            else (None, str(self.team_id).encode(), "text/plain")
         )
 
         field_dict: dict[str, Any] = {}
@@ -492,8 +423,6 @@ class FlawRequest(OSIDBModel):
             field_dict["components"] = components
         if not isinstance(cve_description, Unset):
             field_dict["cve_description"] = cve_description
-        if not isinstance(requires_cve_description, Unset):
-            field_dict["requires_cve_description"] = requires_cve_description
         if not isinstance(statement, Unset):
             field_dict["statement"] = statement
         if not isinstance(cwe_id, Unset):
@@ -514,12 +443,8 @@ class FlawRequest(OSIDBModel):
             field_dict["nist_cvss_validation"] = nist_cvss_validation
         if not isinstance(aegis_meta, Unset):
             field_dict["aegis_meta"] = aegis_meta
-        if not isinstance(group_key, Unset):
-            field_dict["group_key"] = group_key
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
-        if not isinstance(team_id, Unset):
-            field_dict["team_id"] = team_id
 
         return field_dict
 
@@ -582,45 +507,6 @@ class FlawRequest(OSIDBModel):
         components = cast(list[str], d.pop("components", UNSET))
 
         cve_description = d.pop("cve_description", UNSET)
-
-        def _parse_requires_cve_description(
-            data: object,
-        ) -> Union[BlankEnum, RequiresCveDescriptionEnum, Unset]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _requires_cve_description_type_0 = data
-                requires_cve_description_type_0: RequiresCveDescriptionEnum
-                if isinstance(_requires_cve_description_type_0, Unset):
-                    requires_cve_description_type_0 = UNSET
-                else:
-                    requires_cve_description_type_0 = RequiresCveDescriptionEnum(
-                        _requires_cve_description_type_0
-                    )
-
-                return requires_cve_description_type_0
-            except:  # noqa: E722
-                pass
-            if not isinstance(data, str):
-                raise TypeError()
-            _requires_cve_description_type_1 = data
-            requires_cve_description_type_1: BlankEnum
-            if isinstance(_requires_cve_description_type_1, Unset):
-                requires_cve_description_type_1 = UNSET
-            else:
-                requires_cve_description_type_1 = BlankEnum(
-                    _requires_cve_description_type_1
-                )
-
-            return requires_cve_description_type_1
-
-        requires_cve_description = _parse_requires_cve_description(
-            d.pop("requires_cve_description", UNSET)
-        )
 
         statement = d.pop("statement", UNSET)
 
@@ -807,11 +693,7 @@ class FlawRequest(OSIDBModel):
 
         aegis_meta = d.pop("aegis_meta", UNSET)
 
-        group_key = d.pop("group_key", UNSET)
-
         owner = d.pop("owner", UNSET)
-
-        team_id = d.pop("team_id", UNSET)
 
         flaw_request = cls(
             title=title,
@@ -822,7 +704,6 @@ class FlawRequest(OSIDBModel):
             impact=impact,
             components=components,
             cve_description=cve_description,
-            requires_cve_description=requires_cve_description,
             statement=statement,
             cwe_id=cwe_id,
             unembargo_dt=unembargo_dt,
@@ -833,9 +714,7 @@ class FlawRequest(OSIDBModel):
             major_incident_start_dt=major_incident_start_dt,
             nist_cvss_validation=nist_cvss_validation,
             aegis_meta=aegis_meta,
-            group_key=group_key,
             owner=owner,
-            team_id=team_id,
         )
 
         flaw_request.additional_properties = d
