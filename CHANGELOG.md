@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - support for providing existing refresh token to session to skip initial auth
+- support for custom user-agent via `user_agent` parameter in `new_session`
 
 ## [5.8.1] - 2026-04-08
 ### Changed
