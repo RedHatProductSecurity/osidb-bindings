@@ -26,6 +26,7 @@ from .constants import (
     OSIDB_BINDINGS_API_PATH,
     OSIDB_BINDINGS_PLACEHOLDER_FIELD,
     OSIDB_BINDINGS_USERAGENT,
+    USERAGENT_PLACEHOLDER,
 )
 from .exceptions import (
     MissingEndpointMethod,
@@ -84,7 +85,12 @@ def promote_flaw(self, id, *args, api_version: str | None = None, **kwargs):
 
 
 def reject_flaw(
-    self, id: str, form_data: dict[str, Any], *args, api_version: str | None = None, **kwargs
+    self,
+    id: str,
+    form_data: dict[str, Any],
+    *args,
+    api_version: str | None = None,
+    **kwargs,
 ):
     method_module = self._get_method_module(
         resource_name="flaws",
@@ -199,6 +205,7 @@ def new_session(
     username=None,
     verify_ssl=True,
     refresh_token=None,
+    user_agent=None,
 ):
     """
     Create a new session for selected OSIDB URI
@@ -219,22 +226,40 @@ def new_session(
         auth=auth,
         verify_ssl=verify_ssl,
         refresh_token=refresh_token,
+        user_agent=user_agent,
     )
 
 
 class Session:
     """Simple session wrapper which encapsulates the client"""
 
-    def __init__(self, base_url, auth=None, verify_ssl=True, refresh_token=None):
+    def __init__(
+        self,
+        base_url,
+        auth=None,
+        verify_ssl=True,
+        refresh_token=None,
+        user_agent: str | None = None,
+    ):
         # Store auth for the refresh token acquirement
         self.auth = auth
         self.refresh_token = refresh_token
         self.endpoints = self.__cache_endpoints()
 
+        if user_agent is not None:
+            if USERAGENT_PLACEHOLDER in user_agent:
+                resolved_user_agent = user_agent.replace(
+                    USERAGENT_PLACEHOLDER, OSIDB_BINDINGS_USERAGENT
+                )
+            else:
+                resolved_user_agent = f"{user_agent} {OSIDB_BINDINGS_USERAGENT}"
+        else:
+            resolved_user_agent = OSIDB_BINDINGS_USERAGENT
+
         self.__client = AuthenticatedClient(
             base_url=base_url,
             headers={
-                "User-Agent": OSIDB_BINDINGS_USERAGENT,
+                "User-Agent": resolved_user_agent,
                 "Bugzilla-Api-Key": get_env("BUGZILLA_API_KEY", ""),
                 "Jira-Api-Key": get_env("JIRA_ACCESS_TOKEN", ""),
                 "Jira-Api-Email": get_env("JIRA_API_EMAIL", ""),
@@ -383,16 +408,12 @@ class Session:
             for endpoint_name in module.ENDPOINT_NAMES:
                 match = pattern.match(endpoint_name)
                 if match:
-                    endpoints[f"{section_name}_api"][match.group(2)].add(
-                        match.group(1)
-                    )
+                    endpoints[f"{section_name}_api"][match.group(2)].add(match.group(1))
 
         return endpoints
 
     def status(self):
-        api_version = self.get_latest_endpoint_version(
-            "osidb", "status", "retrieve"
-        )
+        api_version = self.get_latest_endpoint_version("osidb", "status", "retrieve")
         status_module = importlib.import_module(
             f"{OSIDB_BINDINGS_API_PATH}.osidb.osidb_api_{api_version}_status_retrieve",
             package="osidb_bindings",

@@ -15,6 +15,7 @@ A Pythonic way to talk to OSIDB without getting lost in HTTP details.
   - [Create a Session](#create-a-session)
   - [Required Environment Variables](#required-environment-variables)
   - [SSL Configuration](#ssl-configuration)
+  - [Custom User-Agent](#custom-user-agent)
 - [Session Operations](#session-operations)
   - [API Version Control](#api-version-control)
   - [Available Resources and Operations](#available-resources-and-operations)
@@ -244,6 +245,30 @@ session = osidb_bindings.new_session(
     osidb_server_uri="https://osidb.example.com/",
     verify_ssl=False
 )
+```
+
+### Custom User-Agent
+
+By default, the session identifies itself as `osidb-bindings/{version} (python-requests/{version})`. You can pass a custom `user_agent` to make your application identifiable in OSIDB logs:
+
+```python
+session = osidb_bindings.new_session(
+    osidb_server_uri="http://localhost:8000/",
+    user_agent="MyApp v1.0.0 ({bindings-user-agent}) prod",
+)
+```
+
+Use the `{bindings-user-agent}` placeholder to control where the osidb-bindings identity is inserted in your user-agent string. The placeholder is replaced with the full bindings identity:
+
+```text
+MyApp v1.0.0 ({bindings-user-agent}) prod → MyApp v1.0.0 (osidb-bindings/5.8.1 (python-requests/2.32.3)) prod
+my-app ({bindings-user-agent})             → my-app (osidb-bindings/5.8.1 (python-requests/2.32.3))
+```
+
+If no placeholder is present, the osidb-bindings identity is appended:
+
+```text
+my-custom-agent → my-custom-agent osidb-bindings/5.8.1 (python-requests/2.32.3)
 ```
 
 ### Session operations
