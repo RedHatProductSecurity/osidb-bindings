@@ -198,8 +198,14 @@ def new_session(
     password=None,
     username=None,
     verify_ssl=True,
+    refresh_token=None,
 ):
-    """Create a new session for selected OSIDB URI"""
+    """
+    Create a new session for selected OSIDB URI
+
+    Provide an existing refresh token to skip
+    the initial authentication & authorization
+    """
 
     if username and password:
         # OSIDB instances with the username/password auth for token acquirement
@@ -209,16 +215,20 @@ def new_session(
         auth = "kerberos"
 
     return Session(
-        base_url=osidb_server_uri.strip("/"), auth=auth, verify_ssl=verify_ssl
+        base_url=osidb_server_uri.strip("/"),
+        auth=auth,
+        verify_ssl=verify_ssl,
+        refresh_token=refresh_token,
     )
 
 
 class Session:
     """Simple session wrapper which encapsulates the client"""
 
-    def __init__(self, base_url, auth=None, verify_ssl=True):
+    def __init__(self, base_url, auth=None, verify_ssl=True, refresh_token=None):
         # Store auth for the refresh token acquirement
         self.auth = auth
+        self.refresh_token = refresh_token
         self.endpoints = self.__cache_endpoints()
 
         self.__client = AuthenticatedClient(
@@ -341,7 +351,8 @@ class Session:
             allowed_operations=("retrieve", "list"),
         )
 
-        self.refresh_token = self.__get_refresh_token()
+        if self.refresh_token is None:
+            self.refresh_token = self.__get_refresh_token()
 
     def get_latest_endpoint_version(
         self, api_section: str, resource_name: str, method: str

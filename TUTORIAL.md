@@ -130,6 +130,50 @@ Used for OSIDB instances with Kerberos authentication enabled (production/stagin
 session = osidb_bindings.new_session(osidb_server_uri="https://osidb-prod.example.com/")
 ```
 
+#### Reusing a Refresh Token
+
+In distributed environments (e.g. multiple OCP pods or workers),
+each session normally authenticates independently which can cause unnecessary load on the OSIDB server.
+To avoid this, you can authenticate once and share the refresh token across workers via the `refresh_token` parameter:
+
+```python
+# Worker A: authenticate normally and share the refresh token
+session = osidb_bindings.new_session(osidb_server_uri="https://osidb-prod.example.com/")
+token = session.refresh_token  # store in Redis, env var, shared volume, etc.
+
+# Workers B, C, D: skip authentication by reusing the token
+session = osidb_bindings.new_session(
+    osidb_server_uri="https://osidb-prod.example.com/",
+    refresh_token=token,
+)
+```
+
+When a provided refresh token expires, the session will automatically fall back to re-authenticating
+using the configured authentication method (Kerberos or username/password).
+
+> **Note on token expiry in distributed environments:** The refresh token typically lives ~24 hours.
+> When it expires, each worker that holds the stale token will re-authenticate independently on its
+> next request. The token refresh happens lazily — `session.refresh_token` is only updated during
+> the first API call that encounters the expired token, not at session creation time. To keep the
+> new token available for other workers, write it back to shared storage after the first API call, eg.:
+>
+> ```python
+> def fetch_flaw(uri, flaw_id, redis_client):
+>     token = redis_client.get("osidb_refresh_token")
+>     session = osidb_bindings.new_session(uri, refresh_token=token)
+>     flaw = session.flaws.retrieve(flaw_id)
+>
+>     # Write back the token if it was refreshed during the call
+>     if session.refresh_token != token:
+>         redis_client.set("osidb_refresh_token", session.refresh_token)
+>
+>     return flaw
+> ```
+>
+> In the worst case (all workers hit the expired token at the same time), each will
+> re-authenticate and update the shared token once. This happens at most once per token
+> lifetime (~24h). For stricter control, use a distributed lock etc.
+
 ### Required Environment Variables
 
 Certain operations (primarily those involving creating or modifying content) require additional API keys to work properly:
