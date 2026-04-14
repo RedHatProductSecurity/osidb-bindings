@@ -49,6 +49,8 @@ from .osidb_api_v1_labels_retrieve import *
 from .osidb_api_v1_manifest_retrieve import *
 from .osidb_api_v1_schema_retrieve import *
 from .osidb_api_v1_status_retrieve import *
+from .osidb_api_v1_sync_managers_list import *
+from .osidb_api_v1_sync_managers_retrieve import *
 from .osidb_api_v1_trackers_list import *
 from .osidb_api_v1_trackers_retrieve import *
 from .osidb_api_v2_affects_bulk_create import *
@@ -134,6 +136,8 @@ ENDPOINT_NAMES = [
     "osidb_api_v1_manifest_retrieve",
     "osidb_api_v1_schema_retrieve",
     "osidb_api_v1_status_retrieve",
+    "osidb_api_v1_sync_managers_list",
+    "osidb_api_v1_sync_managers_retrieve",
     "osidb_api_v1_trackers_list",
     "osidb_api_v1_trackers_retrieve",
     "osidb_api_v2_affects_list",

@@ -412,6 +412,15 @@ from .osidb_api_v1_status_retrieve_response_200_osidb_data import (
 from .osidb_api_v1_status_retrieve_response_200_osidb_service import (
     OsidbApiV1StatusRetrieveResponse200OsidbService,
 )
+from .osidb_api_v1_sync_managers_list_order_item import (
+    OsidbApiV1SyncManagersListOrderItem,
+)
+from .osidb_api_v1_sync_managers_list_response_200 import (
+    OsidbApiV1SyncManagersListResponse200,
+)
+from .osidb_api_v1_sync_managers_retrieve_response_200 import (
+    OsidbApiV1SyncManagersRetrieveResponse200,
+)
 from .osidb_api_v1_trackers_list_affects_affectedness import (
     OsidbApiV1TrackersListAffectsAffectedness,
 )
@@ -689,6 +698,7 @@ from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
 from .paginated_flaw_v1_list import PaginatedFlawV1List
 from .paginated_flaw_v1_report_data_list import PaginatedFlawV1ReportDataList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
+from .paginated_sync_manager_list import PaginatedSyncManagerList
 from .paginated_tracker_list import PaginatedTrackerList
 from .paginated_tracker_v1_list import PaginatedTrackerV1List
 from .patched_integration_token_patch_request import PatchedIntegrationTokenPatchRequest
@@ -700,6 +710,7 @@ from .special_handling_enum import SpecialHandlingEnum
 from .state_enum import StateEnum
 from .stream_component import StreamComponent
 from .supported_products import SupportedProducts
+from .sync_manager import SyncManager
 from .token_obtain_pair import TokenObtainPair
 from .token_obtain_pair_request import TokenObtainPairRequest
 from .token_refresh import TokenRefresh
@@ -945,6 +956,9 @@ __all__ = (
     "OsidbApiV1StatusRetrieveResponse200",
     "OsidbApiV1StatusRetrieveResponse200OsidbData",
     "OsidbApiV1StatusRetrieveResponse200OsidbService",
+    "OsidbApiV1SyncManagersListOrderItem",
+    "OsidbApiV1SyncManagersListResponse200",
+    "OsidbApiV1SyncManagersRetrieveResponse200",
     "OsidbApiV1TrackersListAffectsAffectedness",
     "OsidbApiV1TrackersListAffectsFlawImpact",
     "OsidbApiV1TrackersListAffectsFlawSource",
@@ -1078,6 +1092,7 @@ __all__ = (
     "PaginatedFlawV1List",
     "PaginatedFlawV1ReportDataList",
     "PaginatedSupportedProductsList",
+    "PaginatedSyncManagerList",
     "PaginatedTrackerList",
     "PaginatedTrackerV1List",
     "PatchedIntegrationTokenPatchRequest",
@@ -1089,6 +1104,7 @@ __all__ = (
     "StateEnum",
     "StreamComponent",
     "SupportedProducts",
+    "SyncManager",
     "TokenObtainPair",
     "TokenObtainPairRequest",
     "TokenRefresh",
