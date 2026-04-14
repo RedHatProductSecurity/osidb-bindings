@@ -35,6 +35,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         data_models (Union[Unset, list[str]]):
         state (Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemState]):
         updated_until (Union[Unset, datetime.datetime]):
+        enabled (Union[Unset, bool]):
     """
 
     data: Union[Unset, CollectorsApiV1StatusRetrieveResponse200CollectorsItemData] = (
@@ -51,6 +52,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         UNSET
     )
     updated_until: Union[Unset, datetime.datetime] = UNSET
+    enabled: Union[Unset, bool] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -99,6 +101,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         if not isinstance(self.updated_until, Unset):
             updated_until = self.updated_until.isoformat()
 
+        enabled = self.enabled
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(data, Unset):
@@ -117,6 +121,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             field_dict["state"] = state
         if not isinstance(updated_until, Unset):
             field_dict["updated_until"] = updated_until
+        if not isinstance(enabled, Unset):
+            field_dict["enabled"] = enabled
 
         return field_dict
 
@@ -195,6 +201,8 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
         else:
             updated_until = isoparse(_updated_until)
 
+        enabled = d.pop("enabled", UNSET)
+
         collectors_api_v1_status_retrieve_response_200_collectors_item = cls(
             data=data,
             depends_on=depends_on,
@@ -204,6 +212,7 @@ class CollectorsApiV1StatusRetrieveResponse200CollectorsItem(OSIDBModel):
             data_models=data_models,
             state=state,
             updated_until=updated_until,
+            enabled=enabled,
         )
 
         collectors_api_v1_status_retrieve_response_200_collectors_item.additional_properties = d
