@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [5.9.0] - 2026-04-14
+
 ## [5.8.2] - 2026-04-14
 ### Added
 - support for providing existing refresh token to session to skip initial auth

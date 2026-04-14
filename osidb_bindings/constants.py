@@ -4,7 +4,7 @@ osidb-bindings constants
 
 from requests.utils import default_user_agent
 
-OSIDB_BINDINGS_VERSION: str = "5.8.2"
+OSIDB_BINDINGS_VERSION: str = "5.9.0"
 OSIDB_BINDINGS_USERAGENT: str = (
     f"osidb-bindings/{OSIDB_BINDINGS_VERSION} ({default_user_agent()})"
 )
