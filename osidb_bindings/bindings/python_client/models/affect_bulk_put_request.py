@@ -31,7 +31,7 @@ class AffectBulkPutRequest(OSIDBModel):
             detect mit-air collisions.
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
-        ps_component (Union[None, Unset, str]):
+        ps_component (Union[None, Unset, str]):  Default: ''.
         impact (Union[BlankEnum, ImpactEnum, Unset]):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
@@ -45,7 +45,7 @@ class AffectBulkPutRequest(OSIDBModel):
     updated_dt: datetime.datetime
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
-    ps_component: Union[None, Unset, str] = UNSET
+    ps_component: Union[None, Unset, str] = ""
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
     purl: Union[None, Unset, str] = ""
     subpackage_purls: Union[Unset, list[str]] = UNSET

@@ -1,0 +1,58 @@
+from typing import Any, TypeVar
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
+
+from ..types import OSIDBModel
+
+T = TypeVar("T", bound="AffectBulkPostPutResponseFailedItem")
+
+
+@_attrs_define
+class AffectBulkPostPutResponseFailedItem(OSIDBModel):
+    """ """
+
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        d = src_dict.copy()
+        affect_bulk_post_put_response_failed_item = cls()
+
+        affect_bulk_post_put_response_failed_item.additional_properties = d
+        return affect_bulk_post_put_response_failed_item
+
+    @classmethod
+    def get_fields(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
+
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
+    @classmethod
+    def from_model(cls: type[T], model: "OSIDBModel") -> T:
+        return cls.from_dict(model.to_dict())
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

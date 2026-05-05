@@ -2,6 +2,9 @@
 
 from .affect import Affect
 from .affect_bulk_post_put_response import AffectBulkPostPutResponse
+from .affect_bulk_post_put_response_failed_item import (
+    AffectBulkPostPutResponseFailedItem,
+)
 from .affect_bulk_put_request import AffectBulkPutRequest
 from .affect_cvss import AffectCVSS
 from .affect_cvss_request import AffectCVSSRequest
@@ -280,6 +283,12 @@ from .osidb_api_v1_flaws_cvss_scores_update_response_200 import (
 from .osidb_api_v1_flaws_incident_requests_create_response_200 import (
     OsidbApiV1FlawsIncidentRequestsCreateResponse200,
 )
+from .osidb_api_v1_flaws_index_retrieve_id_type import (
+    OsidbApiV1FlawsIndexRetrieveIdType,
+)
+from .osidb_api_v1_flaws_index_retrieve_response_200 import (
+    OsidbApiV1FlawsIndexRetrieveResponse200,
+)
 from .osidb_api_v1_flaws_labels_create_response_201 import (
     OsidbApiV1FlawsLabelsCreateResponse201,
 )
@@ -550,6 +559,12 @@ from .osidb_api_v2_flaws_cvss_scores_retrieve_response_200 import (
 from .osidb_api_v2_flaws_cvss_scores_update_response_200 import (
     OsidbApiV2FlawsCvssScoresUpdateResponse200,
 )
+from .osidb_api_v2_flaws_index_retrieve_id_type import (
+    OsidbApiV2FlawsIndexRetrieveIdType,
+)
+from .osidb_api_v2_flaws_index_retrieve_response_200 import (
+    OsidbApiV2FlawsIndexRetrieveResponse200,
+)
 from .osidb_api_v2_flaws_list_affects_affectedness import (
     OsidbApiV2FlawsListAffectsAffectedness,
 )
@@ -744,6 +759,7 @@ from .workflows_retrieve_response_200 import WorkflowsRetrieveResponse200
 __all__ = (
     "Affect",
     "AffectBulkPostPutResponse",
+    "AffectBulkPostPutResponseFailedItem",
     "AffectBulkPutRequest",
     "AffectCVSS",
     "AffectCVSSRequest",
@@ -902,6 +918,8 @@ __all__ = (
     "OsidbApiV1FlawsCvssScoresRetrieveResponse200",
     "OsidbApiV1FlawsCvssScoresUpdateResponse200",
     "OsidbApiV1FlawsIncidentRequestsCreateResponse200",
+    "OsidbApiV1FlawsIndexRetrieveIdType",
+    "OsidbApiV1FlawsIndexRetrieveResponse200",
     "OsidbApiV1FlawsLabelsCreateResponse201",
     "OsidbApiV1FlawsLabelsDestroyResponse204",
     "OsidbApiV1FlawsLabelsListResponse200",
@@ -1014,6 +1032,8 @@ __all__ = (
     "OsidbApiV2FlawsCvssScoresListResponse200",
     "OsidbApiV2FlawsCvssScoresRetrieveResponse200",
     "OsidbApiV2FlawsCvssScoresUpdateResponse200",
+    "OsidbApiV2FlawsIndexRetrieveIdType",
+    "OsidbApiV2FlawsIndexRetrieveResponse200",
     "OsidbApiV2FlawsListAffectsAffectedness",
     "OsidbApiV2FlawsListAffectsAffectednessInItem",
     "OsidbApiV2FlawsListAffectsImpact",
