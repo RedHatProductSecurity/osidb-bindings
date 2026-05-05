@@ -86,6 +86,9 @@ def sync_detailed(
 ) -> Response[OsidbApiV2AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
+    Valid affects are created via bulk_create; invalid or duplicate
+    entries are skipped and reported in the ``failed`` list.
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
@@ -127,6 +130,9 @@ def sync(
 ) -> Optional[OsidbApiV2AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
 
+    Valid affects are created via bulk_create; invalid or duplicate
+    entries are skipped and reported in the ``failed`` list.
+
     Args:
         bugzilla_api_key (Union[Unset, str]):
         body (list['AffectPostRequest']):
@@ -157,6 +163,9 @@ async def asyncio_detailed(
     ],
 ) -> Response[OsidbApiV2AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
+
+    Valid affects are created via bulk_create; invalid or duplicate
+    entries are skipped and reported in the ``failed`` list.
 
     Args:
         bugzilla_api_key (Union[Unset, str]):
@@ -198,6 +207,9 @@ async def asyncio(
     ],
 ) -> Optional[OsidbApiV2AffectsBulkCreateResponse200]:
     """Bulk create endpoint. Expects a list of dict Affect objects.
+
+    Valid affects are created via bulk_create; invalid or duplicate
+    entries are skipped and reported in the ``failed`` list.
 
     Args:
         bugzilla_api_key (Union[Unset, str]):

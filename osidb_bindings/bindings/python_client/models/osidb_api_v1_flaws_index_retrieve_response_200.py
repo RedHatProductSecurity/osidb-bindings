@@ -1,5 +1,5 @@
 import datetime
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import Any, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -8,30 +8,21 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-if TYPE_CHECKING:
-    from ..models.affect import Affect
-    from ..models.affect_bulk_post_put_response_failed_item import (
-        AffectBulkPostPutResponseFailedItem,
-    )
-
-
-T = TypeVar("T", bound="OsidbApiV2AffectsBulkUpdateResponse200")
+T = TypeVar("T", bound="OsidbApiV1FlawsIndexRetrieveResponse200")
 
 
 @_attrs_define
-class OsidbApiV2AffectsBulkUpdateResponse200(OSIDBModel):
+class OsidbApiV1FlawsIndexRetrieveResponse200(OSIDBModel):
     """
     Attributes:
-        results (list['Affect']):
-        failed (Union[Unset, list['AffectBulkPostPutResponseFailedItem']]):
+        results (list[Any]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
         version (Union[Unset, str]):
     """
 
-    results: list["Affect"]
-    failed: Union[Unset, list["AffectBulkPostPutResponseFailedItem"]] = UNSET
+    results: list[Any]
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -39,25 +30,9 @@ class OsidbApiV2AffectsBulkUpdateResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        results: list[dict[str, Any]] = UNSET
+        results: list[Any] = UNSET
         if not isinstance(self.results, Unset):
-            results = []
-            for results_item_data in self.results:
-                results_item: dict[str, Any] = UNSET
-                if not isinstance(results_item_data, Unset):
-                    results_item = results_item_data.to_dict()
-
-                results.append(results_item)
-
-        failed: Union[Unset, list[dict[str, Any]]] = UNSET
-        if not isinstance(self.failed, Unset):
-            failed = []
-            for failed_item_data in self.failed:
-                failed_item: dict[str, Any] = UNSET
-                if not isinstance(failed_item_data, Unset):
-                    failed_item = failed_item_data.to_dict()
-
-                failed.append(failed_item)
+            results = self.results
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -73,8 +48,6 @@ class OsidbApiV2AffectsBulkUpdateResponse200(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(results, Unset):
             field_dict["results"] = results
-        if not isinstance(failed, Unset):
-            field_dict["failed"] = failed
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -88,37 +61,8 @@ class OsidbApiV2AffectsBulkUpdateResponse200(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.affect import Affect
-        from ..models.affect_bulk_post_put_response_failed_item import (
-            AffectBulkPostPutResponseFailedItem,
-        )
-
         d = src_dict.copy()
-        results = []
-        _results = d.pop("results", UNSET)
-        for results_item_data in _results or []:
-            _results_item = results_item_data
-            results_item: Affect
-            if isinstance(_results_item, Unset):
-                results_item = UNSET
-            else:
-                results_item = Affect.from_dict(_results_item)
-
-            results.append(results_item)
-
-        failed = []
-        _failed = d.pop("failed", UNSET)
-        for failed_item_data in _failed or []:
-            _failed_item = failed_item_data
-            failed_item: AffectBulkPostPutResponseFailedItem
-            if isinstance(_failed_item, Unset):
-                failed_item = UNSET
-            else:
-                failed_item = AffectBulkPostPutResponseFailedItem.from_dict(
-                    _failed_item
-                )
-
-            failed.append(failed_item)
+        results = cast(list[Any], d.pop("results", UNSET))
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
@@ -133,17 +77,16 @@ class OsidbApiV2AffectsBulkUpdateResponse200(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        osidb_api_v2_affects_bulk_update_response_200 = cls(
+        osidb_api_v1_flaws_index_retrieve_response_200 = cls(
             results=results,
-            failed=failed,
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        osidb_api_v2_affects_bulk_update_response_200.additional_properties = d
-        return osidb_api_v2_affects_bulk_update_response_200
+        osidb_api_v1_flaws_index_retrieve_response_200.additional_properties = d
+        return osidb_api_v1_flaws_index_retrieve_response_200
 
     @classmethod
     def get_fields(cls):
