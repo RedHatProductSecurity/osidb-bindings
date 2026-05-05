@@ -178,6 +178,10 @@ class FlawPackageVersion(OSIDBModel):
     def new(cls):
         return cls.from_dict({})
 
+    @classmethod
+    def from_model(cls: type[T], model: "OSIDBModel") -> T:
+        return cls.from_dict(model.to_dict())
+
     @property
     def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())

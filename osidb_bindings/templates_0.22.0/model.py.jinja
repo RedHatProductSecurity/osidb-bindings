@@ -209,6 +209,13 @@ return field_dict
 
     {# CHANGE END (4) #}
 
+    {# CHANGE START (6) - add classmethod for creating model from another model instance #}
+    @classmethod
+    def from_model(cls: type[T], model: "OSIDBModel") -> T:
+        return cls.from_dict(model.to_dict())
+
+    {# CHANGE END (6) #}
+
     {% if model.additional_properties %}
     @property
     def additional_keys(self) -> list[str]:
