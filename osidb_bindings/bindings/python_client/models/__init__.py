@@ -742,6 +742,9 @@ from .tracker_type import TrackerType
 from .tracker_v1 import TrackerV1
 from .trackers_api_v1_file_create_response_200 import TrackersApiV1FileCreateResponse200
 from .trackers_api_v2_file_create_response_200 import TrackersApiV2FileCreateResponse200
+from .upstream_data import UpstreamData
+from .upstream_data_request import UpstreamDataRequest
+from .upstream_data_source_enum import UpstreamDataSourceEnum
 from .user import User
 from .visibility_enum import VisibilityEnum
 from .workflows_api_v1_workflows_adjust_create_response_200 import (
@@ -1141,6 +1144,9 @@ __all__ = (
     "TrackerSuggestionV1",
     "TrackerType",
     "TrackerV1",
+    "UpstreamData",
+    "UpstreamDataRequest",
+    "UpstreamDataSourceEnum",
     "User",
     "VisibilityEnum",
     "WorkflowsApiV1WorkflowsAdjustCreateResponse200",

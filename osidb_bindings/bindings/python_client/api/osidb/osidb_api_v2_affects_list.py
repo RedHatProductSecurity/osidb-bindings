@@ -69,6 +69,10 @@ from ...types import UNSET, Response, Unset
 QUERY_PARAMS = {
     "affectedness": OsidbApiV2AffectsListAffectedness,
     "affectedness__in": list[OsidbApiV2AffectsListAffectednessInItem],
+    "amended": bool,
+    "created_by": str,
+    "created_by__icontains": str,
+    "created_by__in": list[str],
     "created_dt": datetime.datetime,
     "created_dt__date": datetime.date,
     "created_dt__date__gte": datetime.date,
@@ -152,6 +156,7 @@ QUERY_PARAMS = {
     "include_fields": list[str],
     "include_history": bool,
     "include_meta_attr": list[str],
+    "is_tool_created": bool,
     "limit": int,
     "offset": int,
     "order": list[OsidbApiV2AffectsListOrderItem],
@@ -199,6 +204,9 @@ QUERY_PARAMS = {
     "tracker__uuid": UUID,
     "tracker__uuid__in": list[UUID],
     "tracker__visibility": OsidbApiV2AffectsListTrackerVisibility,
+    "updated_by": str,
+    "updated_by__icontains": str,
+    "updated_by__in": list[str],
     "updated_dt": datetime.datetime,
     "updated_dt__date": datetime.date,
     "updated_dt__date__gte": datetime.date,
@@ -220,6 +228,10 @@ def _get_kwargs(
     affectedness_in: Union[
         Unset, list[OsidbApiV2AffectsListAffectednessInItem]
     ] = UNSET,
+    amended: Union[Unset, bool] = UNSET,
+    created_by: Union[Unset, str] = UNSET,
+    created_by_icontains: Union[Unset, str] = UNSET,
+    created_by_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -307,6 +319,7 @@ def _get_kwargs(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
+    is_tool_created: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV2AffectsListOrderItem]] = UNSET,
@@ -354,6 +367,9 @@ def _get_kwargs(
     tracker_uuid: Union[Unset, UUID] = UNSET,
     tracker_uuid_in: Union[Unset, list[UUID]] = UNSET,
     tracker_visibility: Union[Unset, OsidbApiV2AffectsListTrackerVisibility] = UNSET,
+    updated_by: Union[Unset, str] = UNSET,
+    updated_by_icontains: Union[Unset, str] = UNSET,
+    updated_by_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -389,6 +405,18 @@ def _get_kwargs(
             json_affectedness_in.append(affectedness_in_item)
 
     params["affectedness__in"] = json_affectedness_in
+
+    params["amended"] = amended
+
+    params["created_by"] = created_by
+
+    params["created_by__icontains"] = created_by_icontains
+
+    json_created_by_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(created_by_in, Unset):
+        json_created_by_in = created_by_in
+
+    params["created_by__in"] = json_created_by_in
 
     json_created_dt: Union[Unset, str] = UNSET
     if not isinstance(created_dt, Unset):
@@ -914,6 +942,8 @@ def _get_kwargs(
 
     params["include_meta_attr"] = json_include_meta_attr
 
+    params["is_tool_created"] = is_tool_created
+
     params["limit"] = limit
 
     params["offset"] = offset
@@ -1170,6 +1200,16 @@ def _get_kwargs(
 
     params["tracker__visibility"] = json_tracker_visibility
 
+    params["updated_by"] = updated_by
+
+    params["updated_by__icontains"] = updated_by_icontains
+
+    json_updated_by_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(updated_by_in, Unset):
+        json_updated_by_in = updated_by_in
+
+    params["updated_by__in"] = json_updated_by_in
+
     json_updated_dt: Union[Unset, str] = UNSET
     if not isinstance(updated_dt, Unset):
         json_updated_dt = updated_dt.isoformat()
@@ -1289,6 +1329,10 @@ def sync_detailed(
     affectedness_in: Union[
         Unset, list[OsidbApiV2AffectsListAffectednessInItem]
     ] = UNSET,
+    amended: Union[Unset, bool] = UNSET,
+    created_by: Union[Unset, str] = UNSET,
+    created_by_icontains: Union[Unset, str] = UNSET,
+    created_by_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1376,6 +1420,7 @@ def sync_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
+    is_tool_created: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV2AffectsListOrderItem]] = UNSET,
@@ -1423,6 +1468,9 @@ def sync_detailed(
     tracker_uuid: Union[Unset, UUID] = UNSET,
     tracker_uuid_in: Union[Unset, list[UUID]] = UNSET,
     tracker_visibility: Union[Unset, OsidbApiV2AffectsListTrackerVisibility] = UNSET,
+    updated_by: Union[Unset, str] = UNSET,
+    updated_by_icontains: Union[Unset, str] = UNSET,
+    updated_by_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1439,6 +1487,10 @@ def sync_detailed(
     Args:
         affectedness (Union[Unset, OsidbApiV2AffectsListAffectedness]):
         affectedness_in (Union[Unset, list[OsidbApiV2AffectsListAffectednessInItem]]):
+        amended (Union[Unset, bool]):
+        created_by (Union[Unset, str]):
+        created_by_icontains (Union[Unset, str]):
+        created_by_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1522,6 +1574,7 @@ def sync_detailed(
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
+        is_tool_created (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV2AffectsListOrderItem]]):
@@ -1569,6 +1622,9 @@ def sync_detailed(
         tracker_uuid (Union[Unset, UUID]):
         tracker_uuid_in (Union[Unset, list[UUID]]):
         tracker_visibility (Union[Unset, OsidbApiV2AffectsListTrackerVisibility]):
+        updated_by (Union[Unset, str]):
+        updated_by_icontains (Union[Unset, str]):
+        updated_by_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -1593,6 +1649,10 @@ def sync_detailed(
         client=client,
         affectedness=affectedness,
         affectedness_in=affectedness_in,
+        amended=amended,
+        created_by=created_by,
+        created_by_icontains=created_by_icontains,
+        created_by_in=created_by_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -1676,6 +1736,7 @@ def sync_detailed(
         include_fields=include_fields,
         include_history=include_history,
         include_meta_attr=include_meta_attr,
+        is_tool_created=is_tool_created,
         limit=limit,
         offset=offset,
         order=order,
@@ -1723,6 +1784,9 @@ def sync_detailed(
         tracker_uuid=tracker_uuid,
         tracker_uuid_in=tracker_uuid_in,
         tracker_visibility=tracker_visibility,
+        updated_by=updated_by,
+        updated_by_icontains=updated_by_icontains,
+        updated_by_in=updated_by_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -1754,6 +1818,10 @@ def sync(
     affectedness_in: Union[
         Unset, list[OsidbApiV2AffectsListAffectednessInItem]
     ] = UNSET,
+    amended: Union[Unset, bool] = UNSET,
+    created_by: Union[Unset, str] = UNSET,
+    created_by_icontains: Union[Unset, str] = UNSET,
+    created_by_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1841,6 +1909,7 @@ def sync(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
+    is_tool_created: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV2AffectsListOrderItem]] = UNSET,
@@ -1888,6 +1957,9 @@ def sync(
     tracker_uuid: Union[Unset, UUID] = UNSET,
     tracker_uuid_in: Union[Unset, list[UUID]] = UNSET,
     tracker_visibility: Union[Unset, OsidbApiV2AffectsListTrackerVisibility] = UNSET,
+    updated_by: Union[Unset, str] = UNSET,
+    updated_by_icontains: Union[Unset, str] = UNSET,
+    updated_by_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -1904,6 +1976,10 @@ def sync(
     Args:
         affectedness (Union[Unset, OsidbApiV2AffectsListAffectedness]):
         affectedness_in (Union[Unset, list[OsidbApiV2AffectsListAffectednessInItem]]):
+        amended (Union[Unset, bool]):
+        created_by (Union[Unset, str]):
+        created_by_icontains (Union[Unset, str]):
+        created_by_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -1987,6 +2063,7 @@ def sync(
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
+        is_tool_created (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV2AffectsListOrderItem]]):
@@ -2034,6 +2111,9 @@ def sync(
         tracker_uuid (Union[Unset, UUID]):
         tracker_uuid_in (Union[Unset, list[UUID]]):
         tracker_visibility (Union[Unset, OsidbApiV2AffectsListTrackerVisibility]):
+        updated_by (Union[Unset, str]):
+        updated_by_icontains (Union[Unset, str]):
+        updated_by_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -2058,6 +2138,10 @@ def sync(
         client=client,
         affectedness=affectedness,
         affectedness_in=affectedness_in,
+        amended=amended,
+        created_by=created_by,
+        created_by_icontains=created_by_icontains,
+        created_by_in=created_by_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -2141,6 +2225,7 @@ def sync(
         include_fields=include_fields,
         include_history=include_history,
         include_meta_attr=include_meta_attr,
+        is_tool_created=is_tool_created,
         limit=limit,
         offset=offset,
         order=order,
@@ -2188,6 +2273,9 @@ def sync(
         tracker_uuid=tracker_uuid,
         tracker_uuid_in=tracker_uuid_in,
         tracker_visibility=tracker_visibility,
+        updated_by=updated_by,
+        updated_by_icontains=updated_by_icontains,
+        updated_by_in=updated_by_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -2209,6 +2297,10 @@ async def asyncio_detailed(
     affectedness_in: Union[
         Unset, list[OsidbApiV2AffectsListAffectednessInItem]
     ] = UNSET,
+    amended: Union[Unset, bool] = UNSET,
+    created_by: Union[Unset, str] = UNSET,
+    created_by_icontains: Union[Unset, str] = UNSET,
+    created_by_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2296,6 +2388,7 @@ async def asyncio_detailed(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
+    is_tool_created: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV2AffectsListOrderItem]] = UNSET,
@@ -2343,6 +2436,9 @@ async def asyncio_detailed(
     tracker_uuid: Union[Unset, UUID] = UNSET,
     tracker_uuid_in: Union[Unset, list[UUID]] = UNSET,
     tracker_visibility: Union[Unset, OsidbApiV2AffectsListTrackerVisibility] = UNSET,
+    updated_by: Union[Unset, str] = UNSET,
+    updated_by_icontains: Union[Unset, str] = UNSET,
+    updated_by_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2359,6 +2455,10 @@ async def asyncio_detailed(
     Args:
         affectedness (Union[Unset, OsidbApiV2AffectsListAffectedness]):
         affectedness_in (Union[Unset, list[OsidbApiV2AffectsListAffectednessInItem]]):
+        amended (Union[Unset, bool]):
+        created_by (Union[Unset, str]):
+        created_by_icontains (Union[Unset, str]):
+        created_by_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -2442,6 +2542,7 @@ async def asyncio_detailed(
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
+        is_tool_created (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV2AffectsListOrderItem]]):
@@ -2489,6 +2590,9 @@ async def asyncio_detailed(
         tracker_uuid (Union[Unset, UUID]):
         tracker_uuid_in (Union[Unset, list[UUID]]):
         tracker_visibility (Union[Unset, OsidbApiV2AffectsListTrackerVisibility]):
+        updated_by (Union[Unset, str]):
+        updated_by_icontains (Union[Unset, str]):
+        updated_by_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -2513,6 +2617,10 @@ async def asyncio_detailed(
         client=client,
         affectedness=affectedness,
         affectedness_in=affectedness_in,
+        amended=amended,
+        created_by=created_by,
+        created_by_icontains=created_by_icontains,
+        created_by_in=created_by_in,
         created_dt=created_dt,
         created_dt_date=created_dt_date,
         created_dt_date_gte=created_dt_date_gte,
@@ -2596,6 +2704,7 @@ async def asyncio_detailed(
         include_fields=include_fields,
         include_history=include_history,
         include_meta_attr=include_meta_attr,
+        is_tool_created=is_tool_created,
         limit=limit,
         offset=offset,
         order=order,
@@ -2643,6 +2752,9 @@ async def asyncio_detailed(
         tracker_uuid=tracker_uuid,
         tracker_uuid_in=tracker_uuid_in,
         tracker_visibility=tracker_visibility,
+        updated_by=updated_by,
+        updated_by_icontains=updated_by_icontains,
+        updated_by_in=updated_by_in,
         updated_dt=updated_dt,
         updated_dt_date=updated_dt_date,
         updated_dt_date_gte=updated_dt_date_gte,
@@ -2674,6 +2786,10 @@ async def asyncio(
     affectedness_in: Union[
         Unset, list[OsidbApiV2AffectsListAffectednessInItem]
     ] = UNSET,
+    amended: Union[Unset, bool] = UNSET,
+    created_by: Union[Unset, str] = UNSET,
+    created_by_icontains: Union[Unset, str] = UNSET,
+    created_by_in: Union[Unset, list[str]] = UNSET,
     created_dt: Union[Unset, datetime.datetime] = UNSET,
     created_dt_date: Union[Unset, datetime.date] = UNSET,
     created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2761,6 +2877,7 @@ async def asyncio(
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
     include_meta_attr: Union[Unset, list[str]] = UNSET,
+    is_tool_created: Union[Unset, bool] = UNSET,
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
     order: Union[Unset, list[OsidbApiV2AffectsListOrderItem]] = UNSET,
@@ -2808,6 +2925,9 @@ async def asyncio(
     tracker_uuid: Union[Unset, UUID] = UNSET,
     tracker_uuid_in: Union[Unset, list[UUID]] = UNSET,
     tracker_visibility: Union[Unset, OsidbApiV2AffectsListTrackerVisibility] = UNSET,
+    updated_by: Union[Unset, str] = UNSET,
+    updated_by_icontains: Union[Unset, str] = UNSET,
+    updated_by_in: Union[Unset, list[str]] = UNSET,
     updated_dt: Union[Unset, datetime.datetime] = UNSET,
     updated_dt_date: Union[Unset, datetime.date] = UNSET,
     updated_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2824,6 +2944,10 @@ async def asyncio(
     Args:
         affectedness (Union[Unset, OsidbApiV2AffectsListAffectedness]):
         affectedness_in (Union[Unset, list[OsidbApiV2AffectsListAffectednessInItem]]):
+        amended (Union[Unset, bool]):
+        created_by (Union[Unset, str]):
+        created_by_icontains (Union[Unset, str]):
+        created_by_in (Union[Unset, list[str]]):
         created_dt (Union[Unset, datetime.datetime]):
         created_dt_date (Union[Unset, datetime.date]):
         created_dt_date_gte (Union[Unset, datetime.date]):
@@ -2907,6 +3031,7 @@ async def asyncio(
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
         include_meta_attr (Union[Unset, list[str]]):
+        is_tool_created (Union[Unset, bool]):
         limit (Union[Unset, int]):
         offset (Union[Unset, int]):
         order (Union[Unset, list[OsidbApiV2AffectsListOrderItem]]):
@@ -2954,6 +3079,9 @@ async def asyncio(
         tracker_uuid (Union[Unset, UUID]):
         tracker_uuid_in (Union[Unset, list[UUID]]):
         tracker_visibility (Union[Unset, OsidbApiV2AffectsListTrackerVisibility]):
+        updated_by (Union[Unset, str]):
+        updated_by_icontains (Union[Unset, str]):
+        updated_by_in (Union[Unset, list[str]]):
         updated_dt (Union[Unset, datetime.datetime]):
         updated_dt_date (Union[Unset, datetime.date]):
         updated_dt_date_gte (Union[Unset, datetime.date]):
@@ -2979,6 +3107,10 @@ async def asyncio(
             client=client,
             affectedness=affectedness,
             affectedness_in=affectedness_in,
+            amended=amended,
+            created_by=created_by,
+            created_by_icontains=created_by_icontains,
+            created_by_in=created_by_in,
             created_dt=created_dt,
             created_dt_date=created_dt_date,
             created_dt_date_gte=created_dt_date_gte,
@@ -3062,6 +3194,7 @@ async def asyncio(
             include_fields=include_fields,
             include_history=include_history,
             include_meta_attr=include_meta_attr,
+            is_tool_created=is_tool_created,
             limit=limit,
             offset=offset,
             order=order,
@@ -3109,6 +3242,9 @@ async def asyncio(
             tracker_uuid=tracker_uuid,
             tracker_uuid_in=tracker_uuid_in,
             tracker_visibility=tracker_visibility,
+            updated_by=updated_by,
+            updated_by_icontains=updated_by_icontains,
+            updated_by_in=updated_by_in,
             updated_dt=updated_dt,
             updated_dt_date=updated_dt_date,
             updated_dt_date_gte=updated_dt_date_gte,

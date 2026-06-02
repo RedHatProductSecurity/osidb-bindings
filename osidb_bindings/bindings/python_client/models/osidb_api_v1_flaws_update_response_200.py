@@ -25,6 +25,7 @@ if TYPE_CHECKING:
     from ..models.flaw_put_classification import FlawPutClassification
     from ..models.flaw_reference import FlawReference
     from ..models.package import Package
+    from ..models.upstream_data import UpstreamData
 
 
 T = TypeVar("T", bound="OsidbApiV1FlawsUpdateResponse200")
@@ -40,6 +41,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         comment_zero (str):
         selected_cve_description (str):
         requires_cve_description (str):
+        upstream_data (list['UpstreamData']):
         affects (list['Affect']):
         comments (list['Comment']):
         package_versions (list['Package']):
@@ -85,6 +87,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
     comment_zero: str
     selected_cve_description: str
     requires_cve_description: str
+    upstream_data: list["UpstreamData"]
     affects: list["Affect"]
     comments: list["Comment"]
     package_versions: list["Package"]
@@ -138,6 +141,16 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         selected_cve_description = self.selected_cve_description
 
         requires_cve_description = self.requires_cve_description
+
+        upstream_data: list[dict[str, Any]] = UNSET
+        if not isinstance(self.upstream_data, Unset):
+            upstream_data = []
+            for upstream_data_item_data in self.upstream_data:
+                upstream_data_item: dict[str, Any] = UNSET
+                if not isinstance(upstream_data_item_data, Unset):
+                    upstream_data_item = upstream_data_item_data.to_dict()
+
+                upstream_data.append(upstream_data_item)
 
         affects: list[dict[str, Any]] = UNSET
         if not isinstance(self.affects, Unset):
@@ -381,6 +394,8 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             field_dict["selected_cve_description"] = selected_cve_description
         if not isinstance(requires_cve_description, Unset):
             field_dict["requires_cve_description"] = requires_cve_description
+        if not isinstance(upstream_data, Unset):
+            field_dict["upstream_data"] = upstream_data
         if not isinstance(affects, Unset):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
@@ -465,6 +480,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         from ..models.flaw_put_classification import FlawPutClassification
         from ..models.flaw_reference import FlawReference
         from ..models.package import Package
+        from ..models.upstream_data import UpstreamData
 
         d = src_dict.copy()
         _uuid = d.pop("uuid", UNSET)
@@ -483,6 +499,18 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
         selected_cve_description = d.pop("selected_cve_description", UNSET)
 
         requires_cve_description = d.pop("requires_cve_description", UNSET)
+
+        upstream_data = []
+        _upstream_data = d.pop("upstream_data", UNSET)
+        for upstream_data_item_data in _upstream_data or []:
+            _upstream_data_item = upstream_data_item_data
+            upstream_data_item: UpstreamData
+            if isinstance(_upstream_data_item, Unset):
+                upstream_data_item = UNSET
+            else:
+                upstream_data_item = UpstreamData.from_dict(_upstream_data_item)
+
+            upstream_data.append(upstream_data_item)
 
         affects = []
         _affects = d.pop("affects", UNSET)
@@ -876,6 +904,7 @@ class OsidbApiV1FlawsUpdateResponse200(OSIDBModel):
             comment_zero=comment_zero,
             selected_cve_description=selected_cve_description,
             requires_cve_description=requires_cve_description,
+            upstream_data=upstream_data,
             affects=affects,
             comments=comments,
             package_versions=package_versions,

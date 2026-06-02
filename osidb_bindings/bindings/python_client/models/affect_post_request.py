@@ -32,6 +32,7 @@ class AffectPostRequest(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
+        assist_meta (Union[Unset, Any]):
     """
 
     flaw: UUID
@@ -46,6 +47,7 @@ class AffectPostRequest(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
+    assist_meta: Union[Unset, Any] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -129,6 +131,8 @@ class AffectPostRequest(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
+        assist_meta = self.assist_meta
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(flaw, Unset):
@@ -151,6 +155,8 @@ class AffectPostRequest(OSIDBModel):
             field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
+        if not isinstance(assist_meta, Unset):
+            field_dict["assist_meta"] = assist_meta
 
         return field_dict
 
@@ -258,6 +264,12 @@ class AffectPostRequest(OSIDBModel):
                     "text/plain",
                 )
 
+        assist_meta = (
+            self.assist_meta
+            if isinstance(self.assist_meta, Unset)
+            else (None, str(self.assist_meta).encode(), "text/plain")
+        )
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -282,6 +294,8 @@ class AffectPostRequest(OSIDBModel):
             field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
+        if not isinstance(assist_meta, Unset):
+            field_dict["assist_meta"] = assist_meta
 
         return field_dict
 
@@ -453,6 +467,8 @@ class AffectPostRequest(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
+        assist_meta = d.pop("assist_meta", UNSET)
+
         affect_post_request = cls(
             flaw=flaw,
             ps_update_stream=ps_update_stream,
@@ -464,6 +480,7 @@ class AffectPostRequest(OSIDBModel):
             purl=purl,
             subpackage_purls=subpackage_purls,
             not_affected_justification=not_affected_justification,
+            assist_meta=assist_meta,
         )
 
         affect_post_request.additional_properties = d
