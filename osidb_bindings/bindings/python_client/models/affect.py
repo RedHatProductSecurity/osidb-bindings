@@ -44,6 +44,8 @@ class Affect(OSIDBModel):
         delegated_not_affected_justification (Union[BlankEnum, DelegatedNotAffectedJustificationEnum]):
         resolved_dt (Union[None, datetime.datetime]):
         labels (list[str]):
+        created_by (str):
+        updated_by (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         visibility (VisibilityEnum):
@@ -58,6 +60,7 @@ class Affect(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
+        assist_meta (Union[Unset, Any]):
     """
 
     uuid: UUID
@@ -74,6 +77,8 @@ class Affect(OSIDBModel):
     ]
     resolved_dt: Union[None, datetime.datetime]
     labels: list[str]
+    created_by: str
+    updated_by: str
     embargoed: bool
     visibility: VisibilityEnum
     alerts: list["Alert"]
@@ -88,6 +93,7 @@ class Affect(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
+    assist_meta: Union[Unset, Any] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -168,6 +174,10 @@ class Affect(OSIDBModel):
         labels: list[str] = UNSET
         if not isinstance(self.labels, Unset):
             labels = self.labels
+
+        created_by = self.created_by
+
+        updated_by = self.updated_by
 
         embargoed = self.embargoed
 
@@ -265,6 +275,8 @@ class Affect(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
+        assist_meta = self.assist_meta
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
@@ -293,6 +305,10 @@ class Affect(OSIDBModel):
             field_dict["resolved_dt"] = resolved_dt
         if not isinstance(labels, Unset):
             field_dict["labels"] = labels
+        if not isinstance(created_by, Unset):
+            field_dict["created_by"] = created_by
+        if not isinstance(updated_by, Unset):
+            field_dict["updated_by"] = updated_by
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(visibility, Unset):
@@ -317,6 +333,8 @@ class Affect(OSIDBModel):
             field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
+        if not isinstance(assist_meta, Unset):
+            field_dict["assist_meta"] = assist_meta
 
         return field_dict
 
@@ -453,6 +471,10 @@ class Affect(OSIDBModel):
         resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
 
         labels = cast(list[str], d.pop("labels", UNSET))
+
+        created_by = d.pop("created_by", UNSET)
+
+        updated_by = d.pop("updated_by", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -643,6 +665,8 @@ class Affect(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
+        assist_meta = d.pop("assist_meta", UNSET)
+
         affect = cls(
             uuid=uuid,
             flaw=flaw,
@@ -656,6 +680,8 @@ class Affect(OSIDBModel):
             delegated_not_affected_justification=delegated_not_affected_justification,
             resolved_dt=resolved_dt,
             labels=labels,
+            created_by=created_by,
+            updated_by=updated_by,
             embargoed=embargoed,
             visibility=visibility,
             alerts=alerts,
@@ -668,6 +694,7 @@ class Affect(OSIDBModel):
             purl=purl,
             subpackage_purls=subpackage_purls,
             not_affected_justification=not_affected_justification,
+            assist_meta=assist_meta,
         )
 
         affect.additional_properties = d

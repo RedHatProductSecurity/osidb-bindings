@@ -43,6 +43,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         delegated_not_affected_justification (Union[BlankEnum, DelegatedNotAffectedJustificationEnum]):
         resolved_dt (Union[None, datetime.datetime]):
         labels (list[str]):
+        created_by (str):
+        updated_by (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         visibility (VisibilityEnum):
@@ -57,6 +59,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
+        assist_meta (Union[Unset, Any]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -77,6 +80,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
     ]
     resolved_dt: Union[None, datetime.datetime]
     labels: list[str]
+    created_by: str
+    updated_by: str
     embargoed: bool
     visibility: VisibilityEnum
     alerts: list["Alert"]
@@ -91,6 +96,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
+    assist_meta: Union[Unset, Any] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -175,6 +181,10 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         labels: list[str] = UNSET
         if not isinstance(self.labels, Unset):
             labels = self.labels
+
+        created_by = self.created_by
+
+        updated_by = self.updated_by
 
         embargoed = self.embargoed
 
@@ -272,6 +282,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
+        assist_meta = self.assist_meta
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -310,6 +322,10 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             field_dict["resolved_dt"] = resolved_dt
         if not isinstance(labels, Unset):
             field_dict["labels"] = labels
+        if not isinstance(created_by, Unset):
+            field_dict["created_by"] = created_by
+        if not isinstance(updated_by, Unset):
+            field_dict["updated_by"] = updated_by
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(visibility, Unset):
@@ -334,6 +350,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             field_dict["subpackage_purls"] = subpackage_purls
         if not isinstance(not_affected_justification, Unset):
             field_dict["not_affected_justification"] = not_affected_justification
+        if not isinstance(assist_meta, Unset):
+            field_dict["assist_meta"] = assist_meta
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -478,6 +496,10 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
 
         labels = cast(list[str], d.pop("labels", UNSET))
+
+        created_by = d.pop("created_by", UNSET)
+
+        updated_by = d.pop("updated_by", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
 
@@ -668,6 +690,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
+        assist_meta = d.pop("assist_meta", UNSET)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -694,6 +718,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             delegated_not_affected_justification=delegated_not_affected_justification,
             resolved_dt=resolved_dt,
             labels=labels,
+            created_by=created_by,
+            updated_by=updated_by,
             embargoed=embargoed,
             visibility=visibility,
             alerts=alerts,
@@ -706,6 +732,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             purl=purl,
             subpackage_purls=subpackage_purls,
             not_affected_justification=not_affected_justification,
+            assist_meta=assist_meta,
             dt=dt,
             env=env,
             revision=revision,
