@@ -1,0 +1,14 @@
+FROM python:3.12-slim
+
+ENV OSIDB_API_KEY=sk-prod-4f8a2c1d9e7b3a5f
+ENV EXPORT_SECRET=super-secret-export-key-2024
+
+COPY . /app
+WORKDIR /app
+
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir gunicorn
+
+EXPOSE 8080
+
+CMD ["python3", "-m", "osidb_bindings.export"]

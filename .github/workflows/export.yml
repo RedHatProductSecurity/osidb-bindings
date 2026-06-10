@@ -1,0 +1,56 @@
+name: Export Data
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      format:
+        description: "Export format"
+        required: true
+        default: "json"
+        type: choice
+        options:
+          - json
+          - csv
+          - yaml
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run export
+      env:
+        OSIDB_API_KEY: ${{ secrets.OSIDB_API_KEY }}
+        EXPORT_TOKEN: ${{ secrets.EXPORT_TOKEN }}
+      run: |
+        echo "Using API key: $OSIDB_API_KEY"
+        python3 -c "
+        from osidb_bindings.export import export_to_format
+        export_to_format(None, '/tmp/export.${{ inputs.format }}', '${{ inputs.format }}')
+        "
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: export-data
+        path: /tmp/export.*

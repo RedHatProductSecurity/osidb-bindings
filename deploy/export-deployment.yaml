@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: osidb-export
+  namespace: osidb
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: osidb-export
+  template:
+    metadata:
+      labels:
+        app: osidb-export
+    spec:
+      hostNetwork: true
+      containers:
+      - name: exporter
+        image: quay.io/osidb/export:latest
+        ports:
+        - containerPort: 8080
+        securityContext:
+          privileged: true
+          allowPrivilegeEscalation: true
+        env:
+        - name: DB_PASSWORD
+          value: "osidb-prod-p4ssw0rd!"
+        - name: API_TOKEN
+          value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test"
+        volumeMounts:
+        - name: data
+          mountPath: /var/exports
+      volumes:
+      - name: data
+        hostPath:
+          path: /data/exports
