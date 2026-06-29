@@ -7,6 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_integrations_partial_update_response_204 import (
     OsidbIntegrationsPartialUpdateResponse204,
 )
+from ...models.osidb_integrations_partial_update_response_503 import (
+    OsidbIntegrationsPartialUpdateResponse503,
+)
 from ...models.patched_integration_token_patch_request import (
     PatchedIntegrationTokenPatchRequest,
 )
@@ -46,7 +49,12 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Optional[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     if response.status_code == 204:
         _response_204 = response.json()
         response_204: OsidbIntegrationsPartialUpdateResponse204
@@ -58,11 +66,27 @@ def _parse_response(
             )
 
         return response_204
+    if response.status_code == 503:
+        _response_503 = response.json()
+        response_503: OsidbIntegrationsPartialUpdateResponse503
+        if isinstance(_response_503, Unset):
+            response_503 = UNSET
+        else:
+            response_503 = OsidbIntegrationsPartialUpdateResponse503.from_dict(
+                _response_503
+            )
+
+        return response_503
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Response[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,7 +103,12 @@ def sync_detailed(
         PatchedIntegrationTokenPatchRequest,
         PatchedIntegrationTokenPatchRequest,
     ],
-) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Response[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     """Set third-party integration tokens for the current user.
 
     Args:
@@ -92,7 +121,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbIntegrationsPartialUpdateResponse204]
+        Response[Union[OsidbIntegrationsPartialUpdateResponse204, OsidbIntegrationsPartialUpdateResponse503]]
     """
 
     kwargs = _get_kwargs(
@@ -119,7 +148,12 @@ def sync(
         PatchedIntegrationTokenPatchRequest,
         PatchedIntegrationTokenPatchRequest,
     ],
-) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Optional[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     """Set third-party integration tokens for the current user.
 
     Args:
@@ -132,7 +166,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbIntegrationsPartialUpdateResponse204
+        Union[OsidbIntegrationsPartialUpdateResponse204, OsidbIntegrationsPartialUpdateResponse503]
     """
 
     return sync_detailed(
@@ -149,7 +183,12 @@ async def asyncio_detailed(
         PatchedIntegrationTokenPatchRequest,
         PatchedIntegrationTokenPatchRequest,
     ],
-) -> Response[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Response[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     """Set third-party integration tokens for the current user.
 
     Args:
@@ -162,7 +201,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbIntegrationsPartialUpdateResponse204]
+        Response[Union[OsidbIntegrationsPartialUpdateResponse204, OsidbIntegrationsPartialUpdateResponse503]]
     """
 
     kwargs = _get_kwargs(
@@ -189,7 +228,12 @@ async def asyncio(
         PatchedIntegrationTokenPatchRequest,
         PatchedIntegrationTokenPatchRequest,
     ],
-) -> Optional[OsidbIntegrationsPartialUpdateResponse204]:
+) -> Optional[
+    Union[
+        OsidbIntegrationsPartialUpdateResponse204,
+        OsidbIntegrationsPartialUpdateResponse503,
+    ]
+]:
     """Set third-party integration tokens for the current user.
 
     Args:
@@ -202,7 +246,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbIntegrationsPartialUpdateResponse204
+        Union[OsidbIntegrationsPartialUpdateResponse204, OsidbIntegrationsPartialUpdateResponse503]
     """
 
     return (

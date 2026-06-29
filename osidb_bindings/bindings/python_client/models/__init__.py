@@ -684,8 +684,14 @@ from .osidb_healthy_retrieve_response_200 import OsidbHealthyRetrieveResponse200
 from .osidb_integrations_partial_update_response_204 import (
     OsidbIntegrationsPartialUpdateResponse204,
 )
+from .osidb_integrations_partial_update_response_503 import (
+    OsidbIntegrationsPartialUpdateResponse503,
+)
 from .osidb_integrations_retrieve_response_200 import (
     OsidbIntegrationsRetrieveResponse200,
+)
+from .osidb_integrations_retrieve_response_503 import (
+    OsidbIntegrationsRetrieveResponse503,
 )
 from .osidb_whoami_retrieve_response_200 import OsidbWhoamiRetrieveResponse200
 from .package import Package
@@ -1088,7 +1094,9 @@ __all__ = (
     "OsidbApiV2TrackersUpdateResponse200",
     "OsidbHealthyRetrieveResponse200",
     "OsidbIntegrationsPartialUpdateResponse204",
+    "OsidbIntegrationsPartialUpdateResponse503",
     "OsidbIntegrationsRetrieveResponse200",
+    "OsidbIntegrationsRetrieveResponse503",
     "OsidbWhoamiRetrieveResponse200",
     "Package",
     "PackageRequest",
