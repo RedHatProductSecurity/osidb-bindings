@@ -7,6 +7,9 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_integrations_retrieve_response_200 import (
     OsidbIntegrationsRetrieveResponse200,
 )
+from ...models.osidb_integrations_retrieve_response_503 import (
+    OsidbIntegrationsRetrieveResponse503,
+)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
@@ -28,7 +31,9 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbIntegrationsRetrieveResponse200]:
+) -> Optional[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     if response.status_code == 200:
         _response_200 = response.json()
         response_200: OsidbIntegrationsRetrieveResponse200
@@ -38,11 +43,22 @@ def _parse_response(
             response_200 = OsidbIntegrationsRetrieveResponse200.from_dict(_response_200)
 
         return response_200
+    if response.status_code == 503:
+        _response_503 = response.json()
+        response_503: OsidbIntegrationsRetrieveResponse503
+        if isinstance(_response_503, Unset):
+            response_503 = UNSET
+        else:
+            response_503 = OsidbIntegrationsRetrieveResponse503.from_dict(_response_503)
+
+        return response_503
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbIntegrationsRetrieveResponse200]:
+) -> Response[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,7 +70,9 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbIntegrationsRetrieveResponse200]:
+) -> Response[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     """Set third-party integration tokens for the current user.
 
     Raises:
@@ -62,7 +80,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbIntegrationsRetrieveResponse200]
+        Response[Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]]
     """
 
     kwargs = _get_kwargs(
@@ -83,7 +101,9 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbIntegrationsRetrieveResponse200]:
+) -> Optional[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     """Set third-party integration tokens for the current user.
 
     Raises:
@@ -91,7 +111,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbIntegrationsRetrieveResponse200
+        Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
     """
 
     return sync_detailed(
@@ -102,7 +122,9 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbIntegrationsRetrieveResponse200]:
+) -> Response[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     """Set third-party integration tokens for the current user.
 
     Raises:
@@ -110,7 +132,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbIntegrationsRetrieveResponse200]
+        Response[Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]]
     """
 
     kwargs = _get_kwargs(
@@ -131,7 +153,9 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbIntegrationsRetrieveResponse200]:
+) -> Optional[
+    Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
+]:
     """Set third-party integration tokens for the current user.
 
     Raises:
@@ -139,7 +163,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbIntegrationsRetrieveResponse200
+        Union[OsidbIntegrationsRetrieveResponse200, OsidbIntegrationsRetrieveResponse503]
     """
 
     return (
