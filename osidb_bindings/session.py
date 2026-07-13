@@ -37,6 +37,7 @@ from .exceptions import (
 )
 from .helpers import get_env, parse_version_key
 from .iterators import Paginator
+from .token_cache import TokenCache, resolve_kerberos_principal
 
 MAX_CONCURRENCY = get_env("OSIDB_BINDINGS_MAX_CONCURRENCY", "10", is_int=True)
 
@@ -200,13 +201,14 @@ def serialize_data(data, model):
 
 
 def new_session(
-    osidb_server_uri,
-    password=None,
-    username=None,
-    verify_ssl=True,
-    refresh_token=None,
-    user_agent=None,
-):
+    osidb_server_uri: str,
+    password: str | None = None,
+    username: str | None = None,
+    verify_ssl: bool = True,
+    refresh_token: str | None = None,
+    user_agent: str | None = None,
+    token_cache_enabled: bool = True,
+) -> "Session":
     """
     Create a new session for selected OSIDB URI
 
@@ -227,6 +229,7 @@ def new_session(
         verify_ssl=verify_ssl,
         refresh_token=refresh_token,
         user_agent=user_agent,
+        token_cache_enabled=token_cache_enabled,
     )
 
 
@@ -235,16 +238,29 @@ class Session:
 
     def __init__(
         self,
-        base_url,
-        auth=None,
-        verify_ssl=True,
-        refresh_token=None,
+        base_url: str,
+        auth: tuple[str, str] | str | None = None,
+        verify_ssl: bool = True,
+        refresh_token: str | None = None,
         user_agent: str | None = None,
+        token_cache_enabled: bool = True,
     ):
         # Store auth for the refresh token acquirement
         self.auth = auth
         self.refresh_token = refresh_token
         self.endpoints = self.__cache_endpoints()
+        if token_cache_enabled:
+            if isinstance(auth, tuple):
+                identity = auth[0]
+            elif auth == "kerberos":
+                identity = resolve_kerberos_principal()
+            else:
+                identity = None
+            self.token_cache: TokenCache | None = TokenCache(
+                server_url=base_url, identity=identity
+            )
+        else:
+            self.token_cache = None
 
         if user_agent is not None:
             if USERAGENT_PLACEHOLDER in user_agent:
@@ -377,7 +393,16 @@ class Session:
         )
 
         if self.refresh_token is None:
-            self.refresh_token = self.__get_refresh_token()
+            cached = self.token_cache.read() if self.token_cache else None
+            if cached is not None:
+                self.refresh_token = cached
+            else:
+                self.refresh_token = self.__get_refresh_token()
+                if self.token_cache:
+                    self.token_cache.write(self.refresh_token)
+        else:
+            if self.token_cache:
+                self.token_cache.write(self.refresh_token)
 
     def get_latest_endpoint_version(
         self, api_section: str, resource_name: str, method: str
@@ -450,6 +475,8 @@ class Session:
         except requests.HTTPError:
             # expired refresh token, renew it and try again
             self.refresh_token = self.__get_refresh_token()
+            if self.token_cache:
+                self.token_cache.write(self.refresh_token)
             response = auth_token_refresh_create.sync(
                 client=self.__client,
                 body=models.TokenRefreshRequest.from_dict(

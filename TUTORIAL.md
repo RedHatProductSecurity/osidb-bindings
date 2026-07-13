@@ -131,6 +131,31 @@ Used for OSIDB instances with Kerberos authentication enabled (production/stagin
 session = osidb_bindings.new_session(osidb_server_uri="https://osidb-prod.example.com/")
 ```
 
+#### Refresh Token Caching
+
+By default, the bindings automatically cache the refresh token to a file on disk.
+This means subsequent `new_session()` calls skip the initial authentication
+and reuse the cached token instead, reducing load on the server. The cache
+persists across script runs, so even independent processes benefit from it.
+
+The cache is transparent. If the cached token has expired, the session automatically
+re-authenticates and updates the cache file.
+
+To disable caching:
+
+```python
+session = osidb_bindings.new_session(
+    osidb_server_uri="https://osidb-prod.example.com/",
+    token_cache_enabled=False,
+)
+```
+
+The cache directory is resolved in the following order:
+1. `OSIDB_BINDINGS_CACHE_DIR` environment variable (useful for custom cache locations)
+2. `$XDG_CACHE_HOME/osidb-bindings/`
+3. `~/.cache/osidb-bindings/`
+4. System temp directory fallback (e.g. `/tmp/osidb-bindings-cache-<uid>/`)
+
 #### Reusing a Refresh Token
 
 In distributed environments (e.g. multiple OCP pods or workers),
