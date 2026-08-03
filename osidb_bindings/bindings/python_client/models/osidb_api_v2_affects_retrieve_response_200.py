@@ -59,7 +59,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
-        assist_meta (Union[Unset, Any]):
+        assist_meta (Union[Any, None, Unset]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -96,7 +96,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
-    assist_meta: Union[Unset, Any] = UNSET
+    assist_meta: Union[Any, None, Unset] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -282,7 +282,11 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
-        assist_meta = self.assist_meta
+        assist_meta: Union[Any, None, Unset]
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        else:
+            assist_meta = self.assist_meta
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -400,14 +404,14 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                _tracker_type_1 = data
-                tracker_type_1: Tracker
-                if isinstance(_tracker_type_1, Unset):
-                    tracker_type_1 = UNSET
+                _tracker_type_0 = data
+                tracker_type_0: Tracker
+                if isinstance(_tracker_type_0, Unset):
+                    tracker_type_0 = UNSET
                 else:
-                    tracker_type_1 = Tracker.from_dict(_tracker_type_1)
+                    tracker_type_0 = Tracker.from_dict(_tracker_type_0)
 
-                return tracker_type_1
+                return tracker_type_0
             except:  # noqa: E722
                 pass
             return cast(Union["Tracker", None], data)
@@ -690,7 +694,14 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
-        assist_meta = d.pop("assist_meta", UNSET)
+        def _parse_assist_meta(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]

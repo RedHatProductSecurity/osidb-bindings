@@ -36,7 +36,7 @@ class AffectRequest(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
-        assist_meta (Union[Unset, Any]):
+        assist_meta (Union[Any, None, Unset]):
     """
 
     flaw: UUID
@@ -52,7 +52,7 @@ class AffectRequest(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
-    assist_meta: Union[Unset, Any] = UNSET
+    assist_meta: Union[Any, None, Unset] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -140,7 +140,11 @@ class AffectRequest(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
-        assist_meta = self.assist_meta
+        assist_meta: Union[Any, None, Unset]
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        else:
+            assist_meta = self.assist_meta
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -279,11 +283,14 @@ class AffectRequest(OSIDBModel):
                     "text/plain",
                 )
 
-        assist_meta = (
-            self.assist_meta
-            if isinstance(self.assist_meta, Unset)
-            else (None, str(self.assist_meta).encode(), "text/plain")
-        )
+        assist_meta: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        elif isinstance(self.assist_meta, Any):
+            assist_meta = (None, str(self.assist_meta).encode(), "text/plain")
+        else:
+            assist_meta = (None, str(self.assist_meta).encode(), "text/plain")
 
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
@@ -491,7 +498,14 @@ class AffectRequest(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
-        assist_meta = d.pop("assist_meta", UNSET)
+        def _parse_assist_meta(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
         affect_request = cls(
             flaw=flaw,

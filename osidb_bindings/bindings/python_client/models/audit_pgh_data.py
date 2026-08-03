@@ -1,54 +1,33 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
-from ..types import UNSET, OSIDBModel, Unset
+from ..types import OSIDBModel
 
-T = TypeVar("T", bound="FlawPutClassification")
+T = TypeVar("T", bound="AuditPghData")
 
 
 @_attrs_define
-class FlawPutClassification(OSIDBModel):
-    """
-    Attributes:
-        workflow (Union[Unset, str]):
-        state (Union[Unset, str]):
-    """
+class AuditPghData(OSIDBModel):
+    """ """
 
-    workflow: Union[Unset, str] = UNSET
-    state: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        workflow = self.workflow
-
-        state = self.state
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(workflow, Unset):
-            field_dict["workflow"] = workflow
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        workflow = d.pop("workflow", UNSET)
+        audit_pgh_data = cls()
 
-        state = d.pop("state", UNSET)
-
-        flaw_put_classification = cls(
-            workflow=workflow,
-            state=state,
-        )
-
-        flaw_put_classification.additional_properties = d
-        return flaw_put_classification
+        audit_pgh_data.additional_properties = d
+        return audit_pgh_data
 
     @classmethod
     def get_fields(cls):

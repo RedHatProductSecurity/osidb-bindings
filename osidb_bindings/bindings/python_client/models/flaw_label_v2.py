@@ -1,35 +1,48 @@
 from typing import Any, TypeVar, Union
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
+from ..models.flaw_label_type import FlawLabelType
 from ..models.state_enum import StateEnum
-from ..models.type_96f_enum import Type96FEnum
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawCollaboratorPostRequest")
+T = TypeVar("T", bound="FlawLabelV2")
 
 
 @_attrs_define
-class FlawCollaboratorPostRequest(OSIDBModel):
-    """FlawCollaborator serializer
+class FlawLabelV2(OSIDBModel):
+    """Flaw label V2 serializer with type-specific fields
 
     Attributes:
-        label (str):
+        uuid (UUID):
+        name (str):
+        type_ (Union[Unset, FlawLabelType]):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
-        type_ (Union[Unset, Type96FEnum]):  Default: Type96FEnum.CONTEXT_BASED.
+        relevant (Union[Unset, bool]):
     """
 
-    label: str
+    uuid: UUID
+    name: str
+    type_: Union[Unset, FlawLabelType] = UNSET
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
-    type_: Union[Unset, Type96FEnum] = Type96FEnum.CONTEXT_BASED
+    relevant: Union[Unset, bool] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        label = self.label
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
+
+        name = self.name
+
+        type_: Union[Unset, str] = UNSET
+        if not isinstance(self.type_, Unset):
+            type_ = FlawLabelType(self.type_).value
 
         state: Union[Unset, str] = UNSET
         if not isinstance(self.state, Unset):
@@ -37,59 +50,43 @@ class FlawCollaboratorPostRequest(OSIDBModel):
 
         contributor = self.contributor
 
-        type_: Union[Unset, str] = UNSET
-        if not isinstance(self.type_, Unset):
-            type_ = Type96FEnum(self.type_).value
+        relevant = self.relevant
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(label, Unset):
-            field_dict["label"] = label
+        if not isinstance(uuid, Unset):
+            field_dict["uuid"] = uuid
+        if not isinstance(name, Unset):
+            field_dict["name"] = name
+        if not isinstance(type_, Unset):
+            field_dict["type"] = type_
         if not isinstance(state, Unset):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
-        if not isinstance(type_, Unset):
-            field_dict["type"] = type_
-
-        return field_dict
-
-    def to_multipart(self) -> dict[str, Any]:
-        label = (None, str(self.label).encode(), "text/plain")
-
-        state: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.state, Unset):
-            state = (None, str(self.state.value).encode(), "text/plain")
-
-        contributor = (
-            self.contributor
-            if isinstance(self.contributor, Unset)
-            else (None, str(self.contributor).encode(), "text/plain")
-        )
-
-        type_: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.type_, Unset):
-            type_ = (None, str(self.type_.value).encode(), "text/plain")
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(label, Unset):
-            field_dict["label"] = label
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
-        if not isinstance(contributor, Unset):
-            field_dict["contributor"] = contributor
-        if not isinstance(type_, Unset):
-            field_dict["type"] = type_
+        if not isinstance(relevant, Unset):
+            field_dict["relevant"] = relevant
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        label = d.pop("label", UNSET)
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
+        else:
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
+
+        name = d.pop("name", UNSET)
+
+        _type_ = d.pop("type", UNSET)
+        type_: Union[Unset, FlawLabelType]
+        if isinstance(_type_, Unset):
+            type_ = UNSET
+        else:
+            type_ = FlawLabelType(_type_)
 
         _state = d.pop("state", UNSET)
         state: Union[Unset, StateEnum]
@@ -100,22 +97,19 @@ class FlawCollaboratorPostRequest(OSIDBModel):
 
         contributor = d.pop("contributor", UNSET)
 
-        _type_ = d.pop("type", UNSET)
-        type_: Union[Unset, Type96FEnum]
-        if isinstance(_type_, Unset):
-            type_ = UNSET
-        else:
-            type_ = Type96FEnum(_type_)
+        relevant = d.pop("relevant", UNSET)
 
-        flaw_collaborator_post_request = cls(
-            label=label,
+        flaw_label_v2 = cls(
+            uuid=uuid,
+            name=name,
+            type_=type_,
             state=state,
             contributor=contributor,
-            type_=type_,
+            relevant=relevant,
         )
 
-        flaw_collaborator_post_request.additional_properties = d
-        return flaw_collaborator_post_request
+        flaw_label_v2.additional_properties = d
+        return flaw_label_v2
 
     @classmethod
     def get_fields(cls):

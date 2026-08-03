@@ -1,11 +1,9 @@
-import datetime
 from typing import TYPE_CHECKING, Any, TypeVar, Union
 from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
-from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
@@ -15,31 +13,24 @@ if TYPE_CHECKING:
     from ..models.classification_workflow import ClassificationWorkflow
 
 
-T = TypeVar("T", bound="WorkflowsApiV1WorkflowsRetrieve2Response200")
+T = TypeVar("T", bound="ClassificationResponse")
 
 
 @_attrs_define
-class WorkflowsApiV1WorkflowsRetrieve2Response200(OSIDBModel):
-    """
+class ClassificationResponse(OSIDBModel):
+    """Response serializer for the classification endpoint
+
     Attributes:
         flaw (UUID):
         classification (ClassificationResult): Serializer for the workflow:state classification result
         workflows (Union[Unset, list['ClassificationWorkflow']]):
         history (Union[Unset, list['ClassificationChangeRecord']]): Classification change history
-        dt (Union[Unset, datetime.datetime]):
-        env (Union[Unset, str]):
-        revision (Union[Unset, str]):
-        version (Union[Unset, str]):
     """
 
     flaw: UUID
     classification: "ClassificationResult"
     workflows: Union[Unset, list["ClassificationWorkflow"]] = UNSET
     history: Union[Unset, list["ClassificationChangeRecord"]] = UNSET
-    dt: Union[Unset, datetime.datetime] = UNSET
-    env: Union[Unset, str] = UNSET
-    revision: Union[Unset, str] = UNSET
-    version: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,16 +62,6 @@ class WorkflowsApiV1WorkflowsRetrieve2Response200(OSIDBModel):
 
                 history.append(history_item)
 
-        dt: Union[Unset, str] = UNSET
-        if not isinstance(self.dt, Unset):
-            dt = self.dt.isoformat()
-
-        env = self.env
-
-        revision = self.revision
-
-        version = self.version
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(flaw, Unset):
@@ -91,14 +72,6 @@ class WorkflowsApiV1WorkflowsRetrieve2Response200(OSIDBModel):
             field_dict["workflows"] = workflows
         if not isinstance(history, Unset):
             field_dict["history"] = history
-        if not isinstance(dt, Unset):
-            field_dict["dt"] = dt
-        if not isinstance(env, Unset):
-            field_dict["env"] = env
-        if not isinstance(revision, Unset):
-            field_dict["revision"] = revision
-        if not isinstance(version, Unset):
-            field_dict["version"] = version
 
         return field_dict
 
@@ -147,32 +120,15 @@ class WorkflowsApiV1WorkflowsRetrieve2Response200(OSIDBModel):
 
             history.append(history_item)
 
-        _dt = d.pop("dt", UNSET)
-        dt: Union[Unset, datetime.datetime]
-        if isinstance(_dt, Unset):
-            dt = UNSET
-        else:
-            dt = isoparse(_dt)
-
-        env = d.pop("env", UNSET)
-
-        revision = d.pop("revision", UNSET)
-
-        version = d.pop("version", UNSET)
-
-        workflows_api_v1_workflows_retrieve_2_response_200 = cls(
+        classification_response = cls(
             flaw=flaw,
             classification=classification,
             workflows=workflows,
             history=history,
-            dt=dt,
-            env=env,
-            revision=revision,
-            version=version,
         )
 
-        workflows_api_v1_workflows_retrieve_2_response_200.additional_properties = d
-        return workflows_api_v1_workflows_retrieve_2_response_200
+        classification_response.additional_properties = d
+        return classification_response
 
     @classmethod
     def get_fields(cls):

@@ -80,7 +80,8 @@ def sync_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
 ) -> Response[OsidbApiV1FlawsLabelsListResponse200]:
-    """
+    """List labels for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         limit (Union[Unset, int]):
@@ -119,7 +120,8 @@ def sync(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
 ) -> Optional[OsidbApiV1FlawsLabelsListResponse200]:
-    """
+    """List labels for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         limit (Union[Unset, int]):
@@ -148,7 +150,8 @@ async def asyncio_detailed(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
 ) -> Response[OsidbApiV1FlawsLabelsListResponse200]:
-    """
+    """List labels for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         limit (Union[Unset, int]):
@@ -187,7 +190,8 @@ async def asyncio(
     limit: Union[Unset, int] = UNSET,
     offset: Union[Unset, int] = UNSET,
 ) -> Optional[OsidbApiV1FlawsLabelsListResponse200]:
-    """
+    """List labels for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         limit (Union[Unset, int]):

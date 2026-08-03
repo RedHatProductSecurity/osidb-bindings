@@ -63,9 +63,13 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsRevertCreateResponse200]:
     """Workflow revert API endpoint.
 
-    Try to adjust workflow classification of a Flaw to the previous state
-    available and return its workflow:state classification or errors if
-    not possible to revert.
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly. If requirements
+    for the current state are no longer met, classification will automatically
+    revert to the appropriate state.
 
     Args:
         flaw_id (str):
@@ -103,9 +107,13 @@ def sync(
 ) -> Optional[OsidbApiV1FlawsRevertCreateResponse200]:
     """Workflow revert API endpoint.
 
-    Try to adjust workflow classification of a Flaw to the previous state
-    available and return its workflow:state classification or errors if
-    not possible to revert.
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly. If requirements
+    for the current state are no longer met, classification will automatically
+    revert to the appropriate state.
 
     Args:
         flaw_id (str):
@@ -133,9 +141,13 @@ async def asyncio_detailed(
 ) -> Response[OsidbApiV1FlawsRevertCreateResponse200]:
     """Workflow revert API endpoint.
 
-    Try to adjust workflow classification of a Flaw to the previous state
-    available and return its workflow:state classification or errors if
-    not possible to revert.
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly. If requirements
+    for the current state are no longer met, classification will automatically
+    revert to the appropriate state.
 
     Args:
         flaw_id (str):
@@ -173,9 +185,13 @@ async def asyncio(
 ) -> Optional[OsidbApiV1FlawsRevertCreateResponse200]:
     """Workflow revert API endpoint.
 
-    Try to adjust workflow classification of a Flaw to the previous state
-    available and return its workflow:state classification or errors if
-    not possible to revert.
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly. If requirements
+    for the current state are no longer met, classification will automatically
+    revert to the appropriate state.
 
     Args:
         flaw_id (str):

@@ -83,7 +83,8 @@ def sync_detailed(
         FlawCollaboratorPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsLabelsCreateResponse201]:
-    """
+    """Require parent Flaw write ACLs for create/update/destroy.
+
     Args:
         flaw_id (UUID):
         body (FlawCollaboratorPostRequest): FlawCollaborator serializer
@@ -125,7 +126,8 @@ def sync(
         FlawCollaboratorPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsLabelsCreateResponse201]:
-    """
+    """Require parent Flaw write ACLs for create/update/destroy.
+
     Args:
         flaw_id (UUID):
         body (FlawCollaboratorPostRequest): FlawCollaborator serializer
@@ -157,7 +159,8 @@ async def asyncio_detailed(
         FlawCollaboratorPostRequest,
     ],
 ) -> Response[OsidbApiV1FlawsLabelsCreateResponse201]:
-    """
+    """Require parent Flaw write ACLs for create/update/destroy.
+
     Args:
         flaw_id (UUID):
         body (FlawCollaboratorPostRequest): FlawCollaborator serializer
@@ -199,7 +202,8 @@ async def asyncio(
         FlawCollaboratorPostRequest,
     ],
 ) -> Optional[OsidbApiV1FlawsLabelsCreateResponse201]:
-    """
+    """Require parent Flaw write ACLs for create/update/destroy.
+
     Args:
         flaw_id (UUID):
         body (FlawCollaboratorPostRequest): FlawCollaborator serializer

@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -6,49 +6,59 @@ from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawPutClassification")
+T = TypeVar("T", bound="ClassificationCheck")
 
 
 @_attrs_define
-class FlawPutClassification(OSIDBModel):
-    """
+class ClassificationCheck(OSIDBModel):
+    """Check serializer with classification
+
     Attributes:
-        workflow (Union[Unset, str]):
-        state (Union[Unset, str]):
+        accepts (str):
+        name (str):
+        description (str):
     """
 
-    workflow: Union[Unset, str] = UNSET
-    state: Union[Unset, str] = UNSET
+    accepts: str
+    name: str
+    description: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        workflow = self.workflow
+        accepts = self.accepts
 
-        state = self.state
+        name = self.name
+
+        description = self.description
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(workflow, Unset):
-            field_dict["workflow"] = workflow
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
+        if not isinstance(accepts, Unset):
+            field_dict["accepts"] = accepts
+        if not isinstance(name, Unset):
+            field_dict["name"] = name
+        if not isinstance(description, Unset):
+            field_dict["description"] = description
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        workflow = d.pop("workflow", UNSET)
+        accepts = d.pop("accepts", UNSET)
 
-        state = d.pop("state", UNSET)
+        name = d.pop("name", UNSET)
 
-        flaw_put_classification = cls(
-            workflow=workflow,
-            state=state,
+        description = d.pop("description", UNSET)
+
+        classification_check = cls(
+            accepts=accepts,
+            name=name,
+            description=description,
         )
 
-        flaw_put_classification.additional_properties = d
-        return flaw_put_classification
+        classification_check.additional_properties = d
+        return classification_check
 
     @classmethod
     def get_fields(cls):

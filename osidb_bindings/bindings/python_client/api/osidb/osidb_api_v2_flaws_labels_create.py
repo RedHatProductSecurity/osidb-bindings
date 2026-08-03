@@ -5,38 +5,36 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_collaborator_post_request import FlawCollaboratorPostRequest
-from ...models.osidb_api_v1_flaws_labels_update_response_200 import (
-    OsidbApiV1FlawsLabelsUpdateResponse200,
+from ...models.flaw_label_v2_post_request import FlawLabelV2PostRequest
+from ...models.osidb_api_v2_flaws_labels_create_response_201 import (
+    OsidbApiV2FlawsLabelsCreateResponse201,
 )
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawCollaboratorPostRequest
+REQUEST_BODY_TYPE = FlawLabelV2PostRequest
 
 
 def _get_kwargs(
     flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/flaws/{flaw_id}/labels/{id}".format(
+        "url": f"{client.base_url}/osidb/api/v2/flaws/{flaw_id}/labels".format(
             flaw_id=flaw_id,
-            id=id,
         ),
     }
 
-    if check_nested_instance(body, FlawCollaboratorPostRequest):
+    if check_nested_instance(body, FlawLabelV2PostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,23 +48,23 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
-    if response.status_code == 200:
-        _response_200 = response.json()
-        response_200: OsidbApiV1FlawsLabelsUpdateResponse200
-        if isinstance(_response_200, Unset):
-            response_200 = UNSET
+) -> Optional[OsidbApiV2FlawsLabelsCreateResponse201]:
+    if response.status_code == 201:
+        _response_201 = response.json()
+        response_201: OsidbApiV2FlawsLabelsCreateResponse201
+        if isinstance(_response_201, Unset):
+            response_201 = UNSET
         else:
-            response_200 = OsidbApiV1FlawsLabelsUpdateResponse200.from_dict(
-                _response_200
+            response_201 = OsidbApiV2FlawsLabelsCreateResponse201.from_dict(
+                _response_201
             )
 
-        return response_200
+        return response_201
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsCreateResponse201]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -77,40 +75,37 @@ def _build_response(
 
 def sync_detailed(
     flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsCreateResponse201]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
-        id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsCreateResponse201]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
-        id=id,
         client=client,
         body=body,
     )
 
-    response = requests.put(
+    response = requests.post(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -123,35 +118,32 @@ def sync_detailed(
 
 def sync(
     flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsCreateResponse201]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
-        id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsCreateResponse201
     """
 
     return sync_detailed(
         flaw_id=flaw_id,
-        id=id,
         client=client,
         body=body,
     ).parsed
@@ -159,40 +151,37 @@ def sync(
 
 async def asyncio_detailed(
     flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsCreateResponse201]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
-        id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsCreateResponse201]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
-        id=id,
         client=client,
         body=body,
     )
 
-    async with client.get_async_session().put(
+    async with client.get_async_session().post(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -205,36 +194,33 @@ async def asyncio_detailed(
 
 async def asyncio(
     flaw_id: UUID,
-    id: str,
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsCreateResponse201]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
-        id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsCreateResponse201
     """
 
     return (
         await asyncio_detailed(
             flaw_id=flaw_id,
-            id=id,
             client=client,
             body=body,
         )

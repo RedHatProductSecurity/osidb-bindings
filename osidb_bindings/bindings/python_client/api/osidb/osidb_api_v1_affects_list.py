@@ -18,9 +18,6 @@ from ...models.osidb_api_v1_affects_list_flaw_impact import (
 from ...models.osidb_api_v1_affects_list_flaw_source import (
     OsidbApiV1AffectsListFlawSource,
 )
-from ...models.osidb_api_v1_affects_list_flaw_workflow_state_item import (
-    OsidbApiV1AffectsListFlawWorkflowStateItem,
-)
 from ...models.osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from ...models.osidb_api_v1_affects_list_order_item import (
     OsidbApiV1AffectsListOrderItem,
@@ -103,7 +100,8 @@ QUERY_PARAMS = {
     "flaw__updated_dt__lt": datetime.datetime,
     "flaw__updated_dt__lte": datetime.datetime,
     "flaw__uuid": UUID,
-    "flaw__workflow_state": list[OsidbApiV1AffectsListFlawWorkflowStateItem],
+    "flaw__workflow_name": list[str],
+    "flaw__workflow_state": list[str],
     "impact": OsidbApiV1AffectsListImpact,
     "include_fields": list[str],
     "include_history": bool,
@@ -219,9 +217,8 @@ def _get_kwargs(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -640,17 +637,15 @@ def _get_kwargs(
 
     params["flaw__uuid"] = json_flaw_uuid
 
+    json_flaw_workflow_name: Union[Unset, list[str]] = UNSET
+    if not isinstance(flaw_workflow_name, Unset):
+        json_flaw_workflow_name = flaw_workflow_name
+
+    params["flaw__workflow_name"] = json_flaw_workflow_name
+
     json_flaw_workflow_state: Union[Unset, list[str]] = UNSET
     if not isinstance(flaw_workflow_state, Unset):
-        json_flaw_workflow_state = []
-        for flaw_workflow_state_item_data in flaw_workflow_state:
-            flaw_workflow_state_item: str = UNSET
-            if not isinstance(flaw_workflow_state_item_data, Unset):
-                flaw_workflow_state_item = OsidbApiV1AffectsListFlawWorkflowStateItem(
-                    flaw_workflow_state_item_data
-                ).value
-
-            json_flaw_workflow_state.append(flaw_workflow_state_item)
+        json_flaw_workflow_state = flaw_workflow_state
 
     params["flaw__workflow_state"] = json_flaw_workflow_state
 
@@ -983,9 +978,8 @@ def sync_detailed(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -1099,7 +1093,8 @@ def sync_detailed(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1220,6 +1215,7 @@ def sync_detailed(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
@@ -1346,9 +1342,8 @@ def sync(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -1462,7 +1457,8 @@ def sync(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1583,6 +1579,7 @@ def sync(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
@@ -1699,9 +1696,8 @@ async def asyncio_detailed(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -1815,7 +1811,8 @@ async def asyncio_detailed(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -1936,6 +1933,7 @@ async def asyncio_detailed(
         flaw_updated_dt_lt=flaw_updated_dt_lt,
         flaw_updated_dt_lte=flaw_updated_dt_lte,
         flaw_uuid=flaw_uuid,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         include_fields=include_fields,
@@ -2062,9 +2060,8 @@ async def asyncio(
     flaw_updated_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     flaw_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     flaw_uuid: Union[Unset, UUID] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV1AffectsListImpact] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
     include_history: Union[Unset, bool] = UNSET,
@@ -2178,7 +2175,8 @@ async def asyncio(
         flaw_updated_dt_lt (Union[Unset, datetime.datetime]):
         flaw_updated_dt_lte (Union[Unset, datetime.datetime]):
         flaw_uuid (Union[Unset, UUID]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV1AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV1AffectsListImpact]):
         include_fields (Union[Unset, list[str]]):
         include_history (Union[Unset, bool]):
@@ -2300,6 +2298,7 @@ async def asyncio(
             flaw_updated_dt_lt=flaw_updated_dt_lt,
             flaw_updated_dt_lte=flaw_updated_dt_lte,
             flaw_uuid=flaw_uuid,
+            flaw_workflow_name=flaw_workflow_name,
             flaw_workflow_state=flaw_workflow_state,
             impact=impact,
             include_fields=include_fields,
