@@ -10,6 +10,8 @@ from ...models.workflows_api_v1_workflows_retrieve_2_response_200 import (
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
+    "history": bool,
+    "next": bool,
     "verbose": bool,
 }
 
@@ -18,11 +20,17 @@ def _get_kwargs(
     id: str,
     *,
     client: AuthenticatedClient,
+    history: Union[Unset, bool] = UNSET,
+    next_: Union[Unset, bool] = UNSET,
     verbose: Union[Unset, bool] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     params: dict[str, Any] = {}
+
+    params["history"] = history
+
+    params["next"] = next_
 
     params["verbose"] = verbose
 
@@ -74,6 +82,8 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
+    history: Union[Unset, bool] = UNSET,
+    next_: Union[Unset, bool] = UNSET,
     verbose: Union[Unset, bool] = UNSET,
 ) -> Response[WorkflowsApiV1WorkflowsRetrieve2Response200]:
     """workflow classification API endpoint
@@ -82,11 +92,17 @@ def sync_detailed(
 
     params:
 
+        next - return the next state with requirement acceptance status
+
         verbose - return also workflows with flaw classification
                   which represents the reasoning of the result
 
+        history - return classification change history with reasoning
+
     Args:
         id (str):
+        history (Union[Unset, bool]):
+        next_ (Union[Unset, bool]):
         verbose (Union[Unset, bool]):
 
     Raises:
@@ -100,6 +116,8 @@ def sync_detailed(
     kwargs = _get_kwargs(
         id=id,
         client=client,
+        history=history,
+        next_=next_,
         verbose=verbose,
     )
 
@@ -118,6 +136,8 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
+    history: Union[Unset, bool] = UNSET,
+    next_: Union[Unset, bool] = UNSET,
     verbose: Union[Unset, bool] = UNSET,
 ) -> Optional[WorkflowsApiV1WorkflowsRetrieve2Response200]:
     """workflow classification API endpoint
@@ -126,11 +146,17 @@ def sync(
 
     params:
 
+        next - return the next state with requirement acceptance status
+
         verbose - return also workflows with flaw classification
                   which represents the reasoning of the result
 
+        history - return classification change history with reasoning
+
     Args:
         id (str):
+        history (Union[Unset, bool]):
+        next_ (Union[Unset, bool]):
         verbose (Union[Unset, bool]):
 
     Raises:
@@ -144,6 +170,8 @@ def sync(
     return sync_detailed(
         id=id,
         client=client,
+        history=history,
+        next_=next_,
         verbose=verbose,
     ).parsed
 
@@ -152,6 +180,8 @@ async def asyncio_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
+    history: Union[Unset, bool] = UNSET,
+    next_: Union[Unset, bool] = UNSET,
     verbose: Union[Unset, bool] = UNSET,
 ) -> Response[WorkflowsApiV1WorkflowsRetrieve2Response200]:
     """workflow classification API endpoint
@@ -160,11 +190,17 @@ async def asyncio_detailed(
 
     params:
 
+        next - return the next state with requirement acceptance status
+
         verbose - return also workflows with flaw classification
                   which represents the reasoning of the result
 
+        history - return classification change history with reasoning
+
     Args:
         id (str):
+        history (Union[Unset, bool]):
+        next_ (Union[Unset, bool]):
         verbose (Union[Unset, bool]):
 
     Raises:
@@ -178,6 +214,8 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         id=id,
         client=client,
+        history=history,
+        next_=next_,
         verbose=verbose,
     )
 
@@ -196,6 +234,8 @@ async def asyncio(
     id: str,
     *,
     client: AuthenticatedClient,
+    history: Union[Unset, bool] = UNSET,
+    next_: Union[Unset, bool] = UNSET,
     verbose: Union[Unset, bool] = UNSET,
 ) -> Optional[WorkflowsApiV1WorkflowsRetrieve2Response200]:
     """workflow classification API endpoint
@@ -204,11 +244,17 @@ async def asyncio(
 
     params:
 
+        next - return the next state with requirement acceptance status
+
         verbose - return also workflows with flaw classification
                   which represents the reasoning of the result
 
+        history - return classification change history with reasoning
+
     Args:
         id (str):
+        history (Union[Unset, bool]):
+        next_ (Union[Unset, bool]):
         verbose (Union[Unset, bool]):
 
     Raises:
@@ -223,6 +269,8 @@ async def asyncio(
         await asyncio_detailed(
             id=id,
             client=client,
+            history=history,
+            next_=next_,
             verbose=verbose,
         )
     ).parsed

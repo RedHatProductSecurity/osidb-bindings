@@ -5,15 +5,12 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_collaborator_post_request import FlawCollaboratorPostRequest
-from ...models.osidb_api_v1_flaws_labels_update_response_200 import (
-    OsidbApiV1FlawsLabelsUpdateResponse200,
+from ...models.osidb_api_v2_flaws_labels_destroy_response_204 import (
+    OsidbApiV2FlawsLabelsDestroyResponse204,
 )
-from ...types import UNSET, Response, Unset, check_nested_instance
+from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-
-REQUEST_BODY_TYPE = FlawCollaboratorPostRequest
 
 
 def _get_kwargs(
@@ -21,28 +18,15 @@ def _get_kwargs(
     id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-    ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/flaws/{flaw_id}/labels/{id}".format(
+        "url": f"{client.base_url}/osidb/api/v2/flaws/{flaw_id}/labels/{id}".format(
             flaw_id=flaw_id,
             id=id,
         ),
     }
-
-    if check_nested_instance(body, FlawCollaboratorPostRequest):
-        _json_body: dict[str, Any] = UNSET
-        if not isinstance(body, Unset):
-            _json_body = body.to_dict()
-
-        _kwargs["json"] = _json_body
-        headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -50,23 +34,23 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
-    if response.status_code == 200:
-        _response_200 = response.json()
-        response_200: OsidbApiV1FlawsLabelsUpdateResponse200
-        if isinstance(_response_200, Unset):
-            response_200 = UNSET
+) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
+    if response.status_code == 204:
+        _response_204 = response.json()
+        response_204: OsidbApiV2FlawsLabelsDestroyResponse204
+        if isinstance(_response_204, Unset):
+            response_204 = UNSET
         else:
-            response_200 = OsidbApiV1FlawsLabelsUpdateResponse200.from_dict(
-                _response_200
+            response_204 = OsidbApiV2FlawsLabelsDestroyResponse204.from_dict(
+                _response_204
             )
 
-        return response_200
+        return response_204
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -80,37 +64,28 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-    ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsDestroyResponse204]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         id=id,
         client=client,
-        body=body,
     )
 
-    response = requests.put(
+    response = requests.delete(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -126,34 +101,25 @@ def sync(
     id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-    ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsDestroyResponse204
     """
 
     return sync_detailed(
         flaw_id=flaw_id,
         id=id,
         client=client,
-        body=body,
     ).parsed
 
 
@@ -162,37 +128,28 @@ async def asyncio_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-    ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsDestroyResponse204]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         id=id,
         client=client,
-        body=body,
     )
 
-    async with client.get_async_session().put(
+    async with client.get_async_session().delete(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -208,27 +165,19 @@ async def asyncio(
     id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-    ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsDestroyResponse204
     """
 
     return (
@@ -236,6 +185,5 @@ async def asyncio(
             flaw_id=flaw_id,
             id=id,
             client=client,
-            body=body,
         )
     ).parsed

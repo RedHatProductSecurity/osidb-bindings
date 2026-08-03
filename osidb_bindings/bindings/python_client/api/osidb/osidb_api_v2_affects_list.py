@@ -33,9 +33,6 @@ from ...models.osidb_api_v2_affects_list_flaw_source_in_item import (
 from ...models.osidb_api_v2_affects_list_flaw_visibility import (
     OsidbApiV2AffectsListFlawVisibility,
 )
-from ...models.osidb_api_v2_affects_list_flaw_workflow_state_item import (
-    OsidbApiV2AffectsListFlawWorkflowStateItem,
-)
 from ...models.osidb_api_v2_affects_list_impact import OsidbApiV2AffectsListImpact
 from ...models.osidb_api_v2_affects_list_impact_in_item import (
     OsidbApiV2AffectsListImpactInItem,
@@ -150,7 +147,8 @@ QUERY_PARAMS = {
     "flaw__uuid": UUID,
     "flaw__uuid__in": list[UUID],
     "flaw__visibility": OsidbApiV2AffectsListFlawVisibility,
-    "flaw__workflow_state": list[OsidbApiV2AffectsListFlawWorkflowStateItem],
+    "flaw__workflow_name": list[str],
+    "flaw__workflow_state": list[str],
     "impact": OsidbApiV2AffectsListImpact,
     "impact__in": list[OsidbApiV2AffectsListImpactInItem],
     "include_fields": list[str],
@@ -311,9 +309,8 @@ def _get_kwargs(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     flaw_uuid_in: Union[Unset, list[UUID]] = UNSET,
     flaw_visibility: Union[Unset, OsidbApiV2AffectsListFlawVisibility] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV2AffectsListImpact] = UNSET,
     impact_in: Union[Unset, list[OsidbApiV2AffectsListImpactInItem]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
@@ -894,17 +891,15 @@ def _get_kwargs(
 
     params["flaw__visibility"] = json_flaw_visibility
 
+    json_flaw_workflow_name: Union[Unset, list[str]] = UNSET
+    if not isinstance(flaw_workflow_name, Unset):
+        json_flaw_workflow_name = flaw_workflow_name
+
+    params["flaw__workflow_name"] = json_flaw_workflow_name
+
     json_flaw_workflow_state: Union[Unset, list[str]] = UNSET
     if not isinstance(flaw_workflow_state, Unset):
-        json_flaw_workflow_state = []
-        for flaw_workflow_state_item_data in flaw_workflow_state:
-            flaw_workflow_state_item: str = UNSET
-            if not isinstance(flaw_workflow_state_item_data, Unset):
-                flaw_workflow_state_item = OsidbApiV2AffectsListFlawWorkflowStateItem(
-                    flaw_workflow_state_item_data
-                ).value
-
-            json_flaw_workflow_state.append(flaw_workflow_state_item)
+        json_flaw_workflow_state = flaw_workflow_state
 
     params["flaw__workflow_state"] = json_flaw_workflow_state
 
@@ -1412,9 +1407,8 @@ def sync_detailed(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     flaw_uuid_in: Union[Unset, list[UUID]] = UNSET,
     flaw_visibility: Union[Unset, OsidbApiV2AffectsListFlawVisibility] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV2AffectsListImpact] = UNSET,
     impact_in: Union[Unset, list[OsidbApiV2AffectsListImpactInItem]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
@@ -1568,7 +1562,8 @@ def sync_detailed(
         flaw_uuid (Union[Unset, UUID]):
         flaw_uuid_in (Union[Unset, list[UUID]]):
         flaw_visibility (Union[Unset, OsidbApiV2AffectsListFlawVisibility]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV2AffectsListImpact]):
         impact_in (Union[Unset, list[OsidbApiV2AffectsListImpactInItem]]):
         include_fields (Union[Unset, list[str]]):
@@ -1730,6 +1725,7 @@ def sync_detailed(
         flaw_uuid=flaw_uuid,
         flaw_uuid_in=flaw_uuid_in,
         flaw_visibility=flaw_visibility,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         impact_in=impact_in,
@@ -1901,9 +1897,8 @@ def sync(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     flaw_uuid_in: Union[Unset, list[UUID]] = UNSET,
     flaw_visibility: Union[Unset, OsidbApiV2AffectsListFlawVisibility] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV2AffectsListImpact] = UNSET,
     impact_in: Union[Unset, list[OsidbApiV2AffectsListImpactInItem]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
@@ -2057,7 +2052,8 @@ def sync(
         flaw_uuid (Union[Unset, UUID]):
         flaw_uuid_in (Union[Unset, list[UUID]]):
         flaw_visibility (Union[Unset, OsidbApiV2AffectsListFlawVisibility]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV2AffectsListImpact]):
         impact_in (Union[Unset, list[OsidbApiV2AffectsListImpactInItem]]):
         include_fields (Union[Unset, list[str]]):
@@ -2219,6 +2215,7 @@ def sync(
         flaw_uuid=flaw_uuid,
         flaw_uuid_in=flaw_uuid_in,
         flaw_visibility=flaw_visibility,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         impact_in=impact_in,
@@ -2380,9 +2377,8 @@ async def asyncio_detailed(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     flaw_uuid_in: Union[Unset, list[UUID]] = UNSET,
     flaw_visibility: Union[Unset, OsidbApiV2AffectsListFlawVisibility] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV2AffectsListImpact] = UNSET,
     impact_in: Union[Unset, list[OsidbApiV2AffectsListImpactInItem]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
@@ -2536,7 +2532,8 @@ async def asyncio_detailed(
         flaw_uuid (Union[Unset, UUID]):
         flaw_uuid_in (Union[Unset, list[UUID]]):
         flaw_visibility (Union[Unset, OsidbApiV2AffectsListFlawVisibility]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV2AffectsListImpact]):
         impact_in (Union[Unset, list[OsidbApiV2AffectsListImpactInItem]]):
         include_fields (Union[Unset, list[str]]):
@@ -2698,6 +2695,7 @@ async def asyncio_detailed(
         flaw_uuid=flaw_uuid,
         flaw_uuid_in=flaw_uuid_in,
         flaw_visibility=flaw_visibility,
+        flaw_workflow_name=flaw_workflow_name,
         flaw_workflow_state=flaw_workflow_state,
         impact=impact,
         impact_in=impact_in,
@@ -2869,9 +2867,8 @@ async def asyncio(
     flaw_uuid: Union[Unset, UUID] = UNSET,
     flaw_uuid_in: Union[Unset, list[UUID]] = UNSET,
     flaw_visibility: Union[Unset, OsidbApiV2AffectsListFlawVisibility] = UNSET,
-    flaw_workflow_state: Union[
-        Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]
-    ] = UNSET,
+    flaw_workflow_name: Union[Unset, list[str]] = UNSET,
+    flaw_workflow_state: Union[Unset, list[str]] = UNSET,
     impact: Union[Unset, OsidbApiV2AffectsListImpact] = UNSET,
     impact_in: Union[Unset, list[OsidbApiV2AffectsListImpactInItem]] = UNSET,
     include_fields: Union[Unset, list[str]] = UNSET,
@@ -3025,7 +3022,8 @@ async def asyncio(
         flaw_uuid (Union[Unset, UUID]):
         flaw_uuid_in (Union[Unset, list[UUID]]):
         flaw_visibility (Union[Unset, OsidbApiV2AffectsListFlawVisibility]):
-        flaw_workflow_state (Union[Unset, list[OsidbApiV2AffectsListFlawWorkflowStateItem]]):
+        flaw_workflow_name (Union[Unset, list[str]]):
+        flaw_workflow_state (Union[Unset, list[str]]):
         impact (Union[Unset, OsidbApiV2AffectsListImpact]):
         impact_in (Union[Unset, list[OsidbApiV2AffectsListImpactInItem]]):
         include_fields (Union[Unset, list[str]]):
@@ -3188,6 +3186,7 @@ async def asyncio(
             flaw_uuid=flaw_uuid,
             flaw_uuid_in=flaw_uuid_in,
             flaw_visibility=flaw_visibility,
+            flaw_workflow_name=flaw_workflow_name,
             flaw_workflow_state=flaw_workflow_state,
             impact=impact,
             impact_in=impact_in,

@@ -119,10 +119,12 @@ class OsidbApiV2FlawsListOrderItem(str, Enum):
     VALUE_58 = "-updated_dt"
     VALUE_59 = "-uuid"
     VALUE_6 = "-affects__affectedness"
-    VALUE_60 = "-workflow_state"
+    VALUE_60 = "-workflow_name"
+    VALUE_61 = "-workflow_state"
     VALUE_7 = "-affects__created_dt"
     VALUE_8 = "-affects__impact"
     VALUE_9 = "-affects__ps_component"
+    WORKFLOW_NAME = "workflow_name"
     WORKFLOW_STATE = "workflow_state"
 
     def __str__(self) -> str:

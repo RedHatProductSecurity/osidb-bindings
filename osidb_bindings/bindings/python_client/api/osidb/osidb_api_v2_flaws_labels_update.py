@@ -5,15 +5,15 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_collaborator_post_request import FlawCollaboratorPostRequest
-from ...models.osidb_api_v1_flaws_labels_update_response_200 import (
-    OsidbApiV1FlawsLabelsUpdateResponse200,
+from ...models.flaw_label_v2_post_request import FlawLabelV2PostRequest
+from ...models.osidb_api_v2_flaws_labels_update_response_200 import (
+    OsidbApiV2FlawsLabelsUpdateResponse200,
 )
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawCollaboratorPostRequest
+REQUEST_BODY_TYPE = FlawLabelV2PostRequest
 
 
 def _get_kwargs(
@@ -22,21 +22,21 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/flaws/{flaw_id}/labels/{id}".format(
+        "url": f"{client.base_url}/osidb/api/v2/flaws/{flaw_id}/labels/{id}".format(
             flaw_id=flaw_id,
             id=id,
         ),
     }
 
-    if check_nested_instance(body, FlawCollaboratorPostRequest):
+    if check_nested_instance(body, FlawLabelV2PostRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -50,14 +50,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsUpdateResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1FlawsLabelsUpdateResponse200
+        response_200: OsidbApiV2FlawsLabelsUpdateResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1FlawsLabelsUpdateResponse200.from_dict(
+            response_200 = OsidbApiV2FlawsLabelsUpdateResponse200.from_dict(
                 _response_200
             )
 
@@ -66,7 +66,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsUpdateResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -81,26 +81,26 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsUpdateResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -127,26 +127,26 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsUpdateResponse200
     """
 
     return sync_detailed(
@@ -163,26 +163,26 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Response[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsLabelsUpdateResponse200]
+        Response[OsidbApiV2FlawsLabelsUpdateResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -209,26 +209,26 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
-        FlawCollaboratorPostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
+        FlawLabelV2PostRequest,
     ],
-) -> Optional[OsidbApiV1FlawsLabelsUpdateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
-        body (FlawCollaboratorPostRequest): FlawCollaborator serializer
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsLabelsUpdateResponse200
+        OsidbApiV2FlawsLabelsUpdateResponse200
     """
 
     return (

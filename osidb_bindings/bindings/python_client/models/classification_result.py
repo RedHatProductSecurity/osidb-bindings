@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -6,19 +6,20 @@ from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawPutClassification")
+T = TypeVar("T", bound="ClassificationResult")
 
 
 @_attrs_define
-class FlawPutClassification(OSIDBModel):
-    """
+class ClassificationResult(OSIDBModel):
+    """Serializer for the workflow:state classification result
+
     Attributes:
-        workflow (Union[Unset, str]):
-        state (Union[Unset, str]):
+        workflow (str):
+        state (str):
     """
 
-    workflow: Union[Unset, str] = UNSET
-    state: Union[Unset, str] = UNSET
+    workflow: str
+    state: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -42,13 +43,13 @@ class FlawPutClassification(OSIDBModel):
 
         state = d.pop("state", UNSET)
 
-        flaw_put_classification = cls(
+        classification_result = cls(
             workflow=workflow,
             state=state,
         )
 
-        flaw_put_classification.additional_properties = d
-        return flaw_put_classification
+        classification_result.additional_properties = d
+        return classification_result
 
     @classmethod
     def get_fields(cls):

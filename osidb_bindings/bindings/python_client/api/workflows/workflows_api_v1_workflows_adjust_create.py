@@ -63,11 +63,12 @@ def sync_detailed(
 ) -> Response[WorkflowsApiV1WorkflowsAdjustCreateResponse200]:
     """workflow adjustion API endpoint
 
-    adjust workflow classification of flaw identified by UUID or CVE
-    and return its workflow:state classification (new if changed and old otherwise)
+    DEPRECATED: Workflow classification is now automatic on every flaw save.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
 
-    adjust operation is idempotent so when the classification
-    is already adjusted running it results in no operation
+    To change workflow state, update the flaw data directly (owner, affects,
+    trackers, etc.). Classification will update automatically.
 
     Args:
         id (str):
@@ -103,11 +104,12 @@ def sync(
 ) -> Optional[WorkflowsApiV1WorkflowsAdjustCreateResponse200]:
     """workflow adjustion API endpoint
 
-    adjust workflow classification of flaw identified by UUID or CVE
-    and return its workflow:state classification (new if changed and old otherwise)
+    DEPRECATED: Workflow classification is now automatic on every flaw save.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
 
-    adjust operation is idempotent so when the classification
-    is already adjusted running it results in no operation
+    To change workflow state, update the flaw data directly (owner, affects,
+    trackers, etc.). Classification will update automatically.
 
     Args:
         id (str):
@@ -133,11 +135,12 @@ async def asyncio_detailed(
 ) -> Response[WorkflowsApiV1WorkflowsAdjustCreateResponse200]:
     """workflow adjustion API endpoint
 
-    adjust workflow classification of flaw identified by UUID or CVE
-    and return its workflow:state classification (new if changed and old otherwise)
+    DEPRECATED: Workflow classification is now automatic on every flaw save.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
 
-    adjust operation is idempotent so when the classification
-    is already adjusted running it results in no operation
+    To change workflow state, update the flaw data directly (owner, affects,
+    trackers, etc.). Classification will update automatically.
 
     Args:
         id (str):
@@ -173,11 +176,12 @@ async def asyncio(
 ) -> Optional[WorkflowsApiV1WorkflowsAdjustCreateResponse200]:
     """workflow adjustion API endpoint
 
-    adjust workflow classification of flaw identified by UUID or CVE
-    and return its workflow:state classification (new if changed and old otherwise)
+    DEPRECATED: Workflow classification is now automatic on every flaw save.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
 
-    adjust operation is idempotent so when the classification
-    is already adjusted running it results in no operation
+    To change workflow state, update the flaw data directly (owner, affects,
+    trackers, etc.). Classification will update automatically.
 
     Args:
         id (str):

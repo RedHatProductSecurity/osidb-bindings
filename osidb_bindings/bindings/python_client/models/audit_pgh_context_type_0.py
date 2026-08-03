@@ -4,55 +4,30 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
-from ..types import UNSET, OSIDBModel, Unset
+from ..types import OSIDBModel
 
-T = TypeVar("T", bound="RejectRequest")
+T = TypeVar("T", bound="AuditPghContextType0")
 
 
 @_attrs_define
-class RejectRequest(OSIDBModel):
-    """Task rejection serializer
+class AuditPghContextType0(OSIDBModel):
+    """The context associated with the event."""
 
-    Attributes:
-        reason (str):
-    """
-
-    reason: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        reason = self.reason
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(reason, Unset):
-            field_dict["reason"] = reason
-
-        return field_dict
-
-    def to_multipart(self) -> dict[str, Any]:
-        reason = (None, str(self.reason).encode(), "text/plain")
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(reason, Unset):
-            field_dict["reason"] = reason
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        reason = d.pop("reason", UNSET)
+        audit_pgh_context_type_0 = cls()
 
-        reject_request = cls(
-            reason=reason,
-        )
-
-        reject_request.additional_properties = d
-        return reject_request
+        audit_pgh_context_type_0.additional_properties = d
+        return audit_pgh_context_type_0
 
     @classmethod
     def get_fields(cls):

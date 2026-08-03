@@ -20,6 +20,9 @@ from .affectedness_enum import AffectednessEnum
 from .alert import Alert
 from .alert_type_enum import AlertTypeEnum
 from .audit import Audit
+from .audit_pgh_context_type_0 import AuditPghContextType0
+from .audit_pgh_data import AuditPghData
+from .audit_pgh_diff import AuditPghDiff
 from .auth_token_create_response_200 import AuthTokenCreateResponse200
 from .auth_token_refresh_create_response_200 import AuthTokenRefreshCreateResponse200
 from .auth_token_refresh_retrieve_response_200 import (
@@ -28,6 +31,13 @@ from .auth_token_refresh_retrieve_response_200 import (
 from .auth_token_retrieve_response_200 import AuthTokenRetrieveResponse200
 from .auth_token_verify_create_response_200 import AuthTokenVerifyCreateResponse200
 from .blank_enum import BlankEnum
+from .classification_change_record import ClassificationChangeRecord
+from .classification_change_record_reason import ClassificationChangeRecordReason
+from .classification_check import ClassificationCheck
+from .classification_response import ClassificationResponse
+from .classification_result import ClassificationResult
+from .classification_state import ClassificationState
+from .classification_workflow import ClassificationWorkflow
 from .collectors_api_v1_status_retrieve_response_200 import (
     CollectorsApiV1StatusRetrieveResponse200,
 )
@@ -136,10 +146,8 @@ from .flaw_acknowledgment_post_request import FlawAcknowledgmentPostRequest
 from .flaw_acknowledgment_put_request import FlawAcknowledgmentPutRequest
 from .flaw_acknowledgment_request import FlawAcknowledgmentRequest
 from .flaw_classification import FlawClassification
-from .flaw_classification_state import FlawClassificationState
 from .flaw_collaborator import FlawCollaborator
 from .flaw_collaborator_post_request import FlawCollaboratorPostRequest
-from .flaw_collaborator_post_type_enum import FlawCollaboratorPostTypeEnum
 from .flaw_collaborator_request import FlawCollaboratorRequest
 from .flaw_comment import FlawComment
 from .flaw_comment_post_request import FlawCommentPostRequest
@@ -152,13 +160,14 @@ from .flaw_cvssv2_post_request import FlawCVSSV2PostRequest
 from .flaw_cvssv2_put_request import FlawCVSSV2PutRequest
 from .flaw_label import FlawLabel
 from .flaw_label_type import FlawLabelType
+from .flaw_label_v2 import FlawLabelV2
+from .flaw_label_v2_post_request import FlawLabelV2PostRequest
 from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post_request import FlawPackageVersionPostRequest
 from .flaw_package_version_put_request import FlawPackageVersionPutRequest
 from .flaw_post_request import FlawPostRequest
 from .flaw_put import FlawPut
 from .flaw_put_classification import FlawPutClassification
-from .flaw_put_classification_state import FlawPutClassificationState
 from .flaw_reference import FlawReference
 from .flaw_reference_post_request import FlawReferencePostRequest
 from .flaw_reference_put_request import FlawReferencePutRequest
@@ -170,7 +179,6 @@ from .flaw_source import FlawSource
 from .flaw_uuid_list_request import FlawUUIDListRequest
 from .flaw_v1 import FlawV1
 from .flaw_v1_classification import FlawV1Classification
-from .flaw_v1_classification_state import FlawV1ClassificationState
 from .flaw_v1_report_data import FlawV1ReportData
 from .flaw_v1_request import FlawV1Request
 from .flaw_version import FlawVersion
@@ -203,9 +211,6 @@ from .osidb_api_v1_affects_list_cvss_scores_issuer import (
 )
 from .osidb_api_v1_affects_list_flaw_impact import OsidbApiV1AffectsListFlawImpact
 from .osidb_api_v1_affects_list_flaw_source import OsidbApiV1AffectsListFlawSource
-from .osidb_api_v1_affects_list_flaw_workflow_state_item import (
-    OsidbApiV1AffectsListFlawWorkflowStateItem,
-)
 from .osidb_api_v1_affects_list_impact import OsidbApiV1AffectsListImpact
 from .osidb_api_v1_affects_list_order_item import OsidbApiV1AffectsListOrderItem
 from .osidb_api_v1_affects_list_resolution import OsidbApiV1AffectsListResolution
@@ -346,12 +351,6 @@ from .osidb_api_v1_flaws_list_response_200 import OsidbApiV1FlawsListResponse200
 from .osidb_api_v1_flaws_list_source import OsidbApiV1FlawsListSource
 from .osidb_api_v1_flaws_list_source_in_item import OsidbApiV1FlawsListSourceInItem
 from .osidb_api_v1_flaws_list_visibility import OsidbApiV1FlawsListVisibility
-from .osidb_api_v1_flaws_list_workflow_state_in_item import (
-    OsidbApiV1FlawsListWorkflowStateInItem,
-)
-from .osidb_api_v1_flaws_list_workflow_state_item import (
-    OsidbApiV1FlawsListWorkflowStateItem,
-)
 from .osidb_api_v1_flaws_package_versions_create_response_201 import (
     OsidbApiV1FlawsPackageVersionsCreateResponse201,
 )
@@ -514,9 +513,6 @@ from .osidb_api_v2_affects_list_flaw_source_in_item import (
 from .osidb_api_v2_affects_list_flaw_visibility import (
     OsidbApiV2AffectsListFlawVisibility,
 )
-from .osidb_api_v2_affects_list_flaw_workflow_state_item import (
-    OsidbApiV2AffectsListFlawWorkflowStateItem,
-)
 from .osidb_api_v2_affects_list_impact import OsidbApiV2AffectsListImpact
 from .osidb_api_v2_affects_list_impact_in_item import OsidbApiV2AffectsListImpactInItem
 from .osidb_api_v2_affects_list_order_item import OsidbApiV2AffectsListOrderItem
@@ -564,6 +560,21 @@ from .osidb_api_v2_flaws_index_retrieve_id_type import (
 )
 from .osidb_api_v2_flaws_index_retrieve_response_200 import (
     OsidbApiV2FlawsIndexRetrieveResponse200,
+)
+from .osidb_api_v2_flaws_labels_create_response_201 import (
+    OsidbApiV2FlawsLabelsCreateResponse201,
+)
+from .osidb_api_v2_flaws_labels_destroy_response_204 import (
+    OsidbApiV2FlawsLabelsDestroyResponse204,
+)
+from .osidb_api_v2_flaws_labels_list_response_200 import (
+    OsidbApiV2FlawsLabelsListResponse200,
+)
+from .osidb_api_v2_flaws_labels_retrieve_response_200 import (
+    OsidbApiV2FlawsLabelsRetrieveResponse200,
+)
+from .osidb_api_v2_flaws_labels_update_response_200 import (
+    OsidbApiV2FlawsLabelsUpdateResponse200,
 )
 from .osidb_api_v2_flaws_list_affects_affectedness import (
     OsidbApiV2FlawsListAffectsAffectedness,
@@ -622,12 +633,6 @@ from .osidb_api_v2_flaws_list_response_200 import OsidbApiV2FlawsListResponse200
 from .osidb_api_v2_flaws_list_source import OsidbApiV2FlawsListSource
 from .osidb_api_v2_flaws_list_source_in_item import OsidbApiV2FlawsListSourceInItem
 from .osidb_api_v2_flaws_list_visibility import OsidbApiV2FlawsListVisibility
-from .osidb_api_v2_flaws_list_workflow_state_in_item import (
-    OsidbApiV2FlawsListWorkflowStateInItem,
-)
-from .osidb_api_v2_flaws_list_workflow_state_item import (
-    OsidbApiV2FlawsListWorkflowStateItem,
-)
 from .osidb_api_v2_flaws_retrieve_response_200 import OsidbApiV2FlawsRetrieveResponse200
 from .osidb_api_v2_flaws_update_response_200 import OsidbApiV2FlawsUpdateResponse200
 from .osidb_api_v2_trackers_create_response_201 import (
@@ -712,6 +717,7 @@ from .paginated_flaw_comment_list import PaginatedFlawCommentList
 from .paginated_flaw_cvss_list import PaginatedFlawCVSSList
 from .paginated_flaw_cvssv2_list import PaginatedFlawCVSSV2List
 from .paginated_flaw_label_list import PaginatedFlawLabelList
+from .paginated_flaw_label_v2_list import PaginatedFlawLabelV2List
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_package_version_list import PaginatedFlawPackageVersionList
 from .paginated_flaw_reference_list import PaginatedFlawReferenceList
@@ -725,7 +731,6 @@ from .paginated_tracker_v1_list import PaginatedTrackerV1List
 from .patched_integration_token_patch_request import PatchedIntegrationTokenPatchRequest
 from .profile import Profile
 from .ps_stream_selection import PsStreamSelection
-from .reject_request import RejectRequest
 from .resolution_enum import ResolutionEnum
 from .special_handling_enum import SpecialHandlingEnum
 from .state_enum import StateEnum
@@ -748,6 +753,7 @@ from .tracker_type import TrackerType
 from .tracker_v1 import TrackerV1
 from .trackers_api_v1_file_create_response_200 import TrackersApiV1FileCreateResponse200
 from .trackers_api_v2_file_create_response_200 import TrackersApiV2FileCreateResponse200
+from .type_96f_enum import Type96FEnum
 from .upstream_data import UpstreamData
 from .upstream_data_request import UpstreamDataRequest
 from .upstream_data_source_enum import UpstreamDataSourceEnum
@@ -784,12 +790,22 @@ __all__ = (
     "Alert",
     "AlertTypeEnum",
     "Audit",
+    "AuditPghContextType0",
+    "AuditPghData",
+    "AuditPghDiff",
     "AuthTokenCreateResponse200",
     "AuthTokenRefreshCreateResponse200",
     "AuthTokenRefreshRetrieveResponse200",
     "AuthTokenRetrieveResponse200",
     "AuthTokenVerifyCreateResponse200",
     "BlankEnum",
+    "ClassificationChangeRecord",
+    "ClassificationChangeRecordReason",
+    "ClassificationCheck",
+    "ClassificationResponse",
+    "ClassificationResult",
+    "ClassificationState",
+    "ClassificationWorkflow",
     "CollectorsApiV1StatusRetrieveResponse200",
     "CollectorsApiV1StatusRetrieveResponse200CollectorsItem",
     "CollectorsApiV1StatusRetrieveResponse200CollectorsItemData",
@@ -836,10 +852,8 @@ __all__ = (
     "FlawAcknowledgmentPutRequest",
     "FlawAcknowledgmentRequest",
     "FlawClassification",
-    "FlawClassificationState",
     "FlawCollaborator",
     "FlawCollaboratorPostRequest",
-    "FlawCollaboratorPostTypeEnum",
     "FlawCollaboratorRequest",
     "FlawComment",
     "FlawCommentPostRequest",
@@ -852,13 +866,14 @@ __all__ = (
     "FlawCVSSV2PutRequest",
     "FlawLabel",
     "FlawLabelType",
+    "FlawLabelV2",
+    "FlawLabelV2PostRequest",
     "FlawPackageVersion",
     "FlawPackageVersionPostRequest",
     "FlawPackageVersionPutRequest",
     "FlawPostRequest",
     "FlawPut",
     "FlawPutClassification",
-    "FlawPutClassificationState",
     "FlawReference",
     "FlawReferencePostRequest",
     "FlawReferencePutRequest",
@@ -870,7 +885,6 @@ __all__ = (
     "FlawUUIDListRequest",
     "FlawV1",
     "FlawV1Classification",
-    "FlawV1ClassificationState",
     "FlawV1ReportData",
     "FlawV1Request",
     "FlawVersion",
@@ -893,7 +907,6 @@ __all__ = (
     "OsidbApiV1AffectsListCvssScoresIssuer",
     "OsidbApiV1AffectsListFlawImpact",
     "OsidbApiV1AffectsListFlawSource",
-    "OsidbApiV1AffectsListFlawWorkflowStateItem",
     "OsidbApiV1AffectsListImpact",
     "OsidbApiV1AffectsListOrderItem",
     "OsidbApiV1AffectsListResolution",
@@ -954,8 +967,6 @@ __all__ = (
     "OsidbApiV1FlawsListSource",
     "OsidbApiV1FlawsListSourceInItem",
     "OsidbApiV1FlawsListVisibility",
-    "OsidbApiV1FlawsListWorkflowStateInItem",
-    "OsidbApiV1FlawsListWorkflowStateItem",
     "OsidbApiV1FlawsPackageVersionsCreateResponse201",
     "OsidbApiV1FlawsPackageVersionsDestroyResponse200",
     "OsidbApiV1FlawsPackageVersionsListResponse200",
@@ -1020,7 +1031,6 @@ __all__ = (
     "OsidbApiV2AffectsListFlawSource",
     "OsidbApiV2AffectsListFlawSourceInItem",
     "OsidbApiV2AffectsListFlawVisibility",
-    "OsidbApiV2AffectsListFlawWorkflowStateItem",
     "OsidbApiV2AffectsListImpact",
     "OsidbApiV2AffectsListImpactInItem",
     "OsidbApiV2AffectsListOrderItem",
@@ -1043,6 +1053,11 @@ __all__ = (
     "OsidbApiV2FlawsCvssScoresUpdateResponse200",
     "OsidbApiV2FlawsIndexRetrieveIdType",
     "OsidbApiV2FlawsIndexRetrieveResponse200",
+    "OsidbApiV2FlawsLabelsCreateResponse201",
+    "OsidbApiV2FlawsLabelsDestroyResponse204",
+    "OsidbApiV2FlawsLabelsListResponse200",
+    "OsidbApiV2FlawsLabelsRetrieveResponse200",
+    "OsidbApiV2FlawsLabelsUpdateResponse200",
     "OsidbApiV2FlawsListAffectsAffectedness",
     "OsidbApiV2FlawsListAffectsAffectednessInItem",
     "OsidbApiV2FlawsListAffectsImpact",
@@ -1068,8 +1083,6 @@ __all__ = (
     "OsidbApiV2FlawsListSource",
     "OsidbApiV2FlawsListSourceInItem",
     "OsidbApiV2FlawsListVisibility",
-    "OsidbApiV2FlawsListWorkflowStateInItem",
-    "OsidbApiV2FlawsListWorkflowStateItem",
     "OsidbApiV2FlawsRetrieveResponse200",
     "OsidbApiV2FlawsUpdateResponse200",
     "OsidbApiV2TrackersCreateResponse201",
@@ -1116,6 +1129,7 @@ __all__ = (
     "PaginatedFlawCVSSList",
     "PaginatedFlawCVSSV2List",
     "PaginatedFlawLabelList",
+    "PaginatedFlawLabelV2List",
     "PaginatedFlawList",
     "PaginatedFlawPackageVersionList",
     "PaginatedFlawReferenceList",
@@ -1129,7 +1143,6 @@ __all__ = (
     "PatchedIntegrationTokenPatchRequest",
     "Profile",
     "PsStreamSelection",
-    "RejectRequest",
     "ResolutionEnum",
     "SpecialHandlingEnum",
     "StateEnum",
@@ -1152,6 +1165,7 @@ __all__ = (
     "TrackerSuggestionV1",
     "TrackerType",
     "TrackerV1",
+    "Type96FEnum",
     "UpstreamData",
     "UpstreamDataRequest",
     "UpstreamDataSourceEnum",

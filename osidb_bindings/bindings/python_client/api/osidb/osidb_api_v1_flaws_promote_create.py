@@ -63,8 +63,12 @@ def sync_detailed(
 ) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
-    try to adjust workflow classification of flaw to the next state available
-    return its workflow:state classification or errors if not possible to promote
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly (assign owner, create
+    affects, file trackers, etc.). Classification will update automatically.
 
     Args:
         flaw_id (str):
@@ -102,8 +106,12 @@ def sync(
 ) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
-    try to adjust workflow classification of flaw to the next state available
-    return its workflow:state classification or errors if not possible to promote
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly (assign owner, create
+    affects, file trackers, etc.). Classification will update automatically.
 
     Args:
         flaw_id (str):
@@ -131,8 +139,12 @@ async def asyncio_detailed(
 ) -> Response[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
-    try to adjust workflow classification of flaw to the next state available
-    return its workflow:state classification or errors if not possible to promote
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly (assign owner, create
+    affects, file trackers, etc.). Classification will update automatically.
 
     Args:
         flaw_id (str):
@@ -170,8 +182,12 @@ async def asyncio(
 ) -> Optional[OsidbApiV1FlawsPromoteCreateResponse200]:
     """workflow promotion API endpoint
 
-    try to adjust workflow classification of flaw to the next state available
-    return its workflow:state classification or errors if not possible to promote
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    To change workflow state, update the flaw data directly (assign owner, create
+    affects, file trackers, etc.). Classification will update automatically.
 
     Args:
         flaw_id (str):

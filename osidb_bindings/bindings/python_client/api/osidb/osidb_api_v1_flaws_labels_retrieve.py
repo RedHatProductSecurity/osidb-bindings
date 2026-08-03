@@ -65,7 +65,8 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[OsidbApiV1FlawsLabelsRetrieveResponse200]:
-    """
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         id (str):
@@ -101,7 +102,8 @@ def sync(
     *,
     client: AuthenticatedClient,
 ) -> Optional[OsidbApiV1FlawsLabelsRetrieveResponse200]:
-    """
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         id (str):
@@ -127,7 +129,8 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
 ) -> Response[OsidbApiV1FlawsLabelsRetrieveResponse200]:
-    """
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         id (str):
@@ -163,7 +166,8 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Optional[OsidbApiV1FlawsLabelsRetrieveResponse200]:
-    """
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
+
     Args:
         flaw_id (UUID):
         id (str):

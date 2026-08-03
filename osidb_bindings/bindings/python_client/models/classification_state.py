@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -6,49 +6,61 @@ from attrs import fields as _attrs_fields
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="FlawPutClassification")
+T = TypeVar("T", bound="ClassificationState")
 
 
 @_attrs_define
-class FlawPutClassification(OSIDBModel):
-    """
+class ClassificationState(OSIDBModel):
+    """State serializer with classification
+
     Attributes:
-        workflow (Union[Unset, str]):
-        state (Union[Unset, str]):
+        accepts (str):
+        name (str):
+        requirements (list[Any]):
     """
 
-    workflow: Union[Unset, str] = UNSET
-    state: Union[Unset, str] = UNSET
+    accepts: str
+    name: str
+    requirements: list[Any]
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        workflow = self.workflow
+        accepts = self.accepts
 
-        state = self.state
+        name = self.name
+
+        requirements: list[Any] = UNSET
+        if not isinstance(self.requirements, Unset):
+            requirements = self.requirements
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(workflow, Unset):
-            field_dict["workflow"] = workflow
-        if not isinstance(state, Unset):
-            field_dict["state"] = state
+        if not isinstance(accepts, Unset):
+            field_dict["accepts"] = accepts
+        if not isinstance(name, Unset):
+            field_dict["name"] = name
+        if not isinstance(requirements, Unset):
+            field_dict["requirements"] = requirements
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        workflow = d.pop("workflow", UNSET)
+        accepts = d.pop("accepts", UNSET)
 
-        state = d.pop("state", UNSET)
+        name = d.pop("name", UNSET)
 
-        flaw_put_classification = cls(
-            workflow=workflow,
-            state=state,
+        requirements = cast(list[Any], d.pop("requirements", UNSET))
+
+        classification_state = cls(
+            accepts=accepts,
+            name=name,
+            requirements=requirements,
         )
 
-        flaw_put_classification.additional_properties = d
-        return flaw_put_classification
+        classification_state.additional_properties = d
+        return classification_state
 
     @classmethod
     def get_fields(cls):

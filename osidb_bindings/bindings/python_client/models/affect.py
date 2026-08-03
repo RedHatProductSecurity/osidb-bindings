@@ -60,7 +60,7 @@ class Affect(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
-        assist_meta (Union[Unset, Any]):
+        assist_meta (Union[Any, None, Unset]):
     """
 
     uuid: UUID
@@ -93,7 +93,7 @@ class Affect(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
-    assist_meta: Union[Unset, Any] = UNSET
+    assist_meta: Union[Any, None, Unset] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -275,7 +275,11 @@ class Affect(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
-        assist_meta = self.assist_meta
+        assist_meta: Union[Any, None, Unset]
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        else:
+            assist_meta = self.assist_meta
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -375,14 +379,14 @@ class Affect(OSIDBModel):
             try:
                 if not isinstance(data, dict):
                     raise TypeError()
-                _tracker_type_1 = data
-                tracker_type_1: Tracker
-                if isinstance(_tracker_type_1, Unset):
-                    tracker_type_1 = UNSET
+                _tracker_type_0 = data
+                tracker_type_0: Tracker
+                if isinstance(_tracker_type_0, Unset):
+                    tracker_type_0 = UNSET
                 else:
-                    tracker_type_1 = Tracker.from_dict(_tracker_type_1)
+                    tracker_type_0 = Tracker.from_dict(_tracker_type_0)
 
-                return tracker_type_1
+                return tracker_type_0
             except:  # noqa: E722
                 pass
             return cast(Union["Tracker", None], data)
@@ -665,7 +669,14 @@ class Affect(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
-        assist_meta = d.pop("assist_meta", UNSET)
+        def _parse_assist_meta(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
         affect = cls(
             uuid=uuid,

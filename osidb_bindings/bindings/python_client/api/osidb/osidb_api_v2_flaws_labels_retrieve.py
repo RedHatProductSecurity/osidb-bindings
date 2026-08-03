@@ -1,11 +1,12 @@
 from http import HTTPStatus
 from typing import Any, Optional, Union
+from uuid import UUID
 
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v1_flaws_reset_create_response_200 import (
-    OsidbApiV1FlawsResetCreateResponse200,
+from ...models.osidb_api_v2_flaws_labels_retrieve_response_200 import (
+    OsidbApiV2FlawsLabelsRetrieveResponse200,
 )
 from ...types import UNSET, Response, Unset
 
@@ -13,15 +14,17 @@ QUERY_PARAMS = {}
 
 
 def _get_kwargs(
-    flaw_id: str,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
     _kwargs: dict[str, Any] = {
-        "url": f"{client.base_url}/osidb/api/v1/flaws/{flaw_id}/reset".format(
+        "url": f"{client.base_url}/osidb/api/v2/flaws/{flaw_id}/labels/{id}".format(
             flaw_id=flaw_id,
+            id=id,
         ),
     }
 
@@ -31,14 +34,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV1FlawsResetCreateResponse200]:
+) -> Optional[OsidbApiV2FlawsLabelsRetrieveResponse200]:
     if response.status_code == 200:
         _response_200 = response.json()
-        response_200: OsidbApiV1FlawsResetCreateResponse200
+        response_200: OsidbApiV2FlawsLabelsRetrieveResponse200
         if isinstance(_response_200, Unset):
             response_200 = UNSET
         else:
-            response_200 = OsidbApiV1FlawsResetCreateResponse200.from_dict(
+            response_200 = OsidbApiV2FlawsLabelsRetrieveResponse200.from_dict(
                 _response_200
             )
 
@@ -47,7 +50,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV1FlawsResetCreateResponse200]:
+) -> Response[OsidbApiV2FlawsLabelsRetrieveResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -57,39 +60,32 @@ def _build_response(
 
 
 def sync_detailed(
-    flaw_id: str,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsResetCreateResponse200]:
-    """Workflow reset API endpoint.
-
-    DEPRECATED: Workflow classification is now automatic based on flaw data.
-    This endpoint no longer performs any action - it only returns the current
-    computed classification. This endpoint will be removed in a future version.
-
-    Workflow state cannot be manually reset. Classification is determined by
-    the flaw's current data and will automatically reflect the appropriate
-    workflow and state.
+) -> Response[OsidbApiV2FlawsLabelsRetrieveResponse200]:
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
 
     Args:
-        flaw_id (str):
-        bugzilla_api_key (Union[Unset, str]):
-        jira_api_key (Union[Unset, str]):
+        flaw_id (UUID):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsResetCreateResponse200]
+        Response[OsidbApiV2FlawsLabelsRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
+        id=id,
         client=client,
     )
 
-    response = requests.post(
+    response = requests.get(
         verify=client.verify_ssl,
         auth=client.auth,
         timeout=client.timeout,
@@ -101,73 +97,59 @@ def sync_detailed(
 
 
 def sync(
-    flaw_id: str,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsResetCreateResponse200]:
-    """Workflow reset API endpoint.
-
-    DEPRECATED: Workflow classification is now automatic based on flaw data.
-    This endpoint no longer performs any action - it only returns the current
-    computed classification. This endpoint will be removed in a future version.
-
-    Workflow state cannot be manually reset. Classification is determined by
-    the flaw's current data and will automatically reflect the appropriate
-    workflow and state.
+) -> Optional[OsidbApiV2FlawsLabelsRetrieveResponse200]:
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
 
     Args:
-        flaw_id (str):
-        bugzilla_api_key (Union[Unset, str]):
-        jira_api_key (Union[Unset, str]):
+        flaw_id (UUID):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsResetCreateResponse200
+        OsidbApiV2FlawsLabelsRetrieveResponse200
     """
 
     return sync_detailed(
         flaw_id=flaw_id,
+        id=id,
         client=client,
     ).parsed
 
 
 async def asyncio_detailed(
-    flaw_id: str,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV1FlawsResetCreateResponse200]:
-    """Workflow reset API endpoint.
-
-    DEPRECATED: Workflow classification is now automatic based on flaw data.
-    This endpoint no longer performs any action - it only returns the current
-    computed classification. This endpoint will be removed in a future version.
-
-    Workflow state cannot be manually reset. Classification is determined by
-    the flaw's current data and will automatically reflect the appropriate
-    workflow and state.
+) -> Response[OsidbApiV2FlawsLabelsRetrieveResponse200]:
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
 
     Args:
-        flaw_id (str):
-        bugzilla_api_key (Union[Unset, str]):
-        jira_api_key (Union[Unset, str]):
+        flaw_id (UUID):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV1FlawsResetCreateResponse200]
+        Response[OsidbApiV2FlawsLabelsRetrieveResponse200]
     """
 
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
+        id=id,
         client=client,
     )
 
-    async with client.get_async_session().post(
+    async with client.get_async_session().get(
         verify_ssl=client.verify_ssl, raise_for_status=True, **kwargs
     ) as response:
         content = await response.read()
@@ -179,36 +161,29 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    flaw_id: str,
+    flaw_id: UUID,
+    id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[OsidbApiV1FlawsResetCreateResponse200]:
-    """Workflow reset API endpoint.
-
-    DEPRECATED: Workflow classification is now automatic based on flaw data.
-    This endpoint no longer performs any action - it only returns the current
-    computed classification. This endpoint will be removed in a future version.
-
-    Workflow state cannot be manually reset. Classification is determined by
-    the flaw's current data and will automatically reflect the appropriate
-    workflow and state.
+) -> Optional[OsidbApiV2FlawsLabelsRetrieveResponse200]:
+    """Retrieve a label for a Flaw. Requires parent Flaw read access only.
 
     Args:
-        flaw_id (str):
-        bugzilla_api_key (Union[Unset, str]):
-        jira_api_key (Union[Unset, str]):
+        flaw_id (UUID):
+        id (str):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        OsidbApiV1FlawsResetCreateResponse200
+        OsidbApiV2FlawsLabelsRetrieveResponse200
     """
 
     return (
         await asyncio_detailed(
             flaw_id=flaw_id,
+            id=id,
             client=client,
         )
     ).parsed

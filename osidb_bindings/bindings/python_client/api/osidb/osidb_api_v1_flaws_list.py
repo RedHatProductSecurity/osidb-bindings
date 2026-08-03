@@ -58,12 +58,6 @@ from ...models.osidb_api_v1_flaws_list_source_in_item import (
     OsidbApiV1FlawsListSourceInItem,
 )
 from ...models.osidb_api_v1_flaws_list_visibility import OsidbApiV1FlawsListVisibility
-from ...models.osidb_api_v1_flaws_list_workflow_state_in_item import (
-    OsidbApiV1FlawsListWorkflowStateInItem,
-)
-from ...models.osidb_api_v1_flaws_list_workflow_state_item import (
-    OsidbApiV1FlawsListWorkflowStateItem,
-)
 from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {
@@ -284,8 +278,10 @@ QUERY_PARAMS = {
     "uuid": UUID,
     "uuid__in": list[UUID],
     "visibility": OsidbApiV1FlawsListVisibility,
-    "workflow_state": list[OsidbApiV1FlawsListWorkflowStateItem],
-    "workflow_state__in": list[OsidbApiV1FlawsListWorkflowStateInItem],
+    "workflow_name": list[str],
+    "workflow_name__in": list[str],
+    "workflow_state": list[str],
+    "workflow_state__in": list[str],
 }
 
 
@@ -517,10 +513,10 @@ def _get_kwargs(
     uuid: Union[Unset, UUID] = UNSET,
     uuid_in: Union[Unset, list[UUID]] = UNSET,
     visibility: Union[Unset, OsidbApiV1FlawsListVisibility] = UNSET,
-    workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
-    workflow_state_in: Union[
-        Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]
-    ] = UNSET,
+    workflow_name: Union[Unset, list[str]] = UNSET,
+    workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_state: Union[Unset, list[str]] = UNSET,
+    workflow_state_in: Union[Unset, list[str]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -1834,31 +1830,27 @@ def _get_kwargs(
 
     params["visibility"] = json_visibility
 
+    json_workflow_name: Union[Unset, list[str]] = UNSET
+    if not isinstance(workflow_name, Unset):
+        json_workflow_name = workflow_name
+
+    params["workflow_name"] = json_workflow_name
+
+    json_workflow_name_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(workflow_name_in, Unset):
+        json_workflow_name_in = workflow_name_in
+
+    params["workflow_name__in"] = json_workflow_name_in
+
     json_workflow_state: Union[Unset, list[str]] = UNSET
     if not isinstance(workflow_state, Unset):
-        json_workflow_state = []
-        for workflow_state_item_data in workflow_state:
-            workflow_state_item: str = UNSET
-            if not isinstance(workflow_state_item_data, Unset):
-                workflow_state_item = OsidbApiV1FlawsListWorkflowStateItem(
-                    workflow_state_item_data
-                ).value
-
-            json_workflow_state.append(workflow_state_item)
+        json_workflow_state = workflow_state
 
     params["workflow_state"] = json_workflow_state
 
     json_workflow_state_in: Union[Unset, list[str]] = UNSET
     if not isinstance(workflow_state_in, Unset):
-        json_workflow_state_in = []
-        for workflow_state_in_item_data in workflow_state_in:
-            workflow_state_in_item: str = UNSET
-            if not isinstance(workflow_state_in_item_data, Unset):
-                workflow_state_in_item = OsidbApiV1FlawsListWorkflowStateInItem(
-                    workflow_state_in_item_data
-                ).value
-
-            json_workflow_state_in.append(workflow_state_in_item)
+        json_workflow_state_in = workflow_state_in
 
     params["workflow_state__in"] = json_workflow_state_in
 
@@ -2130,10 +2122,10 @@ def sync_detailed(
     uuid: Union[Unset, UUID] = UNSET,
     uuid_in: Union[Unset, list[UUID]] = UNSET,
     visibility: Union[Unset, OsidbApiV1FlawsListVisibility] = UNSET,
-    workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
-    workflow_state_in: Union[
-        Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]
-    ] = UNSET,
+    workflow_name: Union[Unset, list[str]] = UNSET,
+    workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_state: Union[Unset, list[str]] = UNSET,
+    workflow_state_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
     """View for the flaw model adapted to affects v1
 
@@ -2355,8 +2347,10 @@ def sync_detailed(
         uuid (Union[Unset, UUID]):
         uuid_in (Union[Unset, list[UUID]]):
         visibility (Union[Unset, OsidbApiV1FlawsListVisibility]):
-        workflow_state (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]]):
-        workflow_state_in (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]]):
+        workflow_name (Union[Unset, list[str]]):
+        workflow_name_in (Union[Unset, list[str]]):
+        workflow_state (Union[Unset, list[str]]):
+        workflow_state_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -2585,6 +2579,8 @@ def sync_detailed(
         uuid=uuid,
         uuid_in=uuid_in,
         visibility=visibility,
+        workflow_name=workflow_name,
+        workflow_name_in=workflow_name_in,
         workflow_state=workflow_state,
         workflow_state_in=workflow_state_in,
     )
@@ -2828,10 +2824,10 @@ def sync(
     uuid: Union[Unset, UUID] = UNSET,
     uuid_in: Union[Unset, list[UUID]] = UNSET,
     visibility: Union[Unset, OsidbApiV1FlawsListVisibility] = UNSET,
-    workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
-    workflow_state_in: Union[
-        Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]
-    ] = UNSET,
+    workflow_name: Union[Unset, list[str]] = UNSET,
+    workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_state: Union[Unset, list[str]] = UNSET,
+    workflow_state_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
     """View for the flaw model adapted to affects v1
 
@@ -3053,8 +3049,10 @@ def sync(
         uuid (Union[Unset, UUID]):
         uuid_in (Union[Unset, list[UUID]]):
         visibility (Union[Unset, OsidbApiV1FlawsListVisibility]):
-        workflow_state (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]]):
-        workflow_state_in (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]]):
+        workflow_name (Union[Unset, list[str]]):
+        workflow_name_in (Union[Unset, list[str]]):
+        workflow_state (Union[Unset, list[str]]):
+        workflow_state_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -3283,6 +3281,8 @@ def sync(
         uuid=uuid,
         uuid_in=uuid_in,
         visibility=visibility,
+        workflow_name=workflow_name,
+        workflow_name_in=workflow_name_in,
         workflow_state=workflow_state,
         workflow_state_in=workflow_state_in,
     ).parsed
@@ -3516,10 +3516,10 @@ async def asyncio_detailed(
     uuid: Union[Unset, UUID] = UNSET,
     uuid_in: Union[Unset, list[UUID]] = UNSET,
     visibility: Union[Unset, OsidbApiV1FlawsListVisibility] = UNSET,
-    workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
-    workflow_state_in: Union[
-        Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]
-    ] = UNSET,
+    workflow_name: Union[Unset, list[str]] = UNSET,
+    workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_state: Union[Unset, list[str]] = UNSET,
+    workflow_state_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[OsidbApiV1FlawsListResponse200]:
     """View for the flaw model adapted to affects v1
 
@@ -3741,8 +3741,10 @@ async def asyncio_detailed(
         uuid (Union[Unset, UUID]):
         uuid_in (Union[Unset, list[UUID]]):
         visibility (Union[Unset, OsidbApiV1FlawsListVisibility]):
-        workflow_state (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]]):
-        workflow_state_in (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]]):
+        workflow_name (Union[Unset, list[str]]):
+        workflow_name_in (Union[Unset, list[str]]):
+        workflow_state (Union[Unset, list[str]]):
+        workflow_state_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -3971,6 +3973,8 @@ async def asyncio_detailed(
         uuid=uuid,
         uuid_in=uuid_in,
         visibility=visibility,
+        workflow_name=workflow_name,
+        workflow_name_in=workflow_name_in,
         workflow_state=workflow_state,
         workflow_state_in=workflow_state_in,
     )
@@ -4214,10 +4218,10 @@ async def asyncio(
     uuid: Union[Unset, UUID] = UNSET,
     uuid_in: Union[Unset, list[UUID]] = UNSET,
     visibility: Union[Unset, OsidbApiV1FlawsListVisibility] = UNSET,
-    workflow_state: Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]] = UNSET,
-    workflow_state_in: Union[
-        Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]
-    ] = UNSET,
+    workflow_name: Union[Unset, list[str]] = UNSET,
+    workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_state: Union[Unset, list[str]] = UNSET,
+    workflow_state_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[OsidbApiV1FlawsListResponse200]:
     """View for the flaw model adapted to affects v1
 
@@ -4439,8 +4443,10 @@ async def asyncio(
         uuid (Union[Unset, UUID]):
         uuid_in (Union[Unset, list[UUID]]):
         visibility (Union[Unset, OsidbApiV1FlawsListVisibility]):
-        workflow_state (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateItem]]):
-        workflow_state_in (Union[Unset, list[OsidbApiV1FlawsListWorkflowStateInItem]]):
+        workflow_name (Union[Unset, list[str]]):
+        workflow_name_in (Union[Unset, list[str]]):
+        workflow_state (Union[Unset, list[str]]):
+        workflow_state_in (Union[Unset, list[str]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -4670,6 +4676,8 @@ async def asyncio(
             uuid=uuid,
             uuid_in=uuid_in,
             visibility=visibility,
+            workflow_name=workflow_name,
+            workflow_name_in=workflow_name_in,
             workflow_state=workflow_state,
             workflow_state_in=workflow_state_in,
         )

@@ -4,7 +4,6 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
 
-from ..models.flaw_v1_classification_state import FlawV1ClassificationState
 from ..types import UNSET, OSIDBModel, Unset
 
 T = TypeVar("T", bound="FlawV1Classification")
@@ -15,19 +14,17 @@ class FlawV1Classification(OSIDBModel):
     """
     Attributes:
         workflow (Union[Unset, str]):
-        state (Union[Unset, FlawV1ClassificationState]):
+        state (Union[Unset, str]):
     """
 
     workflow: Union[Unset, str] = UNSET
-    state: Union[Unset, FlawV1ClassificationState] = UNSET
+    state: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         workflow = self.workflow
 
-        state: Union[Unset, str] = UNSET
-        if not isinstance(self.state, Unset):
-            state = FlawV1ClassificationState(self.state).value
+        state = self.state
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -43,12 +40,7 @@ class FlawV1Classification(OSIDBModel):
         d = src_dict.copy()
         workflow = d.pop("workflow", UNSET)
 
-        _state = d.pop("state", UNSET)
-        state: Union[Unset, FlawV1ClassificationState]
-        if isinstance(_state, Unset):
-            state = UNSET
-        else:
-            state = FlawV1ClassificationState(_state)
+        state = d.pop("state", UNSET)
 
         flaw_v1_classification = cls(
             workflow=workflow,

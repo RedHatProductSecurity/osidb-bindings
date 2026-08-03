@@ -36,7 +36,7 @@ class AffectBulkPutRequest(OSIDBModel):
         purl (Union[None, Unset, str]):  Default: ''.
         subpackage_purls (Union[Unset, list[str]]):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum, Unset]):
-        assist_meta (Union[Unset, Any]):
+        assist_meta (Union[Any, None, Unset]):
     """
 
     uuid: UUID
@@ -53,7 +53,7 @@ class AffectBulkPutRequest(OSIDBModel):
     not_affected_justification: Union[
         BlankEnum, NotAffectedJustificationEnum, Unset
     ] = UNSET
-    assist_meta: Union[Unset, Any] = UNSET
+    assist_meta: Union[Any, None, Unset] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -145,7 +145,11 @@ class AffectBulkPutRequest(OSIDBModel):
                     self.not_affected_justification
                 ).value
 
-        assist_meta = self.assist_meta
+        assist_meta: Union[Any, None, Unset]
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        else:
+            assist_meta = self.assist_meta
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -360,7 +364,14 @@ class AffectBulkPutRequest(OSIDBModel):
             d.pop("not_affected_justification", UNSET)
         )
 
-        assist_meta = d.pop("assist_meta", UNSET)
+        def _parse_assist_meta(data: object) -> Union[Any, None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None, Unset], data)
+
+        assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
         affect_bulk_put_request = cls(
             uuid=uuid,

@@ -7,23 +7,15 @@ from ...client import AuthenticatedClient, Client
 from ...models.osidb_api_v1_flaws_reject_create_response_200 import (
     OsidbApiV1FlawsRejectCreateResponse200,
 )
-from ...models.reject_request import RejectRequest
-from ...types import UNSET, Response, Unset, check_nested_instance
+from ...types import UNSET, Response, Unset
 
 QUERY_PARAMS = {}
-
-REQUEST_BODY_TYPE = RejectRequest
 
 
 def _get_kwargs(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        RejectRequest,
-        RejectRequest,
-        RejectRequest,
-    ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
 
@@ -32,14 +24,6 @@ def _get_kwargs(
             flaw_id=flaw_id,
         ),
     }
-
-    if check_nested_instance(body, RejectRequest):
-        _json_body: dict[str, Any] = UNSET
-        if not isinstance(body, Unset):
-            _json_body = body.to_dict()
-
-        _kwargs["json"] = _json_body
-        headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -76,23 +60,19 @@ def sync_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        RejectRequest,
-        RejectRequest,
-        RejectRequest,
-    ],
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
-    """workflow promotion API endpoint
+    """workflow rejection API endpoint
 
-    try to reject a flaw / task
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    Rejection is driven by a flaw data TODO.
 
     Args:
         flaw_id (str):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -105,7 +85,6 @@ def sync_detailed(
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
-        body=body,
     )
 
     response = requests.post(
@@ -123,23 +102,19 @@ def sync(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        RejectRequest,
-        RejectRequest,
-        RejectRequest,
-    ],
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
-    """workflow promotion API endpoint
+    """workflow rejection API endpoint
 
-    try to reject a flaw / task
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    Rejection is driven by a flaw data TODO.
 
     Args:
         flaw_id (str):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -152,7 +127,6 @@ def sync(
     return sync_detailed(
         flaw_id=flaw_id,
         client=client,
-        body=body,
     ).parsed
 
 
@@ -160,23 +134,19 @@ async def asyncio_detailed(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        RejectRequest,
-        RejectRequest,
-        RejectRequest,
-    ],
 ) -> Response[OsidbApiV1FlawsRejectCreateResponse200]:
-    """workflow promotion API endpoint
+    """workflow rejection API endpoint
 
-    try to reject a flaw / task
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    Rejection is driven by a flaw data TODO.
 
     Args:
         flaw_id (str):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -189,7 +159,6 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         flaw_id=flaw_id,
         client=client,
-        body=body,
     )
 
     async with client.get_async_session().post(
@@ -207,23 +176,19 @@ async def asyncio(
     flaw_id: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        RejectRequest,
-        RejectRequest,
-        RejectRequest,
-    ],
 ) -> Optional[OsidbApiV1FlawsRejectCreateResponse200]:
-    """workflow promotion API endpoint
+    """workflow rejection API endpoint
 
-    try to reject a flaw / task
+    DEPRECATED: Workflow classification is now automatic based on flaw data.
+    This endpoint no longer performs any action - it only returns the current
+    computed classification. This endpoint will be removed in a future version.
+
+    Rejection is driven by a flaw data TODO.
 
     Args:
         flaw_id (str):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
-        body (RejectRequest): Task rejection serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -237,6 +202,5 @@ async def asyncio(
         await asyncio_detailed(
             flaw_id=flaw_id,
             client=client,
-            body=body,
         )
     ).parsed
