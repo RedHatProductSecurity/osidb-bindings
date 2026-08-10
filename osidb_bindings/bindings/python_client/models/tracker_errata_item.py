@@ -8,27 +8,25 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="Erratum")
+T = TypeVar("T", bound="TrackerErrataItem")
 
 
 @_attrs_define
-class Erratum(OSIDBModel):
-    """Erratum serializer
-
+class TrackerErrataItem(OSIDBModel):
+    """
     Attributes:
-        et_id (int):
-        advisory_name (str):
-        shipped_dt (Union[None, datetime.datetime]):
-        created_dt (datetime.datetime):
-        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
-            detect mit-air collisions.
+        et_id (Union[Unset, int]):
+        advisory_name (Union[Unset, str]):
+        shipped_dt (Union[None, Unset, datetime.datetime]):
+        created_dt (Union[Unset, datetime.datetime]):
+        updated_dt (Union[Unset, datetime.datetime]):
     """
 
-    et_id: int
-    advisory_name: str
-    shipped_dt: Union[None, datetime.datetime]
-    created_dt: datetime.datetime
-    updated_dt: datetime.datetime
+    et_id: Union[Unset, int] = UNSET
+    advisory_name: Union[Unset, str] = UNSET
+    shipped_dt: Union[None, Unset, datetime.datetime] = UNSET
+    created_dt: Union[Unset, datetime.datetime] = UNSET
+    updated_dt: Union[Unset, datetime.datetime] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -36,7 +34,7 @@ class Erratum(OSIDBModel):
 
         advisory_name = self.advisory_name
 
-        shipped_dt: Union[None, str]
+        shipped_dt: Union[None, Unset, str]
         if isinstance(self.shipped_dt, Unset):
             shipped_dt = UNSET
         elif isinstance(self.shipped_dt, datetime.datetime):
@@ -47,11 +45,11 @@ class Erratum(OSIDBModel):
         else:
             shipped_dt = self.shipped_dt
 
-        created_dt: str = UNSET
+        created_dt: Union[Unset, str] = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
 
-        updated_dt: str = UNSET
+        updated_dt: Union[Unset, str] = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
@@ -77,7 +75,7 @@ class Erratum(OSIDBModel):
 
         advisory_name = d.pop("advisory_name", UNSET)
 
-        def _parse_shipped_dt(data: object) -> Union[None, datetime.datetime]:
+        def _parse_shipped_dt(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -95,25 +93,25 @@ class Erratum(OSIDBModel):
                 return shipped_dt_type_0
             except:  # noqa: E722
                 pass
-            return cast(Union[None, datetime.datetime], data)
+            return cast(Union[None, Unset, datetime.datetime], data)
 
         shipped_dt = _parse_shipped_dt(d.pop("shipped_dt", UNSET))
 
         _created_dt = d.pop("created_dt", UNSET)
-        created_dt: datetime.datetime
+        created_dt: Union[Unset, datetime.datetime]
         if isinstance(_created_dt, Unset):
             created_dt = UNSET
         else:
             created_dt = isoparse(_created_dt)
 
         _updated_dt = d.pop("updated_dt", UNSET)
-        updated_dt: datetime.datetime
+        updated_dt: Union[Unset, datetime.datetime]
         if isinstance(_updated_dt, Unset):
             updated_dt = UNSET
         else:
             updated_dt = isoparse(_updated_dt)
 
-        erratum = cls(
+        tracker_errata_item = cls(
             et_id=et_id,
             advisory_name=advisory_name,
             shipped_dt=shipped_dt,
@@ -121,8 +119,8 @@ class Erratum(OSIDBModel):
             updated_dt=updated_dt,
         )
 
-        erratum.additional_properties = d
-        return erratum
+        tracker_errata_item.additional_properties = d
+        return tracker_errata_item
 
     @classmethod
     def get_fields(cls):

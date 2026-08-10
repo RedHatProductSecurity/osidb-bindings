@@ -16,7 +16,7 @@ from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
     from ..models.alert import Alert
-    from ..models.erratum import Erratum
+    from ..models.tracker_errata_item import TrackerErrataItem
 
 
 T = TypeVar("T", bound="OsidbApiV2TrackersUpdateResponse200")
@@ -28,7 +28,7 @@ class OsidbApiV2TrackersUpdateResponse200(OSIDBModel):
     Attributes:
         affects (list[UUID]):
         cve_id (str):
-        errata (list['Erratum']):
+        errata (list['TrackerErrataItem']):
         external_system_id (str):
         status (str):
         resolution (str):
@@ -53,7 +53,7 @@ class OsidbApiV2TrackersUpdateResponse200(OSIDBModel):
 
     affects: list[UUID]
     cve_id: str
-    errata: list["Erratum"]
+    errata: list["TrackerErrataItem"]
     external_system_id: str
     status: str
     resolution: str
@@ -237,7 +237,7 @@ class OsidbApiV2TrackersUpdateResponse200(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.alert import Alert
-        from ..models.erratum import Erratum
+        from ..models.tracker_errata_item import TrackerErrataItem
 
         d = src_dict.copy()
         affects = []
@@ -262,11 +262,11 @@ class OsidbApiV2TrackersUpdateResponse200(OSIDBModel):
         _errata = d.pop("errata", UNSET)
         for errata_item_data in _errata or []:
             _errata_item = errata_item_data
-            errata_item: Erratum
+            errata_item: TrackerErrataItem
             if isinstance(_errata_item, Unset):
                 errata_item = UNSET
             else:
-                errata_item = Erratum.from_dict(_errata_item)
+                errata_item = TrackerErrataItem.from_dict(_errata_item)
 
             errata.append(errata_item)
 

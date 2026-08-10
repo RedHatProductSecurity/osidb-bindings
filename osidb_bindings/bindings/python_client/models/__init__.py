@@ -64,7 +64,6 @@ from .delegated_not_affected_justification_enum import (
     DelegatedNotAffectedJustificationEnum,
 )
 from .epss import EPSS
-from .erratum import Erratum
 from .exploit_only_report_data import ExploitOnlyReportData
 from .exploit_only_report_data_source_enum import ExploitOnlyReportDataSourceEnum
 from .exploits_api_v1_collect_update_response_200 import (
@@ -159,9 +158,10 @@ from .flaw_cvssv2 import FlawCVSSV2
 from .flaw_cvssv2_post_request import FlawCVSSV2PostRequest
 from .flaw_cvssv2_put_request import FlawCVSSV2PutRequest
 from .flaw_label import FlawLabel
+from .flaw_label_post_request import FlawLabelPostRequest
+from .flaw_label_put_request import FlawLabelPutRequest
+from .flaw_label_request import FlawLabelRequest
 from .flaw_label_type import FlawLabelType
-from .flaw_label_v2 import FlawLabelV2
-from .flaw_label_v2_post_request import FlawLabelV2PostRequest
 from .flaw_package_version import FlawPackageVersion
 from .flaw_package_version_post_request import FlawPackageVersionPostRequest
 from .flaw_package_version_put_request import FlawPackageVersionPutRequest
@@ -188,6 +188,7 @@ from .incident_request_request import IncidentRequestRequest
 from .integration_token_get import IntegrationTokenGet
 from .issuer_enum import IssuerEnum
 from .kind_enum import KindEnum
+from .label_definition import LabelDefinition
 from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
 from .module_component import ModuleComponent
@@ -717,13 +718,13 @@ from .paginated_flaw_comment_list import PaginatedFlawCommentList
 from .paginated_flaw_cvss_list import PaginatedFlawCVSSList
 from .paginated_flaw_cvssv2_list import PaginatedFlawCVSSV2List
 from .paginated_flaw_label_list import PaginatedFlawLabelList
-from .paginated_flaw_label_v2_list import PaginatedFlawLabelV2List
 from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_package_version_list import PaginatedFlawPackageVersionList
 from .paginated_flaw_reference_list import PaginatedFlawReferenceList
 from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
 from .paginated_flaw_v1_list import PaginatedFlawV1List
 from .paginated_flaw_v1_report_data_list import PaginatedFlawV1ReportDataList
+from .paginated_label_definition_list import PaginatedLabelDefinitionList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_sync_manager_list import PaginatedSyncManagerList
 from .paginated_tracker_list import PaginatedTrackerList
@@ -743,7 +744,9 @@ from .token_refresh import TokenRefresh
 from .token_refresh_request import TokenRefreshRequest
 from .token_verify_request import TokenVerifyRequest
 from .tracker import Tracker
+from .tracker_errata_item import TrackerErrataItem
 from .tracker_post import TrackerPost
+from .tracker_post_errata_item import TrackerPostErrataItem
 from .tracker_post_request import TrackerPostRequest
 from .tracker_report_data import TrackerReportData
 from .tracker_request import TrackerRequest
@@ -751,6 +754,7 @@ from .tracker_suggestion import TrackerSuggestion
 from .tracker_suggestion_v1 import TrackerSuggestionV1
 from .tracker_type import TrackerType
 from .tracker_v1 import TrackerV1
+from .tracker_v1_errata_item import TrackerV1ErrataItem
 from .trackers_api_v1_file_create_response_200 import TrackersApiV1FileCreateResponse200
 from .trackers_api_v2_file_create_response_200 import TrackersApiV2FileCreateResponse200
 from .type_96f_enum import Type96FEnum
@@ -818,7 +822,6 @@ __all__ = (
     "CvssVersionEnum",
     "DelegatedNotAffectedJustificationEnum",
     "EPSS",
-    "Erratum",
     "ExploitOnlyReportData",
     "ExploitOnlyReportDataSourceEnum",
     "ExploitsApiV1CollectUpdateResponse200",
@@ -865,9 +868,10 @@ __all__ = (
     "FlawCVSSV2PostRequest",
     "FlawCVSSV2PutRequest",
     "FlawLabel",
+    "FlawLabelPostRequest",
+    "FlawLabelPutRequest",
+    "FlawLabelRequest",
     "FlawLabelType",
-    "FlawLabelV2",
-    "FlawLabelV2PostRequest",
     "FlawPackageVersion",
     "FlawPackageVersionPostRequest",
     "FlawPackageVersionPutRequest",
@@ -894,6 +898,7 @@ __all__ = (
     "IntegrationTokenGet",
     "IssuerEnum",
     "KindEnum",
+    "LabelDefinition",
     "MajorIncidentStateEnum",
     "MaturityPreliminaryEnum",
     "ModuleComponent",
@@ -1129,13 +1134,13 @@ __all__ = (
     "PaginatedFlawCVSSList",
     "PaginatedFlawCVSSV2List",
     "PaginatedFlawLabelList",
-    "PaginatedFlawLabelV2List",
     "PaginatedFlawList",
     "PaginatedFlawPackageVersionList",
     "PaginatedFlawReferenceList",
     "PaginatedFlawReportDataList",
     "PaginatedFlawV1List",
     "PaginatedFlawV1ReportDataList",
+    "PaginatedLabelDefinitionList",
     "PaginatedSupportedProductsList",
     "PaginatedSyncManagerList",
     "PaginatedTrackerList",
@@ -1155,7 +1160,9 @@ __all__ = (
     "TokenRefreshRequest",
     "TokenVerifyRequest",
     "Tracker",
+    "TrackerErrataItem",
     "TrackerPost",
+    "TrackerPostErrataItem",
     "TrackerPostRequest",
     "TrackerReportData",
     "TrackerRequest",
@@ -1165,6 +1172,7 @@ __all__ = (
     "TrackerSuggestionV1",
     "TrackerType",
     "TrackerV1",
+    "TrackerV1ErrataItem",
     "Type96FEnum",
     "UpstreamData",
     "UpstreamDataRequest",

@@ -99,6 +99,17 @@ QUERY_PARAMS = {
     "affects__ps_component": str,
     "affects__ps_module": str,
     "affects__resolution": OsidbApiV1FlawsListAffectsResolution,
+    "affects__tracker__errata__advisory_name": str,
+    "affects__tracker__errata__advisory_name__in": list[str],
+    "affects__tracker__errata__et_id": float,
+    "affects__tracker__errata__shipped_dt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__date": datetime.date,
+    "affects__tracker__errata__shipped_dt__date__gte": datetime.date,
+    "affects__tracker__errata__shipped_dt__date__lte": datetime.date,
+    "affects__tracker__errata__shipped_dt__gt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__gte": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__lt": datetime.datetime,
+    "affects__tracker__errata__shipped_dt__lte": datetime.datetime,
     "affects__trackers__created_dt": datetime.datetime,
     "affects__trackers__created_dt__date": datetime.date,
     "affects__trackers__created_dt__date__gte": datetime.date,
@@ -326,6 +337,17 @@ def _get_kwargs(
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -751,6 +773,102 @@ def _get_kwargs(
         ).value
 
     params["affects__resolution"] = json_affects_resolution
+
+    params["affects__tracker__errata__advisory_name"] = (
+        affects_tracker_errata_advisory_name
+    )
+
+    json_affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET
+    if not isinstance(affects_tracker_errata_advisory_name_in, Unset):
+        json_affects_tracker_errata_advisory_name_in = (
+            affects_tracker_errata_advisory_name_in
+        )
+
+    params["affects__tracker__errata__advisory_name__in"] = (
+        json_affects_tracker_errata_advisory_name_in
+    )
+
+    params["affects__tracker__errata__et_id"] = affects_tracker_errata_et_id
+
+    json_affects_tracker_errata_shipped_dt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt, Unset):
+        json_affects_tracker_errata_shipped_dt = (
+            affects_tracker_errata_shipped_dt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt"] = (
+        json_affects_tracker_errata_shipped_dt
+    )
+
+    json_affects_tracker_errata_shipped_dt_date: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date, Unset):
+        json_affects_tracker_errata_shipped_dt_date = (
+            affects_tracker_errata_shipped_dt_date.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date"] = (
+        json_affects_tracker_errata_shipped_dt_date
+    )
+
+    json_affects_tracker_errata_shipped_dt_date_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date_gte, Unset):
+        json_affects_tracker_errata_shipped_dt_date_gte = (
+            affects_tracker_errata_shipped_dt_date_gte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date__gte"] = (
+        json_affects_tracker_errata_shipped_dt_date_gte
+    )
+
+    json_affects_tracker_errata_shipped_dt_date_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_date_lte, Unset):
+        json_affects_tracker_errata_shipped_dt_date_lte = (
+            affects_tracker_errata_shipped_dt_date_lte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__date__lte"] = (
+        json_affects_tracker_errata_shipped_dt_date_lte
+    )
+
+    json_affects_tracker_errata_shipped_dt_gt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_gt, Unset):
+        json_affects_tracker_errata_shipped_dt_gt = (
+            affects_tracker_errata_shipped_dt_gt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__gt"] = (
+        json_affects_tracker_errata_shipped_dt_gt
+    )
+
+    json_affects_tracker_errata_shipped_dt_gte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_gte, Unset):
+        json_affects_tracker_errata_shipped_dt_gte = (
+            affects_tracker_errata_shipped_dt_gte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__gte"] = (
+        json_affects_tracker_errata_shipped_dt_gte
+    )
+
+    json_affects_tracker_errata_shipped_dt_lt: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_lt, Unset):
+        json_affects_tracker_errata_shipped_dt_lt = (
+            affects_tracker_errata_shipped_dt_lt.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__lt"] = (
+        json_affects_tracker_errata_shipped_dt_lt
+    )
+
+    json_affects_tracker_errata_shipped_dt_lte: Union[Unset, str] = UNSET
+    if not isinstance(affects_tracker_errata_shipped_dt_lte, Unset):
+        json_affects_tracker_errata_shipped_dt_lte = (
+            affects_tracker_errata_shipped_dt_lte.isoformat()
+        )
+
+    params["affects__tracker__errata__shipped_dt__lte"] = (
+        json_affects_tracker_errata_shipped_dt_lte
+    )
 
     json_affects_trackers_created_dt: Union[Unset, str] = UNSET
     if not isinstance(affects_trackers_created_dt, Unset):
@@ -1935,6 +2053,17 @@ def sync_detailed(
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2168,6 +2297,17 @@ def sync_detailed(
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt_date (Union[Unset, datetime.date]):
         affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -2400,6 +2540,17 @@ def sync_detailed(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_advisory_name_in=affects_tracker_errata_advisory_name_in,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
         affects_trackers_created_dt=affects_trackers_created_dt,
         affects_trackers_created_dt_date=affects_trackers_created_dt_date,
         affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
@@ -2637,6 +2788,17 @@ def sync(
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2870,6 +3032,17 @@ def sync(
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt_date (Union[Unset, datetime.date]):
         affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -3102,6 +3275,17 @@ def sync(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_advisory_name_in=affects_tracker_errata_advisory_name_in,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
         affects_trackers_created_dt=affects_trackers_created_dt,
         affects_trackers_created_dt_date=affects_trackers_created_dt_date,
         affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
@@ -3329,6 +3513,17 @@ async def asyncio_detailed(
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -3562,6 +3757,17 @@ async def asyncio_detailed(
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt_date (Union[Unset, datetime.date]):
         affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -3794,6 +4000,17 @@ async def asyncio_detailed(
         affects_ps_component=affects_ps_component,
         affects_ps_module=affects_ps_module,
         affects_resolution=affects_resolution,
+        affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+        affects_tracker_errata_advisory_name_in=affects_tracker_errata_advisory_name_in,
+        affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+        affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+        affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+        affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+        affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+        affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+        affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+        affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+        affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
         affects_trackers_created_dt=affects_trackers_created_dt,
         affects_trackers_created_dt_date=affects_trackers_created_dt_date,
         affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,
@@ -4031,6 +4248,17 @@ async def asyncio(
     affects_ps_component: Union[Unset, str] = UNSET,
     affects_ps_module: Union[Unset, str] = UNSET,
     affects_resolution: Union[Unset, OsidbApiV1FlawsListAffectsResolution] = UNSET,
+    affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
+    affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
+    affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    affects_tracker_errata_shipped_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    affects_tracker_errata_shipped_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_trackers_created_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_trackers_created_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -4264,6 +4492,17 @@ async def asyncio(
         affects_ps_component (Union[Unset, str]):
         affects_ps_module (Union[Unset, str]):
         affects_resolution (Union[Unset, OsidbApiV1FlawsListAffectsResolution]):
+        affects_tracker_errata_advisory_name (Union[Unset, str]):
+        affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
+        affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_date_lte (Union[Unset, datetime.date]):
+        affects_tracker_errata_shipped_dt_gt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_gte (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lt (Union[Unset, datetime.datetime]):
+        affects_tracker_errata_shipped_dt_lte (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt (Union[Unset, datetime.datetime]):
         affects_trackers_created_dt_date (Union[Unset, datetime.date]):
         affects_trackers_created_dt_date_gte (Union[Unset, datetime.date]):
@@ -4497,6 +4736,17 @@ async def asyncio(
             affects_ps_component=affects_ps_component,
             affects_ps_module=affects_ps_module,
             affects_resolution=affects_resolution,
+            affects_tracker_errata_advisory_name=affects_tracker_errata_advisory_name,
+            affects_tracker_errata_advisory_name_in=affects_tracker_errata_advisory_name_in,
+            affects_tracker_errata_et_id=affects_tracker_errata_et_id,
+            affects_tracker_errata_shipped_dt=affects_tracker_errata_shipped_dt,
+            affects_tracker_errata_shipped_dt_date=affects_tracker_errata_shipped_dt_date,
+            affects_tracker_errata_shipped_dt_date_gte=affects_tracker_errata_shipped_dt_date_gte,
+            affects_tracker_errata_shipped_dt_date_lte=affects_tracker_errata_shipped_dt_date_lte,
+            affects_tracker_errata_shipped_dt_gt=affects_tracker_errata_shipped_dt_gt,
+            affects_tracker_errata_shipped_dt_gte=affects_tracker_errata_shipped_dt_gte,
+            affects_tracker_errata_shipped_dt_lt=affects_tracker_errata_shipped_dt_lt,
+            affects_tracker_errata_shipped_dt_lte=affects_tracker_errata_shipped_dt_lte,
             affects_trackers_created_dt=affects_trackers_created_dt,
             affects_trackers_created_dt_date=affects_trackers_created_dt_date,
             affects_trackers_created_dt_date_gte=affects_trackers_created_dt_date_gte,

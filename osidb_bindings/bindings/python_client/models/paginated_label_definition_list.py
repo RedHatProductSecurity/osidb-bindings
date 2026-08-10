@@ -7,24 +7,24 @@ from attrs import fields as _attrs_fields
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
-    from ..models.flaw_label_v2 import FlawLabelV2
+    from ..models.label_definition import LabelDefinition
 
 
-T = TypeVar("T", bound="PaginatedFlawLabelV2List")
+T = TypeVar("T", bound="PaginatedLabelDefinitionList")
 
 
 @_attrs_define
-class PaginatedFlawLabelV2List(OSIDBModel):
+class PaginatedLabelDefinitionList(OSIDBModel):
     """
     Attributes:
         count (int):  Example: 123.
-        results (list['FlawLabelV2']):
+        results (list['LabelDefinition']):
         next_ (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=400&limit=100.
         previous (Union[None, Unset, str]):  Example: http://api.example.org/accounts/?offset=200&limit=100.
     """
 
     count: int
-    results: list["FlawLabelV2"]
+    results: list["LabelDefinition"]
     next_: Union[None, Unset, str] = UNSET
     previous: Union[None, Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -69,7 +69,7 @@ class PaginatedFlawLabelV2List(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
-        from ..models.flaw_label_v2 import FlawLabelV2
+        from ..models.label_definition import LabelDefinition
 
         d = src_dict.copy()
         count = d.pop("count", UNSET)
@@ -78,11 +78,11 @@ class PaginatedFlawLabelV2List(OSIDBModel):
         _results = d.pop("results", UNSET)
         for results_item_data in _results or []:
             _results_item = results_item_data
-            results_item: FlawLabelV2
+            results_item: LabelDefinition
             if isinstance(_results_item, Unset):
                 results_item = UNSET
             else:
-                results_item = FlawLabelV2.from_dict(_results_item)
+                results_item = LabelDefinition.from_dict(_results_item)
 
             results.append(results_item)
 
@@ -104,15 +104,15 @@ class PaginatedFlawLabelV2List(OSIDBModel):
 
         previous = _parse_previous(d.pop("previous", UNSET))
 
-        paginated_flaw_label_v2_list = cls(
+        paginated_label_definition_list = cls(
             count=count,
             results=results,
             next_=next_,
             previous=previous,
         )
 
-        paginated_flaw_label_v2_list.additional_properties = d
-        return paginated_flaw_label_v2_list
+        paginated_label_definition_list.additional_properties = d
+        return paginated_label_definition_list
 
     @classmethod
     def get_fields(cls):
