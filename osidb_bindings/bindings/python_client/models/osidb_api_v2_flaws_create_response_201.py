@@ -21,8 +21,8 @@ if TYPE_CHECKING:
     from ..models.comment import Comment
     from ..models.flaw_acknowledgment import FlawAcknowledgment
     from ..models.flaw_classification import FlawClassification
-    from ..models.flaw_collaborator import FlawCollaborator
     from ..models.flaw_cvss import FlawCVSS
+    from ..models.flaw_label import FlawLabel
     from ..models.flaw_reference import FlawReference
     from ..models.package import Package
     from ..models.upstream_data import UpstreamData
@@ -48,7 +48,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         acknowledgments (list['FlawAcknowledgment']):
         references (list['FlawReference']):
         cvss_scores (list['FlawCVSS']):
-        labels (list['FlawCollaborator']):
+        labels (list['FlawLabel']):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         visibility (VisibilityEnum):
@@ -94,7 +94,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     acknowledgments: list["FlawAcknowledgment"]
     references: list["FlawReference"]
     cvss_scores: list["FlawCVSS"]
-    labels: list["FlawCollaborator"]
+    labels: list["FlawLabel"]
     embargoed: bool
     visibility: VisibilityEnum
     created_dt: datetime.datetime
@@ -476,8 +476,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         from ..models.comment import Comment
         from ..models.flaw_acknowledgment import FlawAcknowledgment
         from ..models.flaw_classification import FlawClassification
-        from ..models.flaw_collaborator import FlawCollaborator
         from ..models.flaw_cvss import FlawCVSS
+        from ..models.flaw_label import FlawLabel
         from ..models.flaw_reference import FlawReference
         from ..models.package import Package
         from ..models.upstream_data import UpstreamData
@@ -590,11 +590,11 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         _labels = d.pop("labels", UNSET)
         for labels_item_data in _labels or []:
             _labels_item = labels_item_data
-            labels_item: FlawCollaborator
+            labels_item: FlawLabel
             if isinstance(_labels_item, Unset):
                 labels_item = UNSET
             else:
-                labels_item = FlawCollaborator.from_dict(_labels_item)
+                labels_item = FlawLabel.from_dict(_labels_item)
 
             labels.append(labels_item)
 

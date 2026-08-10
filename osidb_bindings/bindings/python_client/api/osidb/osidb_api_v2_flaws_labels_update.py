@@ -5,7 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.flaw_label_v2_post_request import FlawLabelV2PostRequest
+from ...models.flaw_label_put_request import FlawLabelPutRequest
 from ...models.osidb_api_v2_flaws_labels_update_response_200 import (
     OsidbApiV2FlawsLabelsUpdateResponse200,
 )
@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = FlawLabelV2PostRequest
+REQUEST_BODY_TYPE = FlawLabelPutRequest
 
 
 def _get_kwargs(
@@ -22,9 +22,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -36,7 +36,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, FlawLabelV2PostRequest):
+    if check_nested_instance(body, FlawLabelPutRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -81,9 +81,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
     ],
 ) -> Response[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
@@ -91,9 +91,9 @@ def sync_detailed(
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -127,9 +127,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
     ],
 ) -> Optional[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
@@ -137,9 +137,9 @@ def sync(
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -163,9 +163,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
     ],
 ) -> Response[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
@@ -173,9 +173,9 @@ async def asyncio_detailed(
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -209,9 +209,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
-        FlawLabelV2PostRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
+        FlawLabelPutRequest,
     ],
 ) -> Optional[OsidbApiV2FlawsLabelsUpdateResponse200]:
     """Require parent Flaw write ACLs for create/update/destroy.
@@ -219,9 +219,9 @@ async def asyncio(
     Args:
         flaw_id (UUID):
         id (str):
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
-        body (FlawLabelV2PostRequest): Flaw label V2 serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
+        body (FlawLabelPutRequest): Flaw label serializer with type-specific fields
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

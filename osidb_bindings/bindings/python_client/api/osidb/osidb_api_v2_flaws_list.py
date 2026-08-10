@@ -132,7 +132,7 @@ QUERY_PARAMS = {
     "affects__tracker__embargoed": bool,
     "affects__tracker__errata__advisory_name": str,
     "affects__tracker__errata__advisory_name__in": list[str],
-    "affects__tracker__errata__et_id": int,
+    "affects__tracker__errata__et_id": float,
     "affects__tracker__errata__shipped_dt": datetime.datetime,
     "affects__tracker__errata__shipped_dt__date": datetime.date,
     "affects__tracker__errata__shipped_dt__date__gte": datetime.date,
@@ -381,7 +381,7 @@ def _get_kwargs(
     affects_tracker_embargoed: Union[Unset, bool] = UNSET,
     affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
     affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
-    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
     affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2158,7 +2158,7 @@ def sync_detailed(
     affects_tracker_embargoed: Union[Unset, bool] = UNSET,
     affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
     affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
-    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
     affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -2411,7 +2411,7 @@ def sync_detailed(
         affects_tracker_embargoed (Union[Unset, bool]):
         affects_tracker_errata_advisory_name (Union[Unset, str]):
         affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
-        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
         affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
         affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
         affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
@@ -2918,7 +2918,7 @@ def sync(
     affects_tracker_embargoed: Union[Unset, bool] = UNSET,
     affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
     affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
-    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
     affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -3171,7 +3171,7 @@ def sync(
         affects_tracker_embargoed (Union[Unset, bool]):
         affects_tracker_errata_advisory_name (Union[Unset, str]):
         affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
-        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
         affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
         affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
         affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
@@ -3668,7 +3668,7 @@ async def asyncio_detailed(
     affects_tracker_embargoed: Union[Unset, bool] = UNSET,
     affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
     affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
-    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
     affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -3921,7 +3921,7 @@ async def asyncio_detailed(
         affects_tracker_embargoed (Union[Unset, bool]):
         affects_tracker_errata_advisory_name (Union[Unset, str]):
         affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
-        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
         affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
         affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
         affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
@@ -4428,7 +4428,7 @@ async def asyncio(
     affects_tracker_embargoed: Union[Unset, bool] = UNSET,
     affects_tracker_errata_advisory_name: Union[Unset, str] = UNSET,
     affects_tracker_errata_advisory_name_in: Union[Unset, list[str]] = UNSET,
-    affects_tracker_errata_et_id: Union[Unset, int] = UNSET,
+    affects_tracker_errata_et_id: Union[Unset, float] = UNSET,
     affects_tracker_errata_shipped_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_tracker_errata_shipped_dt_date: Union[Unset, datetime.date] = UNSET,
     affects_tracker_errata_shipped_dt_date_gte: Union[Unset, datetime.date] = UNSET,
@@ -4681,7 +4681,7 @@ async def asyncio(
         affects_tracker_embargoed (Union[Unset, bool]):
         affects_tracker_errata_advisory_name (Union[Unset, str]):
         affects_tracker_errata_advisory_name_in (Union[Unset, list[str]]):
-        affects_tracker_errata_et_id (Union[Unset, int]):
+        affects_tracker_errata_et_id (Union[Unset, float]):
         affects_tracker_errata_shipped_dt (Union[Unset, datetime.datetime]):
         affects_tracker_errata_shipped_dt_date (Union[Unset, datetime.date]):
         affects_tracker_errata_shipped_dt_date_gte (Union[Unset, datetime.date]):
