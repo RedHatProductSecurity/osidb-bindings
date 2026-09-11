@@ -21,6 +21,7 @@ class FlawLabelPutRequest(OSIDBModel):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        reason (Union[Unset, str]):
     """
 
     name: str
@@ -28,6 +29,7 @@ class FlawLabelPutRequest(OSIDBModel):
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    reason: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -45,6 +47,8 @@ class FlawLabelPutRequest(OSIDBModel):
 
         relevant = self.relevant
 
+        reason = self.reason
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(name, Unset):
@@ -57,6 +61,8 @@ class FlawLabelPutRequest(OSIDBModel):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
@@ -83,6 +89,12 @@ class FlawLabelPutRequest(OSIDBModel):
             else (None, str(self.relevant).encode(), "text/plain")
         )
 
+        reason = (
+            self.reason
+            if isinstance(self.reason, Unset)
+            else (None, str(self.reason).encode(), "text/plain")
+        )
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -97,6 +109,8 @@ class FlawLabelPutRequest(OSIDBModel):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
@@ -123,12 +137,15 @@ class FlawLabelPutRequest(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
+        reason = d.pop("reason", UNSET)
+
         flaw_label_put_request = cls(
             name=name,
             type_=type_,
             state=state,
             contributor=contributor,
             relevant=relevant,
+            reason=reason,
         )
 
         flaw_label_put_request.additional_properties = d

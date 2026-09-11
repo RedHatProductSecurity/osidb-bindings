@@ -59,6 +59,7 @@ from .collectors_healthy_retrieve_response_200 import (
 from .collectors_retrieve_response_200 import CollectorsRetrieveResponse200
 from .comment import Comment
 from .comment_request import CommentRequest
+from .contact_method_enum import ContactMethodEnum
 from .cvss_version_enum import CvssVersionEnum
 from .delegated_not_affected_justification_enum import (
     DelegatedNotAffectedJustificationEnum,
@@ -176,6 +177,8 @@ from .flaw_reference_type import FlawReferenceType
 from .flaw_report_data import FlawReportData
 from .flaw_request import FlawRequest
 from .flaw_source import FlawSource
+from .flaw_upstream_mapping import FlawUpstreamMapping
+from .flaw_upstream_mapping_request import FlawUpstreamMappingRequest
 from .flaw_uuid_list_request import FlawUUIDListRequest
 from .flaw_v1 import FlawV1
 from .flaw_v1_classification import FlawV1Classification
@@ -191,6 +194,8 @@ from .kind_enum import KindEnum
 from .label_definition import LabelDefinition
 from .major_incident_state_enum import MajorIncidentStateEnum
 from .maturity_preliminary_enum import MaturityPreliminaryEnum
+from .method_enum import MethodEnum
+from .milestone_type_enum import MilestoneTypeEnum
 from .module_component import ModuleComponent
 from .nist_cvss_validation_enum import NistCvssValidationEnum
 from .not_affected_justification_enum import NotAffectedJustificationEnum
@@ -722,18 +727,127 @@ from .paginated_flaw_list import PaginatedFlawList
 from .paginated_flaw_package_version_list import PaginatedFlawPackageVersionList
 from .paginated_flaw_reference_list import PaginatedFlawReferenceList
 from .paginated_flaw_report_data_list import PaginatedFlawReportDataList
+from .paginated_flaw_upstream_mapping_list import PaginatedFlawUpstreamMappingList
 from .paginated_flaw_v1_list import PaginatedFlawV1List
 from .paginated_flaw_v1_report_data_list import PaginatedFlawV1ReportDataList
 from .paginated_label_definition_list import PaginatedLabelDefinitionList
+from .paginated_srp_report_list import PaginatedSRPReportList
+from .paginated_srp_report_milestone_list import PaginatedSRPReportMilestoneList
 from .paginated_supported_products_list import PaginatedSupportedProductsList
 from .paginated_sync_manager_list import PaginatedSyncManagerList
 from .paginated_tracker_list import PaginatedTrackerList
 from .paginated_tracker_v1_list import PaginatedTrackerV1List
+from .paginated_upstream_notification_list import PaginatedUpstreamNotificationList
+from .paginated_upstream_project_list import PaginatedUpstreamProjectList
 from .patched_integration_token_patch_request import PatchedIntegrationTokenPatchRequest
 from .profile import Profile
 from .ps_stream_selection import PsStreamSelection
+from .regulatory_reporting_api_v1_flaw_upstream_mappings_destroy_response_204 import (
+    RegulatoryReportingApiV1FlawUpstreamMappingsDestroyResponse204,
+)
+from .regulatory_reporting_api_v1_flaw_upstream_mappings_update_response_200 import (
+    RegulatoryReportingApiV1FlawUpstreamMappingsUpdateResponse200,
+)
+from .regulatory_reporting_api_v1_flaws_srp_reports_list_response_200 import (
+    RegulatoryReportingApiV1FlawsSrpReportsListResponse200,
+)
+from .regulatory_reporting_api_v1_flaws_srp_reports_milestones_list_response_200 import (
+    RegulatoryReportingApiV1FlawsSrpReportsMilestonesListResponse200,
+)
+from .regulatory_reporting_api_v1_flaws_srp_reports_milestones_retrieve_response_200 import (
+    RegulatoryReportingApiV1FlawsSrpReportsMilestonesRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_flaws_srp_reports_retrieve_response_200 import (
+    RegulatoryReportingApiV1FlawsSrpReportsRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_flaws_upstream_mappings_create_response_201 import (
+    RegulatoryReportingApiV1FlawsUpstreamMappingsCreateResponse201,
+)
+from .regulatory_reporting_api_v1_flaws_upstream_mappings_list_response_200 import (
+    RegulatoryReportingApiV1FlawsUpstreamMappingsListResponse200,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_list_method import (
+    RegulatoryReportingApiV1NotificationsUpstreamListMethod,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_list_response_200 import (
+    RegulatoryReportingApiV1NotificationsUpstreamListResponse200,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_list_status import (
+    RegulatoryReportingApiV1NotificationsUpstreamListStatus,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_preview_retrieve_response_200 import (
+    RegulatoryReportingApiV1NotificationsUpstreamPreviewRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_retrieve_response_200 import (
+    RegulatoryReportingApiV1NotificationsUpstreamRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_send_email_create_response_200 import (
+    RegulatoryReportingApiV1NotificationsUpstreamSendEmailCreateResponse200,
+)
+from .regulatory_reporting_api_v1_notifications_upstream_update_response_200 import (
+    RegulatoryReportingApiV1NotificationsUpstreamUpdateResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_create_response_201 import (
+    RegulatoryReportingApiV1SrpReportsCreateResponse201,
+)
+from .regulatory_reporting_api_v1_srp_reports_list_response_200 import (
+    RegulatoryReportingApiV1SrpReportsListResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_create_response_201 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_list_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesListResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_retrieve_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_update_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesUpdateResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_retrieve_response_200 import (
+    RegulatoryReportingApiV1SrpReportsRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_update_response_200 import (
+    RegulatoryReportingApiV1SrpReportsUpdateResponse200,
+)
+from .regulatory_reporting_api_v1_upstream_projects_create_response_201 import (
+    RegulatoryReportingApiV1UpstreamProjectsCreateResponse201,
+)
+from .regulatory_reporting_api_v1_upstream_projects_list_response_200 import (
+    RegulatoryReportingApiV1UpstreamProjectsListResponse200,
+)
+from .regulatory_reporting_api_v1_upstream_projects_retrieve_response_200 import (
+    RegulatoryReportingApiV1UpstreamProjectsRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_upstream_projects_update_response_200 import (
+    RegulatoryReportingApiV1UpstreamProjectsUpdateResponse200,
+)
+from .reportability_reason_enum import ReportabilityReasonEnum
+from .reportable_event_type_enum import ReportableEventTypeEnum
 from .resolution_enum import ResolutionEnum
+from .responsibility_scope_enum import ResponsibilityScopeEnum
 from .special_handling_enum import SpecialHandlingEnum
+from .srp_report import SRPReport
+from .srp_report_create import SRPReportCreate
+from .srp_report_create_request import SRPReportCreateRequest
+from .srp_report_milestone import SRPReportMilestone
+from .srp_report_milestone_additional_details import SRPReportMilestoneAdditionalDetails
+from .srp_report_milestone_create import SRPReportMilestoneCreate
+from .srp_report_milestone_create_additional_details import (
+    SRPReportMilestoneCreateAdditionalDetails,
+)
+from .srp_report_milestone_create_request import SRPReportMilestoneCreateRequest
+from .srp_report_milestone_create_request_additional_details import (
+    SRPReportMilestoneCreateRequestAdditionalDetails,
+)
+from .srp_report_milestone_request import SRPReportMilestoneRequest
+from .srp_report_milestone_request_additional_details import (
+    SRPReportMilestoneRequestAdditionalDetails,
+)
+from .srp_report_milestone_status_enum import SRPReportMilestoneStatusEnum
+from .srp_report_request import SRPReportRequest
+from .srp_report_status_enum import SRPReportStatusEnum
 from .state_enum import StateEnum
 from .stream_component import StreamComponent
 from .supported_products import SupportedProducts
@@ -761,6 +875,14 @@ from .type_96f_enum import Type96FEnum
 from .upstream_data import UpstreamData
 from .upstream_data_request import UpstreamDataRequest
 from .upstream_data_source_enum import UpstreamDataSourceEnum
+from .upstream_notification import UpstreamNotification
+from .upstream_notification_preview import UpstreamNotificationPreview
+from .upstream_notification_request import UpstreamNotificationRequest
+from .upstream_notification_status_enum import UpstreamNotificationStatusEnum
+from .upstream_project import UpstreamProject
+from .upstream_project_post import UpstreamProjectPost
+from .upstream_project_post_request import UpstreamProjectPostRequest
+from .upstream_project_request import UpstreamProjectRequest
 from .user import User
 from .visibility_enum import VisibilityEnum
 from .workflows_api_v1_workflows_adjust_create_response_200 import (
@@ -819,6 +941,7 @@ __all__ = (
     "CollectorsRetrieveResponse200",
     "Comment",
     "CommentRequest",
+    "ContactMethodEnum",
     "CvssVersionEnum",
     "DelegatedNotAffectedJustificationEnum",
     "EPSS",
@@ -886,6 +1009,8 @@ __all__ = (
     "FlawReportData",
     "FlawRequest",
     "FlawSource",
+    "FlawUpstreamMapping",
+    "FlawUpstreamMappingRequest",
     "FlawUUIDListRequest",
     "FlawV1",
     "FlawV1Classification",
@@ -901,6 +1026,8 @@ __all__ = (
     "LabelDefinition",
     "MajorIncidentStateEnum",
     "MaturityPreliminaryEnum",
+    "MethodEnum",
+    "MilestoneTypeEnum",
     "ModuleComponent",
     "NistCvssValidationEnum",
     "NotAffectedJustificationEnum",
@@ -1138,18 +1265,67 @@ __all__ = (
     "PaginatedFlawPackageVersionList",
     "PaginatedFlawReferenceList",
     "PaginatedFlawReportDataList",
+    "PaginatedFlawUpstreamMappingList",
     "PaginatedFlawV1List",
     "PaginatedFlawV1ReportDataList",
     "PaginatedLabelDefinitionList",
+    "PaginatedSRPReportList",
+    "PaginatedSRPReportMilestoneList",
     "PaginatedSupportedProductsList",
     "PaginatedSyncManagerList",
     "PaginatedTrackerList",
     "PaginatedTrackerV1List",
+    "PaginatedUpstreamNotificationList",
+    "PaginatedUpstreamProjectList",
     "PatchedIntegrationTokenPatchRequest",
     "Profile",
     "PsStreamSelection",
+    "RegulatoryReportingApiV1FlawsSrpReportsListResponse200",
+    "RegulatoryReportingApiV1FlawsSrpReportsMilestonesListResponse200",
+    "RegulatoryReportingApiV1FlawsSrpReportsMilestonesRetrieveResponse200",
+    "RegulatoryReportingApiV1FlawsSrpReportsRetrieveResponse200",
+    "RegulatoryReportingApiV1FlawsUpstreamMappingsCreateResponse201",
+    "RegulatoryReportingApiV1FlawsUpstreamMappingsListResponse200",
+    "RegulatoryReportingApiV1FlawUpstreamMappingsDestroyResponse204",
+    "RegulatoryReportingApiV1FlawUpstreamMappingsUpdateResponse200",
+    "RegulatoryReportingApiV1NotificationsUpstreamListMethod",
+    "RegulatoryReportingApiV1NotificationsUpstreamListResponse200",
+    "RegulatoryReportingApiV1NotificationsUpstreamListStatus",
+    "RegulatoryReportingApiV1NotificationsUpstreamPreviewRetrieveResponse200",
+    "RegulatoryReportingApiV1NotificationsUpstreamRetrieveResponse200",
+    "RegulatoryReportingApiV1NotificationsUpstreamSendEmailCreateResponse200",
+    "RegulatoryReportingApiV1NotificationsUpstreamUpdateResponse200",
+    "RegulatoryReportingApiV1SrpReportsCreateResponse201",
+    "RegulatoryReportingApiV1SrpReportsListResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201",
+    "RegulatoryReportingApiV1SrpReportsMilestonesListResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesRetrieveResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesUpdateResponse200",
+    "RegulatoryReportingApiV1SrpReportsRetrieveResponse200",
+    "RegulatoryReportingApiV1SrpReportsUpdateResponse200",
+    "RegulatoryReportingApiV1UpstreamProjectsCreateResponse201",
+    "RegulatoryReportingApiV1UpstreamProjectsListResponse200",
+    "RegulatoryReportingApiV1UpstreamProjectsRetrieveResponse200",
+    "RegulatoryReportingApiV1UpstreamProjectsUpdateResponse200",
+    "ReportabilityReasonEnum",
+    "ReportableEventTypeEnum",
     "ResolutionEnum",
+    "ResponsibilityScopeEnum",
     "SpecialHandlingEnum",
+    "SRPReport",
+    "SRPReportCreate",
+    "SRPReportCreateRequest",
+    "SRPReportMilestone",
+    "SRPReportMilestoneAdditionalDetails",
+    "SRPReportMilestoneCreate",
+    "SRPReportMilestoneCreateAdditionalDetails",
+    "SRPReportMilestoneCreateRequest",
+    "SRPReportMilestoneCreateRequestAdditionalDetails",
+    "SRPReportMilestoneRequest",
+    "SRPReportMilestoneRequestAdditionalDetails",
+    "SRPReportMilestoneStatusEnum",
+    "SRPReportRequest",
+    "SRPReportStatusEnum",
     "StateEnum",
     "StreamComponent",
     "SupportedProducts",
@@ -1177,6 +1353,14 @@ __all__ = (
     "UpstreamData",
     "UpstreamDataRequest",
     "UpstreamDataSourceEnum",
+    "UpstreamNotification",
+    "UpstreamNotificationPreview",
+    "UpstreamNotificationRequest",
+    "UpstreamNotificationStatusEnum",
+    "UpstreamProject",
+    "UpstreamProjectPost",
+    "UpstreamProjectPostRequest",
+    "UpstreamProjectRequest",
     "User",
     "VisibilityEnum",
     "WorkflowsApiV1WorkflowsAdjustCreateResponse200",

@@ -41,6 +41,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
         delegated_resolution (str):
         cvss_scores (list['AffectCVSS']):
         delegated_not_affected_justification (Union[BlankEnum, DelegatedNotAffectedJustificationEnum]):
+        affectedness_explanation (str):
         resolved_dt (Union[None, datetime.datetime]):
         labels (list[str]):
         created_by (str):
@@ -78,6 +79,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
     delegated_not_affected_justification: Union[
         BlankEnum, DelegatedNotAffectedJustificationEnum
     ]
+    affectedness_explanation: str
     resolved_dt: Union[None, datetime.datetime]
     labels: list[str]
     created_by: str
@@ -166,6 +168,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
                 delegated_not_affected_justification = BlankEnum(
                     self.delegated_not_affected_justification
                 ).value
+
+        affectedness_explanation = self.affectedness_explanation
 
         resolved_dt: Union[None, str]
         if isinstance(self.resolved_dt, Unset):
@@ -322,6 +326,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             field_dict["delegated_not_affected_justification"] = (
                 delegated_not_affected_justification
             )
+        if not isinstance(affectedness_explanation, Unset):
+            field_dict["affectedness_explanation"] = affectedness_explanation
         if not isinstance(resolved_dt, Unset):
             field_dict["resolved_dt"] = resolved_dt
         if not isinstance(labels, Unset):
@@ -476,6 +482,8 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
                 d.pop("delegated_not_affected_justification", UNSET)
             )
         )
+
+        affectedness_explanation = d.pop("affectedness_explanation", UNSET)
 
         def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
             if data is None:
@@ -727,6 +735,7 @@ class OsidbApiV2AffectsRetrieveResponse200(OSIDBModel):
             delegated_resolution=delegated_resolution,
             cvss_scores=cvss_scores,
             delegated_not_affected_justification=delegated_not_affected_justification,
+            affectedness_explanation=affectedness_explanation,
             resolved_dt=resolved_dt,
             labels=labels,
             created_by=created_by,

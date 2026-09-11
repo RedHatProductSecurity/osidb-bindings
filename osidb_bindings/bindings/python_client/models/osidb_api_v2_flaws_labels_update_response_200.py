@@ -24,6 +24,7 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        reason (Union[Unset, str]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -36,6 +37,7 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    reason: Union[Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -61,6 +63,8 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
 
         relevant = self.relevant
 
+        reason = self.reason
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -85,6 +89,8 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -126,6 +132,8 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
+        reason = d.pop("reason", UNSET)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -146,6 +154,7 @@ class OsidbApiV2FlawsLabelsUpdateResponse200(OSIDBModel):
             state=state,
             contributor=contributor,
             relevant=relevant,
+            reason=reason,
             dt=dt,
             env=env,
             revision=revision,
