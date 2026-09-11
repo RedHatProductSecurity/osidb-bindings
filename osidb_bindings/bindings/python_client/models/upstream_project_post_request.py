@@ -1,0 +1,481 @@
+import datetime
+from typing import Any, TypeVar, Union, cast
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+from attrs import fields as _attrs_fields
+from dateutil.parser import isoparse
+
+from ..models.blank_enum import BlankEnum
+from ..models.contact_method_enum import ContactMethodEnum
+from ..types import UNSET, OSIDBModel, Unset
+
+T = TypeVar("T", bound="UpstreamProjectPostRequest")
+
+
+@_attrs_define
+class UpstreamProjectPostRequest(OSIDBModel):
+    """TrackingMixin class serializer
+
+    Attributes:
+        component_name (str):
+        repository_url (Union[Unset, str]):
+        security_contact (Union[Unset, str]):
+        contact_method (Union[BlankEnum, ContactMethodEnum, Unset]):
+        contact_url (Union[Unset, str]):
+        source (Union[Unset, str]):
+        confidence (Union[Unset, str]):
+        verified_at (Union[None, Unset, datetime.datetime]):
+        verified_by (Union[Unset, str]):
+        unsupported (Union[Unset, bool]):
+        stewarded_awareness (Union[Unset, bool]):
+        stewarded_awareness_reason (Union[Unset, str]):
+        stewarded_awareness_marked_by (Union[Unset, str]):
+        stewarded_awareness_marked_at (Union[None, Unset, datetime.datetime]):
+        notes (Union[Unset, str]):
+        purl (Union[Unset, str]):
+    """
+
+    component_name: str
+    repository_url: Union[Unset, str] = UNSET
+    security_contact: Union[Unset, str] = UNSET
+    contact_method: Union[BlankEnum, ContactMethodEnum, Unset] = UNSET
+    contact_url: Union[Unset, str] = UNSET
+    source: Union[Unset, str] = UNSET
+    confidence: Union[Unset, str] = UNSET
+    verified_at: Union[None, Unset, datetime.datetime] = UNSET
+    verified_by: Union[Unset, str] = UNSET
+    unsupported: Union[Unset, bool] = UNSET
+    stewarded_awareness: Union[Unset, bool] = UNSET
+    stewarded_awareness_reason: Union[Unset, str] = UNSET
+    stewarded_awareness_marked_by: Union[Unset, str] = UNSET
+    stewarded_awareness_marked_at: Union[None, Unset, datetime.datetime] = UNSET
+    notes: Union[Unset, str] = UNSET
+    purl: Union[Unset, str] = UNSET
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        component_name = self.component_name
+
+        repository_url = self.repository_url
+
+        security_contact = self.security_contact
+
+        contact_method: Union[Unset, str]
+        if isinstance(self.contact_method, Unset):
+            contact_method = UNSET
+        elif isinstance(self.contact_method, ContactMethodEnum):
+            contact_method = UNSET
+            if not isinstance(self.contact_method, Unset):
+                contact_method = ContactMethodEnum(self.contact_method).value
+
+        else:
+            contact_method = UNSET
+            if not isinstance(self.contact_method, Unset):
+                contact_method = BlankEnum(self.contact_method).value
+
+        contact_url = self.contact_url
+
+        source = self.source
+
+        confidence = self.confidence
+
+        verified_at: Union[None, Unset, str]
+        if isinstance(self.verified_at, Unset):
+            verified_at = UNSET
+        elif isinstance(self.verified_at, datetime.datetime):
+            verified_at = UNSET
+            if not isinstance(self.verified_at, Unset):
+                verified_at = self.verified_at.isoformat()
+
+        else:
+            verified_at = self.verified_at
+
+        verified_by = self.verified_by
+
+        unsupported = self.unsupported
+
+        stewarded_awareness = self.stewarded_awareness
+
+        stewarded_awareness_reason = self.stewarded_awareness_reason
+
+        stewarded_awareness_marked_by = self.stewarded_awareness_marked_by
+
+        stewarded_awareness_marked_at: Union[None, Unset, str]
+        if isinstance(self.stewarded_awareness_marked_at, Unset):
+            stewarded_awareness_marked_at = UNSET
+        elif isinstance(self.stewarded_awareness_marked_at, datetime.datetime):
+            stewarded_awareness_marked_at = UNSET
+            if not isinstance(self.stewarded_awareness_marked_at, Unset):
+                stewarded_awareness_marked_at = (
+                    self.stewarded_awareness_marked_at.isoformat()
+                )
+
+        else:
+            stewarded_awareness_marked_at = self.stewarded_awareness_marked_at
+
+        notes = self.notes
+
+        purl = self.purl
+
+        field_dict: dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        if not isinstance(component_name, Unset):
+            field_dict["component_name"] = component_name
+        if not isinstance(repository_url, Unset):
+            field_dict["repository_url"] = repository_url
+        if not isinstance(security_contact, Unset):
+            field_dict["security_contact"] = security_contact
+        if not isinstance(contact_method, Unset):
+            field_dict["contact_method"] = contact_method
+        if not isinstance(contact_url, Unset):
+            field_dict["contact_url"] = contact_url
+        if not isinstance(source, Unset):
+            field_dict["source"] = source
+        if not isinstance(confidence, Unset):
+            field_dict["confidence"] = confidence
+        if not isinstance(verified_at, Unset):
+            field_dict["verified_at"] = verified_at
+        if not isinstance(verified_by, Unset):
+            field_dict["verified_by"] = verified_by
+        if not isinstance(unsupported, Unset):
+            field_dict["unsupported"] = unsupported
+        if not isinstance(stewarded_awareness, Unset):
+            field_dict["stewarded_awareness"] = stewarded_awareness
+        if not isinstance(stewarded_awareness_reason, Unset):
+            field_dict["stewarded_awareness_reason"] = stewarded_awareness_reason
+        if not isinstance(stewarded_awareness_marked_by, Unset):
+            field_dict["stewarded_awareness_marked_by"] = stewarded_awareness_marked_by
+        if not isinstance(stewarded_awareness_marked_at, Unset):
+            field_dict["stewarded_awareness_marked_at"] = stewarded_awareness_marked_at
+        if not isinstance(notes, Unset):
+            field_dict["notes"] = notes
+        if not isinstance(purl, Unset):
+            field_dict["purl"] = purl
+
+        return field_dict
+
+    def to_multipart(self) -> dict[str, Any]:
+        component_name = (None, str(self.component_name).encode(), "text/plain")
+
+        repository_url = (
+            self.repository_url
+            if isinstance(self.repository_url, Unset)
+            else (None, str(self.repository_url).encode(), "text/plain")
+        )
+
+        security_contact = (
+            self.security_contact
+            if isinstance(self.security_contact, Unset)
+            else (None, str(self.security_contact).encode(), "text/plain")
+        )
+
+        contact_method: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.contact_method, Unset):
+            contact_method = UNSET
+        elif isinstance(self.contact_method, ContactMethodEnum):
+            contact_method: Union[Unset, tuple[None, bytes, str]] = UNSET
+            if not isinstance(self.contact_method, Unset):
+                contact_method = (
+                    None,
+                    str(self.contact_method.value).encode(),
+                    "text/plain",
+                )
+        else:
+            contact_method: Union[Unset, tuple[None, bytes, str]] = UNSET
+            if not isinstance(self.contact_method, Unset):
+                contact_method = (
+                    None,
+                    str(self.contact_method.value).encode(),
+                    "text/plain",
+                )
+
+        contact_url = (
+            self.contact_url
+            if isinstance(self.contact_url, Unset)
+            else (None, str(self.contact_url).encode(), "text/plain")
+        )
+
+        source = (
+            self.source
+            if isinstance(self.source, Unset)
+            else (None, str(self.source).encode(), "text/plain")
+        )
+
+        confidence = (
+            self.confidence
+            if isinstance(self.confidence, Unset)
+            else (None, str(self.confidence).encode(), "text/plain")
+        )
+
+        verified_at: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.verified_at, Unset):
+            verified_at = UNSET
+        elif isinstance(self.verified_at, datetime.datetime):
+            verified_at: bytes = UNSET
+            if not isinstance(self.verified_at, Unset):
+                verified_at = self.verified_at.isoformat().encode()
+        else:
+            verified_at = (None, str(self.verified_at).encode(), "text/plain")
+
+        verified_by = (
+            self.verified_by
+            if isinstance(self.verified_by, Unset)
+            else (None, str(self.verified_by).encode(), "text/plain")
+        )
+
+        unsupported = (
+            self.unsupported
+            if isinstance(self.unsupported, Unset)
+            else (None, str(self.unsupported).encode(), "text/plain")
+        )
+
+        stewarded_awareness = (
+            self.stewarded_awareness
+            if isinstance(self.stewarded_awareness, Unset)
+            else (None, str(self.stewarded_awareness).encode(), "text/plain")
+        )
+
+        stewarded_awareness_reason = (
+            self.stewarded_awareness_reason
+            if isinstance(self.stewarded_awareness_reason, Unset)
+            else (None, str(self.stewarded_awareness_reason).encode(), "text/plain")
+        )
+
+        stewarded_awareness_marked_by = (
+            self.stewarded_awareness_marked_by
+            if isinstance(self.stewarded_awareness_marked_by, Unset)
+            else (None, str(self.stewarded_awareness_marked_by).encode(), "text/plain")
+        )
+
+        stewarded_awareness_marked_at: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.stewarded_awareness_marked_at, Unset):
+            stewarded_awareness_marked_at = UNSET
+        elif isinstance(self.stewarded_awareness_marked_at, datetime.datetime):
+            stewarded_awareness_marked_at: bytes = UNSET
+            if not isinstance(self.stewarded_awareness_marked_at, Unset):
+                stewarded_awareness_marked_at = (
+                    self.stewarded_awareness_marked_at.isoformat().encode()
+                )
+        else:
+            stewarded_awareness_marked_at = (
+                None,
+                str(self.stewarded_awareness_marked_at).encode(),
+                "text/plain",
+            )
+
+        notes = (
+            self.notes
+            if isinstance(self.notes, Unset)
+            else (None, str(self.notes).encode(), "text/plain")
+        )
+
+        purl = (
+            self.purl
+            if isinstance(self.purl, Unset)
+            else (None, str(self.purl).encode(), "text/plain")
+        )
+
+        field_dict: dict[str, Any] = {}
+        for prop_name, prop in self.additional_properties.items():
+            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
+
+        if not isinstance(component_name, Unset):
+            field_dict["component_name"] = component_name
+        if not isinstance(repository_url, Unset):
+            field_dict["repository_url"] = repository_url
+        if not isinstance(security_contact, Unset):
+            field_dict["security_contact"] = security_contact
+        if not isinstance(contact_method, Unset):
+            field_dict["contact_method"] = contact_method
+        if not isinstance(contact_url, Unset):
+            field_dict["contact_url"] = contact_url
+        if not isinstance(source, Unset):
+            field_dict["source"] = source
+        if not isinstance(confidence, Unset):
+            field_dict["confidence"] = confidence
+        if not isinstance(verified_at, Unset):
+            field_dict["verified_at"] = verified_at
+        if not isinstance(verified_by, Unset):
+            field_dict["verified_by"] = verified_by
+        if not isinstance(unsupported, Unset):
+            field_dict["unsupported"] = unsupported
+        if not isinstance(stewarded_awareness, Unset):
+            field_dict["stewarded_awareness"] = stewarded_awareness
+        if not isinstance(stewarded_awareness_reason, Unset):
+            field_dict["stewarded_awareness_reason"] = stewarded_awareness_reason
+        if not isinstance(stewarded_awareness_marked_by, Unset):
+            field_dict["stewarded_awareness_marked_by"] = stewarded_awareness_marked_by
+        if not isinstance(stewarded_awareness_marked_at, Unset):
+            field_dict["stewarded_awareness_marked_at"] = stewarded_awareness_marked_at
+        if not isinstance(notes, Unset):
+            field_dict["notes"] = notes
+        if not isinstance(purl, Unset):
+            field_dict["purl"] = purl
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        d = src_dict.copy()
+        component_name = d.pop("component_name", UNSET)
+
+        repository_url = d.pop("repository_url", UNSET)
+
+        security_contact = d.pop("security_contact", UNSET)
+
+        def _parse_contact_method(
+            data: object,
+        ) -> Union[BlankEnum, ContactMethodEnum, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _contact_method_type_0 = data
+                contact_method_type_0: ContactMethodEnum
+                if isinstance(_contact_method_type_0, Unset):
+                    contact_method_type_0 = UNSET
+                else:
+                    contact_method_type_0 = ContactMethodEnum(_contact_method_type_0)
+
+                return contact_method_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _contact_method_type_1 = data
+            contact_method_type_1: BlankEnum
+            if isinstance(_contact_method_type_1, Unset):
+                contact_method_type_1 = UNSET
+            else:
+                contact_method_type_1 = BlankEnum(_contact_method_type_1)
+
+            return contact_method_type_1
+
+        contact_method = _parse_contact_method(d.pop("contact_method", UNSET))
+
+        contact_url = d.pop("contact_url", UNSET)
+
+        source = d.pop("source", UNSET)
+
+        confidence = d.pop("confidence", UNSET)
+
+        def _parse_verified_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _verified_at_type_0 = data
+                verified_at_type_0: datetime.datetime
+                if isinstance(_verified_at_type_0, Unset):
+                    verified_at_type_0 = UNSET
+                else:
+                    verified_at_type_0 = isoparse(_verified_at_type_0)
+
+                return verified_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        verified_at = _parse_verified_at(d.pop("verified_at", UNSET))
+
+        verified_by = d.pop("verified_by", UNSET)
+
+        unsupported = d.pop("unsupported", UNSET)
+
+        stewarded_awareness = d.pop("stewarded_awareness", UNSET)
+
+        stewarded_awareness_reason = d.pop("stewarded_awareness_reason", UNSET)
+
+        stewarded_awareness_marked_by = d.pop("stewarded_awareness_marked_by", UNSET)
+
+        def _parse_stewarded_awareness_marked_at(
+            data: object,
+        ) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _stewarded_awareness_marked_at_type_0 = data
+                stewarded_awareness_marked_at_type_0: datetime.datetime
+                if isinstance(_stewarded_awareness_marked_at_type_0, Unset):
+                    stewarded_awareness_marked_at_type_0 = UNSET
+                else:
+                    stewarded_awareness_marked_at_type_0 = isoparse(
+                        _stewarded_awareness_marked_at_type_0
+                    )
+
+                return stewarded_awareness_marked_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        stewarded_awareness_marked_at = _parse_stewarded_awareness_marked_at(
+            d.pop("stewarded_awareness_marked_at", UNSET)
+        )
+
+        notes = d.pop("notes", UNSET)
+
+        purl = d.pop("purl", UNSET)
+
+        upstream_project_post_request = cls(
+            component_name=component_name,
+            repository_url=repository_url,
+            security_contact=security_contact,
+            contact_method=contact_method,
+            contact_url=contact_url,
+            source=source,
+            confidence=confidence,
+            verified_at=verified_at,
+            verified_by=verified_by,
+            unsupported=unsupported,
+            stewarded_awareness=stewarded_awareness,
+            stewarded_awareness_reason=stewarded_awareness_reason,
+            stewarded_awareness_marked_by=stewarded_awareness_marked_by,
+            stewarded_awareness_marked_at=stewarded_awareness_marked_at,
+            notes=notes,
+            purl=purl,
+        )
+
+        upstream_project_post_request.additional_properties = d
+        return upstream_project_post_request
+
+    @classmethod
+    def get_fields(cls):
+        return {f.name: f.type for f in _attrs_fields(cls)}
+
+    @classmethod
+    def new(cls):
+        return cls.from_dict({})
+
+    @classmethod
+    def from_model(cls: type[T], model: "OSIDBModel") -> T:
+        return cls.from_dict(model.to_dict())
+
+    @property
+    def additional_keys(self) -> list[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties

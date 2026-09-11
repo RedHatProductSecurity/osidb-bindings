@@ -23,6 +23,7 @@ class FlawLabel(OSIDBModel):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
         relevant (Union[Unset, bool]):
+        reason (Union[Unset, str]):
     """
 
     uuid: UUID
@@ -31,6 +32,7 @@ class FlawLabel(OSIDBModel):
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
     relevant: Union[Unset, bool] = UNSET
+    reason: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -52,6 +54,8 @@ class FlawLabel(OSIDBModel):
 
         relevant = self.relevant
 
+        reason = self.reason
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
@@ -66,6 +70,8 @@ class FlawLabel(OSIDBModel):
             field_dict["contributor"] = contributor
         if not isinstance(relevant, Unset):
             field_dict["relevant"] = relevant
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
@@ -99,6 +105,8 @@ class FlawLabel(OSIDBModel):
 
         relevant = d.pop("relevant", UNSET)
 
+        reason = d.pop("reason", UNSET)
+
         flaw_label = cls(
             uuid=uuid,
             name=name,
@@ -106,6 +114,7 @@ class FlawLabel(OSIDBModel):
             state=state,
             contributor=contributor,
             relevant=relevant,
+            reason=reason,
         )
 
         flaw_label.additional_properties = d

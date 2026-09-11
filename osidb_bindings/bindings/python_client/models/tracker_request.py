@@ -24,9 +24,9 @@ class TrackerRequest(OSIDBModel):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
         ps_update_stream (Union[Unset, str]):
-        sync_to_bz (Union[Unset, bool]): Setting sync_to_bz to false disables flaw sync with Bugzilla after this
-            operation. Use only as part of bulk actions and trigger a flaw bugzilla sync afterwards. Does nothing if BZ is
-            disabled.
+        sync_to_bz (Union[Unset, bool]): Setting sync_to_bz to false skips the tracker's own Bugzilla sync during this
+            operation. For Jira trackers, the related flaw is still synced to Bugzilla automatically, deduplicated per flaw.
+            Bugzilla trackers do not go through this sync. Does nothing if BZ is disabled.
     """
 
     affects: list[UUID]

@@ -288,6 +288,14 @@ QUERY_PARAMS = {
     "reported_dt__gte": datetime.datetime,
     "reported_dt__lt": datetime.datetime,
     "reported_dt__lte": datetime.datetime,
+    "resolved_dt": datetime.datetime,
+    "resolved_dt__date": datetime.date,
+    "resolved_dt__date__gte": datetime.date,
+    "resolved_dt__date__lte": datetime.date,
+    "resolved_dt__gt": datetime.datetime,
+    "resolved_dt__gte": datetime.datetime,
+    "resolved_dt__lt": datetime.datetime,
+    "resolved_dt__lte": datetime.datetime,
     "search": str,
     "source": OsidbApiV2FlawsListSource,
     "source__in": list[OsidbApiV2FlawsListSourceInItem],
@@ -549,6 +557,14 @@ def _get_kwargs(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_date: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV2FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV2FlawsListSourceInItem]] = UNSET,
@@ -1909,6 +1925,54 @@ def _get_kwargs(
 
     params["reported_dt__lte"] = json_reported_dt_lte
 
+    json_resolved_dt: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt, Unset):
+        json_resolved_dt = resolved_dt.isoformat()
+
+    params["resolved_dt"] = json_resolved_dt
+
+    json_resolved_dt_date: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_date, Unset):
+        json_resolved_dt_date = resolved_dt_date.isoformat()
+
+    params["resolved_dt__date"] = json_resolved_dt_date
+
+    json_resolved_dt_date_gte: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_date_gte, Unset):
+        json_resolved_dt_date_gte = resolved_dt_date_gte.isoformat()
+
+    params["resolved_dt__date__gte"] = json_resolved_dt_date_gte
+
+    json_resolved_dt_date_lte: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_date_lte, Unset):
+        json_resolved_dt_date_lte = resolved_dt_date_lte.isoformat()
+
+    params["resolved_dt__date__lte"] = json_resolved_dt_date_lte
+
+    json_resolved_dt_gt: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_gt, Unset):
+        json_resolved_dt_gt = resolved_dt_gt.isoformat()
+
+    params["resolved_dt__gt"] = json_resolved_dt_gt
+
+    json_resolved_dt_gte: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_gte, Unset):
+        json_resolved_dt_gte = resolved_dt_gte.isoformat()
+
+    params["resolved_dt__gte"] = json_resolved_dt_gte
+
+    json_resolved_dt_lt: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_lt, Unset):
+        json_resolved_dt_lt = resolved_dt_lt.isoformat()
+
+    params["resolved_dt__lt"] = json_resolved_dt_lt
+
+    json_resolved_dt_lte: Union[Unset, str] = UNSET
+    if not isinstance(resolved_dt_lte, Unset):
+        json_resolved_dt_lte = resolved_dt_lte.isoformat()
+
+    params["resolved_dt__lte"] = json_resolved_dt_lte
+
     params["search"] = search
 
     json_source: Union[Unset, str] = UNSET
@@ -2326,6 +2390,14 @@ def sync_detailed(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_date: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV2FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV2FlawsListSourceInItem]] = UNSET,
@@ -2567,6 +2639,14 @@ def sync_detailed(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
+        resolved_dt (Union[Unset, datetime.datetime]):
+        resolved_dt_date (Union[Unset, datetime.date]):
+        resolved_dt_date_gte (Union[Unset, datetime.date]):
+        resolved_dt_date_lte (Union[Unset, datetime.date]):
+        resolved_dt_gt (Union[Unset, datetime.datetime]):
+        resolved_dt_gte (Union[Unset, datetime.datetime]):
+        resolved_dt_lt (Union[Unset, datetime.datetime]):
+        resolved_dt_lte (Union[Unset, datetime.datetime]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV2FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV2FlawsListSourceInItem]]):
@@ -2815,6 +2895,14 @@ def sync_detailed(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
+        resolved_dt=resolved_dt,
+        resolved_dt_date=resolved_dt_date,
+        resolved_dt_date_gte=resolved_dt_date_gte,
+        resolved_dt_date_lte=resolved_dt_date_lte,
+        resolved_dt_gt=resolved_dt_gt,
+        resolved_dt_gte=resolved_dt_gte,
+        resolved_dt_lt=resolved_dt_lt,
+        resolved_dt_lte=resolved_dt_lte,
         search=search,
         source=source,
         source_in=source_in,
@@ -3086,6 +3174,14 @@ def sync(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_date: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV2FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV2FlawsListSourceInItem]] = UNSET,
@@ -3327,6 +3423,14 @@ def sync(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
+        resolved_dt (Union[Unset, datetime.datetime]):
+        resolved_dt_date (Union[Unset, datetime.date]):
+        resolved_dt_date_gte (Union[Unset, datetime.date]):
+        resolved_dt_date_lte (Union[Unset, datetime.date]):
+        resolved_dt_gt (Union[Unset, datetime.datetime]):
+        resolved_dt_gte (Union[Unset, datetime.datetime]):
+        resolved_dt_lt (Union[Unset, datetime.datetime]):
+        resolved_dt_lte (Union[Unset, datetime.datetime]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV2FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV2FlawsListSourceInItem]]):
@@ -3575,6 +3679,14 @@ def sync(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
+        resolved_dt=resolved_dt,
+        resolved_dt_date=resolved_dt_date,
+        resolved_dt_date_gte=resolved_dt_date_gte,
+        resolved_dt_date_lte=resolved_dt_date_lte,
+        resolved_dt_gt=resolved_dt_gt,
+        resolved_dt_gte=resolved_dt_gte,
+        resolved_dt_lt=resolved_dt_lt,
+        resolved_dt_lte=resolved_dt_lte,
         search=search,
         source=source,
         source_in=source_in,
@@ -3836,6 +3948,14 @@ async def asyncio_detailed(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_date: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV2FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV2FlawsListSourceInItem]] = UNSET,
@@ -4077,6 +4197,14 @@ async def asyncio_detailed(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
+        resolved_dt (Union[Unset, datetime.datetime]):
+        resolved_dt_date (Union[Unset, datetime.date]):
+        resolved_dt_date_gte (Union[Unset, datetime.date]):
+        resolved_dt_date_lte (Union[Unset, datetime.date]):
+        resolved_dt_gt (Union[Unset, datetime.datetime]):
+        resolved_dt_gte (Union[Unset, datetime.datetime]):
+        resolved_dt_lt (Union[Unset, datetime.datetime]):
+        resolved_dt_lte (Union[Unset, datetime.datetime]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV2FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV2FlawsListSourceInItem]]):
@@ -4325,6 +4453,14 @@ async def asyncio_detailed(
         reported_dt_gte=reported_dt_gte,
         reported_dt_lt=reported_dt_lt,
         reported_dt_lte=reported_dt_lte,
+        resolved_dt=resolved_dt,
+        resolved_dt_date=resolved_dt_date,
+        resolved_dt_date_gte=resolved_dt_date_gte,
+        resolved_dt_date_lte=resolved_dt_date_lte,
+        resolved_dt_gt=resolved_dt_gt,
+        resolved_dt_gte=resolved_dt_gte,
+        resolved_dt_lt=resolved_dt_lt,
+        resolved_dt_lte=resolved_dt_lte,
         search=search,
         source=source,
         source_in=source_in,
@@ -4596,6 +4732,14 @@ async def asyncio(
     reported_dt_gte: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lt: Union[Unset, datetime.datetime] = UNSET,
     reported_dt_lte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_date: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_gte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_date_lte: Union[Unset, datetime.date] = UNSET,
+    resolved_dt_gt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_gte: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lt: Union[Unset, datetime.datetime] = UNSET,
+    resolved_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     search: Union[Unset, str] = UNSET,
     source: Union[Unset, OsidbApiV2FlawsListSource] = UNSET,
     source_in: Union[Unset, list[OsidbApiV2FlawsListSourceInItem]] = UNSET,
@@ -4837,6 +4981,14 @@ async def asyncio(
         reported_dt_gte (Union[Unset, datetime.datetime]):
         reported_dt_lt (Union[Unset, datetime.datetime]):
         reported_dt_lte (Union[Unset, datetime.datetime]):
+        resolved_dt (Union[Unset, datetime.datetime]):
+        resolved_dt_date (Union[Unset, datetime.date]):
+        resolved_dt_date_gte (Union[Unset, datetime.date]):
+        resolved_dt_date_lte (Union[Unset, datetime.date]):
+        resolved_dt_gt (Union[Unset, datetime.datetime]):
+        resolved_dt_gte (Union[Unset, datetime.datetime]):
+        resolved_dt_lt (Union[Unset, datetime.datetime]):
+        resolved_dt_lte (Union[Unset, datetime.datetime]):
         search (Union[Unset, str]):
         source (Union[Unset, OsidbApiV2FlawsListSource]):
         source_in (Union[Unset, list[OsidbApiV2FlawsListSourceInItem]]):
@@ -5086,6 +5238,14 @@ async def asyncio(
             reported_dt_gte=reported_dt_gte,
             reported_dt_lt=reported_dt_lt,
             reported_dt_lte=reported_dt_lte,
+            resolved_dt=resolved_dt,
+            resolved_dt_date=resolved_dt_date,
+            resolved_dt_date_gte=resolved_dt_date_gte,
+            resolved_dt_date_lte=resolved_dt_date_lte,
+            resolved_dt_gt=resolved_dt_gt,
+            resolved_dt_gte=resolved_dt_gte,
+            resolved_dt_lt=resolved_dt_lt,
+            resolved_dt_lte=resolved_dt_lte,
             search=search,
             source=source,
             source_in=source_in,

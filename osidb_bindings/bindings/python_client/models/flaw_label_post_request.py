@@ -20,12 +20,14 @@ class FlawLabelPostRequest(OSIDBModel):
         type_ (Type96FEnum):
         state (Union[Unset, StateEnum]):
         contributor (Union[Unset, str]):
+        reason (Union[Unset, str]):
     """
 
     name: str
     type_: Type96FEnum
     state: Union[Unset, StateEnum] = UNSET
     contributor: Union[Unset, str] = UNSET
+    reason: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -41,6 +43,8 @@ class FlawLabelPostRequest(OSIDBModel):
 
         contributor = self.contributor
 
+        reason = self.reason
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(name, Unset):
@@ -51,6 +55,8 @@ class FlawLabelPostRequest(OSIDBModel):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
@@ -71,6 +77,12 @@ class FlawLabelPostRequest(OSIDBModel):
             else (None, str(self.contributor).encode(), "text/plain")
         )
 
+        reason = (
+            self.reason
+            if isinstance(self.reason, Unset)
+            else (None, str(self.reason).encode(), "text/plain")
+        )
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -83,6 +95,8 @@ class FlawLabelPostRequest(OSIDBModel):
             field_dict["state"] = state
         if not isinstance(contributor, Unset):
             field_dict["contributor"] = contributor
+        if not isinstance(reason, Unset):
+            field_dict["reason"] = reason
 
         return field_dict
 
@@ -107,11 +121,14 @@ class FlawLabelPostRequest(OSIDBModel):
 
         contributor = d.pop("contributor", UNSET)
 
+        reason = d.pop("reason", UNSET)
+
         flaw_label_post_request = cls(
             name=name,
             type_=type_,
             state=state,
             contributor=contributor,
+            reason=reason,
         )
 
         flaw_label_post_request.additional_properties = d

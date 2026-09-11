@@ -59,6 +59,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         group_key (str):
         task_key (Union[None, str]):
         team_id (str):
+        resolved_dt (Union[None, datetime.datetime]):
         alerts (list['Alert']):
         cve_id (Union[None, Unset, str]):
         impact (Union[BlankEnum, ImpactEnum, Unset]):
@@ -103,6 +104,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     group_key: str
     task_key: Union[None, str]
     team_id: str
+    resolved_dt: Union[None, datetime.datetime]
     alerts: list["Alert"]
     cve_id: Union[None, Unset, str] = UNSET
     impact: Union[BlankEnum, ImpactEnum, Unset] = UNSET
@@ -248,6 +250,17 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         task_key = self.task_key
 
         team_id = self.team_id
+
+        resolved_dt: Union[None, str]
+        if isinstance(self.resolved_dt, Unset):
+            resolved_dt = UNSET
+        elif isinstance(self.resolved_dt, datetime.datetime):
+            resolved_dt = UNSET
+            if not isinstance(self.resolved_dt, Unset):
+                resolved_dt = self.resolved_dt.isoformat()
+
+        else:
+            resolved_dt = self.resolved_dt
 
         alerts: list[dict[str, Any]] = UNSET
         if not isinstance(self.alerts, Unset):
@@ -426,6 +439,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             field_dict["task_key"] = task_key
         if not isinstance(team_id, Unset):
             field_dict["team_id"] = team_id
+        if not isinstance(resolved_dt, Unset):
+            field_dict["resolved_dt"] = resolved_dt
         if not isinstance(alerts, Unset):
             field_dict["alerts"] = alerts
         if not isinstance(cve_id, Unset):
@@ -640,6 +655,28 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         task_key = _parse_task_key(d.pop("task_key", UNSET))
 
         team_id = d.pop("team_id", UNSET)
+
+        def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _resolved_dt_type_0 = data
+                resolved_dt_type_0: datetime.datetime
+                if isinstance(_resolved_dt_type_0, Unset):
+                    resolved_dt_type_0 = UNSET
+                else:
+                    resolved_dt_type_0 = isoparse(_resolved_dt_type_0)
+
+                return resolved_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
 
         alerts = []
         _alerts = d.pop("alerts", UNSET)
@@ -920,6 +957,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             group_key=group_key,
             task_key=task_key,
             team_id=team_id,
+            resolved_dt=resolved_dt,
             alerts=alerts,
             cve_id=cve_id,
             impact=impact,
