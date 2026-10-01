@@ -13,6 +13,10 @@ from .regulatory_reporting_api_v1_notifications_upstream_send_email_create impor
 from .regulatory_reporting_api_v1_notifications_upstream_update import *
 from .regulatory_reporting_api_v1_srp_reports_create import *
 from .regulatory_reporting_api_v1_srp_reports_list import *
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_create import *
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_list import *
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_retrieve import *
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_update import *
 from .regulatory_reporting_api_v1_srp_reports_milestones_create import *
 from .regulatory_reporting_api_v1_srp_reports_milestones_list import *
 from .regulatory_reporting_api_v1_srp_reports_milestones_retrieve import *
@@ -42,6 +46,10 @@ ENDPOINT_NAMES = [
     "regulatory_reporting_api_v1_srp_reports_create",
     "regulatory_reporting_api_v1_srp_reports_milestones_list",
     "regulatory_reporting_api_v1_srp_reports_milestones_create",
+    "regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_list",
+    "regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_create",
+    "regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_retrieve",
+    "regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_update",
     "regulatory_reporting_api_v1_srp_reports_milestones_retrieve",
     "regulatory_reporting_api_v1_srp_reports_milestones_update",
     "regulatory_reporting_api_v1_srp_reports_retrieve",

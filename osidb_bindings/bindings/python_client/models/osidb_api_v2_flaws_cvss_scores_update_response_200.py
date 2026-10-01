@@ -23,6 +23,7 @@ T = TypeVar("T", bound="OsidbApiV2FlawsCvssScoresUpdateResponse200")
 class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
     """
     Attributes:
+        flaw (UUID):
         cvss_version (CvssVersionEnum):
         issuer (IssuerEnum):
         score (float):
@@ -35,7 +36,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        flaw (Union[Unset, UUID]):
         comment (Union[None, Unset, str]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
@@ -43,6 +43,7 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         version (Union[Unset, str]):
     """
 
+    flaw: UUID
     cvss_version: CvssVersionEnum
     issuer: IssuerEnum
     score: float
@@ -53,7 +54,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    flaw: Union[Unset, UUID] = UNSET
     comment: Union[None, Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
@@ -62,6 +62,10 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        flaw: str = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
+
         cvss_version: str = UNSET
         if not isinstance(self.cvss_version, Unset):
             cvss_version = CvssVersionEnum(self.cvss_version).value
@@ -102,10 +106,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        flaw: Union[Unset, str] = UNSET
-        if not isinstance(self.flaw, Unset):
-            flaw = str(self.flaw)
-
         comment: Union[None, Unset, str]
         if isinstance(self.comment, Unset):
             comment = UNSET
@@ -124,6 +124,8 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(flaw, Unset):
+            field_dict["flaw"] = flaw
         if not isinstance(cvss_version, Unset):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(issuer, Unset):
@@ -144,8 +146,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
         if not isinstance(dt, Unset):
@@ -164,6 +164,13 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         from ..models.alert import Alert
 
         d = src_dict.copy()
+        _flaw = d.pop("flaw", UNSET)
+        flaw: UUID
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
+
         _cvss_version = d.pop("cvss_version", UNSET)
         cvss_version: CvssVersionEnum
         if isinstance(_cvss_version, Unset):
@@ -224,13 +231,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        _flaw = d.pop("flaw", UNSET)
-        flaw: Union[Unset, UUID]
-        if isinstance(_flaw, Unset):
-            flaw = UNSET
-        else:
-            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
-
         def _parse_comment(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -254,6 +254,7 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
         version = d.pop("version", UNSET)
 
         osidb_api_v2_flaws_cvss_scores_update_response_200 = cls(
+            flaw=flaw,
             cvss_version=cvss_version,
             issuer=issuer,
             score=score,
@@ -264,7 +265,6 @@ class OsidbApiV2FlawsCvssScoresUpdateResponse200(OSIDBModel):
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            flaw=flaw,
             comment=comment,
             dt=dt,
             env=env,

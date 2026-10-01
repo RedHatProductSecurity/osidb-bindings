@@ -94,12 +94,9 @@ def sync_detailed(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
@@ -159,12 +156,9 @@ def sync(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
@@ -214,12 +208,9 @@ async def asyncio_detailed(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
@@ -279,12 +270,9 @@ async def asyncio(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:

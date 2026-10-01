@@ -6,15 +6,12 @@ from attrs import fields as _attrs_fields
 
 from ..types import OSIDBModel
 
-T = TypeVar("T", bound="SRPReportMilestoneCreateRequestAdditionalDetails")
+T = TypeVar("T", bound="StatsFlawsResponseGroupsItem")
 
 
 @_attrs_define
-class SRPReportMilestoneCreateRequestAdditionalDetails(OSIDBModel):
-    """Coordinator-provided SRP FAQ fields for this milestone stage. OSIM stores and reads these as individual form fields.
-    Values here override auto-derived payload fields at submission time.
-
-    """
+class StatsFlawsResponseGroupsItem(OSIDBModel):
+    """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -27,10 +24,10 @@ class SRPReportMilestoneCreateRequestAdditionalDetails(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        srp_report_milestone_create_request_additional_details = cls()
+        stats_flaws_response_groups_item = cls()
 
-        srp_report_milestone_create_request_additional_details.additional_properties = d
-        return srp_report_milestone_create_request_additional_details
+        stats_flaws_response_groups_item.additional_properties = d
+        return stats_flaws_response_groups_item
 
     @classmethod
     def get_fields(cls):

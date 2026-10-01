@@ -24,6 +24,7 @@ class AffectCVSS(OSIDBModel):
     """AffectCVSS serializer
 
     Attributes:
+        affect (UUID):
         cvss_version (CvssVersionEnum):
         score (float):
         uuid (UUID):
@@ -35,11 +36,11 @@ class AffectCVSS(OSIDBModel):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
-        affect (Union[Unset, UUID]):
         comment (Union[None, Unset, str]):
         issuer (Union[Unset, IssuerEnum]):  Default: IssuerEnum.RH.
     """
 
+    affect: UUID
     cvss_version: CvssVersionEnum
     score: float
     uuid: UUID
@@ -49,12 +50,15 @@ class AffectCVSS(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    affect: Union[Unset, UUID] = UNSET
     comment: Union[None, Unset, str] = UNSET
     issuer: Union[Unset, IssuerEnum] = IssuerEnum.RH
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        affect: str = UNSET
+        if not isinstance(self.affect, Unset):
+            affect = str(self.affect)
+
         cvss_version: str = UNSET
         if not isinstance(self.cvss_version, Unset):
             cvss_version = CvssVersionEnum(self.cvss_version).value
@@ -91,10 +95,6 @@ class AffectCVSS(OSIDBModel):
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
 
-        affect: Union[Unset, str] = UNSET
-        if not isinstance(self.affect, Unset):
-            affect = str(self.affect)
-
         comment: Union[None, Unset, str]
         if isinstance(self.comment, Unset):
             comment = UNSET
@@ -107,6 +107,8 @@ class AffectCVSS(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(affect, Unset):
+            field_dict["affect"] = affect
         if not isinstance(cvss_version, Unset):
             field_dict["cvss_version"] = cvss_version
         if not isinstance(score, Unset):
@@ -125,8 +127,6 @@ class AffectCVSS(OSIDBModel):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(affect, Unset):
-            field_dict["affect"] = affect
         if not isinstance(comment, Unset):
             field_dict["comment"] = comment
         if not isinstance(issuer, Unset):
@@ -139,6 +139,13 @@ class AffectCVSS(OSIDBModel):
         from ..models.alert import Alert
 
         d = src_dict.copy()
+        _affect = d.pop("affect", UNSET)
+        affect: UUID
+        if isinstance(_affect, Unset):
+            affect = UNSET
+        else:
+            affect = _affect if isinstance(_affect, UUID) else UUID(_affect)
+
         _cvss_version = d.pop("cvss_version", UNSET)
         cvss_version: CvssVersionEnum
         if isinstance(_cvss_version, Unset):
@@ -192,13 +199,6 @@ class AffectCVSS(OSIDBModel):
         else:
             updated_dt = isoparse(_updated_dt)
 
-        _affect = d.pop("affect", UNSET)
-        affect: Union[Unset, UUID]
-        if isinstance(_affect, Unset):
-            affect = UNSET
-        else:
-            affect = _affect if isinstance(_affect, UUID) else UUID(_affect)
-
         def _parse_comment(data: object) -> Union[None, Unset, str]:
             if data is None:
                 return data
@@ -216,6 +216,7 @@ class AffectCVSS(OSIDBModel):
             issuer = IssuerEnum(_issuer)
 
         affect_cvss = cls(
+            affect=affect,
             cvss_version=cvss_version,
             score=score,
             uuid=uuid,
@@ -225,7 +226,6 @@ class AffectCVSS(OSIDBModel):
             alerts=alerts,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            affect=affect,
             comment=comment,
             issuer=issuer,
         )
