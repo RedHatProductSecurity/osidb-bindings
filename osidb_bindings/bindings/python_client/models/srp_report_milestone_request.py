@@ -32,12 +32,10 @@ class SRPReportMilestoneRequest(OSIDBModel):
             additional_details (Union[Unset, SRPReportMilestoneRequestAdditionalDetails]): Coordinator-provided SRP FAQ
                 fields for this milestone stage. OSIM stores and reads these as individual form fields. Values here override
                 auto-derived payload fields at submission time.
-            request_received_at (Union[None, Unset, datetime.datetime]): When the request was received
-            request_source (Union[Unset, str]): Source of the request
-            request_text (Union[Unset, str]): Text of the request
             submitted_at (Union[None, Unset, datetime.datetime]): When this milestone was submitted
             owner (Union[Unset, str]): Owner of this milestone
             manual_completion_notes (Union[Unset, str]): Manual completion notes
+            due_at (Union[None, Unset, datetime.datetime]):
     """
 
     updated_dt: datetime.datetime
@@ -45,12 +43,10 @@ class SRPReportMilestoneRequest(OSIDBModel):
     additional_details: Union[Unset, "SRPReportMilestoneRequestAdditionalDetails"] = (
         UNSET
     )
-    request_received_at: Union[None, Unset, datetime.datetime] = UNSET
-    request_source: Union[Unset, str] = UNSET
-    request_text: Union[Unset, str] = UNSET
     submitted_at: Union[None, Unset, datetime.datetime] = UNSET
     owner: Union[Unset, str] = UNSET
     manual_completion_notes: Union[Unset, str] = UNSET
+    due_at: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -65,21 +61,6 @@ class SRPReportMilestoneRequest(OSIDBModel):
         additional_details: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.additional_details, Unset):
             additional_details = self.additional_details.to_dict()
-
-        request_received_at: Union[None, Unset, str]
-        if isinstance(self.request_received_at, Unset):
-            request_received_at = UNSET
-        elif isinstance(self.request_received_at, datetime.datetime):
-            request_received_at = UNSET
-            if not isinstance(self.request_received_at, Unset):
-                request_received_at = self.request_received_at.isoformat()
-
-        else:
-            request_received_at = self.request_received_at
-
-        request_source = self.request_source
-
-        request_text = self.request_text
 
         submitted_at: Union[None, Unset, str]
         if isinstance(self.submitted_at, Unset):
@@ -96,6 +77,17 @@ class SRPReportMilestoneRequest(OSIDBModel):
 
         manual_completion_notes = self.manual_completion_notes
 
+        due_at: Union[None, Unset, str]
+        if isinstance(self.due_at, Unset):
+            due_at = UNSET
+        elif isinstance(self.due_at, datetime.datetime):
+            due_at = UNSET
+            if not isinstance(self.due_at, Unset):
+                due_at = self.due_at.isoformat()
+
+        else:
+            due_at = self.due_at
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         if not isinstance(updated_dt, Unset):
@@ -104,18 +96,14 @@ class SRPReportMilestoneRequest(OSIDBModel):
             field_dict["status"] = status
         if not isinstance(additional_details, Unset):
             field_dict["additional_details"] = additional_details
-        if not isinstance(request_received_at, Unset):
-            field_dict["request_received_at"] = request_received_at
-        if not isinstance(request_source, Unset):
-            field_dict["request_source"] = request_source
-        if not isinstance(request_text, Unset):
-            field_dict["request_text"] = request_text
         if not isinstance(submitted_at, Unset):
             field_dict["submitted_at"] = submitted_at
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
         if not isinstance(manual_completion_notes, Unset):
             field_dict["manual_completion_notes"] = manual_completion_notes
+        if not isinstance(due_at, Unset):
+            field_dict["due_at"] = due_at
 
         return field_dict
 
@@ -135,33 +123,6 @@ class SRPReportMilestoneRequest(OSIDBModel):
                 json.dumps(self.additional_details.to_dict()).encode(),
                 "application/json",
             )
-
-        request_received_at: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.request_received_at, Unset):
-            request_received_at = UNSET
-        elif isinstance(self.request_received_at, datetime.datetime):
-            request_received_at: bytes = UNSET
-            if not isinstance(self.request_received_at, Unset):
-                request_received_at = self.request_received_at.isoformat().encode()
-        else:
-            request_received_at = (
-                None,
-                str(self.request_received_at).encode(),
-                "text/plain",
-            )
-
-        request_source = (
-            self.request_source
-            if isinstance(self.request_source, Unset)
-            else (None, str(self.request_source).encode(), "text/plain")
-        )
-
-        request_text = (
-            self.request_text
-            if isinstance(self.request_text, Unset)
-            else (None, str(self.request_text).encode(), "text/plain")
-        )
 
         submitted_at: Union[Unset, tuple[None, bytes, str]]
 
@@ -186,6 +147,17 @@ class SRPReportMilestoneRequest(OSIDBModel):
             else (None, str(self.manual_completion_notes).encode(), "text/plain")
         )
 
+        due_at: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.due_at, Unset):
+            due_at = UNSET
+        elif isinstance(self.due_at, datetime.datetime):
+            due_at: bytes = UNSET
+            if not isinstance(self.due_at, Unset):
+                due_at = self.due_at.isoformat().encode()
+        else:
+            due_at = (None, str(self.due_at).encode(), "text/plain")
+
         field_dict: dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
@@ -196,18 +168,14 @@ class SRPReportMilestoneRequest(OSIDBModel):
             field_dict["status"] = status
         if not isinstance(additional_details, Unset):
             field_dict["additional_details"] = additional_details
-        if not isinstance(request_received_at, Unset):
-            field_dict["request_received_at"] = request_received_at
-        if not isinstance(request_source, Unset):
-            field_dict["request_source"] = request_source
-        if not isinstance(request_text, Unset):
-            field_dict["request_text"] = request_text
         if not isinstance(submitted_at, Unset):
             field_dict["submitted_at"] = submitted_at
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
         if not isinstance(manual_completion_notes, Unset):
             field_dict["manual_completion_notes"] = manual_completion_notes
+        if not isinstance(due_at, Unset):
+            field_dict["due_at"] = due_at
 
         return field_dict
 
@@ -241,36 +209,6 @@ class SRPReportMilestoneRequest(OSIDBModel):
                 _additional_details
             )
 
-        def _parse_request_received_at(
-            data: object,
-        ) -> Union[None, Unset, datetime.datetime]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _request_received_at_type_0 = data
-                request_received_at_type_0: datetime.datetime
-                if isinstance(_request_received_at_type_0, Unset):
-                    request_received_at_type_0 = UNSET
-                else:
-                    request_received_at_type_0 = isoparse(_request_received_at_type_0)
-
-                return request_received_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, Unset, datetime.datetime], data)
-
-        request_received_at = _parse_request_received_at(
-            d.pop("request_received_at", UNSET)
-        )
-
-        request_source = d.pop("request_source", UNSET)
-
-        request_text = d.pop("request_text", UNSET)
-
         def _parse_submitted_at(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
                 return data
@@ -297,16 +235,36 @@ class SRPReportMilestoneRequest(OSIDBModel):
 
         manual_completion_notes = d.pop("manual_completion_notes", UNSET)
 
+        def _parse_due_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _due_at_type_0 = data
+                due_at_type_0: datetime.datetime
+                if isinstance(_due_at_type_0, Unset):
+                    due_at_type_0 = UNSET
+                else:
+                    due_at_type_0 = isoparse(_due_at_type_0)
+
+                return due_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        due_at = _parse_due_at(d.pop("due_at", UNSET))
+
         srp_report_milestone_request = cls(
             updated_dt=updated_dt,
             status=status,
             additional_details=additional_details,
-            request_received_at=request_received_at,
-            request_source=request_source,
-            request_text=request_text,
             submitted_at=submitted_at,
             owner=owner,
             manual_completion_notes=manual_completion_notes,
+            due_at=due_at,
         )
 
         srp_report_milestone_request.additional_properties = d

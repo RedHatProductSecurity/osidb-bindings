@@ -50,7 +50,11 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         if not isinstance(self.profile, Unset):
             profile = self.profile.to_dict()
 
-        email = self.email
+        email: Union[Unset, str]
+        if isinstance(self.email, Unset):
+            email = UNSET
+        else:
+            email = self.email
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -99,7 +103,14 @@ class OsidbWhoamiRetrieveResponse200(OSIDBModel):
         else:
             profile = Profile.from_dict(_profile)
 
-        email = d.pop("email", UNSET)
+        def _parse_email(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        email = _parse_email(d.pop("email", UNSET))
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]

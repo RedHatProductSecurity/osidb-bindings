@@ -14,8 +14,11 @@ from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
     from ..models.alert import Alert
-    from ..models.srp_report_milestone_create_additional_details import (
-        SRPReportMilestoneCreateAdditionalDetails,
+    from ..models.srp_report_milestone_additional_details import (
+        SRPReportMilestoneAdditionalDetails,
+    )
+    from ..models.srp_report_milestone_payload_fields_item import (
+        SRPReportMilestonePayloadFieldsItem,
     )
 
 
@@ -29,9 +32,12 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         uuid (UUID):
         srp_report (UUID): The SRP report this milestone belongs to
         milestone_type (MilestoneTypeEnum):
+        payload_fields (list['SRPReportMilestonePayloadFieldsItem']): Ordered SRP payload form fields with labels,
+            values, input type, requiredness, editability, and options for this milestone.
+        missing_required_fields (str): Missing required fields
         created_dt (datetime.datetime):
-        updated_dt (datetime.datetime):
-        due_at (Union[None, datetime.datetime]):
+        updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
+            detect mit-air collisions.
         hours_remaining (Union[None, int]):
         days_remaining (Union[None, int]):
         is_overdue (bool):
@@ -40,15 +46,13 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         visibility (VisibilityEnum):
         alerts (list['Alert']):
         status (Union[Unset, SRPReportMilestoneStatusEnum]):
-        additional_details (Union[Unset, SRPReportMilestoneCreateAdditionalDetails]): Coordinator-provided SRP FAQ
-            fields for this milestone stage. OSIM stores and reads these as individual form fields. Values here override
-            auto-derived payload fields at submission time.
-        request_received_at (Union[None, Unset, datetime.datetime]): When the request was received
-        request_source (Union[Unset, str]): Source of the request
-        request_text (Union[Unset, str]): Text of the request
+        additional_details (Union[Unset, SRPReportMilestoneAdditionalDetails]): Coordinator-provided SRP FAQ fields for
+            this milestone stage. OSIM stores and reads these as individual form fields. Values here override auto-derived
+            payload fields at submission time.
         submitted_at (Union[None, Unset, datetime.datetime]): When this milestone was submitted
         owner (Union[Unset, str]): Owner of this milestone
         manual_completion_notes (Union[Unset, str]): Manual completion notes
+        due_at (Union[None, Unset, datetime.datetime]):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -58,9 +62,10 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
     uuid: UUID
     srp_report: UUID
     milestone_type: MilestoneTypeEnum
+    payload_fields: list["SRPReportMilestonePayloadFieldsItem"]
+    missing_required_fields: str
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
-    due_at: Union[None, datetime.datetime]
     hours_remaining: Union[None, int]
     days_remaining: Union[None, int]
     is_overdue: bool
@@ -68,15 +73,11 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
     visibility: VisibilityEnum
     alerts: list["Alert"]
     status: Union[Unset, SRPReportMilestoneStatusEnum] = UNSET
-    additional_details: Union[Unset, "SRPReportMilestoneCreateAdditionalDetails"] = (
-        UNSET
-    )
-    request_received_at: Union[None, Unset, datetime.datetime] = UNSET
-    request_source: Union[Unset, str] = UNSET
-    request_text: Union[Unset, str] = UNSET
+    additional_details: Union[Unset, "SRPReportMilestoneAdditionalDetails"] = UNSET
     submitted_at: Union[None, Unset, datetime.datetime] = UNSET
     owner: Union[Unset, str] = UNSET
     manual_completion_notes: Union[Unset, str] = UNSET
+    due_at: Union[None, Unset, datetime.datetime] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -96,6 +97,18 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         if not isinstance(self.milestone_type, Unset):
             milestone_type = MilestoneTypeEnum(self.milestone_type).value
 
+        payload_fields: list[dict[str, Any]] = UNSET
+        if not isinstance(self.payload_fields, Unset):
+            payload_fields = []
+            for payload_fields_item_data in self.payload_fields:
+                payload_fields_item: dict[str, Any] = UNSET
+                if not isinstance(payload_fields_item_data, Unset):
+                    payload_fields_item = payload_fields_item_data.to_dict()
+
+                payload_fields.append(payload_fields_item)
+
+        missing_required_fields = self.missing_required_fields
+
         created_dt: str = UNSET
         if not isinstance(self.created_dt, Unset):
             created_dt = self.created_dt.isoformat()
@@ -103,17 +116,6 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
-
-        due_at: Union[None, str]
-        if isinstance(self.due_at, Unset):
-            due_at = UNSET
-        elif isinstance(self.due_at, datetime.datetime):
-            due_at = UNSET
-            if not isinstance(self.due_at, Unset):
-                due_at = self.due_at.isoformat()
-
-        else:
-            due_at = self.due_at
 
         hours_remaining: Union[None, int]
         if isinstance(self.hours_remaining, Unset):
@@ -151,21 +153,6 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         if not isinstance(self.additional_details, Unset):
             additional_details = self.additional_details.to_dict()
 
-        request_received_at: Union[None, Unset, str]
-        if isinstance(self.request_received_at, Unset):
-            request_received_at = UNSET
-        elif isinstance(self.request_received_at, datetime.datetime):
-            request_received_at = UNSET
-            if not isinstance(self.request_received_at, Unset):
-                request_received_at = self.request_received_at.isoformat()
-
-        else:
-            request_received_at = self.request_received_at
-
-        request_source = self.request_source
-
-        request_text = self.request_text
-
         submitted_at: Union[None, Unset, str]
         if isinstance(self.submitted_at, Unset):
             submitted_at = UNSET
@@ -180,6 +167,17 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         owner = self.owner
 
         manual_completion_notes = self.manual_completion_notes
+
+        due_at: Union[None, Unset, str]
+        if isinstance(self.due_at, Unset):
+            due_at = UNSET
+        elif isinstance(self.due_at, datetime.datetime):
+            due_at = UNSET
+            if not isinstance(self.due_at, Unset):
+                due_at = self.due_at.isoformat()
+
+        else:
+            due_at = self.due_at
 
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
@@ -199,12 +197,14 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             field_dict["srp_report"] = srp_report
         if not isinstance(milestone_type, Unset):
             field_dict["milestone_type"] = milestone_type
+        if not isinstance(payload_fields, Unset):
+            field_dict["payload_fields"] = payload_fields
+        if not isinstance(missing_required_fields, Unset):
+            field_dict["missing_required_fields"] = missing_required_fields
         if not isinstance(created_dt, Unset):
             field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
-        if not isinstance(due_at, Unset):
-            field_dict["due_at"] = due_at
         if not isinstance(hours_remaining, Unset):
             field_dict["hours_remaining"] = hours_remaining
         if not isinstance(days_remaining, Unset):
@@ -221,18 +221,14 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             field_dict["status"] = status
         if not isinstance(additional_details, Unset):
             field_dict["additional_details"] = additional_details
-        if not isinstance(request_received_at, Unset):
-            field_dict["request_received_at"] = request_received_at
-        if not isinstance(request_source, Unset):
-            field_dict["request_source"] = request_source
-        if not isinstance(request_text, Unset):
-            field_dict["request_text"] = request_text
         if not isinstance(submitted_at, Unset):
             field_dict["submitted_at"] = submitted_at
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
         if not isinstance(manual_completion_notes, Unset):
             field_dict["manual_completion_notes"] = manual_completion_notes
+        if not isinstance(due_at, Unset):
+            field_dict["due_at"] = due_at
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -247,8 +243,11 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         from ..models.alert import Alert
-        from ..models.srp_report_milestone_create_additional_details import (
-            SRPReportMilestoneCreateAdditionalDetails,
+        from ..models.srp_report_milestone_additional_details import (
+            SRPReportMilestoneAdditionalDetails,
+        )
+        from ..models.srp_report_milestone_payload_fields_item import (
+            SRPReportMilestonePayloadFieldsItem,
         )
 
         d = src_dict.copy()
@@ -275,6 +274,22 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
         else:
             milestone_type = MilestoneTypeEnum(_milestone_type)
 
+        payload_fields = []
+        _payload_fields = d.pop("payload_fields", UNSET)
+        for payload_fields_item_data in _payload_fields or []:
+            _payload_fields_item = payload_fields_item_data
+            payload_fields_item: SRPReportMilestonePayloadFieldsItem
+            if isinstance(_payload_fields_item, Unset):
+                payload_fields_item = UNSET
+            else:
+                payload_fields_item = SRPReportMilestonePayloadFieldsItem.from_dict(
+                    _payload_fields_item
+                )
+
+            payload_fields.append(payload_fields_item)
+
+        missing_required_fields = d.pop("missing_required_fields", UNSET)
+
         _created_dt = d.pop("created_dt", UNSET)
         created_dt: datetime.datetime
         if isinstance(_created_dt, Unset):
@@ -288,28 +303,6 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             updated_dt = UNSET
         else:
             updated_dt = isoparse(_updated_dt)
-
-        def _parse_due_at(data: object) -> Union[None, datetime.datetime]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _due_at_type_0 = data
-                due_at_type_0: datetime.datetime
-                if isinstance(_due_at_type_0, Unset):
-                    due_at_type_0 = UNSET
-                else:
-                    due_at_type_0 = isoparse(_due_at_type_0)
-
-                return due_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, datetime.datetime], data)
-
-        due_at = _parse_due_at(d.pop("due_at", UNSET))
 
         def _parse_hours_remaining(data: object) -> Union[None, int]:
             if data is None:
@@ -360,43 +353,13 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             status = SRPReportMilestoneStatusEnum(_status)
 
         _additional_details = d.pop("additional_details", UNSET)
-        additional_details: Union[Unset, SRPReportMilestoneCreateAdditionalDetails]
+        additional_details: Union[Unset, SRPReportMilestoneAdditionalDetails]
         if isinstance(_additional_details, Unset):
             additional_details = UNSET
         else:
-            additional_details = SRPReportMilestoneCreateAdditionalDetails.from_dict(
+            additional_details = SRPReportMilestoneAdditionalDetails.from_dict(
                 _additional_details
             )
-
-        def _parse_request_received_at(
-            data: object,
-        ) -> Union[None, Unset, datetime.datetime]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, str):
-                    raise TypeError()
-                _request_received_at_type_0 = data
-                request_received_at_type_0: datetime.datetime
-                if isinstance(_request_received_at_type_0, Unset):
-                    request_received_at_type_0 = UNSET
-                else:
-                    request_received_at_type_0 = isoparse(_request_received_at_type_0)
-
-                return request_received_at_type_0
-            except:  # noqa: E722
-                pass
-            return cast(Union[None, Unset, datetime.datetime], data)
-
-        request_received_at = _parse_request_received_at(
-            d.pop("request_received_at", UNSET)
-        )
-
-        request_source = d.pop("request_source", UNSET)
-
-        request_text = d.pop("request_text", UNSET)
 
         def _parse_submitted_at(data: object) -> Union[None, Unset, datetime.datetime]:
             if data is None:
@@ -424,6 +387,28 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
 
         manual_completion_notes = d.pop("manual_completion_notes", UNSET)
 
+        def _parse_due_at(data: object) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _due_at_type_0 = data
+                due_at_type_0: datetime.datetime
+                if isinstance(_due_at_type_0, Unset):
+                    due_at_type_0 = UNSET
+                else:
+                    due_at_type_0 = isoparse(_due_at_type_0)
+
+                return due_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        due_at = _parse_due_at(d.pop("due_at", UNSET))
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -441,9 +426,10 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             uuid=uuid,
             srp_report=srp_report,
             milestone_type=milestone_type,
+            payload_fields=payload_fields,
+            missing_required_fields=missing_required_fields,
             created_dt=created_dt,
             updated_dt=updated_dt,
-            due_at=due_at,
             hours_remaining=hours_remaining,
             days_remaining=days_remaining,
             is_overdue=is_overdue,
@@ -452,12 +438,10 @@ class RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201(OSIDBModel):
             alerts=alerts,
             status=status,
             additional_details=additional_details,
-            request_received_at=request_received_at,
-            request_source=request_source,
-            request_text=request_text,
             submitted_at=submitted_at,
             owner=owner,
             manual_completion_notes=manual_completion_notes,
+            due_at=due_at,
             dt=dt,
             env=env,
             revision=revision,

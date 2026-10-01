@@ -7,14 +7,12 @@ from ...client import AuthenticatedClient, Client
 from ...models.regulatory_reporting_api_v1_srp_reports_milestones_create_response_201 import (
     RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201,
 )
-from ...models.srp_report_milestone_create_request import (
-    SRPReportMilestoneCreateRequest,
-)
+from ...models.srp_report_milestone_request import SRPReportMilestoneRequest
 from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = SRPReportMilestoneCreateRequest
+REQUEST_BODY_TYPE = SRPReportMilestoneRequest
 
 
 def _get_kwargs(
@@ -22,9 +20,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -35,7 +33,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, SRPReportMilestoneCreateRequest):
+    if check_nested_instance(body, SRPReportMilestoneRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -81,9 +79,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
     ],
 ) -> Response[RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201]:
     """ViewSet for SRP Report Milestones (nested under reports).
@@ -93,31 +91,22 @@ def sync_detailed(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
         report_uuid (str):
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
+            Includes computed fields for deadline tracking and status.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -149,9 +138,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
     ],
 ) -> Optional[RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201]:
     """ViewSet for SRP Report Milestones (nested under reports).
@@ -161,31 +150,22 @@ def sync(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
         report_uuid (str):
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
+            Includes computed fields for deadline tracking and status.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -207,9 +187,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
     ],
 ) -> Response[RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201]:
     """ViewSet for SRP Report Milestones (nested under reports).
@@ -219,31 +199,22 @@ async def asyncio_detailed(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
         report_uuid (str):
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
+            Includes computed fields for deadline tracking and status.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -275,9 +246,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
-        SRPReportMilestoneCreateRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
+        SRPReportMilestoneRequest,
     ],
 ) -> Optional[RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201]:
     """ViewSet for SRP Report Milestones (nested under reports).
@@ -287,31 +258,22 @@ async def asyncio(
     report
     - GET /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Retrieve single
     milestone
-    - POST /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones - Create
-    additional_information_response milestone
     - PUT /regulatory-reporting/api/v1/srp-reports/{report_uuid}/milestones/{uuid} - Update
 
     Standard milestones (24h, 72h, final) are auto-created by signals.
-    Only additional_information_response milestones can be created via POST.
     PATCH is globally blacklisted (BLACKLISTED_HTTP_METHODS).
 
     Args:
         report_uuid (str):
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
-        body (SRPReportMilestoneCreateRequest): Serializer for creating SRP Report Milestones.
+            Includes computed fields for deadline tracking and status.
+        body (SRPReportMilestoneRequest): Serializer for SRP Report Milestones.
 
-            Only additional_information_response milestones can be created via the API;
-            all other milestone types are auto-created by signals.
-            ACLs are inherited from the parent report in the view's perform_create.
+            Includes computed fields for deadline tracking and status.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

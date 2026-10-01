@@ -1,5 +1,7 @@
 """Contains all the data models used in inputs/outputs"""
 
+from .additional_information_request import AdditionalInformationRequest
+from .additional_information_request_request import AdditionalInformationRequestRequest
 from .affect import Affect
 from .affect_bulk_post_put_response import AffectBulkPostPutResponse
 from .affect_bulk_post_put_response_failed_item import (
@@ -709,6 +711,9 @@ from .package import Package
 from .package_request import PackageRequest
 from .package_ver import PackageVer
 from .package_ver_request import PackageVerRequest
+from .paginated_additional_information_request_list import (
+    PaginatedAdditionalInformationRequestList,
+)
 from .paginated_affect_cvss_list import PaginatedAffectCVSSList
 from .paginated_affect_cvssv2_list import PaginatedAffectCVSSV2List
 from .paginated_affect_list import PaginatedAffectList
@@ -793,6 +798,18 @@ from .regulatory_reporting_api_v1_srp_reports_create_response_201 import (
 from .regulatory_reporting_api_v1_srp_reports_list_response_200 import (
     RegulatoryReportingApiV1SrpReportsListResponse200,
 )
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_create_response_201 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsCreateResponse201,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_list_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsListResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_retrieve_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsRetrieveResponse200,
+)
+from .regulatory_reporting_api_v1_srp_reports_milestones_additional_information_requests_update_response_200 import (
+    RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsUpdateResponse200,
+)
 from .regulatory_reporting_api_v1_srp_reports_milestones_create_response_201 import (
     RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201,
 )
@@ -833,13 +850,8 @@ from .srp_report_create import SRPReportCreate
 from .srp_report_create_request import SRPReportCreateRequest
 from .srp_report_milestone import SRPReportMilestone
 from .srp_report_milestone_additional_details import SRPReportMilestoneAdditionalDetails
-from .srp_report_milestone_create import SRPReportMilestoneCreate
-from .srp_report_milestone_create_additional_details import (
-    SRPReportMilestoneCreateAdditionalDetails,
-)
-from .srp_report_milestone_create_request import SRPReportMilestoneCreateRequest
-from .srp_report_milestone_create_request_additional_details import (
-    SRPReportMilestoneCreateRequestAdditionalDetails,
+from .srp_report_milestone_payload_fields_item import (
+    SRPReportMilestonePayloadFieldsItem,
 )
 from .srp_report_milestone_request import SRPReportMilestoneRequest
 from .srp_report_milestone_request_additional_details import (
@@ -849,6 +861,28 @@ from .srp_report_milestone_status_enum import SRPReportMilestoneStatusEnum
 from .srp_report_request import SRPReportRequest
 from .srp_report_status_enum import SRPReportStatusEnum
 from .state_enum import StateEnum
+from .stats_api_v1_beta_flaws_retrieve_group_by_item import (
+    StatsApiV1BetaFlawsRetrieveGroupByItem,
+)
+from .stats_api_v1_beta_flaws_retrieve_impact_in_item import (
+    StatsApiV1BetaFlawsRetrieveImpactInItem,
+)
+from .stats_api_v1_beta_flaws_retrieve_impact_not_in_item import (
+    StatsApiV1BetaFlawsRetrieveImpactNotInItem,
+)
+from .stats_api_v1_beta_flaws_retrieve_response_200 import (
+    StatsApiV1BetaFlawsRetrieveResponse200,
+)
+from .stats_api_v1_beta_flaws_retrieve_visibility_in_item import (
+    StatsApiV1BetaFlawsRetrieveVisibilityInItem,
+)
+from .stats_api_v1_beta_flaws_retrieve_visibility_not_in_item import (
+    StatsApiV1BetaFlawsRetrieveVisibilityNotInItem,
+)
+from .stats_flaws_response import StatsFlawsResponse
+from .stats_flaws_response_groups_item import StatsFlawsResponseGroupsItem
+from .stats_meta import StatsMeta
+from .stats_meta_filters import StatsMetaFilters
 from .stream_component import StreamComponent
 from .supported_products import SupportedProducts
 from .sync_manager import SyncManager
@@ -898,6 +932,8 @@ from .workflows_healthy_retrieve_response_200 import WorkflowsHealthyRetrieveRes
 from .workflows_retrieve_response_200 import WorkflowsRetrieveResponse200
 
 __all__ = (
+    "AdditionalInformationRequest",
+    "AdditionalInformationRequestRequest",
     "Affect",
     "AffectBulkPostPutResponse",
     "AffectBulkPostPutResponseFailedItem",
@@ -1247,6 +1283,7 @@ __all__ = (
     "PackageRequest",
     "PackageVer",
     "PackageVerRequest",
+    "PaginatedAdditionalInformationRequestList",
     "PaginatedAffectCVSSList",
     "PaginatedAffectCVSSV2List",
     "PaginatedAffectList",
@@ -1297,6 +1334,10 @@ __all__ = (
     "RegulatoryReportingApiV1NotificationsUpstreamUpdateResponse200",
     "RegulatoryReportingApiV1SrpReportsCreateResponse201",
     "RegulatoryReportingApiV1SrpReportsListResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsCreateResponse201",
+    "RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsListResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsRetrieveResponse200",
+    "RegulatoryReportingApiV1SrpReportsMilestonesAdditionalInformationRequestsUpdateResponse200",
     "RegulatoryReportingApiV1SrpReportsMilestonesCreateResponse201",
     "RegulatoryReportingApiV1SrpReportsMilestonesListResponse200",
     "RegulatoryReportingApiV1SrpReportsMilestonesRetrieveResponse200",
@@ -1317,16 +1358,23 @@ __all__ = (
     "SRPReportCreateRequest",
     "SRPReportMilestone",
     "SRPReportMilestoneAdditionalDetails",
-    "SRPReportMilestoneCreate",
-    "SRPReportMilestoneCreateAdditionalDetails",
-    "SRPReportMilestoneCreateRequest",
-    "SRPReportMilestoneCreateRequestAdditionalDetails",
+    "SRPReportMilestonePayloadFieldsItem",
     "SRPReportMilestoneRequest",
     "SRPReportMilestoneRequestAdditionalDetails",
     "SRPReportMilestoneStatusEnum",
     "SRPReportRequest",
     "SRPReportStatusEnum",
     "StateEnum",
+    "StatsApiV1BetaFlawsRetrieveGroupByItem",
+    "StatsApiV1BetaFlawsRetrieveImpactInItem",
+    "StatsApiV1BetaFlawsRetrieveImpactNotInItem",
+    "StatsApiV1BetaFlawsRetrieveResponse200",
+    "StatsApiV1BetaFlawsRetrieveVisibilityInItem",
+    "StatsApiV1BetaFlawsRetrieveVisibilityNotInItem",
+    "StatsFlawsResponse",
+    "StatsFlawsResponseGroupsItem",
+    "StatsMeta",
+    "StatsMetaFilters",
     "StreamComponent",
     "SupportedProducts",
     "SyncManager",

@@ -40,7 +40,11 @@ class User(OSIDBModel):
         if not isinstance(self.profile, Unset):
             profile = self.profile.to_dict()
 
-        email = self.email
+        email: Union[Unset, str]
+        if isinstance(self.email, Unset):
+            email = UNSET
+        else:
+            email = self.email
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -71,7 +75,14 @@ class User(OSIDBModel):
         else:
             profile = Profile.from_dict(_profile)
 
-        email = d.pop("email", UNSET)
+        def _parse_email(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        email = _parse_email(d.pop("email", UNSET))
 
         user = cls(
             username=username,

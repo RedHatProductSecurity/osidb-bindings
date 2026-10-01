@@ -76,7 +76,11 @@ class SRPReportCreateRequest(OSIDBModel):
 
         srp_reference_id = self.srp_reference_id
 
-        srp_reference_url = self.srp_reference_url
+        srp_reference_url: Union[Unset, str]
+        if isinstance(self.srp_reference_url, Unset):
+            srp_reference_url = UNSET
+        else:
+            srp_reference_url = self.srp_reference_url
 
         member_states_available: Union[Unset, list[str]] = UNSET
         if not isinstance(self.member_states_available, Unset):
@@ -158,11 +162,22 @@ class SRPReportCreateRequest(OSIDBModel):
             else (None, str(self.srp_reference_id).encode(), "text/plain")
         )
 
-        srp_reference_url = (
-            self.srp_reference_url
-            if isinstance(self.srp_reference_url, Unset)
-            else (None, str(self.srp_reference_url).encode(), "text/plain")
-        )
+        srp_reference_url: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.srp_reference_url, Unset):
+            srp_reference_url = UNSET
+        elif isinstance(self.srp_reference_url, str):
+            srp_reference_url = (
+                None,
+                str(self.srp_reference_url).encode(),
+                "text/plain",
+            )
+        else:
+            srp_reference_url = (
+                None,
+                str(self.srp_reference_url).encode(),
+                "text/plain",
+            )
 
         member_states_available: Union[Unset, tuple[None, bytes, str]] = UNSET
         if not isinstance(self.member_states_available, Unset):
@@ -254,7 +269,14 @@ class SRPReportCreateRequest(OSIDBModel):
 
         srp_reference_id = d.pop("srp_reference_id", UNSET)
 
-        srp_reference_url = d.pop("srp_reference_url", UNSET)
+        def _parse_srp_reference_url(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        srp_reference_url = _parse_srp_reference_url(d.pop("srp_reference_url", UNSET))
 
         member_states_available = cast(
             list[str], d.pop("member_states_available", UNSET)

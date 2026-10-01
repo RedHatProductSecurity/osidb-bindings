@@ -77,7 +77,11 @@ class RegulatoryReportingApiV1UpstreamProjectsCreateResponse201(OSIDBModel):
 
         component_name = self.component_name
 
-        repository_url = self.repository_url
+        repository_url: Union[Unset, str]
+        if isinstance(self.repository_url, Unset):
+            repository_url = UNSET
+        else:
+            repository_url = self.repository_url
 
         security_contact = self.security_contact
 
@@ -94,7 +98,11 @@ class RegulatoryReportingApiV1UpstreamProjectsCreateResponse201(OSIDBModel):
             if not isinstance(self.contact_method, Unset):
                 contact_method = BlankEnum(self.contact_method).value
 
-        contact_url = self.contact_url
+        contact_url: Union[Unset, str]
+        if isinstance(self.contact_url, Unset):
+            contact_url = UNSET
+        else:
+            contact_url = self.contact_url
 
         source = self.source
 
@@ -216,7 +224,14 @@ class RegulatoryReportingApiV1UpstreamProjectsCreateResponse201(OSIDBModel):
 
         component_name = d.pop("component_name", UNSET)
 
-        repository_url = d.pop("repository_url", UNSET)
+        def _parse_repository_url(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        repository_url = _parse_repository_url(d.pop("repository_url", UNSET))
 
         security_contact = d.pop("security_contact", UNSET)
 
@@ -253,7 +268,14 @@ class RegulatoryReportingApiV1UpstreamProjectsCreateResponse201(OSIDBModel):
 
         contact_method = _parse_contact_method(d.pop("contact_method", UNSET))
 
-        contact_url = d.pop("contact_url", UNSET)
+        def _parse_contact_url(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        contact_url = _parse_contact_url(d.pop("contact_url", UNSET))
 
         source = d.pop("source", UNSET)
 
