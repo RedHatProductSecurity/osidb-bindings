@@ -12,14 +12,9 @@ from typing import Any, Callable, get_args, get_origin
 
 import aiohttp
 import requests
-from requests_gssapi import HTTPSPNEGOAuth
 
+from .auth import TokenManager, is_unauthorized
 from .bindings.python_client import AuthenticatedClient, models
-from .bindings.python_client.api.auth import (
-    auth_token_create,
-    auth_token_refresh_create,
-    auth_token_retrieve,
-)
 from .constants import (
     ALL_SESSION_OPERATIONS,
     DEFAULT_LIMIT,
@@ -37,7 +32,6 @@ from .exceptions import (
 )
 from .helpers import get_env, parse_version_key
 from .iterators import Paginator
-from .token_cache import TokenCache, resolve_kerberos_principal
 
 MAX_CONCURRENCY = get_env("OSIDB_BINDINGS_MAX_CONCURRENCY", "10", is_int=True)
 
@@ -62,12 +56,7 @@ def file_trackers(
 
     transformed_data = serialize_data(form_data, model)
     sync_fn = get_sync_function(method_module)
-    return sync_fn(
-        *args,
-        client=self.session.get_client_with_new_access_token(),
-        body=transformed_data,
-        **kwargs,
-    )
+    return self.session.call(sync_fn, *args, body=transformed_data, **kwargs)
 
 
 def promote_flaw(self, id, *args, api_version: str | None = None, **kwargs):
@@ -77,12 +66,7 @@ def promote_flaw(self, id, *args, api_version: str | None = None, **kwargs):
         api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
-    return sync_fn(
-        id,
-        *args,
-        client=self.session.get_client_with_new_access_token(),
-        **kwargs,
-    )
+    return self.session.call(sync_fn, id, *args, **kwargs)
 
 
 def reject_flaw(
@@ -106,13 +90,7 @@ def reject_flaw(
             'and the operation "reject" is not defined.'
         )
     transformed_data = serialize_data(form_data, model)
-    return sync_fn(
-        id,
-        *args,
-        client=self.session.get_client_with_new_access_token(),
-        body=transformed_data,
-        **kwargs,
-    )
+    return self.session.call(sync_fn, id, *args, body=transformed_data, **kwargs)
 
 
 def reset_flaw(self, id, *args, api_version: str | None = None, **kwargs):
@@ -122,12 +100,7 @@ def reset_flaw(self, id, *args, api_version: str | None = None, **kwargs):
         api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
-    return sync_fn(
-        id,
-        *args,
-        client=self.session.get_client_with_new_access_token(),
-        **kwargs,
-    )
+    return self.session.call(sync_fn, id, *args, **kwargs)
 
 
 def revert_flaw(self, id, *args, api_version: str | None = None, **kwargs):
@@ -137,12 +110,7 @@ def revert_flaw(self, id, *args, api_version: str | None = None, **kwargs):
         api_version=api_version,
     )
     sync_fn = get_sync_function(method_module)
-    return sync_fn(
-        id,
-        *args,
-        client=self.session.get_client_with_new_access_token(),
-        **kwargs,
-    )
+    return self.session.call(sync_fn, id, *args, **kwargs)
 
 
 def double_underscores_to_single_underscores(fn):
@@ -245,22 +213,7 @@ class Session:
         user_agent: str | None = None,
         token_cache_enabled: bool = True,
     ):
-        # Store auth for the refresh token acquirement
-        self.auth = auth
-        self.refresh_token = refresh_token
         self.endpoints = self.__cache_endpoints()
-        if token_cache_enabled:
-            if isinstance(auth, tuple):
-                identity = auth[0]
-            elif auth == "kerberos":
-                identity = resolve_kerberos_principal()
-            else:
-                identity = None
-            self.token_cache: TokenCache | None = TokenCache(
-                server_url=base_url, identity=identity
-            )
-        else:
-            self.token_cache = None
 
         if user_agent is not None:
             if USERAGENT_PLACEHOLDER in user_agent:
@@ -282,6 +235,15 @@ class Session:
             },
             verify_ssl=verify_ssl,
         )
+
+        self.token_manager = TokenManager(
+            client=self.__client,
+            auth=auth,
+            refresh_token=refresh_token,
+            token_cache_enabled=token_cache_enabled,
+        )
+        # authenticate right away so invalid credentials fail early
+        self.token_manager.get_access_token()
 
         self.flaws = SessionOperationsGroup(
             self,
@@ -392,17 +354,9 @@ class Session:
             allowed_operations=("retrieve", "list"),
         )
 
-        if self.refresh_token is None:
-            cached = self.token_cache.read() if self.token_cache else None
-            if cached is not None:
-                self.refresh_token = cached
-            else:
-                self.refresh_token = self.__get_refresh_token()
-                if self.token_cache:
-                    self.token_cache.write(self.refresh_token)
-        else:
-            if self.token_cache:
-                self.token_cache.write(self.refresh_token)
+    @property
+    def refresh_token(self) -> str | None:
+        return self.token_manager.refresh_token
 
     def get_latest_endpoint_version(
         self, api_section: str, resource_name: str, method: str
@@ -444,54 +398,61 @@ class Session:
             package="osidb_bindings",
         )
         status_fn = get_sync_function(status_module)
-        return status_fn(client=self.get_client_with_new_access_token())
+        return self.call(status_fn)
 
-    def __get_refresh_token(self) -> str:
-        """Get resfresh token based on the auth type"""
+    def get_client_with_new_access_token(
+        self, force_refresh: bool = False
+    ) -> AuthenticatedClient:
+        """
+        Create a new client with a valid access token
 
-        if isinstance(self.auth, tuple):
-            response = auth_token_create.sync(
-                client=self.__client,
-                body=models.TokenObtainPairRequest.from_dict(
-                    {"username": self.auth[0], "password": self.auth[1]}
-                ),
-            )
-        else:
-            response = auth_token_retrieve.sync(
-                client=self.__client.with_auth(HTTPSPNEGOAuth())
-            )
-        return response.refresh
-
-    def __get_access_token(self) -> str:
-        """Get new access token using the refresh token"""
-
-        try:
-            response = auth_token_refresh_create.sync(
-                client=self.__client,
-                body=models.TokenRefreshRequest.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
-            )
-        except requests.HTTPError:
-            # expired refresh token, renew it and try again
-            self.refresh_token = self.__get_refresh_token()
-            if self.token_cache:
-                self.token_cache.write(self.refresh_token)
-            response = auth_token_refresh_create.sync(
-                client=self.__client,
-                body=models.TokenRefreshRequest.from_dict(
-                    {"refresh": self.refresh_token}
-                ),
-            )
-
-        return response.access
-
-    def get_client_with_new_access_token(self) -> AuthenticatedClient:
-        """Create a new client with refreshed access token"""
+        The access token is reused until it is about to expire,
+        pass force_refresh=True to always request a new one
+        """
 
         return self.__client.with_headers(
-            {"Authorization": f"Bearer {self.__get_access_token()}"}
+            {
+                "Authorization": f"Bearer {self.token_manager.get_access_token(force_refresh)}"
+            }
         )
+
+    def call(self, fn: Callable, *args, **kwargs):
+        """
+        Call the endpoint function with an authenticated client,
+        on 401 request a new access token and retry once
+        """
+
+        try:
+            return fn(*args, client=self.get_client_with_new_access_token(), **kwargs)
+        except requests.HTTPError as e:
+            if not is_unauthorized(e):
+                raise
+        return fn(
+            *args,
+            client=self.get_client_with_new_access_token(force_refresh=True),
+            **kwargs,
+        )
+
+    async def call_async(
+        self, fn: Callable, async_session: aiohttp.ClientSession, *args, **kwargs
+    ):
+        """
+        Await the async endpoint function with an authenticated client,
+        on 401 request a new access token and retry once
+        """
+
+        client = self.get_client_with_new_access_token().with_async_session(
+            async_session
+        )
+        try:
+            return await fn(*args, client=client, **kwargs)
+        except aiohttp.ClientResponseError as e:
+            if not is_unauthorized(e):
+                raise
+        client = self.get_client_with_new_access_token(
+            force_refresh=True
+        ).with_async_session(async_session)
+        return await fn(*args, client=client, **kwargs)
 
 
 class SessionOperationsGroup:
@@ -594,12 +555,7 @@ class SessionOperationsGroup:
                 api_version=api_version,
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                id,
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                **kwargs,
-            )
+            return self.session.call(sync_fn, id, *args, **kwargs)
         else:
             self.__raise_operation_unsupported("retrieve")
 
@@ -609,9 +565,7 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
-            response = sync_fn(
-                *args, client=self.session.get_client_with_new_access_token(), **kwargs
-            )
+            response = self.session.call(sync_fn, *args, **kwargs)
             return Paginator.make_response_iterable(
                 response, self.retrieve_list, *args, api_version=api_version, **kwargs
             )
@@ -633,12 +587,7 @@ class SessionOperationsGroup:
 
             serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                body=serialized_data,
-                **kwargs,
-            )
+            return self.session.call(sync_fn, *args, body=serialized_data, **kwargs)
         else:
             self.__raise_operation_unsupported("create")
 
@@ -657,12 +606,7 @@ class SessionOperationsGroup:
 
             serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                body=serialized_data,
-                **kwargs,
-            )
+            return self.session.call(sync_fn, *args, body=serialized_data, **kwargs)
         else:
             self.__raise_operation_unsupported("bulk_create")
 
@@ -686,13 +630,7 @@ class SessionOperationsGroup:
 
             serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                id,
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                body=serialized_data,
-                **kwargs,
-            )
+            return self.session.call(sync_fn, id, *args, body=serialized_data, **kwargs)
         else:
             self.__raise_operation_unsupported("update")
 
@@ -711,12 +649,7 @@ class SessionOperationsGroup:
 
             serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                body=serialized_data,
-                **kwargs,
-            )
+            return self.session.call(sync_fn, *args, body=serialized_data, **kwargs)
         else:
             self.__raise_operation_unsupported("bulk_update")
 
@@ -728,12 +661,7 @@ class SessionOperationsGroup:
                 api_version=api_version,
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                id,
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                **kwargs,
-            )
+            return self.session.call(sync_fn, id, *args, **kwargs)
         else:
             self.__raise_operation_unsupported("delete")
 
@@ -752,12 +680,7 @@ class SessionOperationsGroup:
 
             serialized_data = serialize_data(form_data, model)
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                *args,
-                client=self.session.get_client_with_new_access_token(),
-                body=serialized_data,
-                **kwargs,
-            )
+            return self.session.call(sync_fn, *args, body=serialized_data, **kwargs)
         else:
             self.__raise_operation_unsupported("bulk_delete")
 
@@ -773,9 +696,7 @@ class SessionOperationsGroup:
             kwargs["limit"] = 1
             kwargs["include_fields"] = OSIDB_BINDINGS_PLACEHOLDER_FIELD
 
-            response = sync_fn(
-                *args, client=self.session.get_client_with_new_access_token(), **kwargs
-            )
+            response = self.session.call(sync_fn, *args, **kwargs)
             return response.count
         else:
             self.__raise_operation_unsupported("retrieve_list")
@@ -786,10 +707,7 @@ class SessionOperationsGroup:
                 resource_name=self.resource_name, method="list", api_version=api_version
             )
             sync_fn = get_sync_function(method_module)
-            return sync_fn(
-                client=self.session.get_client_with_new_access_token(),
-                search=searched_text,
-            )
+            return self.session.call(sync_fn, search=searched_text)
         else:
             self.__raise_operation_unsupported("search")
 
@@ -845,15 +763,9 @@ class SessionOperationsGroup:
             results = []
             connector = aiohttp.TCPConnector(limit=MAX_CONCURRENCY)
             async with aiohttp.ClientSession(connector=connector) as async_session:
-                client = (
-                    self.session.get_client_with_new_access_token().with_async_session(
-                        async_session
-                    )
-                )
-
                 # await first response page
-                first_response = await async_fn(
-                    *args, limit=limit, client=client, **kwargs
+                first_response = await self.session.call_async(
+                    async_fn, async_session, *args, limit=limit, **kwargs
                 )
                 results.append(first_response)
 
@@ -869,7 +781,14 @@ class SessionOperationsGroup:
 
                 # retrieve rest of the pages
                 tasks = [
-                    async_fn(*args, limit=limit, offset=offset, client=client, **kwargs)
+                    self.session.call_async(
+                        async_fn,
+                        async_session,
+                        *args,
+                        limit=limit,
+                        offset=offset,
+                        **kwargs,
+                    )
                     for offset in range(limit, results_count, limit)
                 ]
                 results.extend(await asyncio.gather(*tasks))
