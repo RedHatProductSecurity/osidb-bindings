@@ -131,17 +131,20 @@ Used for OSIDB instances with Kerberos authentication enabled (production/stagin
 session = osidb_bindings.new_session(osidb_server_uri="https://osidb-prod.example.com/")
 ```
 
-#### Refresh Token Caching
+#### Token Caching
 
-By default, the bindings automatically cache the refresh token to a file on disk.
+By default, the bindings automatically cache the refresh token and the access token to a file on disk.
 This means subsequent `new_session()` calls skip the initial authentication
-and reuse the cached token instead, reducing load on the server. The cache
-persists across script runs, so even independent processes benefit from it.
+and reuse the cached refresh token instead, reducing load on the server. Similarly,
+operations reuse the cached access token instead of requesting a new one before every API call.
+The cache persists across script runs, so even independent processes benefit from it.
 
-The cache is transparent. If the cached token has expired, the session automatically
-re-authenticates and updates the cache file.
+The cache is transparent. If the cached refresh token has expired, the session automatically
+re-authenticates and updates the cache file. The access token is renewed shortly before
+it expires, and if a request is rejected as unauthorized (401), a new access token is
+requested and the request is retried once.
 
-To disable caching:
+To disable caching on disk (the access token is then reused only within the session):
 
 ```python
 session = osidb_bindings.new_session(
@@ -178,10 +181,10 @@ When a provided refresh token expires, the session will automatically fall back 
 using the configured authentication method (Kerberos or username/password).
 
 > **Note on token expiry in distributed environments:** The refresh token typically lives ~24 hours.
-> When it expires, each worker that holds the stale token will re-authenticate independently on its
-> next request. The token refresh happens lazily — `session.refresh_token` is only updated during
-> the first API call that encounters the expired token, not at session creation time. To keep the
-> new token available for other workers, write it back to shared storage after the first API call, eg.:
+> When it expires, each worker that holds the stale token will re-authenticate independently. This
+> happens the next time the session needs a new access token, at session creation or on a later
+> request. To keep the new token available for other workers, write it back to shared storage
+> whenever `session.refresh_token` differs from the token you passed in, eg.:
 >
 > ```python
 > def fetch_flaw(uri, flaw_id, redis_client):

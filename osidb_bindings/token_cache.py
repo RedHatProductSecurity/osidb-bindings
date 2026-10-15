@@ -1,5 +1,5 @@
 """
-osidb-bindings refresh token file cache
+osidb-bindings refresh and access token file cache
 """
 
 import base64
@@ -38,7 +38,7 @@ def resolve_kerberos_principal() -> str | None:
 
 
 class TokenCache:
-    """Manages reading/writing refresh tokens to disk cache files."""
+    """Manages reading/writing refresh and access tokens to disk cache files."""
 
     def __init__(self, server_url: str, identity: str | None = None) -> None:
         self.server_url: str = server_url
@@ -92,18 +92,22 @@ class TokenCache:
         return self.cache_dir / f"{self.cache_key}.json"
 
     @staticmethod
-    def is_token_expired(token: str) -> bool:
-        """Check if a JWT token has expired by decoding its payload."""
+    def is_token_expired(token: str, leeway: int = 0) -> bool:
+        """
+        Check if a JWT token has expired by decoding its payload.
+
+        A token is treated as expired `leeway` seconds before its actual expiration.
+        """
         try:
             payload: str = token.split(".")[1]
             payload += "=" * (4 - len(payload) % 4)
             claims: dict = json.loads(base64.urlsafe_b64decode(payload))
-            return claims["exp"] < time.time()
+            return claims["exp"] - leeway < time.time()
         except Exception:
             return True
 
-    def read(self) -> str | None:
-        """Read cached refresh token, or None if absent/invalid/expired/unreadable."""
+    def read_data(self) -> dict | None:
+        """Read the whole cache file, or None if absent/invalid/unreadable."""
         path: Path | None = self.cache_file()
         if path is None or not path.exists():
             return None
@@ -113,10 +117,7 @@ class TokenCache:
                 return None
             if data.get("version") != CACHE_VERSION:
                 return None
-            token: str | None = data.get("refresh_token")
-            if token is None or self.is_token_expired(token):
-                return None
-            return token
+            return data
         except Exception as e:
             print(
                 f"WARNING: Token cache read failed: {e}. "
@@ -124,18 +125,18 @@ class TokenCache:
             )
             return None
 
-    def write(self, token: str) -> None:
-        """Write refresh token to cache file with restrictive permissions."""
+    def write_data(self, data: dict) -> None:
+        """Write the whole cache file atomically with restrictive permissions."""
         path: Path | None = self.cache_file()
         if path is None:
             return
         tmp_path: Path = path.with_suffix(f".tmp.{os.getpid()}")
         try:
-            data: str = json.dumps(
+            content: str = json.dumps(
                 {
+                    **data,
                     "version": CACHE_VERSION,
                     "server_url": self.server_url,
-                    "refresh_token": token,
                     "created_at": datetime.datetime.now(
                         datetime.timezone.utc
                     ).isoformat(),
@@ -149,7 +150,7 @@ class TokenCache:
             )
             os.chmod(tmp_path, CACHE_FILE_PERMISSIONS)
             try:
-                os.write(fd, data.encode())
+                os.write(fd, content.encode())
             finally:
                 os.close(fd)
             os.replace(tmp_path, path)
@@ -162,3 +163,21 @@ class TokenCache:
                 tmp_path.unlink(missing_ok=True)
             except OSError:
                 pass
+
+    def read_token(self, key: str, leeway: int = 0) -> str | None:
+        """Read cached token, or None if absent/invalid/expired/unreadable."""
+        data: dict | None = self.read_data()
+        if data is None:
+            return None
+        token: str | None = data.get(key)
+        if token is None or self.is_token_expired(token, leeway):
+            return None
+        return token
+
+    def write_token(self, key: str, token: str) -> None:
+        """Write token to cache file, keeping the other cached tokens."""
+        # read-modify-write keeps the other token; a concurrent writer may win the
+        # race and drop our update, which only costs an extra token request later
+        data: dict = self.read_data() or {}
+        data[key] = token
+        self.write_data(data)

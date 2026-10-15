@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- access token caching to avoid requesting a new access token before every API call (OSIDB-5749)
+- automatic access token renewal and retry on 401 responses (OSIDB-5749)
 
 ## [5.19.0] - 2026-10-15
 
