@@ -33,6 +33,9 @@ reviews:
     - "!yarn.lock"
     # keeps complaining about empty line after header
     - "!CHANGELOG.md"
+    # openapi-python-client output rendered from openapi_schema.yml; fixes
+    # belong in templates_0.22.0/ or bindings_config.yml, never here
+    - "!osidb_bindings/bindings/**"
 
   auto_review:
     enabled: true
@@ -44,6 +47,29 @@ reviews:
       - "release-\\d+\\.\\d+\\.\\d+(-prep)?$"
 
   path_instructions:
+
+    # ── Project-specific: bindings generation ────────────────────
+    - path: "osidb_bindings/templates_0.22.0/**"
+      instructions: |
+        Jinja templates for openapi-python-client. They render every file in
+        osidb_bindings/bindings/ (excluded from review), so a bug here repeats
+        across hundreds of endpoints and models. Review thoroughly: sync/async
+        parity, response headers and status handling, error handling, typing,
+        and serialization of optional/unset values.
+
+    - path: "osidb_bindings/openapi_schema.yml"
+      instructions: |
+        Upstream-owned schema downloaded from OSIDB. Never comment on its own
+        content, naming, descriptions, or style, and never suggest editing it.
+        Only comment when a removed or renamed operation, resource, or API
+        version would break hand-written code. osidb_bindings/session.py
+        resolves endpoints dynamically by module name
+        "{section}_api_{version}_{resource}_{method}" (importlib and
+        ENDPOINT_NAMES), so static tools will not catch such breakage. Its
+        endpoint cache parses the version as "v[^_]+", so also flag a new API
+        version that would contain an underscore in the generated module name
+        (e.g. "v2.1" -> "v2_1", "v2_beta"). Also check helpers.py,
+        iterators.py, and constants.py.
 
     # ── Injection & input validation ─────────────────────────────
     # Skills: input-validation-injection, web-application-security
