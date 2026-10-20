@@ -34,6 +34,8 @@ class SRPReportMilestoneRequest(OSIDBModel):
                 auto-derived payload fields at submission time.
             submitted_at (Union[None, Unset, datetime.datetime]): When this milestone was submitted
             owner (Union[Unset, str]): Owner of this milestone
+            mitigation_created_at (Union[None, Unset, datetime.datetime]): When the mitigation or patch became available
+            mitigation_link (Union[Unset, str]): Link to the mitigation or patch used for reporting
             manual_completion_notes (Union[Unset, str]): Manual completion notes
             due_at (Union[None, Unset, datetime.datetime]):
     """
@@ -45,6 +47,8 @@ class SRPReportMilestoneRequest(OSIDBModel):
     )
     submitted_at: Union[None, Unset, datetime.datetime] = UNSET
     owner: Union[Unset, str] = UNSET
+    mitigation_created_at: Union[None, Unset, datetime.datetime] = UNSET
+    mitigation_link: Union[Unset, str] = UNSET
     manual_completion_notes: Union[Unset, str] = UNSET
     due_at: Union[None, Unset, datetime.datetime] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -75,6 +79,23 @@ class SRPReportMilestoneRequest(OSIDBModel):
 
         owner = self.owner
 
+        mitigation_created_at: Union[None, Unset, str]
+        if isinstance(self.mitigation_created_at, Unset):
+            mitigation_created_at = UNSET
+        elif isinstance(self.mitigation_created_at, datetime.datetime):
+            mitigation_created_at = UNSET
+            if not isinstance(self.mitigation_created_at, Unset):
+                mitigation_created_at = self.mitigation_created_at.isoformat()
+
+        else:
+            mitigation_created_at = self.mitigation_created_at
+
+        mitigation_link: Union[Unset, str]
+        if isinstance(self.mitigation_link, Unset):
+            mitigation_link = UNSET
+        else:
+            mitigation_link = self.mitigation_link
+
         manual_completion_notes = self.manual_completion_notes
 
         due_at: Union[None, Unset, str]
@@ -100,6 +121,10 @@ class SRPReportMilestoneRequest(OSIDBModel):
             field_dict["submitted_at"] = submitted_at
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
+        if not isinstance(mitigation_created_at, Unset):
+            field_dict["mitigation_created_at"] = mitigation_created_at
+        if not isinstance(mitigation_link, Unset):
+            field_dict["mitigation_link"] = mitigation_link
         if not isinstance(manual_completion_notes, Unset):
             field_dict["manual_completion_notes"] = manual_completion_notes
         if not isinstance(due_at, Unset):
@@ -141,6 +166,30 @@ class SRPReportMilestoneRequest(OSIDBModel):
             else (None, str(self.owner).encode(), "text/plain")
         )
 
+        mitigation_created_at: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.mitigation_created_at, Unset):
+            mitigation_created_at = UNSET
+        elif isinstance(self.mitigation_created_at, datetime.datetime):
+            mitigation_created_at: bytes = UNSET
+            if not isinstance(self.mitigation_created_at, Unset):
+                mitigation_created_at = self.mitigation_created_at.isoformat().encode()
+        else:
+            mitigation_created_at = (
+                None,
+                str(self.mitigation_created_at).encode(),
+                "text/plain",
+            )
+
+        mitigation_link: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.mitigation_link, Unset):
+            mitigation_link = UNSET
+        elif isinstance(self.mitigation_link, str):
+            mitigation_link = (None, str(self.mitigation_link).encode(), "text/plain")
+        else:
+            mitigation_link = (None, str(self.mitigation_link).encode(), "text/plain")
+
         manual_completion_notes = (
             self.manual_completion_notes
             if isinstance(self.manual_completion_notes, Unset)
@@ -172,6 +221,10 @@ class SRPReportMilestoneRequest(OSIDBModel):
             field_dict["submitted_at"] = submitted_at
         if not isinstance(owner, Unset):
             field_dict["owner"] = owner
+        if not isinstance(mitigation_created_at, Unset):
+            field_dict["mitigation_created_at"] = mitigation_created_at
+        if not isinstance(mitigation_link, Unset):
+            field_dict["mitigation_link"] = mitigation_link
         if not isinstance(manual_completion_notes, Unset):
             field_dict["manual_completion_notes"] = manual_completion_notes
         if not isinstance(due_at, Unset):
@@ -233,6 +286,43 @@ class SRPReportMilestoneRequest(OSIDBModel):
 
         owner = d.pop("owner", UNSET)
 
+        def _parse_mitigation_created_at(
+            data: object,
+        ) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _mitigation_created_at_type_0 = data
+                mitigation_created_at_type_0: datetime.datetime
+                if isinstance(_mitigation_created_at_type_0, Unset):
+                    mitigation_created_at_type_0 = UNSET
+                else:
+                    mitigation_created_at_type_0 = isoparse(
+                        _mitigation_created_at_type_0
+                    )
+
+                return mitigation_created_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        mitigation_created_at = _parse_mitigation_created_at(
+            d.pop("mitigation_created_at", UNSET)
+        )
+
+        def _parse_mitigation_link(data: object) -> Union[Unset, str]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Unset, str], data)
+
+        mitigation_link = _parse_mitigation_link(d.pop("mitigation_link", UNSET))
+
         manual_completion_notes = d.pop("manual_completion_notes", UNSET)
 
         def _parse_due_at(data: object) -> Union[None, Unset, datetime.datetime]:
@@ -263,6 +353,8 @@ class SRPReportMilestoneRequest(OSIDBModel):
             additional_details=additional_details,
             submitted_at=submitted_at,
             owner=owner,
+            mitigation_created_at=mitigation_created_at,
+            mitigation_link=mitigation_link,
             manual_completion_notes=manual_completion_notes,
             due_at=due_at,
         )

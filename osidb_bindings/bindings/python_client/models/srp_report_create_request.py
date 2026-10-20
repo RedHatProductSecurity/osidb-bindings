@@ -1,3 +1,4 @@
+import datetime
 import json
 from typing import Any, TypeVar, Union, cast
 from uuid import UUID
@@ -5,6 +6,7 @@ from uuid import UUID
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 from attrs import fields as _attrs_fields
+from dateutil.parser import isoparse
 
 from ..models.reportable_event_type_enum import ReportableEventTypeEnum
 from ..models.responsibility_scope_enum import ResponsibilityScopeEnum
@@ -19,8 +21,7 @@ class SRPReportCreateRequest(OSIDBModel):
 
     Status is always EMPTY. ACLs are inherited from the flaw in the
     view's perform_create. evidence is required for manual create.
-    srp_reference_id and srp_reference_url are optional. timer_started_at is
-    read-only and remains null until the report transitions to IN_PROGRESS.
+    srp_reference_id, srp_reference_url, and timer_started_at are optional.
 
         Attributes:
             flaw_id (UUID): UUID of the flaw to create an SRP report for
@@ -29,6 +30,7 @@ class SRPReportCreateRequest(OSIDBModel):
             title (Union[Unset, str]):
             manufacturer_or_steward_name (Union[Unset, str]): Name of the manufacturer or steward
             responsibility_scope (Union[Unset, ResponsibilityScopeEnum]):
+            timer_started_at (Union[None, Unset, datetime.datetime]):
             srp_reference_id (Union[Unset, str]):
             srp_reference_url (Union[Unset, str]):
             member_states_available (Union[Unset, list[str]]): List of EU member state codes where product is available
@@ -43,6 +45,7 @@ class SRPReportCreateRequest(OSIDBModel):
     title: Union[Unset, str] = UNSET
     manufacturer_or_steward_name: Union[Unset, str] = UNSET
     responsibility_scope: Union[Unset, ResponsibilityScopeEnum] = UNSET
+    timer_started_at: Union[None, Unset, datetime.datetime] = UNSET
     srp_reference_id: Union[Unset, str] = UNSET
     srp_reference_url: Union[Unset, str] = UNSET
     member_states_available: Union[Unset, list[str]] = UNSET
@@ -73,6 +76,17 @@ class SRPReportCreateRequest(OSIDBModel):
             responsibility_scope = ResponsibilityScopeEnum(
                 self.responsibility_scope
             ).value
+
+        timer_started_at: Union[None, Unset, str]
+        if isinstance(self.timer_started_at, Unset):
+            timer_started_at = UNSET
+        elif isinstance(self.timer_started_at, datetime.datetime):
+            timer_started_at = UNSET
+            if not isinstance(self.timer_started_at, Unset):
+                timer_started_at = self.timer_started_at.isoformat()
+
+        else:
+            timer_started_at = self.timer_started_at
 
         srp_reference_id = self.srp_reference_id
 
@@ -106,6 +120,8 @@ class SRPReportCreateRequest(OSIDBModel):
             field_dict["manufacturer_or_steward_name"] = manufacturer_or_steward_name
         if not isinstance(responsibility_scope, Unset):
             field_dict["responsibility_scope"] = responsibility_scope
+        if not isinstance(timer_started_at, Unset):
+            field_dict["timer_started_at"] = timer_started_at
         if not isinstance(srp_reference_id, Unset):
             field_dict["srp_reference_id"] = srp_reference_id
         if not isinstance(srp_reference_url, Unset):
@@ -155,6 +171,17 @@ class SRPReportCreateRequest(OSIDBModel):
                 str(self.responsibility_scope.value).encode(),
                 "text/plain",
             )
+
+        timer_started_at: Union[Unset, tuple[None, bytes, str]]
+
+        if isinstance(self.timer_started_at, Unset):
+            timer_started_at = UNSET
+        elif isinstance(self.timer_started_at, datetime.datetime):
+            timer_started_at: bytes = UNSET
+            if not isinstance(self.timer_started_at, Unset):
+                timer_started_at = self.timer_started_at.isoformat().encode()
+        else:
+            timer_started_at = (None, str(self.timer_started_at).encode(), "text/plain")
 
         srp_reference_id = (
             self.srp_reference_id
@@ -222,6 +249,8 @@ class SRPReportCreateRequest(OSIDBModel):
             field_dict["manufacturer_or_steward_name"] = manufacturer_or_steward_name
         if not isinstance(responsibility_scope, Unset):
             field_dict["responsibility_scope"] = responsibility_scope
+        if not isinstance(timer_started_at, Unset):
+            field_dict["timer_started_at"] = timer_started_at
         if not isinstance(srp_reference_id, Unset):
             field_dict["srp_reference_id"] = srp_reference_id
         if not isinstance(srp_reference_url, Unset):
@@ -267,6 +296,30 @@ class SRPReportCreateRequest(OSIDBModel):
         else:
             responsibility_scope = ResponsibilityScopeEnum(_responsibility_scope)
 
+        def _parse_timer_started_at(
+            data: object,
+        ) -> Union[None, Unset, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _timer_started_at_type_0 = data
+                timer_started_at_type_0: datetime.datetime
+                if isinstance(_timer_started_at_type_0, Unset):
+                    timer_started_at_type_0 = UNSET
+                else:
+                    timer_started_at_type_0 = isoparse(_timer_started_at_type_0)
+
+                return timer_started_at_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, Unset, datetime.datetime], data)
+
+        timer_started_at = _parse_timer_started_at(d.pop("timer_started_at", UNSET))
+
         srp_reference_id = d.pop("srp_reference_id", UNSET)
 
         def _parse_srp_reference_url(data: object) -> Union[Unset, str]:
@@ -295,6 +348,7 @@ class SRPReportCreateRequest(OSIDBModel):
             title=title,
             manufacturer_or_steward_name=manufacturer_or_steward_name,
             responsibility_scope=responsibility_scope,
+            timer_started_at=timer_started_at,
             srp_reference_id=srp_reference_id,
             srp_reference_url=srp_reference_url,
             member_states_available=member_states_available,

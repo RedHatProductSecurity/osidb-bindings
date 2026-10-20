@@ -22,33 +22,28 @@ T = TypeVar("T", bound="SRPReportCreate")
 
 @_attrs_define
 class SRPReportCreate(OSIDBModel):
-    """Serializer for manually creating SRP Reports.
+    """Schema serializer for manual SRP report create responses.
 
-    Status is always EMPTY. ACLs are inherited from the flaw in the
-    view's perform_create. evidence is required for manual create.
-    srp_reference_id and srp_reference_url are optional. timer_started_at is
-    read-only and remains null until the report transitions to IN_PROGRESS.
-
-        Attributes:
-            uuid (UUID):
-            flaw_id (UUID): UUID of the flaw to create an SRP report for
-            reportable_event_type (ReportableEventTypeEnum):
-            status (SRPReportStatusEnum):
-            evidence (str):
-            timer_started_at (Union[None, datetime.datetime]):
-            created_dt (datetime.datetime):
-            updated_dt (datetime.datetime):
-            milestones (list['SRPReportMilestone']):
-            alerts (list['Alert']):
-            title (Union[Unset, str]):
-            manufacturer_or_steward_name (Union[Unset, str]): Name of the manufacturer or steward
-            responsibility_scope (Union[Unset, ResponsibilityScopeEnum]):
-            srp_reference_id (Union[Unset, str]):
-            srp_reference_url (Union[Unset, str]):
-            member_states_available (Union[Unset, list[str]]): List of EU member state codes where product is available
-            designated_csirt_country (Union[Unset, str]): Country code of the designated CSIRT coordinator
-            designated_csirt_source (Union[Unset, str]): Source of the designated CSIRT coordinator
-            manual_completion_notes (Union[Unset, str]): Manual completion notes
+    Attributes:
+        uuid (UUID):
+        flaw_id (UUID): UUID of the flaw to create an SRP report for
+        reportable_event_type (ReportableEventTypeEnum):
+        status (SRPReportStatusEnum):
+        evidence (str):
+        timer_started_at (Union[None, datetime.datetime]):
+        created_dt (datetime.datetime):
+        updated_dt (datetime.datetime):
+        milestones (list['SRPReportMilestone']):
+        alerts (list['Alert']):
+        title (Union[Unset, str]):
+        manufacturer_or_steward_name (Union[Unset, str]): Name of the manufacturer or steward
+        responsibility_scope (Union[Unset, ResponsibilityScopeEnum]):
+        srp_reference_id (Union[Unset, str]):
+        srp_reference_url (Union[Unset, str]):
+        member_states_available (Union[Unset, list[str]]): List of EU member state codes where product is available
+        designated_csirt_country (Union[Unset, str]): Country code of the designated CSIRT coordinator
+        designated_csirt_source (Union[Unset, str]): Source of the designated CSIRT coordinator
+        manual_completion_notes (Union[Unset, str]): Manual completion notes
     """
 
     uuid: UUID

@@ -97,20 +97,17 @@ def sync_detailed(
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -162,20 +159,17 @@ def sync(
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -217,20 +211,17 @@ async def asyncio_detailed(
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -282,20 +273,17 @@ async def asyncio(
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
         body (SRPReportCreateRequest): Serializer for manually creating SRP Reports.
 
             Status is always EMPTY. ACLs are inherited from the flaw in the
             view's perform_create. evidence is required for manual create.
-            srp_reference_id and srp_reference_url are optional. timer_started_at is
-            read-only and remains null until the report transitions to IN_PROGRESS.
+            srp_reference_id, srp_reference_url, and timer_started_at are optional.
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
