@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - deprecate flaw `promote`, `reject`, `reset` and `revert` operations as the workflow
   classification is now computed automatically by OSIDB
 
+### Fixed
+- token cache file corruption when multiple threads in one process write it concurrently
+
 ## [5.20.0] - 2026-10-20
 ### Added
 - access token caching to avoid requesting a new access token before every API call (OSIDB-5749)
