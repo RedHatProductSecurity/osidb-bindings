@@ -2,6 +2,8 @@
 osidb-bindings token management
 """
 
+import threading
+
 import aiohttp
 import requests
 from requests_gssapi import HTTPSPNEGOAuth
@@ -42,6 +44,7 @@ class TokenManager:
         self.auth = auth
         self.refresh_token: str | None = None
         self.access_token: str | None = None
+        self._lock = threading.Lock()
 
         if token_cache_enabled:
             if isinstance(auth, tuple):
@@ -64,27 +67,30 @@ class TokenManager:
         Get a valid access token, requesting new tokens only when needed
 
         Pass force_refresh=True to skip reusing the current access token
+
+        Thread-safe: concurrent callers sharing the same Session are
+        serialized so that token refresh does not race.
         """
+        with self._lock:
+            # 1. reuse the access token
+            if not force_refresh:
+                token = self.lookup("access_token")
+                if token is not None:
+                    return token
 
-        # 1. reuse the access token
-        if not force_refresh:
-            token = self.lookup("access_token")
-            if token is not None:
-                return token
+            # 2. exchange the refresh token for a new access token
+            refresh_token = self.lookup("refresh_token")
+            if refresh_token is not None:
+                try:
+                    return self.store(
+                        "access_token", self.refresh_access_token(refresh_token)
+                    )
+                except requests.HTTPError as e:
+                    if not is_unauthorized(e):
+                        raise
 
-        # 2. exchange the refresh token for a new access token
-        refresh_token = self.lookup("refresh_token")
-        if refresh_token is not None:
-            try:
-                return self.store(
-                    "access_token", self.refresh_access_token(refresh_token)
-                )
-            except requests.HTTPError as e:
-                if not is_unauthorized(e):
-                    raise
-
-        # 3. no usable refresh token, log in for both
-        return self.login()
+            # 3. no usable refresh token, log in for both
+            return self.login()
 
     def lookup(self, key: str) -> str | None:
         """Get an unexpired token from memory, then from the token cache"""
