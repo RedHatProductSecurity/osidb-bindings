@@ -18,8 +18,6 @@ CACHE_SUBDIR: str = "osidb-bindings"
 CACHE_VERSION: int = 1
 # owner read/write/execute, no access for group or others
 CACHE_DIR_PERMISSIONS: int = 0o700
-# owner read/write only, no access for group or others
-CACHE_FILE_PERMISSIONS: int = 0o600
 
 
 def resolve_kerberos_principal() -> str | None:
@@ -130,7 +128,7 @@ class TokenCache:
         path: Path | None = self.cache_file()
         if path is None:
             return
-        tmp_path: Path = path.with_suffix(f".tmp.{os.getpid()}")
+        tmp_path: Path | None = None
         try:
             content: str = json.dumps(
                 {
@@ -142,27 +140,25 @@ class TokenCache:
                     ).isoformat(),
                 }
             )
-            # create or overwrite file, write-only, with permissions set atomically
-            fd: int = os.open(
-                tmp_path,
-                os.O_WRONLY | os.O_CREAT | os.O_TRUNC,
-                CACHE_FILE_PERMISSIONS,
+            # unique temp file per writer so concurrent threads, processes and
+            # containers never share it, mkstemp creates it as owner read/write only
+            fd, tmp_name = tempfile.mkstemp(
+                dir=path.parent, prefix=f"{path.stem}.", suffix=".tmp"
             )
-            os.chmod(tmp_path, CACHE_FILE_PERMISSIONS)
-            try:
-                os.write(fd, content.encode())
-            finally:
-                os.close(fd)
+            tmp_path = Path(tmp_name)
+            with os.fdopen(fd, "w") as f:
+                f.write(content)
             os.replace(tmp_path, path)
         except Exception as e:
             print(
                 f"WARNING: Token cache write failed: {e}. "
                 "To disable caching, pass token_cache_enabled=False to new_session()."
             )
-            try:
-                tmp_path.unlink(missing_ok=True)
-            except OSError:
-                pass
+            if tmp_path is not None:
+                try:
+                    tmp_path.unlink(missing_ok=True)
+                except OSError:
+                    pass
 
     def read_token(self, key: str, leeway: int = 0) -> str | None:
         """Read cached token, or None if absent/invalid/expired/unreadable."""
