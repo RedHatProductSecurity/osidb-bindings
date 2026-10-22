@@ -350,7 +350,6 @@ Operations can be performed on the following resources and their subresources:
   - labels
   - package_versions
   - references
-- Extra operations: promote, reject, reset, revert
 
 **Affects** (`session.affects`)
 - Standard operations: retrieve, retrieve_list, create, update, delete, bulk_create, bulk_update
@@ -678,30 +677,11 @@ See `/DELETE /osidb/api/{api_version}/flaws/{id}` in the [API documentation](osi
 
 Some resources have additional operations beyond the standard CRUD operations:
 
-**Flaws:**
-- `promote` - Advance flaw workflow to next state (POST `/osidb/api/v1/flaws/{flaw_id}/promote`)
-- `reject` - Reject flaw and put it in rejected workflow state (POST `/osidb/api/v1/flaws/{flaw_id}/reject`)
-- `reset` - Reset flaw workflow to initial state (POST `/osidb/api/v1/flaws/{flaw_id}/reset`)
-- `revert` - Revert flaw workflow to previous state (POST `/osidb/api/v1/flaws/{flaw_id}/revert`)
-
 **Trackers:**
 - `file` - Given a list of flaws, generates a list of suggested trackers to file (POST `/trackers/api/v1/file`)
 
-**Examples:**
+**Example:**
 ```python
-# Promote a flaw
-promote_response = session.flaws.promote(id="CVE-1111-2222")
-
-# Reject a flaw with rejection data
-reject_data = {"reason": "duplicate"}
-reject_response = session.flaws.reject(id="CVE-1111-2222", form_data=reject_data)
-
-# Reset a flaw workflow to initial state
-reset_response = session.flaws.reset(id="CVE-1111-2222")
-
-# Revert a flaw workflow to previous state
-revert_response = session.flaws.revert(id="CVE-1111-2222")
-
 # File trackers
 file_data = {"flaw_uuids": ["3fa85f64-5717-4562-b3fc-2c963f66afa6"]}
 trackers_response = session.trackers.file(form_data=file_data)

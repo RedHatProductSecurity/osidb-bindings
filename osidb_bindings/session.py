@@ -6,6 +6,7 @@ import asyncio
 import importlib
 import re
 import types
+import warnings
 from collections import defaultdict
 from types import ModuleType
 from typing import Any, Callable, get_args, get_origin
@@ -59,7 +60,18 @@ def file_trackers(
     return self.session.call(sync_fn, *args, body=transformed_data, **kwargs)
 
 
+def warn_deprecated_workflow_operation(operation: str):
+    warnings.warn(
+        f'The flaw "{operation}" operation is deprecated and no longer changes '
+        "the flaw workflow state, which is now computed automatically by OSIDB "
+        "from the flaw data. It will be removed in a future version.",
+        DeprecationWarning,
+        stacklevel=3,
+    )
+
+
 def promote_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    warn_deprecated_workflow_operation("promote")
     method_module = self._get_method_module(
         resource_name="flaws",
         method="promote_create",
@@ -77,6 +89,7 @@ def reject_flaw(
     api_version: str | None = None,
     **kwargs,
 ):
+    warn_deprecated_workflow_operation("reject")
     method_module = self._get_method_module(
         resource_name="flaws",
         method="reject_create",
@@ -94,6 +107,7 @@ def reject_flaw(
 
 
 def reset_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    warn_deprecated_workflow_operation("reset")
     method_module = self._get_method_module(
         resource_name="flaws",
         method="reset_create",
@@ -104,6 +118,7 @@ def reset_flaw(self, id, *args, api_version: str | None = None, **kwargs):
 
 
 def revert_flaw(self, id, *args, api_version: str | None = None, **kwargs):
+    warn_deprecated_workflow_operation("revert")
     method_module = self._get_method_module(
         resource_name="flaws",
         method="revert_create",
