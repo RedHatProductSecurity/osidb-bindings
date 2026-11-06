@@ -5,7 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.affect_request import AffectRequest
+from ...models.affect_put_request import AffectPutRequest
 from ...models.osidb_api_v2_affects_update_response_200 import (
     OsidbApiV2AffectsUpdateResponse200,
 )
@@ -13,7 +13,7 @@ from ...types import UNSET, Response, Unset, check_nested_instance
 
 QUERY_PARAMS = {}
 
-REQUEST_BODY_TYPE = AffectRequest
+REQUEST_BODY_TYPE = AffectPutRequest
 
 
 def _get_kwargs(
@@ -21,9 +21,9 @@ def _get_kwargs(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectRequest,
-        AffectRequest,
-        AffectRequest,
+        AffectPutRequest,
+        AffectPutRequest,
+        AffectPutRequest,
     ],
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -34,7 +34,7 @@ def _get_kwargs(
         ),
     }
 
-    if check_nested_instance(body, AffectRequest):
+    if check_nested_instance(body, AffectPutRequest):
         _json_body: dict[str, Any] = UNSET
         if not isinstance(body, Unset):
             _json_body = body.to_dict()
@@ -76,9 +76,9 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectRequest,
-        AffectRequest,
-        AffectRequest,
+        AffectPutRequest,
+        AffectPutRequest,
+        AffectPutRequest,
     ],
 ) -> Response[OsidbApiV2AffectsUpdateResponse200]:
     """
@@ -86,9 +86,9 @@ def sync_detailed(
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -120,9 +120,9 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectRequest,
-        AffectRequest,
-        AffectRequest,
+        AffectPutRequest,
+        AffectPutRequest,
+        AffectPutRequest,
     ],
 ) -> Optional[OsidbApiV2AffectsUpdateResponse200]:
     """
@@ -130,9 +130,9 @@ def sync(
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -154,9 +154,9 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectRequest,
-        AffectRequest,
-        AffectRequest,
+        AffectPutRequest,
+        AffectPutRequest,
+        AffectPutRequest,
     ],
 ) -> Response[OsidbApiV2AffectsUpdateResponse200]:
     """
@@ -164,9 +164,9 @@ async def asyncio_detailed(
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -198,9 +198,9 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: Union[
-        AffectRequest,
-        AffectRequest,
-        AffectRequest,
+        AffectPutRequest,
+        AffectPutRequest,
+        AffectPutRequest,
     ],
 ) -> Optional[OsidbApiV2AffectsUpdateResponse200]:
     """
@@ -208,9 +208,9 @@ async def asyncio(
         uuid (UUID):
         bugzilla_api_key (Union[Unset, str]):
         jira_api_key (Union[Unset, str]):
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
-        body (AffectRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
+        body (AffectPutRequest): Affect serializer
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

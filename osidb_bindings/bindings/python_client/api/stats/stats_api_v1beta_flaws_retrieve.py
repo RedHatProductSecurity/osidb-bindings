@@ -34,8 +34,10 @@ QUERY_PARAMS = {
     "visibility__in": list[StatsApiV1BetaFlawsRetrieveVisibilityInItem],
     "visibility__not_in": list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem],
     "workflow_name__in": list[str],
+    "workflow_name__isempty": bool,
     "workflow_name__not_in": list[str],
     "workflow_state__in": list[str],
+    "workflow_state__isempty": bool,
     "workflow_state__not_in": list[str],
 }
 
@@ -58,8 +60,10 @@ def _get_kwargs(
         Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]
     ] = UNSET,
     workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_name_isempty: Union[Unset, bool] = UNSET,
     workflow_name_not_in: Union[Unset, list[str]] = UNSET,
     workflow_state_in: Union[Unset, list[str]] = UNSET,
+    workflow_state_isempty: Union[Unset, bool] = UNSET,
     workflow_state_not_in: Union[Unset, list[str]] = UNSET,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = client.get_headers()
@@ -156,6 +160,8 @@ def _get_kwargs(
 
     params["workflow_name__in"] = json_workflow_name_in
 
+    params["workflow_name__isempty"] = workflow_name_isempty
+
     json_workflow_name_not_in: Union[Unset, list[str]] = UNSET
     if not isinstance(workflow_name_not_in, Unset):
         json_workflow_name_not_in = workflow_name_not_in
@@ -167,6 +173,8 @@ def _get_kwargs(
         json_workflow_state_in = workflow_state_in
 
     params["workflow_state__in"] = json_workflow_state_in
+
+    params["workflow_state__isempty"] = workflow_state_isempty
 
     json_workflow_state_not_in: Union[Unset, list[str]] = UNSET
     if not isinstance(workflow_state_not_in, Unset):
@@ -234,8 +242,10 @@ def sync_detailed(
         Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]
     ] = UNSET,
     workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_name_isempty: Union[Unset, bool] = UNSET,
     workflow_name_not_in: Union[Unset, list[str]] = UNSET,
     workflow_state_in: Union[Unset, list[str]] = UNSET,
+    workflow_state_isempty: Union[Unset, bool] = UNSET,
     workflow_state_not_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[StatsApiV1BetaFlawsRetrieveResponse200]:
     """[Experimental] Aggregated flaw statistics
@@ -253,8 +263,10 @@ def sync_detailed(
         visibility_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityInItem]]):
         visibility_not_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]]):
         workflow_name_in (Union[Unset, list[str]]):
+        workflow_name_isempty (Union[Unset, bool]):
         workflow_name_not_in (Union[Unset, list[str]]):
         workflow_state_in (Union[Unset, list[str]]):
+        workflow_state_isempty (Union[Unset, bool]):
         workflow_state_not_in (Union[Unset, list[str]]):
 
     Raises:
@@ -276,8 +288,10 @@ def sync_detailed(
         visibility_in=visibility_in,
         visibility_not_in=visibility_not_in,
         workflow_name_in=workflow_name_in,
+        workflow_name_isempty=workflow_name_isempty,
         workflow_name_not_in=workflow_name_not_in,
         workflow_state_in=workflow_state_in,
+        workflow_state_isempty=workflow_state_isempty,
         workflow_state_not_in=workflow_state_not_in,
     )
 
@@ -310,8 +324,10 @@ def sync(
         Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]
     ] = UNSET,
     workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_name_isempty: Union[Unset, bool] = UNSET,
     workflow_name_not_in: Union[Unset, list[str]] = UNSET,
     workflow_state_in: Union[Unset, list[str]] = UNSET,
+    workflow_state_isempty: Union[Unset, bool] = UNSET,
     workflow_state_not_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[StatsApiV1BetaFlawsRetrieveResponse200]:
     """[Experimental] Aggregated flaw statistics
@@ -329,8 +345,10 @@ def sync(
         visibility_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityInItem]]):
         visibility_not_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]]):
         workflow_name_in (Union[Unset, list[str]]):
+        workflow_name_isempty (Union[Unset, bool]):
         workflow_name_not_in (Union[Unset, list[str]]):
         workflow_state_in (Union[Unset, list[str]]):
+        workflow_state_isempty (Union[Unset, bool]):
         workflow_state_not_in (Union[Unset, list[str]]):
 
     Raises:
@@ -352,8 +370,10 @@ def sync(
         visibility_in=visibility_in,
         visibility_not_in=visibility_not_in,
         workflow_name_in=workflow_name_in,
+        workflow_name_isempty=workflow_name_isempty,
         workflow_name_not_in=workflow_name_not_in,
         workflow_state_in=workflow_state_in,
+        workflow_state_isempty=workflow_state_isempty,
         workflow_state_not_in=workflow_state_not_in,
     ).parsed
 
@@ -376,8 +396,10 @@ async def asyncio_detailed(
         Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]
     ] = UNSET,
     workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_name_isempty: Union[Unset, bool] = UNSET,
     workflow_name_not_in: Union[Unset, list[str]] = UNSET,
     workflow_state_in: Union[Unset, list[str]] = UNSET,
+    workflow_state_isempty: Union[Unset, bool] = UNSET,
     workflow_state_not_in: Union[Unset, list[str]] = UNSET,
 ) -> Response[StatsApiV1BetaFlawsRetrieveResponse200]:
     """[Experimental] Aggregated flaw statistics
@@ -395,8 +417,10 @@ async def asyncio_detailed(
         visibility_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityInItem]]):
         visibility_not_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]]):
         workflow_name_in (Union[Unset, list[str]]):
+        workflow_name_isempty (Union[Unset, bool]):
         workflow_name_not_in (Union[Unset, list[str]]):
         workflow_state_in (Union[Unset, list[str]]):
+        workflow_state_isempty (Union[Unset, bool]):
         workflow_state_not_in (Union[Unset, list[str]]):
 
     Raises:
@@ -418,8 +442,10 @@ async def asyncio_detailed(
         visibility_in=visibility_in,
         visibility_not_in=visibility_not_in,
         workflow_name_in=workflow_name_in,
+        workflow_name_isempty=workflow_name_isempty,
         workflow_name_not_in=workflow_name_not_in,
         workflow_state_in=workflow_state_in,
+        workflow_state_isempty=workflow_state_isempty,
         workflow_state_not_in=workflow_state_not_in,
     )
 
@@ -452,8 +478,10 @@ async def asyncio(
         Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]
     ] = UNSET,
     workflow_name_in: Union[Unset, list[str]] = UNSET,
+    workflow_name_isempty: Union[Unset, bool] = UNSET,
     workflow_name_not_in: Union[Unset, list[str]] = UNSET,
     workflow_state_in: Union[Unset, list[str]] = UNSET,
+    workflow_state_isempty: Union[Unset, bool] = UNSET,
     workflow_state_not_in: Union[Unset, list[str]] = UNSET,
 ) -> Optional[StatsApiV1BetaFlawsRetrieveResponse200]:
     """[Experimental] Aggregated flaw statistics
@@ -471,8 +499,10 @@ async def asyncio(
         visibility_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityInItem]]):
         visibility_not_in (Union[Unset, list[StatsApiV1BetaFlawsRetrieveVisibilityNotInItem]]):
         workflow_name_in (Union[Unset, list[str]]):
+        workflow_name_isempty (Union[Unset, bool]):
         workflow_name_not_in (Union[Unset, list[str]]):
         workflow_state_in (Union[Unset, list[str]]):
+        workflow_state_isempty (Union[Unset, bool]):
         workflow_state_not_in (Union[Unset, list[str]]):
 
     Raises:
@@ -495,8 +525,10 @@ async def asyncio(
             visibility_in=visibility_in,
             visibility_not_in=visibility_not_in,
             workflow_name_in=workflow_name_in,
+            workflow_name_isempty=workflow_name_isempty,
             workflow_name_not_in=workflow_name_not_in,
             workflow_state_in=workflow_state_in,
+            workflow_state_isempty=workflow_state_isempty,
             workflow_state_not_in=workflow_state_not_in,
         )
     ).parsed

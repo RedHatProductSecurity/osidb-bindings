@@ -23,12 +23,12 @@ class AffectBulkPutRequest(OSIDBModel):
 
     Attributes:
         uuid (UUID):
-        flaw (UUID):
         ps_update_stream (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
+        flaw (Union[Unset, UUID]):
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
         ps_component (Union[None, Unset, str]):  Default: ''.
@@ -40,10 +40,10 @@ class AffectBulkPutRequest(OSIDBModel):
     """
 
     uuid: UUID
-    flaw: UUID
     ps_update_stream: str
     embargoed: bool
     updated_dt: datetime.datetime
+    flaw: Union[Unset, UUID] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     ps_component: Union[None, Unset, str] = ""
@@ -61,10 +61,6 @@ class AffectBulkPutRequest(OSIDBModel):
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
 
-        flaw: str = UNSET
-        if not isinstance(self.flaw, Unset):
-            flaw = str(self.flaw)
-
         ps_update_stream = self.ps_update_stream
 
         embargoed = self.embargoed
@@ -72,6 +68,10 @@ class AffectBulkPutRequest(OSIDBModel):
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
+
+        flaw: Union[Unset, str] = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -155,14 +155,14 @@ class AffectBulkPutRequest(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
+        if not isinstance(flaw, Unset):
+            field_dict["flaw"] = flaw
         if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
@@ -192,13 +192,6 @@ class AffectBulkPutRequest(OSIDBModel):
         else:
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
-        _flaw = d.pop("flaw", UNSET)
-        flaw: UUID
-        if isinstance(_flaw, Unset):
-            flaw = UNSET
-        else:
-            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
-
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
         embargoed = d.pop("embargoed", UNSET)
@@ -209,6 +202,13 @@ class AffectBulkPutRequest(OSIDBModel):
             updated_dt = UNSET
         else:
             updated_dt = isoparse(_updated_dt)
+
+        _flaw = d.pop("flaw", UNSET)
+        flaw: Union[Unset, UUID]
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         def _parse_affectedness(
             data: object,
@@ -375,10 +375,10 @@ class AffectBulkPutRequest(OSIDBModel):
 
         affect_bulk_put_request = cls(
             uuid=uuid,
-            flaw=flaw,
             ps_update_stream=ps_update_stream,
             embargoed=embargoed,
             updated_dt=updated_dt,
+            flaw=flaw,
             affectedness=affectedness,
             resolution=resolution,
             ps_component=ps_component,

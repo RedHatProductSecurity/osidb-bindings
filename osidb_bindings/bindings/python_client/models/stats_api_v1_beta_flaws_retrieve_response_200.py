@@ -9,8 +9,8 @@ from dateutil.parser import isoparse
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
+    from ..models.stats_flaws_meta import StatsFlawsMeta
     from ..models.stats_flaws_response_groups_item import StatsFlawsResponseGroupsItem
-    from ..models.stats_meta import StatsMeta
 
 
 T = TypeVar("T", bound="StatsApiV1BetaFlawsRetrieveResponse200")
@@ -21,7 +21,7 @@ class StatsApiV1BetaFlawsRetrieveResponse200(OSIDBModel):
     """
     Attributes:
         groups (list['StatsFlawsResponseGroupsItem']):
-        meta (StatsMeta):
+        meta (StatsFlawsMeta):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
@@ -29,7 +29,7 @@ class StatsApiV1BetaFlawsRetrieveResponse200(OSIDBModel):
     """
 
     groups: list["StatsFlawsResponseGroupsItem"]
-    meta: "StatsMeta"
+    meta: "StatsFlawsMeta"
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -80,10 +80,10 @@ class StatsApiV1BetaFlawsRetrieveResponse200(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.stats_flaws_meta import StatsFlawsMeta
         from ..models.stats_flaws_response_groups_item import (
             StatsFlawsResponseGroupsItem,
         )
-        from ..models.stats_meta import StatsMeta
 
         d = src_dict.copy()
         groups = []
@@ -99,11 +99,11 @@ class StatsApiV1BetaFlawsRetrieveResponse200(OSIDBModel):
             groups.append(groups_item)
 
         _meta = d.pop("meta", UNSET)
-        meta: StatsMeta
+        meta: StatsFlawsMeta
         if isinstance(_meta, Unset):
             meta = UNSET
         else:
-            meta = StatsMeta.from_dict(_meta)
+            meta = StatsFlawsMeta.from_dict(_meta)
 
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]

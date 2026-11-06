@@ -6,11 +6,11 @@ from attrs import fields as _attrs_fields
 
 from ..types import OSIDBModel
 
-T = TypeVar("T", bound="StatsMetaFilters")
+T = TypeVar("T", bound="StatsTrackersResponseGroupsItem")
 
 
 @_attrs_define
-class StatsMetaFilters(OSIDBModel):
+class StatsTrackersResponseGroupsItem(OSIDBModel):
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -24,10 +24,10 @@ class StatsMetaFilters(OSIDBModel):
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
         d = src_dict.copy()
-        stats_meta_filters = cls()
+        stats_trackers_response_groups_item = cls()
 
-        stats_meta_filters.additional_properties = d
-        return stats_meta_filters
+        stats_trackers_response_groups_item.additional_properties = d
+        return stats_trackers_response_groups_item
 
     @classmethod
     def get_fields(cls):

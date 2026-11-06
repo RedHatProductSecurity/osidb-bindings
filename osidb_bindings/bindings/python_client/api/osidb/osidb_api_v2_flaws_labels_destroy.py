@@ -5,10 +5,7 @@ from uuid import UUID
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v2_flaws_labels_destroy_response_204 import (
-    OsidbApiV2FlawsLabelsDestroyResponse204,
-)
-from ...types import UNSET, Response, Unset
+from ...types import Response
 
 QUERY_PARAMS = {}
 
@@ -34,23 +31,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
+) -> Optional[Any]:
     if response.status_code == 204:
-        _response_204 = response.json()
-        response_204: OsidbApiV2FlawsLabelsDestroyResponse204
-        if isinstance(_response_204, Unset):
-            response_204 = UNSET
-        else:
-            response_204 = OsidbApiV2FlawsLabelsDestroyResponse204.from_dict(
-                _response_204
-            )
-
-        return response_204
+        return None
 
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
-) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
+) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -64,7 +52,7 @@ def sync_detailed(
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
+) -> Response[Any]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
@@ -76,7 +64,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV2FlawsLabelsDestroyResponse204]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -96,39 +84,12 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-def sync(
-    flaw_id: UUID,
-    id: str,
-    *,
-    client: AuthenticatedClient,
-) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
-    """Require parent Flaw write ACLs for create/update/destroy.
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        OsidbApiV2FlawsLabelsDestroyResponse204
-    """
-
-    return sync_detailed(
-        flaw_id=flaw_id,
-        id=id,
-        client=client,
-    ).parsed
-
-
 async def asyncio_detailed(
     flaw_id: UUID,
     id: str,
     *,
     client: AuthenticatedClient,
-) -> Response[OsidbApiV2FlawsLabelsDestroyResponse204]:
+) -> Response[Any]:
     """Require parent Flaw write ACLs for create/update/destroy.
 
     Args:
@@ -140,7 +101,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[OsidbApiV2FlawsLabelsDestroyResponse204]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -158,32 +119,3 @@ async def asyncio_detailed(
         resp._content = content
 
     return _build_response(client=client, response=resp)
-
-
-async def asyncio(
-    flaw_id: UUID,
-    id: str,
-    *,
-    client: AuthenticatedClient,
-) -> Optional[OsidbApiV2FlawsLabelsDestroyResponse204]:
-    """Require parent Flaw write ACLs for create/update/destroy.
-
-    Args:
-        flaw_id (UUID):
-        id (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        OsidbApiV2FlawsLabelsDestroyResponse204
-    """
-
-    return (
-        await asyncio_detailed(
-            flaw_id=flaw_id,
-            id=id,
-            client=client,
-        )
-    ).parsed

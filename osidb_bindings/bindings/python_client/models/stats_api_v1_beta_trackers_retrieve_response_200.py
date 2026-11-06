@@ -1,5 +1,5 @@
 import datetime
-from typing import Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar, Union
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -8,19 +8,30 @@ from dateutil.parser import isoparse
 
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="OsidbApiV2FlawsCvssScoresDestroyResponse204")
+if TYPE_CHECKING:
+    from ..models.stats_trackers_meta import StatsTrackersMeta
+    from ..models.stats_trackers_response_groups_item import (
+        StatsTrackersResponseGroupsItem,
+    )
+
+
+T = TypeVar("T", bound="StatsApiV1BetaTrackersRetrieveResponse200")
 
 
 @_attrs_define
-class OsidbApiV2FlawsCvssScoresDestroyResponse204(OSIDBModel):
+class StatsApiV1BetaTrackersRetrieveResponse200(OSIDBModel):
     """
     Attributes:
+        groups (list['StatsTrackersResponseGroupsItem']):
+        meta (StatsTrackersMeta):
         dt (Union[Unset, datetime.datetime]):
         env (Union[Unset, str]):
         revision (Union[Unset, str]):
         version (Union[Unset, str]):
     """
 
+    groups: list["StatsTrackersResponseGroupsItem"]
+    meta: "StatsTrackersMeta"
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
     revision: Union[Unset, str] = UNSET
@@ -28,6 +39,20 @@ class OsidbApiV2FlawsCvssScoresDestroyResponse204(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        groups: list[dict[str, Any]] = UNSET
+        if not isinstance(self.groups, Unset):
+            groups = []
+            for groups_item_data in self.groups:
+                groups_item: dict[str, Any] = UNSET
+                if not isinstance(groups_item_data, Unset):
+                    groups_item = groups_item_data.to_dict()
+
+                groups.append(groups_item)
+
+        meta: dict[str, Any] = UNSET
+        if not isinstance(self.meta, Unset):
+            meta = self.meta.to_dict()
+
         dt: Union[Unset, str] = UNSET
         if not isinstance(self.dt, Unset):
             dt = self.dt.isoformat()
@@ -40,6 +65,10 @@ class OsidbApiV2FlawsCvssScoresDestroyResponse204(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        if not isinstance(groups, Unset):
+            field_dict["groups"] = groups
+        if not isinstance(meta, Unset):
+            field_dict["meta"] = meta
         if not isinstance(dt, Unset):
             field_dict["dt"] = dt
         if not isinstance(env, Unset):
@@ -53,7 +82,31 @@ class OsidbApiV2FlawsCvssScoresDestroyResponse204(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.stats_trackers_meta import StatsTrackersMeta
+        from ..models.stats_trackers_response_groups_item import (
+            StatsTrackersResponseGroupsItem,
+        )
+
         d = src_dict.copy()
+        groups = []
+        _groups = d.pop("groups", UNSET)
+        for groups_item_data in _groups or []:
+            _groups_item = groups_item_data
+            groups_item: StatsTrackersResponseGroupsItem
+            if isinstance(_groups_item, Unset):
+                groups_item = UNSET
+            else:
+                groups_item = StatsTrackersResponseGroupsItem.from_dict(_groups_item)
+
+            groups.append(groups_item)
+
+        _meta = d.pop("meta", UNSET)
+        meta: StatsTrackersMeta
+        if isinstance(_meta, Unset):
+            meta = UNSET
+        else:
+            meta = StatsTrackersMeta.from_dict(_meta)
+
         _dt = d.pop("dt", UNSET)
         dt: Union[Unset, datetime.datetime]
         if isinstance(_dt, Unset):
@@ -67,15 +120,17 @@ class OsidbApiV2FlawsCvssScoresDestroyResponse204(OSIDBModel):
 
         version = d.pop("version", UNSET)
 
-        osidb_api_v2_flaws_cvss_scores_destroy_response_204 = cls(
+        stats_api_v1_beta_trackers_retrieve_response_200 = cls(
+            groups=groups,
+            meta=meta,
             dt=dt,
             env=env,
             revision=revision,
             version=version,
         )
 
-        osidb_api_v2_flaws_cvss_scores_destroy_response_204.additional_properties = d
-        return osidb_api_v2_flaws_cvss_scores_destroy_response_204
+        stats_api_v1_beta_trackers_retrieve_response_200.additional_properties = d
+        return stats_api_v1_beta_trackers_retrieve_response_200
 
     @classmethod
     def get_fields(cls):

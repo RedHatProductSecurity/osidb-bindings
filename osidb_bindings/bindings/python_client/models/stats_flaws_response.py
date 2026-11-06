@@ -7,8 +7,8 @@ from attrs import fields as _attrs_fields
 from ..types import UNSET, OSIDBModel, Unset
 
 if TYPE_CHECKING:
+    from ..models.stats_flaws_meta import StatsFlawsMeta
     from ..models.stats_flaws_response_groups_item import StatsFlawsResponseGroupsItem
-    from ..models.stats_meta import StatsMeta
 
 
 T = TypeVar("T", bound="StatsFlawsResponse")
@@ -19,11 +19,11 @@ class StatsFlawsResponse(OSIDBModel):
     """
     Attributes:
         groups (list['StatsFlawsResponseGroupsItem']):
-        meta (StatsMeta):
+        meta (StatsFlawsMeta):
     """
 
     groups: list["StatsFlawsResponseGroupsItem"]
-    meta: "StatsMeta"
+    meta: "StatsFlawsMeta"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -52,10 +52,10 @@ class StatsFlawsResponse(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.stats_flaws_meta import StatsFlawsMeta
         from ..models.stats_flaws_response_groups_item import (
             StatsFlawsResponseGroupsItem,
         )
-        from ..models.stats_meta import StatsMeta
 
         d = src_dict.copy()
         groups = []
@@ -71,11 +71,11 @@ class StatsFlawsResponse(OSIDBModel):
             groups.append(groups_item)
 
         _meta = d.pop("meta", UNSET)
-        meta: StatsMeta
+        meta: StatsFlawsMeta
         if isinstance(_meta, Unset):
             meta = UNSET
         else:
-            meta = StatsMeta.from_dict(_meta)
+            meta = StatsFlawsMeta.from_dict(_meta)
 
         stats_flaws_response = cls(
             groups=groups,
