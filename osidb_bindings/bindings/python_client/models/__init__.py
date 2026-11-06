@@ -14,8 +14,9 @@ from .affect_cvssv2 import AffectCVSSV2
 from .affect_cvssv2_post_request import AffectCVSSV2PostRequest
 from .affect_cvssv2_put_request import AffectCVSSV2PutRequest
 from .affect_post_request import AffectPostRequest
+from .affect_put import AffectPut
+from .affect_put_request import AffectPutRequest
 from .affect_report_data import AffectReportData
-from .affect_request import AffectRequest
 from .affect_v1 import AffectV1
 from .affect_v1_report_data import AffectV1ReportData
 from .affectedness_enum import AffectednessEnum
@@ -238,9 +239,6 @@ from .osidb_api_v1_alerts_retrieve_response_200 import (
 )
 from .osidb_api_v1_audit_list_response_200 import OsidbApiV1AuditListResponse200
 from .osidb_api_v1_audit_retrieve_response_200 import OsidbApiV1AuditRetrieveResponse200
-from .osidb_api_v1_available_flaws_retrieve_response_204 import (
-    OsidbApiV1AvailableFlawsRetrieveResponse204,
-)
 from .osidb_api_v1_available_flaws_retrieve_response_400 import (
     OsidbApiV1AvailableFlawsRetrieveResponse400,
 )
@@ -304,9 +302,6 @@ from .osidb_api_v1_flaws_index_retrieve_response_200 import (
 )
 from .osidb_api_v1_flaws_labels_create_response_201 import (
     OsidbApiV1FlawsLabelsCreateResponse201,
-)
-from .osidb_api_v1_flaws_labels_destroy_response_204 import (
-    OsidbApiV1FlawsLabelsDestroyResponse204,
 )
 from .osidb_api_v1_flaws_labels_list_response_200 import (
     OsidbApiV1FlawsLabelsListResponse200,
@@ -479,9 +474,6 @@ from .osidb_api_v2_affects_create_response_201 import OsidbApiV2AffectsCreateRes
 from .osidb_api_v2_affects_cvss_scores_create_response_201 import (
     OsidbApiV2AffectsCvssScoresCreateResponse201,
 )
-from .osidb_api_v2_affects_cvss_scores_destroy_response_204 import (
-    OsidbApiV2AffectsCvssScoresDestroyResponse204,
-)
 from .osidb_api_v2_affects_cvss_scores_list_issuer import (
     OsidbApiV2AffectsCvssScoresListIssuer,
 )
@@ -545,9 +537,6 @@ from .osidb_api_v2_flaws_create_response_201 import OsidbApiV2FlawsCreateRespons
 from .osidb_api_v2_flaws_cvss_scores_create_response_201 import (
     OsidbApiV2FlawsCvssScoresCreateResponse201,
 )
-from .osidb_api_v2_flaws_cvss_scores_destroy_response_204 import (
-    OsidbApiV2FlawsCvssScoresDestroyResponse204,
-)
 from .osidb_api_v2_flaws_cvss_scores_list_issuer import (
     OsidbApiV2FlawsCvssScoresListIssuer,
 )
@@ -571,9 +560,6 @@ from .osidb_api_v2_flaws_index_retrieve_response_200 import (
 )
 from .osidb_api_v2_flaws_labels_create_response_201 import (
     OsidbApiV2FlawsLabelsCreateResponse201,
-)
-from .osidb_api_v2_flaws_labels_destroy_response_204 import (
-    OsidbApiV2FlawsLabelsDestroyResponse204,
 )
 from .osidb_api_v2_flaws_labels_list_response_200 import (
     OsidbApiV2FlawsLabelsListResponse200,
@@ -694,9 +680,6 @@ from .osidb_api_v2_trackers_update_response_200 import (
     OsidbApiV2TrackersUpdateResponse200,
 )
 from .osidb_healthy_retrieve_response_200 import OsidbHealthyRetrieveResponse200
-from .osidb_integrations_partial_update_response_204 import (
-    OsidbIntegrationsPartialUpdateResponse204,
-)
 from .osidb_integrations_partial_update_response_503 import (
     OsidbIntegrationsPartialUpdateResponse503,
 )
@@ -747,9 +730,6 @@ from .paginated_upstream_project_list import PaginatedUpstreamProjectList
 from .patched_integration_token_patch_request import PatchedIntegrationTokenPatchRequest
 from .profile import Profile
 from .ps_stream_selection import PsStreamSelection
-from .regulatory_reporting_api_v1_flaw_upstream_mappings_destroy_response_204 import (
-    RegulatoryReportingApiV1FlawUpstreamMappingsDestroyResponse204,
-)
 from .regulatory_reporting_api_v1_flaw_upstream_mappings_update_response_200 import (
     RegulatoryReportingApiV1FlawUpstreamMappingsUpdateResponse200,
 )
@@ -879,10 +859,26 @@ from .stats_api_v1_beta_flaws_retrieve_visibility_in_item import (
 from .stats_api_v1_beta_flaws_retrieve_visibility_not_in_item import (
     StatsApiV1BetaFlawsRetrieveVisibilityNotInItem,
 )
+from .stats_api_v1_beta_trackers_retrieve_group_by_item import (
+    StatsApiV1BetaTrackersRetrieveGroupByItem,
+)
+from .stats_api_v1_beta_trackers_retrieve_response_200 import (
+    StatsApiV1BetaTrackersRetrieveResponse200,
+)
+from .stats_api_v1_beta_trackers_retrieve_visibility_in_item import (
+    StatsApiV1BetaTrackersRetrieveVisibilityInItem,
+)
+from .stats_api_v1_beta_trackers_retrieve_visibility_not_in_item import (
+    StatsApiV1BetaTrackersRetrieveVisibilityNotInItem,
+)
+from .stats_flaws_meta import StatsFlawsMeta
+from .stats_flaws_meta_filters import StatsFlawsMetaFilters
 from .stats_flaws_response import StatsFlawsResponse
 from .stats_flaws_response_groups_item import StatsFlawsResponseGroupsItem
-from .stats_meta import StatsMeta
-from .stats_meta_filters import StatsMetaFilters
+from .stats_trackers_meta import StatsTrackersMeta
+from .stats_trackers_meta_filters import StatsTrackersMetaFilters
+from .stats_trackers_response import StatsTrackersResponse
+from .stats_trackers_response_groups_item import StatsTrackersResponseGroupsItem
 from .stream_component import StreamComponent
 from .supported_products import SupportedProducts
 from .sync_manager import SyncManager
@@ -945,8 +941,9 @@ __all__ = (
     "AffectCVSSV2PutRequest",
     "AffectednessEnum",
     "AffectPostRequest",
+    "AffectPut",
+    "AffectPutRequest",
     "AffectReportData",
-    "AffectRequest",
     "AffectV1",
     "AffectV1ReportData",
     "Alert",
@@ -1088,7 +1085,6 @@ __all__ = (
     "OsidbApiV1AlertsRetrieveResponse200",
     "OsidbApiV1AuditListResponse200",
     "OsidbApiV1AuditRetrieveResponse200",
-    "OsidbApiV1AvailableFlawsRetrieveResponse204",
     "OsidbApiV1AvailableFlawsRetrieveResponse400",
     "OsidbApiV1AvailableFlawsRetrieveResponse404",
     "OsidbApiV1FlawsAcknowledgmentsCreateResponse201",
@@ -1111,7 +1107,6 @@ __all__ = (
     "OsidbApiV1FlawsIndexRetrieveIdType",
     "OsidbApiV1FlawsIndexRetrieveResponse200",
     "OsidbApiV1FlawsLabelsCreateResponse201",
-    "OsidbApiV1FlawsLabelsDestroyResponse204",
     "OsidbApiV1FlawsLabelsListResponse200",
     "OsidbApiV1FlawsLabelsRetrieveResponse200",
     "OsidbApiV1FlawsLabelsUpdateResponse200",
@@ -1183,7 +1178,6 @@ __all__ = (
     "OsidbApiV2AffectsBulkUpdateResponse200",
     "OsidbApiV2AffectsCreateResponse201",
     "OsidbApiV2AffectsCvssScoresCreateResponse201",
-    "OsidbApiV2AffectsCvssScoresDestroyResponse204",
     "OsidbApiV2AffectsCvssScoresListIssuer",
     "OsidbApiV2AffectsCvssScoresListIssuerInItem",
     "OsidbApiV2AffectsCvssScoresListResponse200",
@@ -1213,7 +1207,6 @@ __all__ = (
     "OsidbApiV2AffectsUpdateResponse200",
     "OsidbApiV2FlawsCreateResponse201",
     "OsidbApiV2FlawsCvssScoresCreateResponse201",
-    "OsidbApiV2FlawsCvssScoresDestroyResponse204",
     "OsidbApiV2FlawsCvssScoresListIssuer",
     "OsidbApiV2FlawsCvssScoresListIssuerInItem",
     "OsidbApiV2FlawsCvssScoresListResponse200",
@@ -1222,7 +1215,6 @@ __all__ = (
     "OsidbApiV2FlawsIndexRetrieveIdType",
     "OsidbApiV2FlawsIndexRetrieveResponse200",
     "OsidbApiV2FlawsLabelsCreateResponse201",
-    "OsidbApiV2FlawsLabelsDestroyResponse204",
     "OsidbApiV2FlawsLabelsListResponse200",
     "OsidbApiV2FlawsLabelsRetrieveResponse200",
     "OsidbApiV2FlawsLabelsUpdateResponse200",
@@ -1274,7 +1266,6 @@ __all__ = (
     "OsidbApiV2TrackersRetrieveResponse200",
     "OsidbApiV2TrackersUpdateResponse200",
     "OsidbHealthyRetrieveResponse200",
-    "OsidbIntegrationsPartialUpdateResponse204",
     "OsidbIntegrationsPartialUpdateResponse503",
     "OsidbIntegrationsRetrieveResponse200",
     "OsidbIntegrationsRetrieveResponse503",
@@ -1323,7 +1314,6 @@ __all__ = (
     "RegulatoryReportingApiV1FlawsSrpReportsRetrieveResponse200",
     "RegulatoryReportingApiV1FlawsUpstreamMappingsCreateResponse201",
     "RegulatoryReportingApiV1FlawsUpstreamMappingsListResponse200",
-    "RegulatoryReportingApiV1FlawUpstreamMappingsDestroyResponse204",
     "RegulatoryReportingApiV1FlawUpstreamMappingsUpdateResponse200",
     "RegulatoryReportingApiV1NotificationsUpstreamListMethod",
     "RegulatoryReportingApiV1NotificationsUpstreamListResponse200",
@@ -1371,10 +1361,18 @@ __all__ = (
     "StatsApiV1BetaFlawsRetrieveResponse200",
     "StatsApiV1BetaFlawsRetrieveVisibilityInItem",
     "StatsApiV1BetaFlawsRetrieveVisibilityNotInItem",
+    "StatsApiV1BetaTrackersRetrieveGroupByItem",
+    "StatsApiV1BetaTrackersRetrieveResponse200",
+    "StatsApiV1BetaTrackersRetrieveVisibilityInItem",
+    "StatsApiV1BetaTrackersRetrieveVisibilityNotInItem",
+    "StatsFlawsMeta",
+    "StatsFlawsMetaFilters",
     "StatsFlawsResponse",
     "StatsFlawsResponseGroupsItem",
-    "StatsMeta",
-    "StatsMetaFilters",
+    "StatsTrackersMeta",
+    "StatsTrackersMetaFilters",
+    "StatsTrackersResponse",
+    "StatsTrackersResponseGroupsItem",
     "StreamComponent",
     "SupportedProducts",
     "SyncManager",

@@ -36,6 +36,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     """
     Attributes:
         uuid (UUID):
+        bz_id (Union[None, int]):
         title (str):
         trackers (list[str]):
         comment_zero (str):
@@ -44,6 +45,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         upstream_data (list['UpstreamData']):
         affects (list['Affect']):
         comments (list['Comment']):
+        assist_meta (Union[Any, None]):
         package_versions (list['Package']):
         acknowledgments (list['FlawAcknowledgment']):
         references (list['FlawReference']):
@@ -83,6 +85,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     """
 
     uuid: UUID
+    bz_id: Union[None, int]
     title: str
     trackers: list[str]
     comment_zero: str
@@ -91,6 +94,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
     upstream_data: list["UpstreamData"]
     affects: list["Affect"]
     comments: list["Comment"]
+    assist_meta: Union[Any, None]
     package_versions: list["Package"]
     acknowledgments: list["FlawAcknowledgment"]
     references: list["FlawReference"]
@@ -131,6 +135,11 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         uuid: str = UNSET
         if not isinstance(self.uuid, Unset):
             uuid = str(self.uuid)
+
+        bz_id: Union[None, int]
+        if isinstance(self.bz_id, Unset):
+            bz_id = UNSET
+        bz_id = self.bz_id
 
         title = self.title
 
@@ -173,6 +182,11 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
                     comments_item = comments_item_data.to_dict()
 
                 comments.append(comments_item)
+
+        assist_meta: Union[Any, None]
+        if isinstance(self.assist_meta, Unset):
+            assist_meta = UNSET
+        assist_meta = self.assist_meta
 
         package_versions: list[dict[str, Any]] = UNSET
         if not isinstance(self.package_versions, Unset):
@@ -397,6 +411,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         field_dict.update(self.additional_properties)
         if not isinstance(uuid, Unset):
             field_dict["uuid"] = uuid
+        if not isinstance(bz_id, Unset):
+            field_dict["bz_id"] = bz_id
         if not isinstance(title, Unset):
             field_dict["title"] = title
         if not isinstance(trackers, Unset):
@@ -413,6 +429,8 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             field_dict["affects"] = affects
         if not isinstance(comments, Unset):
             field_dict["comments"] = comments
+        if not isinstance(assist_meta, Unset):
+            field_dict["assist_meta"] = assist_meta
         if not isinstance(package_versions, Unset):
             field_dict["package_versions"] = package_versions
         if not isinstance(acknowledgments, Unset):
@@ -505,6 +523,15 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
         else:
             uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
+        def _parse_bz_id(data: object) -> Union[None, int]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, int], data)
+
+        bz_id = _parse_bz_id(d.pop("bz_id", UNSET))
+
         title = d.pop("title", UNSET)
 
         trackers = cast(list[str], d.pop("trackers", UNSET))
@@ -550,6 +577,15 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
                 comments_item = Comment.from_dict(_comments_item)
 
             comments.append(comments_item)
+
+        def _parse_assist_meta(data: object) -> Union[Any, None]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[Any, None], data)
+
+        assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
         package_versions = []
         _package_versions = d.pop("package_versions", UNSET)
@@ -936,6 +972,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
 
         osidb_api_v2_flaws_create_response_201 = cls(
             uuid=uuid,
+            bz_id=bz_id,
             title=title,
             trackers=trackers,
             comment_zero=comment_zero,
@@ -944,6 +981,7 @@ class OsidbApiV2FlawsCreateResponse201(OSIDBModel):
             upstream_data=upstream_data,
             affects=affects,
             comments=comments,
+            assist_meta=assist_meta,
             package_versions=package_versions,
             acknowledgments=acknowledgments,
             references=references,

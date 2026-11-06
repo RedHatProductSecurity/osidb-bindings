@@ -25,7 +25,7 @@ class FlawComment(OSIDBModel):
         flaw (UUID):
         text (str):
         uuid (UUID):
-        external_system_id (str):
+        external_system_id (str):  Default: ''.
         alerts (list['Alert']):
         created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
@@ -40,12 +40,12 @@ class FlawComment(OSIDBModel):
     flaw: UUID
     text: str
     uuid: UUID
-    external_system_id: str
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
     embargoed: bool
     visibility: VisibilityEnum
+    external_system_id: str = ""
     creator: Union[Unset, str] = UNSET
     is_private: Union[Unset, bool] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)

@@ -1,6 +1,5 @@
 import datetime
-import json
-from typing import Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
 from uuid import UUID
 
 from attrs import define as _attrs_define
@@ -10,25 +9,51 @@ from dateutil.parser import isoparse
 
 from ..models.affectedness_enum import AffectednessEnum
 from ..models.blank_enum import BlankEnum
+from ..models.delegated_not_affected_justification_enum import (
+    DelegatedNotAffectedJustificationEnum,
+)
 from ..models.impact_enum import ImpactEnum
 from ..models.not_affected_justification_enum import NotAffectedJustificationEnum
 from ..models.resolution_enum import ResolutionEnum
+from ..models.visibility_enum import VisibilityEnum
 from ..types import UNSET, OSIDBModel, Unset
 
-T = TypeVar("T", bound="AffectRequest")
+if TYPE_CHECKING:
+    from ..models.affect_cvss import AffectCVSS
+    from ..models.alert import Alert
+    from ..models.tracker import Tracker
+
+
+T = TypeVar("T", bound="AffectPut")
 
 
 @_attrs_define
-class AffectRequest(OSIDBModel):
+class AffectPut(OSIDBModel):
     """Affect serializer
 
     Attributes:
-        flaw (UUID):
+        uuid (UUID):
         ps_update_stream (str):
+        ps_module (str):
+        cve_id (str):
+        ps_product (str):
+        tracker (Union['Tracker', None]):
+        delegated_resolution (str):
+        cvss_scores (list['AffectCVSS']):
+        delegated_not_affected_justification (Union[BlankEnum, DelegatedNotAffectedJustificationEnum]):
+        affectedness_explanation (str):
+        resolved_dt (Union[None, datetime.datetime]):
+        labels (list[str]):
+        created_by (str):
+        updated_by (str):
         embargoed (bool): The embargoed boolean attribute is technically read-only as it just indirectly modifies the
             ACLs but is mandatory as it controls the access to the resource.
+        visibility (VisibilityEnum):
+        alerts (list['Alert']):
+        created_dt (datetime.datetime):
         updated_dt (datetime.datetime): The updated_dt timestamp attribute is mandatory on update as it is used to
             detect mit-air collisions.
+        flaw (Union[Unset, UUID]):
         affectedness (Union[AffectednessEnum, BlankEnum, Unset]):
         resolution (Union[BlankEnum, ResolutionEnum, Unset]):
         ps_component (Union[None, Unset, str]):  Default: ''.
@@ -39,10 +64,28 @@ class AffectRequest(OSIDBModel):
         assist_meta (Union[Any, None, Unset]):
     """
 
-    flaw: UUID
+    uuid: UUID
     ps_update_stream: str
+    ps_module: str
+    cve_id: str
+    ps_product: str
+    tracker: Union["Tracker", None]
+    delegated_resolution: str
+    cvss_scores: list["AffectCVSS"]
+    delegated_not_affected_justification: Union[
+        BlankEnum, DelegatedNotAffectedJustificationEnum
+    ]
+    affectedness_explanation: str
+    resolved_dt: Union[None, datetime.datetime]
+    labels: list[str]
+    created_by: str
+    updated_by: str
     embargoed: bool
+    visibility: VisibilityEnum
+    alerts: list["Alert"]
+    created_dt: datetime.datetime
     updated_dt: datetime.datetime
+    flaw: Union[Unset, UUID] = UNSET
     affectedness: Union[AffectednessEnum, BlankEnum, Unset] = UNSET
     resolution: Union[BlankEnum, ResolutionEnum, Unset] = UNSET
     ps_component: Union[None, Unset, str] = ""
@@ -56,17 +99,113 @@ class AffectRequest(OSIDBModel):
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        flaw: str = UNSET
-        if not isinstance(self.flaw, Unset):
-            flaw = str(self.flaw)
+        from ..models.tracker import Tracker
+
+        uuid: str = UNSET
+        if not isinstance(self.uuid, Unset):
+            uuid = str(self.uuid)
 
         ps_update_stream = self.ps_update_stream
 
+        ps_module = self.ps_module
+
+        cve_id = self.cve_id
+
+        ps_product = self.ps_product
+
+        tracker: Union[None, dict[str, Any]]
+        if isinstance(self.tracker, Unset):
+            tracker = UNSET
+        elif isinstance(self.tracker, Tracker):
+            tracker = UNSET
+            if not isinstance(self.tracker, Unset):
+                tracker = self.tracker.to_dict()
+
+        else:
+            tracker = self.tracker
+
+        delegated_resolution = self.delegated_resolution
+
+        cvss_scores: list[dict[str, Any]] = UNSET
+        if not isinstance(self.cvss_scores, Unset):
+            cvss_scores = []
+            for cvss_scores_item_data in self.cvss_scores:
+                cvss_scores_item: dict[str, Any] = UNSET
+                if not isinstance(cvss_scores_item_data, Unset):
+                    cvss_scores_item = cvss_scores_item_data.to_dict()
+
+                cvss_scores.append(cvss_scores_item)
+
+        delegated_not_affected_justification: str
+        if isinstance(self.delegated_not_affected_justification, Unset):
+            delegated_not_affected_justification = UNSET
+        elif isinstance(
+            self.delegated_not_affected_justification,
+            DelegatedNotAffectedJustificationEnum,
+        ):
+            delegated_not_affected_justification = UNSET
+            if not isinstance(self.delegated_not_affected_justification, Unset):
+                delegated_not_affected_justification = (
+                    DelegatedNotAffectedJustificationEnum(
+                        self.delegated_not_affected_justification
+                    ).value
+                )
+
+        else:
+            delegated_not_affected_justification = UNSET
+            if not isinstance(self.delegated_not_affected_justification, Unset):
+                delegated_not_affected_justification = BlankEnum(
+                    self.delegated_not_affected_justification
+                ).value
+
+        affectedness_explanation = self.affectedness_explanation
+
+        resolved_dt: Union[None, str]
+        if isinstance(self.resolved_dt, Unset):
+            resolved_dt = UNSET
+        elif isinstance(self.resolved_dt, datetime.datetime):
+            resolved_dt = UNSET
+            if not isinstance(self.resolved_dt, Unset):
+                resolved_dt = self.resolved_dt.isoformat()
+
+        else:
+            resolved_dt = self.resolved_dt
+
+        labels: list[str] = UNSET
+        if not isinstance(self.labels, Unset):
+            labels = self.labels
+
+        created_by = self.created_by
+
+        updated_by = self.updated_by
+
         embargoed = self.embargoed
+
+        visibility: str = UNSET
+        if not isinstance(self.visibility, Unset):
+            visibility = VisibilityEnum(self.visibility).value
+
+        alerts: list[dict[str, Any]] = UNSET
+        if not isinstance(self.alerts, Unset):
+            alerts = []
+            for alerts_item_data in self.alerts:
+                alerts_item: dict[str, Any] = UNSET
+                if not isinstance(alerts_item_data, Unset):
+                    alerts_item = alerts_item_data.to_dict()
+
+                alerts.append(alerts_item)
+
+        created_dt: str = UNSET
+        if not isinstance(self.created_dt, Unset):
+            created_dt = self.created_dt.isoformat()
 
         updated_dt: str = UNSET
         if not isinstance(self.updated_dt, Unset):
             updated_dt = self.updated_dt.isoformat()
+
+        flaw: Union[Unset, str] = UNSET
+        if not isinstance(self.flaw, Unset):
+            flaw = str(self.flaw)
 
         affectedness: Union[Unset, str]
         if isinstance(self.affectedness, Unset):
@@ -148,162 +287,48 @@ class AffectRequest(OSIDBModel):
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
+        if not isinstance(uuid, Unset):
+            field_dict["uuid"] = uuid
         if not isinstance(ps_update_stream, Unset):
             field_dict["ps_update_stream"] = ps_update_stream
-        if not isinstance(embargoed, Unset):
-            field_dict["embargoed"] = embargoed
-        if not isinstance(updated_dt, Unset):
-            field_dict["updated_dt"] = updated_dt
-        if not isinstance(affectedness, Unset):
-            field_dict["affectedness"] = affectedness
-        if not isinstance(resolution, Unset):
-            field_dict["resolution"] = resolution
-        if not isinstance(ps_component, Unset):
-            field_dict["ps_component"] = ps_component
-        if not isinstance(impact, Unset):
-            field_dict["impact"] = impact
-        if not isinstance(purl, Unset):
-            field_dict["purl"] = purl
-        if not isinstance(subpackage_purls, Unset):
-            field_dict["subpackage_purls"] = subpackage_purls
-        if not isinstance(not_affected_justification, Unset):
-            field_dict["not_affected_justification"] = not_affected_justification
-        if not isinstance(assist_meta, Unset):
-            field_dict["assist_meta"] = assist_meta
-
-        return field_dict
-
-    def to_multipart(self) -> dict[str, Any]:
-        flaw: bytes = UNSET
-        if not isinstance(self.flaw, Unset):
-            flaw = str(self.flaw)
-
-        ps_update_stream = (None, str(self.ps_update_stream).encode(), "text/plain")
-
-        embargoed = (None, str(self.embargoed).encode(), "text/plain")
-
-        updated_dt: bytes = UNSET
-        if not isinstance(self.updated_dt, Unset):
-            updated_dt = self.updated_dt.isoformat().encode()
-
-        affectedness: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.affectedness, Unset):
-            affectedness = UNSET
-        elif isinstance(self.affectedness, AffectednessEnum):
-            affectedness: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.affectedness, Unset):
-                affectedness = (
-                    None,
-                    str(self.affectedness.value).encode(),
-                    "text/plain",
-                )
-        else:
-            affectedness: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.affectedness, Unset):
-                affectedness = (
-                    None,
-                    str(self.affectedness.value).encode(),
-                    "text/plain",
-                )
-
-        resolution: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.resolution, Unset):
-            resolution = UNSET
-        elif isinstance(self.resolution, ResolutionEnum):
-            resolution: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.resolution, Unset):
-                resolution = (None, str(self.resolution.value).encode(), "text/plain")
-        else:
-            resolution: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.resolution, Unset):
-                resolution = (None, str(self.resolution.value).encode(), "text/plain")
-
-        ps_component: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.ps_component, Unset):
-            ps_component = UNSET
-        elif isinstance(self.ps_component, str):
-            ps_component = (None, str(self.ps_component).encode(), "text/plain")
-        else:
-            ps_component = (None, str(self.ps_component).encode(), "text/plain")
-
-        impact: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.impact, Unset):
-            impact = UNSET
-        elif isinstance(self.impact, ImpactEnum):
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-        else:
-            impact: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.impact, Unset):
-                impact = (None, str(self.impact.value).encode(), "text/plain")
-
-        purl: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.purl, Unset):
-            purl = UNSET
-        elif isinstance(self.purl, str):
-            purl = (None, str(self.purl).encode(), "text/plain")
-        else:
-            purl = (None, str(self.purl).encode(), "text/plain")
-
-        subpackage_purls: Union[Unset, tuple[None, bytes, str]] = UNSET
-        if not isinstance(self.subpackage_purls, Unset):
-            _temp_subpackage_purls = self.subpackage_purls
-            subpackage_purls = (
-                None,
-                json.dumps(_temp_subpackage_purls).encode(),
-                "application/json",
+        if not isinstance(ps_module, Unset):
+            field_dict["ps_module"] = ps_module
+        if not isinstance(cve_id, Unset):
+            field_dict["cve_id"] = cve_id
+        if not isinstance(ps_product, Unset):
+            field_dict["ps_product"] = ps_product
+        if not isinstance(tracker, Unset):
+            field_dict["tracker"] = tracker
+        if not isinstance(delegated_resolution, Unset):
+            field_dict["delegated_resolution"] = delegated_resolution
+        if not isinstance(cvss_scores, Unset):
+            field_dict["cvss_scores"] = cvss_scores
+        if not isinstance(delegated_not_affected_justification, Unset):
+            field_dict["delegated_not_affected_justification"] = (
+                delegated_not_affected_justification
             )
-
-        not_affected_justification: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.not_affected_justification, Unset):
-            not_affected_justification = UNSET
-        elif isinstance(self.not_affected_justification, NotAffectedJustificationEnum):
-            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.not_affected_justification, Unset):
-                not_affected_justification = (
-                    None,
-                    str(self.not_affected_justification.value).encode(),
-                    "text/plain",
-                )
-        else:
-            not_affected_justification: Union[Unset, tuple[None, bytes, str]] = UNSET
-            if not isinstance(self.not_affected_justification, Unset):
-                not_affected_justification = (
-                    None,
-                    str(self.not_affected_justification.value).encode(),
-                    "text/plain",
-                )
-
-        assist_meta: Union[Unset, tuple[None, bytes, str]]
-
-        if isinstance(self.assist_meta, Unset):
-            assist_meta = UNSET
-        elif isinstance(self.assist_meta, Any):
-            assist_meta = (None, str(self.assist_meta).encode(), "text/plain")
-        else:
-            assist_meta = (None, str(self.assist_meta).encode(), "text/plain")
-
-        field_dict: dict[str, Any] = {}
-        for prop_name, prop in self.additional_properties.items():
-            field_dict[prop_name] = (None, str(prop).encode(), "text/plain")
-
-        if not isinstance(flaw, Unset):
-            field_dict["flaw"] = flaw
-        if not isinstance(ps_update_stream, Unset):
-            field_dict["ps_update_stream"] = ps_update_stream
+        if not isinstance(affectedness_explanation, Unset):
+            field_dict["affectedness_explanation"] = affectedness_explanation
+        if not isinstance(resolved_dt, Unset):
+            field_dict["resolved_dt"] = resolved_dt
+        if not isinstance(labels, Unset):
+            field_dict["labels"] = labels
+        if not isinstance(created_by, Unset):
+            field_dict["created_by"] = created_by
+        if not isinstance(updated_by, Unset):
+            field_dict["updated_by"] = updated_by
         if not isinstance(embargoed, Unset):
             field_dict["embargoed"] = embargoed
+        if not isinstance(visibility, Unset):
+            field_dict["visibility"] = visibility
+        if not isinstance(alerts, Unset):
+            field_dict["alerts"] = alerts
+        if not isinstance(created_dt, Unset):
+            field_dict["created_dt"] = created_dt
         if not isinstance(updated_dt, Unset):
             field_dict["updated_dt"] = updated_dt
+        if not isinstance(flaw, Unset):
+            field_dict["flaw"] = flaw
         if not isinstance(affectedness, Unset):
             field_dict["affectedness"] = affectedness
         if not isinstance(resolution, Unset):
@@ -325,17 +350,164 @@ class AffectRequest(OSIDBModel):
 
     @classmethod
     def from_dict(cls: type[T], src_dict: dict[str, Any]) -> T:
+        from ..models.affect_cvss import AffectCVSS
+        from ..models.alert import Alert
+        from ..models.tracker import Tracker
+
         d = src_dict.copy()
-        _flaw = d.pop("flaw", UNSET)
-        flaw: UUID
-        if isinstance(_flaw, Unset):
-            flaw = UNSET
+        _uuid = d.pop("uuid", UNSET)
+        uuid: UUID
+        if isinstance(_uuid, Unset):
+            uuid = UNSET
         else:
-            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
+            uuid = _uuid if isinstance(_uuid, UUID) else UUID(_uuid)
 
         ps_update_stream = d.pop("ps_update_stream", UNSET)
 
+        ps_module = d.pop("ps_module", UNSET)
+
+        cve_id = d.pop("cve_id", UNSET)
+
+        ps_product = d.pop("ps_product", UNSET)
+
+        def _parse_tracker(data: object) -> Union["Tracker", None]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                _tracker_type_0 = data
+                tracker_type_0: Tracker
+                if isinstance(_tracker_type_0, Unset):
+                    tracker_type_0 = UNSET
+                else:
+                    tracker_type_0 = Tracker.from_dict(_tracker_type_0)
+
+                return tracker_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union["Tracker", None], data)
+
+        tracker = _parse_tracker(d.pop("tracker", UNSET))
+
+        delegated_resolution = d.pop("delegated_resolution", UNSET)
+
+        cvss_scores = []
+        _cvss_scores = d.pop("cvss_scores", UNSET)
+        for cvss_scores_item_data in _cvss_scores or []:
+            _cvss_scores_item = cvss_scores_item_data
+            cvss_scores_item: AffectCVSS
+            if isinstance(_cvss_scores_item, Unset):
+                cvss_scores_item = UNSET
+            else:
+                cvss_scores_item = AffectCVSS.from_dict(_cvss_scores_item)
+
+            cvss_scores.append(cvss_scores_item)
+
+        def _parse_delegated_not_affected_justification(
+            data: object,
+        ) -> Union[BlankEnum, DelegatedNotAffectedJustificationEnum]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _delegated_not_affected_justification_type_0 = data
+                delegated_not_affected_justification_type_0: (
+                    DelegatedNotAffectedJustificationEnum
+                )
+                if isinstance(_delegated_not_affected_justification_type_0, Unset):
+                    delegated_not_affected_justification_type_0 = UNSET
+                else:
+                    delegated_not_affected_justification_type_0 = (
+                        DelegatedNotAffectedJustificationEnum(
+                            _delegated_not_affected_justification_type_0
+                        )
+                    )
+
+                return delegated_not_affected_justification_type_0
+            except:  # noqa: E722
+                pass
+            if not isinstance(data, str):
+                raise TypeError()
+            _delegated_not_affected_justification_type_1 = data
+            delegated_not_affected_justification_type_1: BlankEnum
+            if isinstance(_delegated_not_affected_justification_type_1, Unset):
+                delegated_not_affected_justification_type_1 = UNSET
+            else:
+                delegated_not_affected_justification_type_1 = BlankEnum(
+                    _delegated_not_affected_justification_type_1
+                )
+
+            return delegated_not_affected_justification_type_1
+
+        delegated_not_affected_justification = (
+            _parse_delegated_not_affected_justification(
+                d.pop("delegated_not_affected_justification", UNSET)
+            )
+        )
+
+        affectedness_explanation = d.pop("affectedness_explanation", UNSET)
+
+        def _parse_resolved_dt(data: object) -> Union[None, datetime.datetime]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, str):
+                    raise TypeError()
+                _resolved_dt_type_0 = data
+                resolved_dt_type_0: datetime.datetime
+                if isinstance(_resolved_dt_type_0, Unset):
+                    resolved_dt_type_0 = UNSET
+                else:
+                    resolved_dt_type_0 = isoparse(_resolved_dt_type_0)
+
+                return resolved_dt_type_0
+            except:  # noqa: E722
+                pass
+            return cast(Union[None, datetime.datetime], data)
+
+        resolved_dt = _parse_resolved_dt(d.pop("resolved_dt", UNSET))
+
+        labels = cast(list[str], d.pop("labels", UNSET))
+
+        created_by = d.pop("created_by", UNSET)
+
+        updated_by = d.pop("updated_by", UNSET)
+
         embargoed = d.pop("embargoed", UNSET)
+
+        _visibility = d.pop("visibility", UNSET)
+        visibility: VisibilityEnum
+        if isinstance(_visibility, Unset):
+            visibility = UNSET
+        else:
+            visibility = VisibilityEnum(_visibility)
+
+        alerts = []
+        _alerts = d.pop("alerts", UNSET)
+        for alerts_item_data in _alerts or []:
+            _alerts_item = alerts_item_data
+            alerts_item: Alert
+            if isinstance(_alerts_item, Unset):
+                alerts_item = UNSET
+            else:
+                alerts_item = Alert.from_dict(_alerts_item)
+
+            alerts.append(alerts_item)
+
+        _created_dt = d.pop("created_dt", UNSET)
+        created_dt: datetime.datetime
+        if isinstance(_created_dt, Unset):
+            created_dt = UNSET
+        else:
+            created_dt = isoparse(_created_dt)
 
         _updated_dt = d.pop("updated_dt", UNSET)
         updated_dt: datetime.datetime
@@ -343,6 +515,13 @@ class AffectRequest(OSIDBModel):
             updated_dt = UNSET
         else:
             updated_dt = isoparse(_updated_dt)
+
+        _flaw = d.pop("flaw", UNSET)
+        flaw: Union[Unset, UUID]
+        if isinstance(_flaw, Unset):
+            flaw = UNSET
+        else:
+            flaw = _flaw if isinstance(_flaw, UUID) else UUID(_flaw)
 
         def _parse_affectedness(
             data: object,
@@ -507,11 +686,27 @@ class AffectRequest(OSIDBModel):
 
         assist_meta = _parse_assist_meta(d.pop("assist_meta", UNSET))
 
-        affect_request = cls(
-            flaw=flaw,
+        affect_put = cls(
+            uuid=uuid,
             ps_update_stream=ps_update_stream,
+            ps_module=ps_module,
+            cve_id=cve_id,
+            ps_product=ps_product,
+            tracker=tracker,
+            delegated_resolution=delegated_resolution,
+            cvss_scores=cvss_scores,
+            delegated_not_affected_justification=delegated_not_affected_justification,
+            affectedness_explanation=affectedness_explanation,
+            resolved_dt=resolved_dt,
+            labels=labels,
+            created_by=created_by,
+            updated_by=updated_by,
             embargoed=embargoed,
+            visibility=visibility,
+            alerts=alerts,
+            created_dt=created_dt,
             updated_dt=updated_dt,
+            flaw=flaw,
             affectedness=affectedness,
             resolution=resolution,
             ps_component=ps_component,
@@ -522,8 +717,8 @@ class AffectRequest(OSIDBModel):
             assist_meta=assist_meta,
         )
 
-        affect_request.additional_properties = d
-        return affect_request
+        affect_put.additional_properties = d
+        return affect_put
 
     @classmethod
     def get_fields(cls):

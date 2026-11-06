@@ -30,7 +30,7 @@ class Tracker(OSIDBModel):
         affects (list[UUID]):
         cve_id (str):
         errata (list['TrackerErrataItem']):
-        external_system_id (str):
+        external_system_id (str):  Default: ''.
         status (str):
         resolution (str):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum]):
@@ -51,7 +51,6 @@ class Tracker(OSIDBModel):
     affects: list[UUID]
     cve_id: str
     errata: list["TrackerErrataItem"]
-    external_system_id: str
     status: str
     resolution: str
     not_affected_justification: Union[BlankEnum, NotAffectedJustificationEnum]
@@ -64,6 +63,7 @@ class Tracker(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
+    external_system_id: str = ""
     ps_update_stream: Union[Unset, str] = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 

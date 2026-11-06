@@ -1,12 +1,9 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any, Optional, Union, cast
 
 import requests
 
 from ...client import AuthenticatedClient, Client
-from ...models.osidb_api_v1_available_flaws_retrieve_response_204 import (
-    OsidbApiV1AvailableFlawsRetrieveResponse204,
-)
 from ...models.osidb_api_v1_available_flaws_retrieve_response_400 import (
     OsidbApiV1AvailableFlawsRetrieveResponse400,
 )
@@ -39,21 +36,13 @@ def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Optional[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
 ]:
     if response.status_code == 204:
-        _response_204 = response.json()
-        response_204: OsidbApiV1AvailableFlawsRetrieveResponse204
-        if isinstance(_response_204, Unset):
-            response_204 = UNSET
-        else:
-            response_204 = OsidbApiV1AvailableFlawsRetrieveResponse204.from_dict(
-                _response_204
-            )
-
+        response_204 = cast(Any, None)
         return response_204
     if response.status_code == 400:
         _response_400 = response.json()
@@ -83,7 +72,7 @@ def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: requests.Response
 ) -> Response[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
@@ -102,7 +91,7 @@ def sync_detailed(
     client: AuthenticatedClient,
 ) -> Response[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
@@ -146,7 +135,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[OsidbApiV1AvailableFlawsRetrieveResponse204, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]]
+        Response[Union[Any, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]]
     """
 
     kwargs = _get_kwargs(
@@ -171,7 +160,7 @@ def sync(
     client: AuthenticatedClient,
 ) -> Optional[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
@@ -215,7 +204,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[OsidbApiV1AvailableFlawsRetrieveResponse204, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]
+        Union[Any, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]
     """
 
     return sync_detailed(
@@ -230,7 +219,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
 ) -> Response[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
@@ -274,7 +263,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[OsidbApiV1AvailableFlawsRetrieveResponse204, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]]
+        Response[Union[Any, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]]
     """
 
     kwargs = _get_kwargs(
@@ -299,7 +288,7 @@ async def asyncio(
     client: AuthenticatedClient,
 ) -> Optional[
     Union[
-        OsidbApiV1AvailableFlawsRetrieveResponse204,
+        Any,
         OsidbApiV1AvailableFlawsRetrieveResponse400,
         OsidbApiV1AvailableFlawsRetrieveResponse404,
     ]
@@ -343,7 +332,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[OsidbApiV1AvailableFlawsRetrieveResponse204, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]
+        Union[Any, OsidbApiV1AvailableFlawsRetrieveResponse400, OsidbApiV1AvailableFlawsRetrieveResponse404]
     """
 
     return (

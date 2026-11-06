@@ -84,6 +84,7 @@ QUERY_PARAMS = {
     "acknowledgments__updated_dt__lte": datetime.datetime,
     "acknowledgments__uuid": UUID,
     "acknowledgments__uuid__in": list[UUID],
+    "aegis_processed": bool,
     "affects__affectedness": OsidbApiV1FlawsListAffectsAffectedness,
     "affects__created_dt": datetime.datetime,
     "affects__created_dt__date": datetime.date,
@@ -227,6 +228,7 @@ QUERY_PARAMS = {
     "major_incident_start_dt__lte": datetime.datetime,
     "major_incident_state": OsidbApiV1FlawsListMajorIncidentState,
     "major_incident_state__in": list[OsidbApiV1FlawsListMajorIncidentStateInItem],
+    "meta_attr__bz_id": int,
     "mitigation__isempty": bool,
     "nist_cvss_validation": OsidbApiV1FlawsListNistCvssValidation,
     "nist_cvss_validation__in": list[OsidbApiV1FlawsListNistCvssValidationInItem],
@@ -322,6 +324,7 @@ def _get_kwargs(
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
     acknowledgments_uuid_in: Union[Unset, list[UUID]] = UNSET,
+    aegis_processed: Union[Unset, bool] = UNSET,
     affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -469,6 +472,7 @@ def _get_kwargs(
     major_incident_state_in: Union[
         Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]
     ] = UNSET,
+    meta_attr_bz_id: Union[Unset, int] = UNSET,
     mitigation_isempty: Union[Unset, bool] = UNSET,
     nist_cvss_validation: Union[Unset, OsidbApiV1FlawsListNistCvssValidation] = UNSET,
     nist_cvss_validation_in: Union[
@@ -695,6 +699,8 @@ def _get_kwargs(
             json_acknowledgments_uuid_in.append(acknowledgments_uuid_in_item)
 
     params["acknowledgments__uuid__in"] = json_acknowledgments_uuid_in
+
+    params["aegis_processed"] = aegis_processed
 
     json_affects_affectedness: Union[Unset, str] = UNSET
     if not isinstance(affects_affectedness, Unset):
@@ -1578,6 +1584,8 @@ def _get_kwargs(
 
     params["major_incident_state__in"] = json_major_incident_state_in
 
+    params["meta_attr__bz_id"] = meta_attr_bz_id
+
     params["mitigation__isempty"] = mitigation_isempty
 
     json_nist_cvss_validation: Union[Unset, str] = UNSET
@@ -2038,6 +2046,7 @@ def sync_detailed(
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
     acknowledgments_uuid_in: Union[Unset, list[UUID]] = UNSET,
+    aegis_processed: Union[Unset, bool] = UNSET,
     affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -2185,6 +2194,7 @@ def sync_detailed(
     major_incident_state_in: Union[
         Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]
     ] = UNSET,
+    meta_attr_bz_id: Union[Unset, int] = UNSET,
     mitigation_isempty: Union[Unset, bool] = UNSET,
     nist_cvss_validation: Union[Unset, OsidbApiV1FlawsListNistCvssValidation] = UNSET,
     nist_cvss_validation_in: Union[
@@ -2282,6 +2292,7 @@ def sync_detailed(
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
         acknowledgments_uuid_in (Union[Unset, list[UUID]]):
+        aegis_processed (Union[Unset, bool]):
         affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
@@ -2425,6 +2436,7 @@ def sync_detailed(
         major_incident_start_dt_lte (Union[Unset, datetime.datetime]):
         major_incident_state (Union[Unset, OsidbApiV1FlawsListMajorIncidentState]):
         major_incident_state_in (Union[Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]]):
+        meta_attr_bz_id (Union[Unset, int]):
         mitigation_isempty (Union[Unset, bool]):
         nist_cvss_validation (Union[Unset, OsidbApiV1FlawsListNistCvssValidation]):
         nist_cvss_validation_in (Union[Unset, list[OsidbApiV1FlawsListNistCvssValidationInItem]]):
@@ -2525,6 +2537,7 @@ def sync_detailed(
         acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
         acknowledgments_uuid=acknowledgments_uuid,
         acknowledgments_uuid_in=acknowledgments_uuid_in,
+        aegis_processed=aegis_processed,
         affects_affectedness=affects_affectedness,
         affects_created_dt=affects_created_dt,
         affects_created_dt_date=affects_created_dt_date,
@@ -2668,6 +2681,7 @@ def sync_detailed(
         major_incident_start_dt_lte=major_incident_start_dt_lte,
         major_incident_state=major_incident_state,
         major_incident_state_in=major_incident_state_in,
+        meta_attr_bz_id=meta_attr_bz_id,
         mitigation_isempty=mitigation_isempty,
         nist_cvss_validation=nist_cvss_validation,
         nist_cvss_validation_in=nist_cvss_validation_in,
@@ -2773,6 +2787,7 @@ def sync(
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
     acknowledgments_uuid_in: Union[Unset, list[UUID]] = UNSET,
+    aegis_processed: Union[Unset, bool] = UNSET,
     affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -2920,6 +2935,7 @@ def sync(
     major_incident_state_in: Union[
         Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]
     ] = UNSET,
+    meta_attr_bz_id: Union[Unset, int] = UNSET,
     mitigation_isempty: Union[Unset, bool] = UNSET,
     nist_cvss_validation: Union[Unset, OsidbApiV1FlawsListNistCvssValidation] = UNSET,
     nist_cvss_validation_in: Union[
@@ -3017,6 +3033,7 @@ def sync(
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
         acknowledgments_uuid_in (Union[Unset, list[UUID]]):
+        aegis_processed (Union[Unset, bool]):
         affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
@@ -3160,6 +3177,7 @@ def sync(
         major_incident_start_dt_lte (Union[Unset, datetime.datetime]):
         major_incident_state (Union[Unset, OsidbApiV1FlawsListMajorIncidentState]):
         major_incident_state_in (Union[Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]]):
+        meta_attr_bz_id (Union[Unset, int]):
         mitigation_isempty (Union[Unset, bool]):
         nist_cvss_validation (Union[Unset, OsidbApiV1FlawsListNistCvssValidation]):
         nist_cvss_validation_in (Union[Unset, list[OsidbApiV1FlawsListNistCvssValidationInItem]]):
@@ -3260,6 +3278,7 @@ def sync(
         acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
         acknowledgments_uuid=acknowledgments_uuid,
         acknowledgments_uuid_in=acknowledgments_uuid_in,
+        aegis_processed=aegis_processed,
         affects_affectedness=affects_affectedness,
         affects_created_dt=affects_created_dt,
         affects_created_dt_date=affects_created_dt_date,
@@ -3403,6 +3422,7 @@ def sync(
         major_incident_start_dt_lte=major_incident_start_dt_lte,
         major_incident_state=major_incident_state,
         major_incident_state_in=major_incident_state_in,
+        meta_attr_bz_id=meta_attr_bz_id,
         mitigation_isempty=mitigation_isempty,
         nist_cvss_validation=nist_cvss_validation,
         nist_cvss_validation_in=nist_cvss_validation_in,
@@ -3498,6 +3518,7 @@ async def asyncio_detailed(
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
     acknowledgments_uuid_in: Union[Unset, list[UUID]] = UNSET,
+    aegis_processed: Union[Unset, bool] = UNSET,
     affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -3645,6 +3666,7 @@ async def asyncio_detailed(
     major_incident_state_in: Union[
         Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]
     ] = UNSET,
+    meta_attr_bz_id: Union[Unset, int] = UNSET,
     mitigation_isempty: Union[Unset, bool] = UNSET,
     nist_cvss_validation: Union[Unset, OsidbApiV1FlawsListNistCvssValidation] = UNSET,
     nist_cvss_validation_in: Union[
@@ -3742,6 +3764,7 @@ async def asyncio_detailed(
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
         acknowledgments_uuid_in (Union[Unset, list[UUID]]):
+        aegis_processed (Union[Unset, bool]):
         affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
@@ -3885,6 +3908,7 @@ async def asyncio_detailed(
         major_incident_start_dt_lte (Union[Unset, datetime.datetime]):
         major_incident_state (Union[Unset, OsidbApiV1FlawsListMajorIncidentState]):
         major_incident_state_in (Union[Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]]):
+        meta_attr_bz_id (Union[Unset, int]):
         mitigation_isempty (Union[Unset, bool]):
         nist_cvss_validation (Union[Unset, OsidbApiV1FlawsListNistCvssValidation]):
         nist_cvss_validation_in (Union[Unset, list[OsidbApiV1FlawsListNistCvssValidationInItem]]):
@@ -3985,6 +4009,7 @@ async def asyncio_detailed(
         acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
         acknowledgments_uuid=acknowledgments_uuid,
         acknowledgments_uuid_in=acknowledgments_uuid_in,
+        aegis_processed=aegis_processed,
         affects_affectedness=affects_affectedness,
         affects_created_dt=affects_created_dt,
         affects_created_dt_date=affects_created_dt_date,
@@ -4128,6 +4153,7 @@ async def asyncio_detailed(
         major_incident_start_dt_lte=major_incident_start_dt_lte,
         major_incident_state=major_incident_state,
         major_incident_state_in=major_incident_state_in,
+        meta_attr_bz_id=meta_attr_bz_id,
         mitigation_isempty=mitigation_isempty,
         nist_cvss_validation=nist_cvss_validation,
         nist_cvss_validation_in=nist_cvss_validation_in,
@@ -4233,6 +4259,7 @@ async def asyncio(
     acknowledgments_updated_dt_lte: Union[Unset, datetime.datetime] = UNSET,
     acknowledgments_uuid: Union[Unset, UUID] = UNSET,
     acknowledgments_uuid_in: Union[Unset, list[UUID]] = UNSET,
+    aegis_processed: Union[Unset, bool] = UNSET,
     affects_affectedness: Union[Unset, OsidbApiV1FlawsListAffectsAffectedness] = UNSET,
     affects_created_dt: Union[Unset, datetime.datetime] = UNSET,
     affects_created_dt_date: Union[Unset, datetime.date] = UNSET,
@@ -4380,6 +4407,7 @@ async def asyncio(
     major_incident_state_in: Union[
         Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]
     ] = UNSET,
+    meta_attr_bz_id: Union[Unset, int] = UNSET,
     mitigation_isempty: Union[Unset, bool] = UNSET,
     nist_cvss_validation: Union[Unset, OsidbApiV1FlawsListNistCvssValidation] = UNSET,
     nist_cvss_validation_in: Union[
@@ -4477,6 +4505,7 @@ async def asyncio(
         acknowledgments_updated_dt_lte (Union[Unset, datetime.datetime]):
         acknowledgments_uuid (Union[Unset, UUID]):
         acknowledgments_uuid_in (Union[Unset, list[UUID]]):
+        aegis_processed (Union[Unset, bool]):
         affects_affectedness (Union[Unset, OsidbApiV1FlawsListAffectsAffectedness]):
         affects_created_dt (Union[Unset, datetime.datetime]):
         affects_created_dt_date (Union[Unset, datetime.date]):
@@ -4620,6 +4649,7 @@ async def asyncio(
         major_incident_start_dt_lte (Union[Unset, datetime.datetime]):
         major_incident_state (Union[Unset, OsidbApiV1FlawsListMajorIncidentState]):
         major_incident_state_in (Union[Unset, list[OsidbApiV1FlawsListMajorIncidentStateInItem]]):
+        meta_attr_bz_id (Union[Unset, int]):
         mitigation_isempty (Union[Unset, bool]):
         nist_cvss_validation (Union[Unset, OsidbApiV1FlawsListNistCvssValidation]):
         nist_cvss_validation_in (Union[Unset, list[OsidbApiV1FlawsListNistCvssValidationInItem]]):
@@ -4721,6 +4751,7 @@ async def asyncio(
             acknowledgments_updated_dt_lte=acknowledgments_updated_dt_lte,
             acknowledgments_uuid=acknowledgments_uuid,
             acknowledgments_uuid_in=acknowledgments_uuid_in,
+            aegis_processed=aegis_processed,
             affects_affectedness=affects_affectedness,
             affects_created_dt=affects_created_dt,
             affects_created_dt_date=affects_created_dt_date,
@@ -4864,6 +4895,7 @@ async def asyncio(
             major_incident_start_dt_lte=major_incident_start_dt_lte,
             major_incident_state=major_incident_state,
             major_incident_state_in=major_incident_state_in,
+            meta_attr_bz_id=meta_attr_bz_id,
             mitigation_isempty=mitigation_isempty,
             nist_cvss_validation=nist_cvss_validation,
             nist_cvss_validation_in=nist_cvss_validation_in,

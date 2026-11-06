@@ -29,7 +29,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
         affects (list[UUID]):
         cve_id (str):
         errata (list['TrackerV1ErrataItem']):
-        external_system_id (str):
+        external_system_id (str):  Default: ''.
         status (str):
         resolution (str):
         not_affected_justification (Union[BlankEnum, NotAffectedJustificationEnum]):
@@ -54,7 +54,6 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     affects: list[UUID]
     cve_id: str
     errata: list["TrackerV1ErrataItem"]
-    external_system_id: str
     status: str
     resolution: str
     not_affected_justification: Union[BlankEnum, NotAffectedJustificationEnum]
@@ -67,6 +66,7 @@ class OsidbApiV1TrackersRetrieveResponse200(OSIDBModel):
     alerts: list["Alert"]
     created_dt: datetime.datetime
     updated_dt: datetime.datetime
+    external_system_id: str = ""
     ps_update_stream: Union[Unset, str] = UNSET
     dt: Union[Unset, datetime.datetime] = UNSET
     env: Union[Unset, str] = UNSET
